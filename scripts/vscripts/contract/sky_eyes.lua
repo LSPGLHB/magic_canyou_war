@@ -1,11 +1,11 @@
 require('player_power')
-function modifier_contract_contract_a_on_created(keys)
-    print("onCreated_contract_a")
+function modifier_contract_sky_eyes_on_created(keys)
+    print("onCreated_sky_eyes")
     refreshContractBuff(keys,true)
 end
 
-function modifier_contract_contract_a_on_destroy(keys)
-    print("onDestroy_contract_a")   
+function modifier_contract_sky_eyes_on_destroy(keys)
+    print("onDestroy_sky_eyes")   
     refreshContractBuff(keys,false)
 end
 

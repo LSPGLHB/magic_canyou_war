@@ -1,11 +1,11 @@
 require('player_power')
-function modifier_contract_contract_b_on_created(keys)
-    print("onCreated_contract_b")
+function modifier_contract_tank_on_created(keys)
+    print("onCreated_tank")
     refreshContractBuff(keys,true)
 end
 
-function modifier_contract_contract_b_on_destroy(keys)
-    print("onDestroy_contract_b")
+function modifier_contract_tank_on_destroy(keys)
+    print("onDestroy_tank")
     refreshContractBuff(keys,false)
 end
 

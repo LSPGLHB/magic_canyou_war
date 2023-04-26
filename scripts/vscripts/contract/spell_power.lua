@@ -1,12 +1,12 @@
 require('player_power')
-function modifier_contract_contract_c_on_created(keys)
-    print("onCreated_contract_c")
+function modifier_contract_spell_power_on_created(keys)
+    print("onCreated_spell_power")
     refreshContractBuff(keys,true)
 end
 
-function modifier_contract_contract_c_on_destroy(keys)
+function modifier_contract_spell_power_on_destroy(keys)
 
-    print("onDestroy_contract_c")
+    print("onDestroy_spell_power")
 
     refreshContractBuff(keys,false)
 
