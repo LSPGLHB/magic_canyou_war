@@ -7,9 +7,9 @@
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
         "AbilityType"               "contract"
-        "ShowName"                  "sky_eyes"
+        "ShowName"                  "天眼"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract.png"
-        "Describe"                  "DescribeDescribeA"
+        "Describe"                  "视野增加400，移速增加70，生命总值下降50%"
 
         "AbilitySpecial"
         {
@@ -35,7 +35,7 @@
             "modifier_contract_sky_eyes_datadriven"
             {
                 "Passive"			"1"
-                //"IsHidden"			"1"
+                "IsHidden"			"1"
 
                 "OnCreated"
                 {
@@ -66,9 +66,9 @@
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN "
 
         "AbilityType"               "contract"
-        "ShowName"                  "tank"
+        "ShowName"                  "坦克"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract2.png"                              
-        "Describe"                  "DescribeDescribeB"
+        "Describe"                  "生命总值提高50%，移速不再受到加成"
 
         "AbilitySpecial"
         {
@@ -90,7 +90,7 @@
             "modifier_contract_tank_datadriven"
             {
                 "Passive"			"1"
-                //"IsHidden"			"1"
+                "IsHidden"			"1"
 
                 "OnCreated"
                 {
@@ -120,9 +120,9 @@
 
 
         "AbilityType"               "contract"
-        "ShowName"                  "spell_power"
+        "ShowName"                  "法魂附体"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract3.png"
-        "Describe"                  "DescribeDescribeC"
+        "Describe"                  "法魂基础值增加25%，视野、伤害、控制效果不再获得加成"
 
         "AbilitySpecial"
         {
@@ -165,7 +165,7 @@
             "modifier_contract_spell_power_datadriven"
             {
                 "Passive"			"1"
-                //"IsHidden"			"1"
+                "IsHidden"			"1"
 
                 "OnCreated"
                 {
@@ -195,9 +195,9 @@
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
         "AbilityType"               "contract"
-        "ShowName"                  "control_force"
+        "ShowName"                  "控场大师"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract4.png"
-        "Describe"                  "DescribeDescribeD"
+        "Describe"                  "控制效果增加20%，伤害不再获得加成"
 
         "AbilitySpecial"
         {
@@ -221,7 +221,7 @@
             "modifier_contract_control_force_datadriven"
             {
                 "Passive"			"1"
-                //"IsHidden"			"1"
+                "IsHidden"			"1"
 
                 "OnCreated"
                 {
@@ -251,9 +251,9 @@
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
        
         "AbilityType"               "contract"
-        "ShowName"                  "damage_power"
+        "ShowName"                  "输出专精"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract5.png"
-        "Describe"                  "DescribeDescribee"
+        "Describe"                  "最终伤害增加25%，控制效果不再获得加成"
 
         "AbilitySpecial"
         {
@@ -277,7 +277,7 @@
             "modifier_contract_damage_power_datadriven"
             {
                 "Passive"			"1"
-                //"IsHidden"			"1"
+                "IsHidden"			"1"
 
                 "OnCreated"
                 {
@@ -301,7 +301,7 @@
 
     }
 
-    "battle_magician "
+    "battle_magician"
     {
         "BaseClass"	                "ability_datadriven"
         "AbilityTextureName"        "riki_smoke_screen"
@@ -309,9 +309,9 @@
 
 
         "AbilityType"               "contract"
-        "ShowName"                  "battle_magician"
+        "ShowName"                  "战斗法师"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract6.png"
-        "Describe"                  "DescribeDescribef"
+        "Describe"                  "射速、射程、伤害、控制效果最终值增加7%，视野、移速、生命不受加成"
 
         "AbilitySpecial"
         {
@@ -360,7 +360,7 @@
             "modifier_contract_battle_magician_datadriven"
             {
                 "Passive"			"1"
-                //"IsHidden"			"1"
+                "IsHidden"			"1"
 
                 "OnCreated"
                 {
@@ -386,12 +386,7 @@
 
 
 
-
-
-
-
-
-    "contract_g"
+    "guerrilla_force"
     {
         "BaseClass"	                "ability_datadriven"
         "AbilityTextureName"        "riki_smoke_screen"
@@ -399,10 +394,62 @@
 
 
         "AbilityType"               "contract"
-        "ShowName"                  "battle_magician"
+        "ShowName"                  "游侠"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract6.png"
-        "Describe"                  "DescribeDescribef"
+        "Describe"                  "移速增加150，视野减少400并不再获得加成"
+
+        "AbilitySpecial"
+        {
+            
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_speed"        "150"
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_vision"              "-400"
+            }
+            
+            "07"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_vision_flag"       "0"
+            }
+
+           
+        }
+
+        "Modifiers"
+        {
+            "modifier_contract_guerrilla_force_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"contract/guerrilla_force.lua"
+                        "Function"			"modifier_contract_guerrilla_force_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"contract/guerrilla_force.lua"
+                        "Function"			"modifier_contract_guerrilla_force_on_destroy"
+                    }
+                }
+            }
+        }
     }
+
+    
     "contract_h"
     {
         "BaseClass"	                "ability_datadriven"

@@ -1,15 +1,18 @@
 --永久类modifier，天赋与装备专用
 function setPlayerBuffByNameAndBValue(hero,buffName,baseValue)
+    print("setPlayerBuffByNameAndBValue",buffName,"=",baseValue)
     --local caster = keys.caster
+    local playerID = hero:GetPlayerID()
     local modifierName = "player_"..buffName
     local abilityName = "ability_"..buffName.."_control"
     local modifierNameBuff = "modifier_"..buffName.."_buff"  
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
+    local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]
     local modifierStackCount =  getPlayerPowerValueByName(hero, modifierName, baseValue)
-    setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount)
+    setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
 end
 
-function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount)
+function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
     --local caster = keys.caster
     --local playerID = caster:GetPlayerID()
     --local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -19,43 +22,53 @@ function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, 
     --print("setPlayerBuffByAbilityAndModifier",abilityName)
     --print(modifierNameBuff,"==",modifierNameDebuff)
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
-    if (modifierStackCount ~= 0) then 
+    if (modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0) then --增幅且没被禁止，或减幅
         hero:AddAbility(abilityName):SetLevel(1)
-        if (modifierStackCount > 0) then
+        if (modifierStackCount > 0) then   
             modifierNameAdd = modifierNameBuff
             modifierNameRemove = modifierNameDebuff
+
         else
             modifierNameAdd = modifierNameDebuff
             modifierNameRemove = modifierNameBuff
             modifierStackCount = modifierStackCount * -1
         end
-        print("modifierNameRemove",modifierNameRemove)
-        print("modifierNameAdd",modifierNameAdd,"=",modifierStackCount)
+        --print("modifierNameRemove",modifierNameRemove)
+        --print("modifierNameAdd",modifierNameAdd,"=",modifierStackCount)
+      
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
+
+        if (hero:HasAbility(abilityName)) then
+            hero:RemoveAbility(abilityName)
+        end
     end
 end
 
 --条件触发，有持续时间的modifier
-function setPlayerDurationBuffByName(keys,buffName)
+function setPlayerDurationBuffByName(keys,buffName,baseValue)
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
+    local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]    
     print("setPlayerDurationBuffByName",buffName)
-    if (PlayerPower[playerID]['player_'..buffName..'_duration'] > 0 and PlayerPower[playerID]['player_'..buffName..'_flag'] == 1) then
+    if (PlayerPower[playerID]['player_'..buffName..'_duration'] > 0) then --（目前不计算正只计算负）
         local modifierName = "duration_"..buffName
         local abilityName = "ability_"..buffName.."_control_duration"
         local modifierNameBuff = "modifier_"..buffName.."_buff_duration"  
-        local modifierNameDebuff = "modifier_"..buffName.."_debuff_duration"
-        initPlayerDurationBuff(keys, abilityName, modifierNameBuff, modifierNameDebuff)
+        local modifierNameDebuff = "modifier_"..buffName.."_debuff_duration" 
+        local modifierStackCount =  getPlayerPowerValueByName(caster, modifierName, baseValue)
+        initPlayerDurationBuff(keys, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
     end
 end
 
 --条件触发，有持续时间的modifier
-function initPlayerDurationBuff(keys, abilityName, modifierNameBuff, modifierNameDebuff)
+function initPlayerDurationBuff(keys, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
     print("initPlayerDurationBuff",abilityName)
     local caster = keys.caster
-    removePlayerBuffByAbilityAndModifier(caster, abilityName, modifierNameBuff,modifierNameDebuff)
-    if (modifierStackCount ~= 0) then 
+    --local playerID = caster:GetPlayerID()
+
+    removePlayerBuffByAbilityAndModifier(caster, abilityName, modifierNameBuff, modifierNameDebuff)
+    if (modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0) then --增幅且没被禁止，或减幅
         caster:AddAbility(abilityName):SetLevel(1)
     end
 end
@@ -65,16 +78,17 @@ function setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
     local modifierName = "duration_"..buffName
-    --local abilityName = "ability_"..buffName.."_control_duration"
+    local abilityName = "ability_"..buffName.."_control_duration"
     local modifierNameBuff = "modifier_"..buffName.."_buff_duration"  
     local modifierNameDebuff = "modifier_"..buffName.."_debuff_duration"
+    
     local modifierStackCount =  getPlayerPowerValueByName(caster, modifierName, baseValue)
     local modifierDuration = PlayerPower[playerID]['player_'..buffName..'_duration']
     
     local modifierNameAdd
     local modifierNameRemove
 
-    if (modifierStackCount > 0) then
+    if (modifierStackCount > 0) then   
         modifierNameAdd = modifierNameBuff
         modifierNameRemove = modifierNameDebuff
     else
@@ -84,9 +98,14 @@ function setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
     end
     print("setPlayerDurationBuffByAbilityAndModifier",modifierNameAdd,"==",modifierStackCount)
     print("=======================================")
+
     caster:RemoveModifierByName(modifierNameRemove)
     ability:ApplyDataDrivenModifier( caster, caster, modifierNameAdd, {duration = modifierDuration} )
     caster:SetModifierStackCount(modifierNameAdd, caster, modifierStackCount)
+
+    if (caster:HasAbility(abilityName)) then
+        caster:RemoveAbility(abilityName)
+    end
 end
 
 
@@ -124,6 +143,7 @@ function getPlayerPowerValueByName(hero, powerName, playerBaseValue)
     --print("getPlayerPowerValueByName",playerID,powerName,playerBaseValue)
     local precentBaseBuff = powerName .. "_precent_base"
     local precentFinalBuff = powerName .. "_precent_final"
+
 
     local powerValue = PlayerPower[playerID][powerName]
     local precentBaseValue = PlayerPower[playerID][precentBaseBuff] / 100
@@ -313,6 +333,7 @@ function initPlayerPower()
         PlayerPower[playerID]['duration_mana_cost_A'] = 0
         PlayerPower[playerID]['duration_mana_cost_A_precent'] = 0
         PlayerPower[playerID]['player_mana_cost_duration'] = 0
+        PlayerPower[playerID]['player_mana_cost_flag'] = 1
 
         PlayerPower[playerID]['player_damage_D'] = 0
         PlayerPower[playerID]['player_damage_D_precent_base'] = 0

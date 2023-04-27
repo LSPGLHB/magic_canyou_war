@@ -140,7 +140,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseMana = 100
 	GameRules.playerBaseSpeed = 300
 	GameRules.playerBaseVision = 1200
-	GameRules.playerManaRegen = 10
+	GameRules.playerBaseManaRegen = 10
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 
 

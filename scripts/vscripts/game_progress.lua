@@ -15,11 +15,6 @@ function sendMsgOnScreenToAll(topTips,bottomTips)
     end
 end
 
-
-
-
-
-
 --游戏开始
 function gameProgress()  
     gameInit()--游戏数据初始化，配置数据
@@ -35,7 +30,7 @@ function prepareStep(gameRound)
     local step1 = "预备阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 10 --准备阶段时长
+    local prepareTime = 15 --准备阶段时长
     --每次轮回初始化地图与数据
     gameRoundInit()
 
@@ -138,11 +133,11 @@ function gameInit()
     --战斗地点
     battlePointsTeam1 = {}
 
-    local preparePointTeam1_1 = Entities:FindByName(nil,"youxia") --找到实体
-    local preparePointTeam1_2 = Entities:FindByName(nil,"player2")--找到实体
-    local preparePointTeam1_3 = Entities:FindByName(nil,"player3") 
-    local preparePointTeam1_4 = Entities:FindByName(nil,"player4") 
-    local preparePointTeam1_5 = Entities:FindByName(nil,"player5")   
+    local preparePointTeam1_1 = Entities:FindByName(nil,"goodP1") --找到实体
+    local preparePointTeam1_2 = Entities:FindByName(nil,"goodP2")--找到实体
+    local preparePointTeam1_3 = Entities:FindByName(nil,"goodP3") 
+    local preparePointTeam1_4 = Entities:FindByName(nil,"goodP4") 
+    local preparePointTeam1_5 = Entities:FindByName(nil,"goodP5")   
     table.insert(preparePointsTeam1,preparePointTeam1_1)
     table.insert(preparePointsTeam1,preparePointTeam1_2)
     table.insert(preparePointsTeam1,preparePointTeam1_3)
@@ -150,11 +145,11 @@ function gameInit()
     table.insert(preparePointsTeam1,preparePointTeam1_5)
 
     
-    local battlePointTeam1_1 = Entities:FindByName(nil,"zuoshang") --找到实体
-    local battlePointTeam1_2 = Entities:FindByName(nil,"player2")--找到实体
-    local battlePointTeam1_3 = Entities:FindByName(nil,"player3") 
-    local battlePointTeam1_4 = Entities:FindByName(nil,"player4") 
-    local battlePointTeam1_5 = Entities:FindByName(nil,"player5")   
+    local battlePointTeam1_1 = Entities:FindByName(nil,"goodB1") --找到实体
+    local battlePointTeam1_2 = Entities:FindByName(nil,"goodB2")--找到实体
+    local battlePointTeam1_3 = Entities:FindByName(nil,"goodB3") 
+    local battlePointTeam1_4 = Entities:FindByName(nil,"goodB4") 
+    local battlePointTeam1_5 = Entities:FindByName(nil,"goodB5")   
     table.insert(battlePointsTeam1,battlePointTeam1_1)
     table.insert(battlePointsTeam1,battlePointTeam1_2)
     table.insert(battlePointsTeam1,battlePointTeam1_3)
@@ -164,7 +159,30 @@ function gameInit()
     
     preparePointsTeam2 = {}
     battlePointsTeam2 = {}
-    --2队数据待录入
+    local preparePointTeam2_1 = Entities:FindByName(nil,"badP1") --找到实体
+    local preparePointTeam2_2 = Entities:FindByName(nil,"badP2")--找到实体
+    local preparePointTeam2_3 = Entities:FindByName(nil,"badP3") 
+    local preparePointTeam2_4 = Entities:FindByName(nil,"badP4") 
+    local preparePointTeam2_5 = Entities:FindByName(nil,"badP5")   
+    table.insert(preparePointsTeam2,preparePointTeam2_1)
+    table.insert(preparePointsTeam2,preparePointTeam2_2)
+    table.insert(preparePointsTeam2,preparePointTeam2_3)
+    table.insert(preparePointsTeam2,preparePointTeam2_4)
+    table.insert(preparePointsTeam2,preparePointTeam2_5)
+
+    
+    local battlePointTeam2_1 = Entities:FindByName(nil,"badB1") --找到实体
+    local battlePointTeam2_2 = Entities:FindByName(nil,"badB2")--找到实体
+    local battlePointTeam2_3 = Entities:FindByName(nil,"badB3") 
+    local battlePointTeam2_4 = Entities:FindByName(nil,"badB4") 
+    local battlePointTeam2_5 = Entities:FindByName(nil,"badB5")   
+    table.insert(battlePointsTeam2,battlePointTeam2_1)
+    table.insert(battlePointsTeam2,battlePointTeam2_2)
+    table.insert(battlePointsTeam2,battlePointTeam2_3)
+    table.insert(battlePointsTeam2,battlePointTeam2_4)
+    table.insert(battlePointsTeam2,battlePointTeam2_5)
+
+    
     
     playersTeam1 ={}
     playersTeam2 ={}
@@ -187,15 +205,7 @@ function gameInit()
         end
         table.insert(playersAll,playerID)
     end
---[[
-    GameRules.preparePointsTeam1 = preparePointsTeam1
-    GameRules.preparePointsTeam2 = preparePointsTeam2
-    GameRules.battlePointsTeam1 = battlePointsTeam1
-    GameRules.battlePointsTeam2 = battlePointsTeam2
-    GameRules.playersTeam1 = playersTeam1
-    GameRules.playersTeam2 = playersTeam2
-    GameRules.playersAll = playersAll
-    ]]
+
     winTeam = DOTA_TEAM_GOODGUYS
     GoodWin = 0
     BadWin = 0

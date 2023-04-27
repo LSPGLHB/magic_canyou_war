@@ -86,7 +86,7 @@ function refreshItemBuff(keys,flag)
     setPlayerBuffByNameAndBValue(caster,"health",GameRules.playerBaseHealth)
     setPlayerBuffByNameAndBValue(caster,"speed",GameRules.playerBaseSpeed)
     setPlayerBuffByNameAndBValue(caster,"mana",GameRules.playerBaseMana)
-    setPlayerBuffByNameAndBValue(caster,"mana_regen",GameRules.playerManaRegen)
+    setPlayerBuffByNameAndBValue(caster,"mana_regen",GameRules.playerBaseManaRegen)
 
 
 

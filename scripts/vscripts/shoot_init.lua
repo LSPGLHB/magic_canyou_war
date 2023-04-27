@@ -289,11 +289,12 @@ function initDurationBuff(keys)
 	local AbilityLevel = keys.AbilityLevel
 
 
-	setPlayerDurationBuffByName(keys,"vision")
-	setPlayerDurationBuffByName(keys,"speed")
-	setPlayerDurationBuffByName(keys,"health")
-	setPlayerDurationBuffByName(keys,"mana")
-	setPlayerDurationBuffByName(keys,"mana_regen")
+	setPlayerDurationBuffByName(keys,"vision",GameRules.playerBaseVision)
+	setPlayerDurationBuffByName(keys,"speed",GameRules.playerBaseSpeed)
+	setPlayerDurationBuffByName(keys,"health",GameRules.playerBaseHealth)
+	setPlayerDurationBuffByName(keys,"mana",GameRules.playerBaseMana)
+	setPlayerDurationBuffByName(keys,"mana_regen",GameRules.playerBaseManaRegen)
+	
 end
 
 function finalValueOperation(baseValue,bonusValue,precentBase,precentFinal)

@@ -20,9 +20,9 @@
 		"Ability10" "shoot_datadriven"
 
 
-		"Ability12"  "ice_arrow_launch_ready_datadriven"
-		"Ability13"  "stone_spear_stage_b_datadriven"
-		"Ability14"  "multi_stage_skills_b_datadriven"
+		"Ability11"  "ice_arrow_launch_ready_datadriven"
+		"Ability12"  "stone_spear_stage_b_datadriven"
+		//"Ability11"  "multi_stage_skills_b_datadriven"
 
 
 
