@@ -412,7 +412,7 @@
                 "contract_vision"              "-400"
             }
             
-            "07"
+            "03"
             {
                 "var_type"				"FIELD_INTEGER"
                 "contract_vision_flag"       "0"
@@ -450,7 +450,7 @@
     }
 
     
-    "contract_h"
+    "dark_mage"
     {
         "BaseClass"	                "ability_datadriven"
         "AbilityTextureName"        "riki_smoke_screen"
@@ -458,11 +458,89 @@
 
 
         "AbilityType"               "contract"
-        "ShowName"                  "battle_magician"
+        "ShowName"                  "黑魔导士"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract6.png"
-        "Describe"                  "DescribeDescribef"
+        "Describe"                  "蓝量增加25，射程增加15%，射速增加15%，伤害增加25%，控制效果增加20%，视野减少400，生命减少50%，移速减少50"
+
+        "AbilitySpecial"
+        {
+            
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_mana"         "25"
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_range_precent_final"         "15"
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_ability_speed_precent_final"         "15"
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_damage_precent_final"         "25"
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_control_precent_final"         "20"
+            }
+            "06"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_vision"              "-400"
+            }
+            "07"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_health_precent_final"              "-50"
+            }
+            "08"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_speed"              "-50"
+            }
+            
+
+
+           
+        }
+
+        "Modifiers"
+        {
+            "modifier_contract_dark_mage_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"contract/dark_mage.lua"
+                        "Function"			"modifier_contract_dark_mage_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"contract/dark_mage.lua"
+                        "Function"			"modifier_contract_dark_mage_on_destroy"
+                    }
+                }
+            }
+        }
     }
-    "contract_i"
+
+
+    "scout"
     {
         "BaseClass"	                "ability_datadriven"
         "AbilityTextureName"        "riki_smoke_screen"
@@ -470,13 +548,79 @@
 
 
         "AbilityType"               "contract"
-        "ShowName"                  "battle_magician"
+        "ShowName"                  "先锋侦察"
         "IconSrc"                   "file://{images}/custom_game/contract_icon/contract6.png"
-        "Describe"                  "DescribeDescribef"
+        "Describe"                  "生命总值增加25%。视野增加300，射程、射速、伤害、控制效果、法魂不再获得加成"
+
+
+        "AbilitySpecial"
+        {
+            
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_health_precent_final"         "25"
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_vision"         "300"
+            }
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_range_flag"         "0"
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_ability_speed_flag"         "0"
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_damage_flag"         "0"
+            }
+            "06"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_control_flag"              "0"
+            }
+            "07"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "contract_energy_flag"              "0"
+            }
+    
+        }
+
+        "Modifiers"
+        {
+            "modifier_contract_scout_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"contract/scout.lua"
+                        "Function"			"modifier_contract_scout_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"contract/scout.lua"
+                        "Function"			"modifier_contract_scout_on_destroy"
+                    }
+                }
+            }
+        }
     }
-
-
-
-
 
 }
