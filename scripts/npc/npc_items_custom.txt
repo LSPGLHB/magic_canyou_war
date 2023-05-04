@@ -6,13 +6,16 @@
 #base items/lvxie6.kv
 #base items/lvxie7.kv
 
+#base items/dragon_eye.kv
+#base items/dragon_eye_plus.kv
+
 
 "DOTAAbilities"
 {
 	
 	"item_lvping"
 	{
-		"ID"                                        "3001"
+		"ID"                                        "1004"
 		"BaseClass"                                "item_datadriven"
 		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"        	"item_lvping"
