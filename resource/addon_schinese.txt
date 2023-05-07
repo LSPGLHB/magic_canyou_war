@@ -26,6 +26,12 @@
         "DOTA_Tooltip_ability_make_friend_datadriven_Note0"                "这是召唤物"
 
 
+
+
+
+
+
+
 	
 
 		"huoren"                      "召唤火人"
@@ -82,11 +88,45 @@
 
 
 
-		"UIButton1"                   "攻击+222"
-		"UIButton2"                   "射程+200"
-        "UIButton3"                   "充能上限+2"
-        "UIButton4"                   "充能速度+1"
-        "UIButton5"                   "弹道速度+200"
+		"DOTA_Tooltip_ability_item_dragon_eye"   "奥妮克希亚的头环"
+		"DOTA_Tooltip_ability_item_dragon_eye_Description"  "+视野：150，两个可合成奥妮克希亚之眼"
+		"DOTA_Tooltip_ability_item_dragon_eye_2"   "奥妮克希亚之眼"
+		"DOTA_Tooltip_ability_item_dragon_eye_2_Description"  "+视野：300"
+
+		"DOTA_Tooltip_ability_item_dragon_heart"   "艾瑞斯之血"
+		"DOTA_Tooltip_ability_item_dragon_heart_Description"  "+生命：20，两个可合成艾瑞斯之心"
+		"DOTA_Tooltip_ability_item_dragon_heart_2"   "艾瑞斯之心"
+		"DOTA_Tooltip_ability_item_dragon_heart_2_Description"  "+生命：40"
+
+		"DOTA_Tooltip_ability_item_dragon_gem"   "泰拉尔结晶"
+		"DOTA_Tooltip_ability_item_dragon_gem_Description"  "+生命：10，+视野：100，两个可合成泰拉尔宝石"
+		"DOTA_Tooltip_ability_item_dragon_gem_2"   "泰拉尔宝石"
+		"DOTA_Tooltip_ability_item_dragon_gem_2_Description"  "+生命：20，+视野：200
+
+		"DOTA_Tooltip_ability_item_dragon_squama"   "艾瑞斯的皮毛"
+		"DOTA_Tooltip_ability_item_dragon_squama_Description"  "+免伤：10%，两个可合成艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_dragon_squama_2"   "艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_dragon_squama_2_Description"  "+免伤：20%"
+
+		"DOTA_Tooltip_ability_item_speed_shoe"   "布鞋"
+		"DOTA_Tooltip_ability_item_speed_shoe_Description"  "+移动速度：20，两个可合成速度鞋"
+		"DOTA_Tooltip_ability_item_speed_shoe_2"   "速度鞋"
+		"DOTA_Tooltip_ability_item_speed_shoe_2_Description"  "+移动速度：45"
+
+		"DOTA_Tooltip_ability_item_dragon_claw"   "凯旋腿甲"
+		"DOTA_Tooltip_ability_item_dragon_claw_Description"  "+移速：15，+视野：100，两个可合成元帅腿甲"
+		"DOTA_Tooltip_ability_item_dragon_claw_2"   "元帅腿甲"
+		"DOTA_Tooltip_ability_item_dragon_claw_2_Description"  "+移速：25，+视野：200"
+
+		"DOTA_Tooltip_ability_item_energy_shoe"   "动力鞋"
+		"DOTA_Tooltip_ability_item_energy_shoe_Description"  "+移速：10%（每次施放技能后触发，持续1.25秒），两个可合成艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_energy_shoe_2"   "能量鞋"
+		"DOTA_Tooltip_ability_item_energy_shoe_2_Description"  "+移速：20%（每次施放技能后触发，持续1.25秒）"
+
+
+
+
+
 
 
 

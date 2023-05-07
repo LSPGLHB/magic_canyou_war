@@ -18,6 +18,6 @@ function refreshItemBuff(keys,flag)
 
     setPlayerPower(playerID, "player_vision", flag, item_vision)
 
-    setPlayerBuffByNameAndBValue(caster,"vision",GameRules.playerBaseVision)
+    setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
 
 end

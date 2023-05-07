@@ -1,13 +1,18 @@
-#base items/lvxie.kv
-#base items/sacrificial_robe.kv
-#base items/lvxie3.kv
-#base items/lvxie4.kv
-#base items/lvxie5.kv
-#base items/lvxie6.kv
-#base items/lvxie7.kv
+//#base items/lvxie.kv
+//#base items/sacrificial_robe.kv
+//#base items/lvxie3.kv
+//#base items/lvxie4.kv
+//#base items/lvxie5.kv
+//#base items/lvxie6.kv
+//#base items/lvxie7.kv
 
 #base items/dragon_eye.kv
-#base items/dragon_eye_plus.kv
+#base items/dragon_claw.kv
+#base items/dragon_gem.kv
+#base items/dragon_heart.kv
+#base items/dragon_squama.kv
+#base items/speed_shoe.kv
+
 
 
 "DOTAAbilities"

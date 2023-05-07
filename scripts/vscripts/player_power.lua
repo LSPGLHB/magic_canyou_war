@@ -1,7 +1,7 @@
 --永久类modifier，天赋与装备专用
-function setPlayerBuffByNameAndBValue(hero,buffName,baseValue)
+function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
     print("setPlayerBuffByNameAndBValue",buffName,"=",baseValue)
-    --local caster = keys.caster
+    local hero = keys.caster
     local playerID = hero:GetPlayerID()
     local modifierName = "player_"..buffName
     local abilityName = "ability_"..buffName.."_control"
@@ -9,10 +9,9 @@ function setPlayerBuffByNameAndBValue(hero,buffName,baseValue)
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
     local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]
     local modifierStackCount =  getPlayerPowerValueByName(hero, modifierName, baseValue)
-    setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
-end
-
-function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
+   -- setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
+--end
+--function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
     --local caster = keys.caster
     --local playerID = caster:GetPlayerID()
     --local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -21,29 +20,34 @@ function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, 
     local modifierNameRemove
     --print("setPlayerBuffByAbilityAndModifier",abilityName)
     --print(modifierNameBuff,"==",modifierNameDebuff)
+    --print("HasModifier")
+    --print(hero:HasModifier(modifierNameAdd))  
+    print("modifierNameCount=",modifierStackCount)
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
-    if (modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0) then --增幅且没被禁止，或减幅
-        hero:AddAbility(abilityName):SetLevel(1)
+    if ( modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0 ) then --增幅且没被禁止，或减幅
         if (modifierStackCount > 0) then   
             modifierNameAdd = modifierNameBuff
             modifierNameRemove = modifierNameDebuff
-
         else
             modifierNameAdd = modifierNameDebuff
             modifierNameRemove = modifierNameBuff
             modifierStackCount = modifierStackCount * -1
         end
-        --print("modifierNameRemove",modifierNameRemove)
-        --print("modifierNameAdd",modifierNameAdd,"=",modifierStackCount)
-      
+        print("modifierNameAdd",modifierNameAdd)
+        hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
+        hero:RemoveAbility(abilityName)
 
-        if (hero:HasAbility(abilityName)) then
-            hero:RemoveAbility(abilityName)
-        end
+       --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
+        hero:AddAbility(abilityName):SetLevel(1)
+        hero:RemoveModifierByName(modifierNameRemove)
+        hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
+        hero:RemoveAbility(abilityName)
+      
     end
 end
+
 
 --条件触发，有持续时间的modifier
 function setPlayerDurationBuffByName(keys,buffName,baseValue)
@@ -110,7 +114,8 @@ end
 
 
 function removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
-    --print("hero",hero)
+    print("removePlayerBuffByAbilityAndModifier")
+    print(abilityName..modifierNameBuff..modifierNameDebuff)
     if (hero:HasAbility(abilityName)) then
         hero:RemoveAbility(abilityName)
     end
@@ -124,11 +129,13 @@ end
 
 function setPlayerPower(playerID, powerName, isAdd, value)
     print("setPlayerPower",playerID)
-    print(powerName.."=="..value)
     if( not isAdd ) then
         value = value * -1
     end
+    print(powerName.."=="..value)
     PlayerPower[playerID][powerName] = PlayerPower[playerID][powerName] + value
+    print("PlayerPower=="..PlayerPower[playerID][powerName])
+
 end
 
 function setPlayerPowerFlag(playerID, powerName, value)
