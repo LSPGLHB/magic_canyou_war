@@ -14,10 +14,10 @@ function refreshItemBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local item_mana = ability:GetSpecialValueFor("item_mana")
+    local item_defense = ability:GetSpecialValueFor("item_defense")
 
-    setPlayerPower(playerID, "player_mana", flag, item_mana)
+    setPlayerPower(playerID, "player_defense", flag, item_defense)
 
-   setPlayerBuffByNameAndBValue(keys,"mana",GameRules.playerBaseMana)
+   setPlayerBuffByNameAndBValue(keys,"defense",GameRules.playerBaseDefense)
 
 end

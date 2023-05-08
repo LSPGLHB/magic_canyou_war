@@ -54,28 +54,23 @@ function setPlayerDurationBuffByName(keys,buffName,baseValue)
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
     local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]    
-    print("setPlayerDurationBuffByName",buffName)
+    --print("setPlayerDurationBuffByName",buffName)
     if (PlayerPower[playerID]['player_'..buffName..'_duration'] > 0) then --（目前不计算正只计算负）
         local modifierName = "duration_"..buffName
         local abilityName = "ability_"..buffName.."_control_duration"
         local modifierNameBuff = "modifier_"..buffName.."_buff_duration"  
         local modifierNameDebuff = "modifier_"..buffName.."_debuff_duration" 
         local modifierStackCount =  getPlayerPowerValueByName(caster, modifierName, baseValue)
-        initPlayerDurationBuff(keys, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
+
+        --print("initPlayerDurationBuff",abilityName)
+        removePlayerBuffByAbilityAndModifier(caster, abilityName, modifierNameBuff, modifierNameDebuff)
+        if (modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0) then --增幅且没被禁止，或减幅
+            caster:AddAbility(abilityName):SetLevel(1)
+        end
     end
 end
 
---条件触发，有持续时间的modifier
-function initPlayerDurationBuff(keys, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
-    print("initPlayerDurationBuff",abilityName)
-    local caster = keys.caster
-    --local playerID = caster:GetPlayerID()
 
-    removePlayerBuffByAbilityAndModifier(caster, abilityName, modifierNameBuff, modifierNameDebuff)
-    if (modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0) then --增幅且没被禁止，或减幅
-        caster:AddAbility(abilityName):SetLevel(1)
-    end
-end
 --条件触发，有持续时间的modifier
 function setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
     local caster = keys.caster
@@ -234,6 +229,18 @@ function initPlayerPower()
         PlayerPower[playerID]['duration_mana_regen_precent_final'] = 0
         PlayerPower[playerID]['player_mana_regen_duration'] = 0
         PlayerPower[playerID]['player_mana_regen_flag'] = 1
+
+        PlayerPower[playerID]['player_defense'] = 0     
+        PlayerPower[playerID]['player_defense_precent_base'] = 0
+        PlayerPower[playerID]['player_defense_precent_final'] = 0
+        PlayerPower[playerID]['temp_defense'] = 0     
+        PlayerPower[playerID]['temp_defense_precent_base'] = 0
+        PlayerPower[playerID]['temp_defense_precent_final'] = 0
+        PlayerPower[playerID]['duration_defense'] = 0     
+        PlayerPower[playerID]['duration_defense_precent_base'] = 0
+        PlayerPower[playerID]['duration_defense_precent_final'] = 0
+        PlayerPower[playerID]['player_defense_duration'] = 0
+        PlayerPower[playerID]['player_defense_flag'] = 1
 
 
         --技能能力

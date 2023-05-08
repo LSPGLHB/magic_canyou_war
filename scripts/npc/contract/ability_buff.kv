@@ -169,6 +169,39 @@
                 }
         }
 
+        "ability_defense_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_defense_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "0"
+                                //"Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "1"
+                                }
+                        }
+                        "modifier_defense_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "0"
+                                //"Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "-1"
+                                }
+                        }
+                }
+        }
+
         // 临时类
         "ability_health_control_temp"
         {
@@ -333,6 +366,39 @@
                                 "Properties"
                                 {
                                         "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"        "-1"
+                                }
+                        }
+                }
+        }
+
+        "ability_defense_control_temp"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_defense_buff_temp"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "0"
+                                //"Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "1"
+                                }
+                        }
+                        "modifier_defense_debuff_temp"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "0"
+                                //"Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "-1"
                                 }
                         }
                 }
@@ -555,6 +621,39 @@
                                 "Properties"
                                 {
                                         "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"        "-1"
+                                }
+                        }
+                }
+        }
+
+        "ability_defense_control_duration"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_defense_buff_duration"
+                        {
+                                //"Passive"		    "1"
+                                "IsHidden"          "0"
+                                //"Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "1"
+                                }
+                        }
+                        "modifier_defense_debuff_duration"
+                        {
+                                //"Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "0"
+                                //"Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "-1"
                                 }
                         }
                 }

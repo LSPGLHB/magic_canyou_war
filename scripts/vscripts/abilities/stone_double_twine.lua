@@ -27,12 +27,13 @@ function createStoneDoubleTwine(keys)
     initDurationBuff(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, shootPos[i], true, nil, nil, caster:GetTeam())
-        creatSkillShootInit(keys,shoot,caster)
+        local direction =  (skillPoint - shootPos[i]):Normalized()
+        creatSkillShootInit(keys,shoot,caster,max_distance,direction)
         
-        local tempDirection =  (skillPoint - shootPos[i]):Normalized()
+        
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-        moveShoot(keys, shoot, max_distance, tempDirection, particleID, stoneDoubleTwineBoom, nil)
+        moveShoot(keys, shoot, particleID, stoneDoubleTwineBoom, nil)
     end
    
 

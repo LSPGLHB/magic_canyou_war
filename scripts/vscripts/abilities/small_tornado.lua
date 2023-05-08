@@ -8,11 +8,11 @@ function createSmallTornado(keys)
 		local position = caster:GetAbsOrigin()
 		local direction = (ability:GetCursorPosition() - position):Normalized()
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
-        creatSkillShootInit(keys,shoot,caster)
+        creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-		moveShoot(keys, shoot, max_distance, direction, particleID, smallTornadoBoomCallBack, smallTornadoTakeAwayCallBack)
+		moveShoot(keys, shoot, particleID, smallTornadoBoomCallBack, smallTornadoTakeAwayCallBack)
 end
 
 function smallTornadoBoomCallBack(keys,shoot,particleID)

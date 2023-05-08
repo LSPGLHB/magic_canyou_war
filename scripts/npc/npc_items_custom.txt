@@ -12,6 +12,10 @@
 #base items/dragon_heart.kv
 #base items/dragon_squama.kv
 #base items/speed_shoe.kv
+#base items/magic_staff.kv
+#base items/magic_gem.kv
+
+#base items/ability_speed_c.kv
 
 
 

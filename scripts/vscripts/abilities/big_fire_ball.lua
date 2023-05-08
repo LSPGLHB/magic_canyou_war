@@ -9,12 +9,12 @@ function createBigFireBall(keys)
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
-    creatSkillShootInit(keys,shoot,caster)
+    creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     initDurationBuff(keys)
 	--shoot.timer = 0
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-    moveShoot(keys, shoot, max_distance, direction, particleID, bigFireBallBoomCallBack, nil)
+    moveShoot(keys, shoot, particleID, bigFireBallBoomCallBack, nil)
 end
 
 --技能爆炸,单次伤害

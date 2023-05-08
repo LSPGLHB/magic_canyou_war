@@ -21,11 +21,11 @@ function createStoneSpear(keys)
 		local ability_b_name	= keys.ability_b_name
 		caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
         
-        creatSkillShootInit(keys,shoot,caster)
+        creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-		moveShoot(keys, shoot, max_distance, direction, particleID, stoneSpearHitCallBack, nil)
+		moveShoot(keys, shoot, particleID, stoneSpearHitCallBack, nil)
 
 		local timeCount = 0
 		local interval = 0.1

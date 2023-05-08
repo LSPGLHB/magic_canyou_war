@@ -98,13 +98,13 @@ function createStoneSpirit(keys)
 		end
 	
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
-		creatSkillShootInit(keys,shoot,caster)
+		creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
 
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         
-        moveShoot(keys, shoot, max_distance, direction, particleID, stoneSpiritBoom, nil)
+        moveShoot(keys, shoot, particleID, stoneSpiritBoom, nil)
 
 		local casterTeam = caster:GetTeam()
 		

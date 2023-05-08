@@ -1,18 +1,18 @@
 "DOTAAbilities"
 {
-    "item_dragon_eye"
+    "item_magic_staff"
     {
-        "ID"			"6000"
+        "ID"			"6070"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "sphere_lg"
+        "AbilityTextureName"        "staff_of_wizardry_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/sphere_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_dragon_eye"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_dragon_eye_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/staff_of_wizardry_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_magic_staff"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_magic_staff_Description" 
         "ItemCost"               "5"
 
 
@@ -29,7 +29,7 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_vision"              "150"  
+                "item_mana"              "20"  
             }
 
         }
@@ -37,7 +37,7 @@
 
         "Modifiers"
         {
-            "modifier_item_dragon_eye_datadriven"
+            "modifier_item_magic_staff_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -46,8 +46,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_eye.lua"
-                        "Function"			"modifier_item_dragon_eye_on_created"
+                        "ScriptFile"		"items/magic_staff.lua"
+                        "Function"			"modifier_item_magic_staff_on_created"
                     }
                 }
                 
@@ -55,8 +55,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_eye.lua"
-                        "Function"			"modifier_item_dragon_eye_on_destroy"
+                        "ScriptFile"		"items/magic_staff.lua"
+                        "Function"			"modifier_item_magic_staff_on_destroy"
                     }
                 }
             }
@@ -65,19 +65,19 @@
         }
     }
 
-"item_dragon_eye_2"
+"item_magic_staff_2"
     {
-        "ID"			"6001"
+        "ID"			"6071"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "skadi_lg"
+        "AbilityTextureName"        "ultimate_scepter_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/skadi_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_dragon_eye_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_dragon_eye_2_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/ultimate_scepter_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_magic_staff_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_magic_staff_2_Description" 
         "ItemCost"               "0"
 
 
@@ -94,7 +94,7 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_vision"              "300"  
+                "item_mana"              "40"  
             }
 
         }
@@ -102,7 +102,7 @@
 
         "Modifiers"
         {
-            "modifier_item_dragon_eye_2_datadriven"
+            "modifier_item_magic_staff_2_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -111,8 +111,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_eye.lua"
-                        "Function"			"modifier_item_dragon_eye_on_created"
+                        "ScriptFile"		"items/magic_staff.lua"
+                        "Function"			"modifier_item_magic_staff_on_created"
                     }
                 }
                 
@@ -120,25 +120,25 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_eye.lua"
-                        "Function"			"modifier_item_dragon_eye_on_destroy"
+                        "ScriptFile"		"items/magic_staff.lua"
+                        "Function"			"modifier_item_magic_staff_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "item_recipe_dragon_eye_2"
+    "item_recipe_magic_staff_2"
     {
-        "ID"                       "6002"
-        "BaseClass"                "item_recipe_arcane_boots"
-        "ItemCost"                 "0"        
+        "ID"                                        "6072"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
 
         ItemRecipe                 "1" 
-        ItemResult                 "item_dragon_eye_2"
+        ItemResult                  "item_magic_staff_2"
         ItemRequirements   
         {
-                "01"    "item_dragon_eye;item_dragon_eye"
+                "01"    "item_magic_staff;item_magic_staff"
         }
 
     }

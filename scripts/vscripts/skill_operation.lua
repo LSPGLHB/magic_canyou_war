@@ -1,3 +1,4 @@
+require('player_power')
 --LinkLuaModifier( "modifier_stone_beat_back_aoe_lua", "abilities/modifier_stone_beat_back_aoe_lua.lua",LUA_MODIFIER_MOTION_NONE )
 ----伤害计算(keys, 子弹实体)
 function getApplyDamageValue(shoot)
@@ -188,6 +189,10 @@ function shootPenetrateParticleOperation(keys,shoot)
 end
 
 
+
+
+
+
 --影响弹道的buff
 --测试速度调整
 function skillSpeedOperation(keys,speed)
@@ -207,7 +212,7 @@ function skillSpeedOperation(keys,speed)
 		speed_up_stacks = caster:GetModifierStackCount(buff_modifier, ability)
 	end
 	local buff_speed_up = speed_up_stacks * speed_up_per_stack
-	speed = (speed  + buff_speed_up  + item_bonus_shoot_speed) * 0.02
+	speed = (speed  + buff_speed_up  + item_bonus_shoot_speed) 
 	return speed
 end
 

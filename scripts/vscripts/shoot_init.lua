@@ -1,29 +1,31 @@
 require('skill_operation')
 require('player_power')
-function moveShoot(keys, shoot, max_distance, direction, particleID, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
-	--初始化数据包
-	moveShootInit(keys,shoot,max_distance,direction)
-	local speed = shoot.speed * 0.02
-
+function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
+	print('moveShoot1:'..shoot.speed)
+	--影响弹道的buff--测试速度调整可删除
+	shoot.speed = skillSpeedOperation(keys,shoot.speed)
+	print('moveShoot2:'..shoot.speed)
 	--实现延迟满法魂效果
 	local shootHealthMax = shoot:GetHealth()
 	local shootHealthSend = shootHealthMax * 0.8
-	local shootHealthStep = shootHealthMax * 0.2 * speed / 10
+	local shootHealthStep = shootHealthMax * 0.2 * shoot.speed / 10
 	shoot:SetHealth(shootHealthSend)
 
-	--影响弹道的buff--测试速度调整
-	--speed = skillSpeedOperation(keys,speed)
+	shoot.max_distance = shoot.max_distance_base
+	--local direction = shoot.direction
 
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
 		if shoot.traveled_distance < shoot.max_distance then
-			moveShootTimerInit(keys,shoot,direction,speed)
+			moveShootTimerRun(keys,shoot)
+
+
 			if shootHealthSend < shootHealthMax then
 				shootHealthSend = shootHealthSend + shootHealthStep
 				shoot:SetHealth(shootHealthSend)
 			end
 			--技能加强或减弱粒子效果实现
 			powerShootParticleOperation(keys,shoot,particleID)
-			shoot.traveled_distance = shoot.traveled_distance + speed
+			shoot.traveled_distance = shoot.traveled_distance + shoot.speed
 			--子弹命中目标
 			local isHitType = shootHit(keys, shoot, isHitType, hitUnitCallBack)
 			--击中目标，行程结束
@@ -167,19 +169,20 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 	return returnVal
 end
 
-function moveShootTimerInit(keys,shoot,direction,speed)
+function moveShootTimerRun(keys,shoot)
 	local shootTempPos = shoot:GetAbsOrigin()
+	local speed = shoot.speed
+	--print('moveShootTimerRun-speed:'..speed)
+	local direction = shoot.direction
+	--[[此处已经时刻实时同步方向
 	if keys.isControl == 1 then
 		if shoot.direction ~= nil then 
 			direction = shoot.direction
-		end
-		if shoot.speed ~= nil then 
-			speed = shoot.speed
-		end
-	end
+		end	
+	end]]
+	--此处追踪状态，只知道追踪，其他不管
 	if keys.isTrack == 1 then
 		direction = (keys.trackUnit:GetAbsOrigin() - Vector(shootTempPos.x, shootTempPos.y, 0)):Normalized()
-		speed = shoot.speed
 	end
 
 	local newPos = shootTempPos + direction * speed
@@ -189,13 +192,9 @@ function moveShootTimerInit(keys,shoot,direction,speed)
 	shoot:SetAbsOrigin(shootPos)
 end
 
-function moveShootInit(keys,shoot,max_distance,direction)
-	
-	shoot.max_distance = max_distance
-	shoot.direction = direction
-	shoot.traveled_distance = 0 --初始化已经飞行的距离0
-	shoot.shootHight = 100 --子弹高度
-	shoot.isBreak = 0 --初始化不跳出
+--先
+function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
+	print("creatSkillShootInit")
 
 	if keys.hitType == nil then--hitType：1碰撞伤害，2穿透伤害，3直达指定位置，不命中单位
 		keys.hitType = 1
@@ -221,21 +220,25 @@ function moveShootInit(keys,shoot,max_distance,direction)
 	if keys.isControl == nil then
 		keys.isControl = 0
 	end 
-	
-end
 
-function creatSkillShootInit(keys,shoot,owner)
-	print("creatSkillShootInit")
 	local caster = keys.caster
 	local ability = keys.ability
 	local playerID = caster:GetPlayerID()
 	local AbilityLevel = keys.AbilityLevel
+
+
+	shoot.max_distance_base = max_distance
+	shoot.direction = direction
+	shoot.traveled_distance = 0 --初始化已经飞行的距离0
+	shoot.shootHight = 100 --子弹高度
+	shoot.isBreak = 0 --初始化不跳出
 
 	shoot:SetOwner(owner)
 	shoot.unit_type = keys.unitType --用于计算克制和加强
 	shoot.power_lv = 0 --用于实现克制和加强
 	shoot.power_flag = 0 --用于实现克制和加强
 	shoot.hitUnits = {}--用于记录命中的目标
+	shoot.abilityLevel = AbilityLevel
 
 	--已处理
 	--蓝耗
@@ -247,25 +250,43 @@ function creatSkillShootInit(keys,shoot,owner)
 
 	--法魂
 	local abilityEnergy = shoot:GetHealth()
-	shoot.energy_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_'..AbilityLevel],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_final']) - abilityEnergy
-	shoot.energy_match_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_match_'..AbilityLevel],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_final']) - abilityEnergy
+	local energyBuffName = 'energy'
+	local energyMatchBuffName = 'energy_match'
+	--shoot.energy_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_'..AbilityLevel],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_final']) - abilityEnergy
+	--shoot.energy_match_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_match_'..AbilityLevel],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_final']) - abilityEnergy
+	shoot.energy_bonus = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner)
+	shoot.energy_match_bonus = getFinalValueOperation(playerID,shoot.energy_bonus,energyMatchBuffName,AbilityLevel,owner)
 	shoot:AddAbility('ability_health_control'):SetLevel(1)
 	shoot:RemoveModifierByName('modifier_health_debuff')
     shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
+	shoot:RemoveAbility('ability_health_control')
 	--print("abilityEnergy",abilityEnergy)
 	--print("energy_bonus",shoot.energy_bonus)
 
 	--直接可用数据
 	--伤害
 	local damageBase = ability:GetSpecialValueFor("damage")
-	shoot.damage = finalValueOperation(damageBase, PlayerPower[playerID]['player_damage_'..AbilityLevel],PlayerPower[playerID]['player_damage_'..AbilityLevel..'_precent_base'], PlayerPower[playerID]['player_damage_'..AbilityLevel..'_precent_final'])
-	shoot.damage_match = finalValueOperation(shoot.damage, PlayerPower[playerID]['player_damage_match_'..AbilityLevel],PlayerPower[playerID]['player_damage_match_'..AbilityLevel..'_precent_base'] ,PlayerPower[playerID]['player_damage_match_'..AbilityLevel..'_precent_final'])
+	local damageBuffName = 'damage'
+	local damageMatchBuffName = 'damage_match'
+	--shoot.damage = finalValueOperation(damageBase, PlayerPower[playerID]['player_damage_'..AbilityLevel],PlayerPower[playerID]['player_damage_'..AbilityLevel..'_precent_base'], PlayerPower[playerID]['player_damage_'..AbilityLevel..'_precent_final'])
+	--shoot.damage_match = finalValueOperation(shoot.damage, PlayerPower[playerID]['player_damage_match_'..AbilityLevel],PlayerPower[playerID]['player_damage_match_'..AbilityLevel..'_precent_base'] ,PlayerPower[playerID]['player_damage_match_'..AbilityLevel..'_precent_final'])
+	shoot.damage = getFinalValueOperation(playerID,damageBase,damageBuffName,AbilityLevel,owner)
+	shoot.damage_match = getFinalValueOperation(playerID,shoot.damage,damageMatchBuffName,AbilityLevel,owner)
 	--print("damage",shoot.damage)
 	--弹道速度
 	local speedBase =  ability:GetSpecialValueFor("speed")
-	shoot.speed = finalValueOperation(speedBase,PlayerPower[playerID]['player_ability_speed_'..AbilityLevel],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_final'])
-	
-	--半成品（还需现场加工）
+	local speedBuffName = 'ability_speed'
+	--shoot.speed = finalValueOperation(speedBase,PlayerPower[playerID]['player_ability_speed_'..AbilityLevel],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_final'])
+	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * 0.02
+
+
+	--射程
+	shoot.range_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel]
+	shoot.range_precent_base_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_base']
+	shoot.range_precent_final_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_final']	
+
+
+	--半成品（还需现场加工,缺基础数据）
 	--控制时间
 	shoot.control_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel]
 	shoot.control_precent_base_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel..'_precent_base']
@@ -274,32 +295,62 @@ function creatSkillShootInit(keys,shoot,owner)
 	shoot.control_match_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel]
 	shoot.control_match_precent_base_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel..'_precent_base']
 	shoot.control_match_precent_final_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel..'_precent_final']
-	--作用范围
-	shoot.range_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel]
-	shoot.range_precent_base_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_base']
-	shoot.range_precent_final_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_final']	
-
+	
+	
 end
 
---施放技能时加强
+--施放技能时buff加强
 function initDurationBuff(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	local playerID = caster:GetPlayerID()
-	local AbilityLevel = keys.AbilityLevel
-
-
 	setPlayerDurationBuffByName(keys,"vision",GameRules.playerBaseVision)
 	setPlayerDurationBuffByName(keys,"speed",GameRules.playerBaseSpeed)
 	setPlayerDurationBuffByName(keys,"health",GameRules.playerBaseHealth)
 	setPlayerDurationBuffByName(keys,"mana",GameRules.playerBaseMana)
 	setPlayerDurationBuffByName(keys,"mana_regen",GameRules.playerBaseManaRegen)
-	
 end
+
+
 
 function finalValueOperation(baseValue,bonusValue,precentBase,precentFinal)
 	local operationValue = (baseValue * (1+precentBase/100) + bonusValue) * (1+precentFinal/100)
 	return operationValue
+end
+
+function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
+	
+
+	local abilityBuffName = buffName.."_"..abilityLevel
+	print("getFinalValueOperation"..playerID..abilityBuffName)
+	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
+	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
+	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
+	
+	local tempPrecentBase = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_base'] / 100
+	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
+	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
+
+	--临时带持续时间的加强的功能还没做
+	local durationPrecentBase = 0
+	local durationBonusValue = 0
+	local durationPrecentFinal = 0 
+	--local modifierName = 
+	print("getFinalValueOperation")
+	print(precentBase..","..bonusValue..","..precentFinal)
+	print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
+	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
+	local returnValue = 0
+	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + durationPrecentBase) + bonusValue + tempBonusValue + durationBonusValue) * (1 + precentFinal + tempPrecentFinal + durationPrecentFinal)
+	
+	if (flag == 1) then
+		returnValue = operationValue
+	end
+	if( flag == 0 and returnValue <= baseValue)then
+		returnValue = operationValue
+	end
+	if (flag == 0 and returnValue > baseValue) then
+		returnValue = baseValue
+	end
+	print("flag:"..flag..",baseValue:"..baseValue..",returnValue"..returnValue)
+	return returnValue
 end
 
 function shootKill(shoot)
