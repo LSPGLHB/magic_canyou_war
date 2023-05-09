@@ -223,7 +223,10 @@ function magicCanyouWar:InitGameMode()
 	--CustomGameEventManager:RegisterListener( "lua_to_js", OnLuaToJs )
 	--CustomGameEventManager:RegisterListener( "myui_open", OnMyUIOpen )
 	--CustomGameEventManager:RegisterListener( "uimsg_open", OnUIMsg )
-
+	--测试快捷键
+	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)
+		self:On_ed_open_my_shop(keys)
+	end)
 
 	--初始化玩家数据
 	if init_flag == 0 then
@@ -239,6 +242,10 @@ function magicCanyouWar:InitGameMode()
 
 end
 
+function magicCanyouWar:On_ed_open_my_shop(keys)
+	local player = PlayerResource:GetPlayer(keys.PlayerID)
+	print("On_ed_open_my_shop"..keys.PlayerID)
+end
 
 
 --死亡物品掉落

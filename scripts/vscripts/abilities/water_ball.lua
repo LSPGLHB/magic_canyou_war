@@ -72,7 +72,7 @@ end
 function waterBallBoomRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
-	local radius = finalValueOperation(ability:GetSpecialValueFor("radius"),shoot.range_bonus,shoot.range_precent_base_bonus,shoot.range_precent_final_bonus)
+	local radius = ability:GetSpecialValueFor("radius")
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particleBoom, 3, shoot:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 0))
@@ -86,7 +86,7 @@ function dealSkillBoom(keys,shoot)
 	local ability = keys.ability
 	local hitTargetDebuff = keys.hitTargetDebuff
 	local duration = ability:GetSpecialValueFor("duration") --冰冻持续时间
-	local radius = finalValueOperation(ability:GetSpecialValueFor("radius"),shoot.range_bonus,shoot.range_precent_base_bonus,shoot.range_precent_final_bonus)--AOE范围
+	local radius = ability:GetSpecialValueFor("radius")--AOE范围
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
 	

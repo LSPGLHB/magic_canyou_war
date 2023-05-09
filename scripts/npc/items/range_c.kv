@@ -1,0 +1,158 @@
+"DOTAAbilities"
+{
+    "item_range_c"
+    {
+        "ID"			"6090"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "branches_lg"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+
+
+        "ItemType"               "equip"     //equip类型才会在商店出现
+        "IconSrc"                "file://{images}/custom_game/shop_item/branches_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_range_c"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_range_c_Description" 
+        "ItemCost"               "5"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_c"              "120"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_c_precent_base"              "6"  
+            }
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_range_c_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/range_c.lua"
+                        "Function"			"modifier_item_range_c_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/range_c.lua"
+                        "Function"			"modifier_item_range_c_on_destroy"
+                    }
+                }
+            }
+
+           
+        }
+    }
+
+"item_range_c_2"
+    {
+        "ID"			"6091"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "force_staff_lg"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "IconSrc"                "file://{images}/custom_game/shop_item/force_staff_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_range_c_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_range_c_2_Description" 
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_c"              "200"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_c_precent_base"              "10"  
+            }
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_range_c_2_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/range_c.lua"
+                        "Function"			"modifier_item_range_c_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/range_c.lua"
+                        "Function"			"modifier_item_range_c_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "item_recipe_range_c_2"
+    {
+        "ID"                                        "6092"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_range_c_2"
+        ItemRequirements   
+        {
+                "01"    "item_range_c;item_range_c"
+        }
+
+    }
+
+
+}
+

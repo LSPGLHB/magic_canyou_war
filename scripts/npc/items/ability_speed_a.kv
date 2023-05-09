@@ -1,0 +1,158 @@
+"DOTAAbilities"
+{
+    "item_ability_speed_a"
+    {
+        "ID"			"6090"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "claymore_lg"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+
+
+        "ItemType"               "equip"     //equip类型才会在商店出现
+        "IconSrc"                "file://{images}/custom_game/shop_item/claymore_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_ability_speed_a"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_ability_speed_a_Description" 
+        "ItemCost"               "5"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_ability_speed_a"              "70"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_ability_speed_a_precent_base"              "7"  
+            }
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_ability_speed_a_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/ability_speed_a.lua"
+                        "Function"			"modifier_item_ability_speed_a_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/ability_speed_a.lua"
+                        "Function"			"modifier_item_ability_speed_a_on_destroy"
+                    }
+                }
+            }
+
+           
+        }
+    }
+
+"item_ability_speed_a_2"
+    {
+        "ID"			"6091"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "kaya_and_sange_lg"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "IconSrc"                "file://{images}/custom_game/shop_item/kaya_and_sange_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_ability_speed_a_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_ability_speed_a_2_Description" 
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_ability_speed_a"              "100"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_ability_speed_a_precent_base"              "10"  
+            }
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_ability_speed_a_2_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/ability_speed_a.lua"
+                        "Function"			"modifier_item_ability_speed_a_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/ability_speed_a.lua"
+                        "Function"			"modifier_item_ability_speed_a_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "item_recipe_ability_speed_a_2"
+    {
+        "ID"                                        "6092"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_ability_speed_a_2"
+        ItemRequirements   
+        {
+                "01"    "item_ability_speed_a;item_ability_speed_a"
+        }
+
+    }
+
+
+}
+

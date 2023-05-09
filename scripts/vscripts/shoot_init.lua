@@ -11,7 +11,8 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 	local shootHealthStep = shootHealthMax * 0.2 * shoot.speed / 10
 	shoot:SetHealth(shootHealthSend)
 
-	shoot.max_distance = shoot.max_distance_base
+	print(shoot.max_distance_operation)
+	shoot.max_distance = shoot.max_distance_operation
 	--local direction = shoot.direction
 
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
@@ -227,7 +228,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	local AbilityLevel = keys.AbilityLevel
 
 
-	shoot.max_distance_base = max_distance
+	
 	shoot.direction = direction
 	shoot.traveled_distance = 0 --初始化已经飞行的距离0
 	shoot.shootHight = 100 --子弹高度
@@ -281,9 +282,12 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 
 	--射程
-	shoot.range_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel]
-	shoot.range_precent_base_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_base']
-	shoot.range_precent_final_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_final']	
+	local rangeBase = max_distance
+	--shoot.range_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel]
+	--shoot.range_precent_base_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_base']
+	--shoot.range_precent_final_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_final']	
+	local rangeBuffName = 'range'
+	shoot.max_distance_operation = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
 
 
 	--半成品（还需现场加工,缺基础数据）
@@ -309,15 +313,8 @@ function initDurationBuff(keys)
 end
 
 
-
-function finalValueOperation(baseValue,bonusValue,precentBase,precentFinal)
-	local operationValue = (baseValue * (1+precentBase/100) + bonusValue) * (1+precentFinal/100)
-	return operationValue
-end
-
 function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
 	
-
 	local abilityBuffName = buffName.."_"..abilityLevel
 	print("getFinalValueOperation"..playerID..abilityBuffName)
 	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
