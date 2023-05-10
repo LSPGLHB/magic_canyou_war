@@ -11,7 +11,7 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 	local shootHealthStep = shootHealthMax * 0.2 * shoot.speed / 10
 	shoot:SetHealth(shootHealthSend)
 
-	print(shoot.max_distance_operation)
+
 	shoot.max_distance = shoot.max_distance_operation
 	--local direction = shoot.direction
 
@@ -280,12 +280,8 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--shoot.speed = finalValueOperation(speedBase,PlayerPower[playerID]['player_ability_speed_'..AbilityLevel],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_final'])
 	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * 0.02
 
-
 	--射程
 	local rangeBase = max_distance
-	--shoot.range_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel]
-	--shoot.range_precent_base_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_base']
-	--shoot.range_precent_final_bonus = PlayerPower[playerID]['player_range_'..AbilityLevel..'_precent_final']	
 	local rangeBuffName = 'range'
 	shoot.max_distance_operation = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
 

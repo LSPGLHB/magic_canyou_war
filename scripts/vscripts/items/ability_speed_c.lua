@@ -14,11 +14,11 @@ function refreshItemBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local item_ability_speed_C = ability:GetSpecialValueFor("item_ability_speed_C")
-    local item_ability_speed_C_precent_base = ability:GetSpecialValueFor("item_ability_speed_C_precent_base")
+    local item_ability_speed_c = ability:GetSpecialValueFor("item_ability_speed_c")
+    local item_ability_speed_c_precent_base = ability:GetSpecialValueFor("item_ability_speed_c_precent_base")
 
-    setPlayerPower(playerID, "player_ability_speed_C", flag, item_ability_speed_C)
-    setPlayerPower(playerID, "player_ability_speed_C_precent_base", flag, item_ability_speed_C_precent_base)
+    setPlayerPower(playerID, "player_ability_speed_c", flag, item_ability_speed_c)
+    setPlayerPower(playerID, "player_ability_speed_c_precent_base", flag, item_ability_speed_c_precent_base)
 
 
 

@@ -11,6 +11,8 @@ function createWaterBall(keys)
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
 	--初始化数据包
 	creatSkillShootInit(keys,shoot,caster,max_distance,direction)
+	--过滤掉增加施法距离的操作
+	shoot.max_distance_operation = max_distance
 	initDurationBuff(keys)
 	--shoot.timer = 0
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)

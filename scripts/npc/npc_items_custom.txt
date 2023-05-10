@@ -21,6 +21,9 @@
 #base items/range_c.kv
 #base items/range_b.kv
 #base items/range_a.kv
+#base items/damage_c.kv
+#base items/damage_b.kv
+#base items/damage_a.kv
 
 
 
