@@ -6,6 +6,7 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 	shoot.speed = skillSpeedOperation(keys,shoot.speed)
 	print('moveShoot2:'..shoot.speed)
 	--实现延迟满法魂效果
+
 	local shootHealthMax = shoot:GetHealth()
 	local shootHealthSend = shootHealthMax * 0.8
 	local shootHealthStep = shootHealthMax * 0.2 * shoot.speed / 10
@@ -19,7 +20,8 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 		if shoot.traveled_distance < shoot.max_distance then
 			moveShootTimerRun(keys,shoot)
 
-
+			--实现延迟满法魂效果
+			
 			if shootHealthSend < shootHealthMax then
 				shootHealthSend = shootHealthSend + shootHealthStep
 				shoot:SetHealth(shootHealthSend)
@@ -444,8 +446,7 @@ end
 function takeAwayUnit(keys,shoot,hitTarget)
 	local caster = keys.caster
 	local ability = keys.ability
-	local interval = 0.02
-	local speed = shoot.speed * interval
+	local speed = shoot.speed 
 	local direction = shoot.direction
 	local hitTargetDebuff = keys.hitTargetDebuff
 	local debuffTable = hitTarget:FindModifierByName(hitTargetDebuff)

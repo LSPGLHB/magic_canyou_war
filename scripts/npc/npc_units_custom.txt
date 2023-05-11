@@ -364,12 +364,12 @@
         "IdleSoundLoop"             ""
 	}
 
-	"yang"//"npc_dota_gyrocopter_homing_missile"							
+	"yang"			
 	{										
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/doom/doom.vmdl"//"models/heroes/invoker/forge_spirit.vmdl"//"models\heroes\gyro\gyro_missile.mdl"	// Model.
-		"BaseClass"					"npc_dota_base_additive"
+		"BaseClass"					"npc_dota_creature"//"npc_dota_base_additive"//(忘记哪里来的additive)
 		"UnitLabel"					"yangyang"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"

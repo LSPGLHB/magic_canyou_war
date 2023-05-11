@@ -80,9 +80,17 @@ function createShoot(keys)
 		local speed = shoot_speed
 		--local traveled_distance = 0
 		--local point = ability:GetCursorPosition()
+		local target = keys.target
+
+		if(target ~= nil) then
+			print("target",target:GetAbsOrigin())
+		else
+			print("point",ability:GetCursorPosition())
+		end
 
 		--local starting_distance = ability:GetLevelSpecialValueFor( "starting_distance", ability:GetLevel() - 1 )
 		local direction = (ability:GetCursorPosition() - caster:GetAbsOrigin()):Normalized()
+
 		local position = caster:GetAbsOrigin() --+ starting_distance * direction
 
 		local counterModifierName = keys.modifierCountName
