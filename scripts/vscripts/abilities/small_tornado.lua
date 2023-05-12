@@ -5,9 +5,11 @@ function createSmallTornado(keys)
 		local ability = keys.ability
 		local speed = ability:GetSpecialValueFor("speed")
 		local max_distance = ability:GetSpecialValueFor("max_distance")
+		local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
 		local position = caster:GetAbsOrigin()
 		local direction = (ability:GetCursorPosition() - position):Normalized()
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
+		shoot.control = aoe_duration
         creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
@@ -25,7 +27,8 @@ function smallTornadoDuration(keys,shoot)
 	local ability = keys.ability
     local aoeDebuff = keys.hitTargetDebuff
     local aoe_duration_radius = ability:GetSpecialValueFor("aoe_duration_radius") --AOE持续作用范围
-    local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
+    print("smallTornadoDuration:"..shoot.control)
+	local aoe_duration = shoot.control
     local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
     local tempTimer = 0
@@ -72,16 +75,17 @@ function smallTornadoDuration(keys,shoot)
 	end)
 end
 
+--特效显示效果
 function smallTornadoRenderParticles(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
-	local duration = ability:GetSpecialValueFor("aoe_duration") --持续时间
 	local radius = ability:GetSpecialValueFor("aoe_duration_radius")
+	print("smallTornadoRenderParticles:"..shoot.control)
 	local particleBoom = ParticleManager:CreateParticle(keys.durationParticlesBoom, PATTACH_WORLDORIGIN, caster)
     local shootPos = shoot:GetAbsOrigin()
 	ParticleManager:SetParticleControl(particleBoom, 0, Vector(shootPos.x, shootPos.y, shootPos.z))
 	ParticleManager:SetParticleControl(particleBoom, 1, Vector(radius, 0, 0))
-	ParticleManager:SetParticleControl(particleBoom, 2, Vector(duration, 0, 0))
+	ParticleManager:SetParticleControl(particleBoom, 2, Vector(shoot.control, 0, 0))
 	return particleBoom
 end
 

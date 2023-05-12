@@ -1,18 +1,18 @@
 "DOTAAbilities"
 {
-    "item_range_b"
+    "item_energy_c"
     {
-        "ID"			"6130"
+        "ID"			"6210"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "magic_stick_lg"
+        "AbilityTextureName"        "wind_lace_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/magic_stick_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_range_b"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_range_b_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/wind_lace_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_energy_c"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_energy_c_Description" 
         "ItemCost"               "5"
 
 
@@ -29,20 +29,21 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_range_b"              "120"  
+                "item_energy_c_precent_base"              "25"  
             }
             "02"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_range_b_precent_base"              "6"  
+                "item_mana_cost_c_precent_base"              "40"  
             }
+
 
         }
 
 
         "Modifiers"
         {
-            "modifier_item_range_b_datadriven"
+            "modifier_item_energy_c_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -51,8 +52,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/range_b.lua"
-                        "Function"			"modifier_item_range_b_on_created"
+                        "ScriptFile"		"items/energy_c.lua"
+                        "Function"			"modifier_item_energy_c_on_created"
                     }
                 }
                 
@@ -60,8 +61,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/range_b.lua"
-                        "Function"			"modifier_item_range_b_on_destroy"
+                        "ScriptFile"		"items/energy_c.lua"
+                        "Function"			"modifier_item_energy_c_on_destroy"
                     }
                 }
             }
@@ -70,19 +71,19 @@
         }
     }
 
-"item_range_b_2"
+"item_energy_c_2"
     {
-        "ID"			"6131"
+        "ID"			"6211"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "cyclone_lg"
+        "AbilityTextureName"        "gungir_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/cyclone_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_range_b_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_range_b_2_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/gungir_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_energy_c_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_energy_c_2_Description" 
         "ItemCost"               "0"
 
 
@@ -99,20 +100,21 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_range_b"              "200"  
+                "item_energy_c_precent_base"              "50"  
             }
             "02"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_range_b_precent_base"              "10"  
+                "item_mana_cost_c_precent_base"              "40"  
             }
+
 
         }
 
 
         "Modifiers"
         {
-            "modifier_item_range_b_2_datadriven"
+            "modifier_item_energy_c_2_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -121,8 +123,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/range_b.lua"
-                        "Function"			"modifier_item_range_b_on_created"
+                        "ScriptFile"		"items/energy_c.lua"
+                        "Function"			"modifier_item_energy_c_on_created"
                     }
                 }
                 
@@ -130,25 +132,25 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/range_b.lua"
-                        "Function"			"modifier_item_range_b_on_destroy"
+                        "ScriptFile"		"items/energy_c.lua"
+                        "Function"			"modifier_item_energy_c_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "item_recipe_range_b_2"
+    "item_recipe_energy_c_2"
     {
-        "ID"                                        "6132"
+        "ID"                                        "6212"
         "BaseClass"                        "item_recipe_arcane_boots"
         "ItemCost"                        "0"        
 
         ItemRecipe                 "1" 
-        ItemResult                  "item_range_b_2"
+        ItemResult                  "item_energy_c_2"
         ItemRequirements   
         {
-                "01"    "item_range_b;item_range_b"
+                "01"    "item_energy_c;item_energy_c"
         }
 
     }

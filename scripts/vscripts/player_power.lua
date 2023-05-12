@@ -110,7 +110,7 @@ end
 
 function removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
     print("removePlayerBuffByAbilityAndModifier")
-    print(abilityName..modifierNameBuff..modifierNameDebuff)
+    --print(abilityName..modifierNameBuff..modifierNameDebuff)
     if (hero:HasAbility(abilityName)) then
         hero:RemoveAbility(abilityName)
     end
@@ -322,29 +322,41 @@ function initPlayerPower()
         PlayerPower[playerID]['player_range_flag'] = 1
 
         PlayerPower[playerID]['player_mana_cost_d'] = 0
-        PlayerPower[playerID]['player_mana_cost_d_precent'] = 0
+        PlayerPower[playerID]['player_mana_cost_d_precent_base'] = 0
+        PlayerPower[playerID]['player_mana_cost_d_precent_final'] = 0
         PlayerPower[playerID]['player_mana_cost_c'] = 0
-        PlayerPower[playerID]['player_mana_cost_c_precent'] = 0
+        PlayerPower[playerID]['player_mana_cost_c_precent_base'] = 0
+        PlayerPower[playerID]['player_mana_cost_c_precent_final'] = 0
         PlayerPower[playerID]['player_mana_cost_b'] = 0
-        PlayerPower[playerID]['player_mana_cost_b_precent'] = 0
+        PlayerPower[playerID]['player_mana_cost_b_precent_base'] = 0
+        PlayerPower[playerID]['player_mana_cost_b_precent_final'] = 0
         PlayerPower[playerID]['player_mana_cost_a'] = 0
-        PlayerPower[playerID]['player_mana_cost_a_precent'] = 0
+        PlayerPower[playerID]['player_mana_cost_a_precent_base'] = 0
+        PlayerPower[playerID]['player_mana_cost_a_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_d'] = 0
-        PlayerPower[playerID]['temp_mana_cost_d_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_d_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_c'] = 0
-        PlayerPower[playerID]['temp_mana_cost_c_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_c_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_b'] = 0
-        PlayerPower[playerID]['temp_mana_cost_b_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_b_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_a'] = 0
-        PlayerPower[playerID]['temp_mana_cost_a_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_a_precent_final'] = 0
         PlayerPower[playerID]['duration_mana_cost_d'] = 0
-        PlayerPower[playerID]['duration_mana_cost_d_precent'] = 0
+        PlayerPower[playerID]['duration_mana_cost_d_precent_base'] = 0
+        PlayerPower[playerID]['duration_mana_cost_d_precent_final'] = 0
         PlayerPower[playerID]['duration_mana_cost_c'] = 0
-        PlayerPower[playerID]['duration_mana_cost_c_precent'] = 0
+        PlayerPower[playerID]['duration_mana_cost_c_precent_base'] = 0
+        PlayerPower[playerID]['duration_mana_cost_c_precent_final'] = 0
         PlayerPower[playerID]['duration_mana_cost_b'] = 0
-        PlayerPower[playerID]['duration_mana_cost_b_precent'] = 0
+        PlayerPower[playerID]['duration_mana_cost_b_precent_base'] = 0
+        PlayerPower[playerID]['duration_mana_cost_b_precent_final'] = 0
         PlayerPower[playerID]['duration_mana_cost_a'] = 0
-        PlayerPower[playerID]['duration_mana_cost_a_precent'] = 0
+        PlayerPower[playerID]['duration_mana_cost_a_precent_base'] = 0
+        PlayerPower[playerID]['duration_mana_cost_a_precent_final'] = 0
         PlayerPower[playerID]['player_mana_cost_duration'] = 0
         PlayerPower[playerID]['player_mana_cost_flag'] = 1
 

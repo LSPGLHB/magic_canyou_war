@@ -9,15 +9,15 @@ function getApplyDamageValue(shoot)
 	return damage
 end
 --克制增强运算
-function powerLevelOperation(powerLv, damage)
-	print("powerLevelOperation",powerLv,"=",damage)
+function powerLevelOperation(powerLv, value)
+	--print("powerLevelOperation",powerLv,"=",damage)
 	if powerLv > 0 then
-		damage = damage * 1.25
+		value = value * 1.25
 	end
 	if powerLv < 0 then
-		damage = damage * 0.75
+		value = value * 0.75
 	end
-	return damage
+	return value
 end
 
 --power_lv：标记增强等级

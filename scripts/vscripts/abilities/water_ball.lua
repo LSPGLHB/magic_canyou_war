@@ -30,7 +30,7 @@ function waterBallBoom(keys,shoot,particleID)
 	--local modifierName = keys.modifierName
 	--local duration = ability:GetSpecialValueFor("duration") --持续时间
 	--local radius = ability:GetSpecialValueFor("radius") --AOE范围
-	local delay = 1 --延迟作用时间
+	local delay = 0 --延迟作用时间
 	--[[
 	if particleID ~= nil then
 		ParticleManager:DestroyParticle(particleID, true)

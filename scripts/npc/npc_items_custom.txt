@@ -18,12 +18,20 @@
 #base items/ability_speed_c.kv
 #base items/ability_speed_b.kv
 #base items/ability_speed_a.kv
+
 #base items/range_c.kv
 #base items/range_b.kv
 #base items/range_a.kv
+
 #base items/damage_c.kv
 #base items/damage_b.kv
 #base items/damage_a.kv
+
+#base items/control_c.kv
+#base items/control_b.kv
+#base items/control_a.kv
+
+#base items/energy_c.kv
 
 
 
@@ -32,7 +40,7 @@
 	
 	"item_lvping"
 	{
-		"ID"                                        "1004"
+		"ID"                                        "1000"
 		"BaseClass"                                "item_datadriven"
 		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"        	"item_lvping"
@@ -61,69 +69,7 @@
 		}
 	}
 
-	"item_first"
-	{
-		"ID"                                        "1000"
-		"BaseClass"                                "item_datadriven"
-		"AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"        "item_first"
-
-		"ItemCost"                                "200"
-		"ItemDroppable"                        "1"
-		"ItemSellable"                        "1"
-		"ItemPurchasable"                "1"
-		"ItemKillable"                        "1"
-		"ItemQuality"                        "rare"
-		"SecretShop"						"1"
-		"ItemShareability"                "ITEM_FULLY_SHAREABLE"
-	}
-
-	"item_sha_b"
-	{
-		"ID"                                        "1001"
-		"BaseClass"                                "item_datadriven"
-		"AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"        "item_sha_b"
-
-		"ItemCost"                                "200"
-		"ItemDroppable"                        "1"
-		"ItemSellable"                        "1"
-		"ItemPurchasable"                "1"
-		"ItemKillable"                        "1"
-		"ItemQuality"                        "rare"
-		"ItemShareability"                "ITEM_FULLY_SHAREABLE"
-	}
-
-	"item_2_b"
-	{
-		"ID"                                        "1002"
-		"BaseClass"                                "item_datadriven"
-		"AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"        "item_2_b"
-
-		"ItemCost"                                "99999"
-		"ItemDroppable"                        "1"
-		"ItemSellable"                        "1"
-		"ItemPurchasable"                "1"
-		"ItemKillable"                        "1"
-		"ItemQuality"                        "rare"
-		"ItemShareability"                "ITEM_FULLY_SHAREABLE"
-	}
-
-	"item_recipe_2_b"
-	{
-		"ID"                                        "1003"
-		"BaseClass"                        "item_recipe_arcane_boots"
-		"ItemCost"                        "50"        
-		"ItemShopTags"                ""
-
-		ItemRecipe                 "1" 
-		ItemResult                  "item_2_b"
-		ItemRequirements   
-		{
-				"01"    "item_sha_b;item_first"
-		}
-	}
+	
 
 
 }

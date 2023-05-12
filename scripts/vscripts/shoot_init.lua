@@ -230,7 +230,9 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	local AbilityLevel = keys.AbilityLevel
 
 
-	
+	if(shoot.control == nil) then
+		shoot.control = 0
+	end
 	shoot.direction = direction
 	shoot.traveled_distance = 0 --初始化已经飞行的距离0
 	shoot.shootHight = 100 --子弹高度
@@ -247,7 +249,8 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--蓝耗
 	
 	local manaCost = ability:GetManaCost(1)
-	shoot.mana_cost_bonus = PlayerPower[playerID]['player_mana_cost_'..AbilityLevel] + manaCost * PlayerPower[playerID]['player_mana_cost_'..AbilityLevel..'_precent']
+	local manaCostBuffName = 'mana_cost'
+	shoot.mana_cost_bonus = getFinalValueOperation(playerID,manaCost,manaCostBuffName,AbilityLevel,owner) - manaCost
 	--caster:ReduceMana(50.0)--(shoot.mana_cost_bonus)-- 此方法23.4.21更新后不能使用
 	caster:SpendMana(shoot.mana_cost_bonus, caster)
 
@@ -263,8 +266,8 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot:RemoveModifierByName('modifier_health_debuff')
     shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
 	shoot:RemoveAbility('ability_health_control')
-	--print("abilityEnergy",abilityEnergy)
-	--print("energy_bonus",shoot.energy_bonus)
+	print("abilityEnergy",abilityEnergy)
+	print("energy_bonus",shoot.energy_bonus)
 
 	--直接可用数据
 	--伤害
@@ -290,6 +293,10 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 	--半成品（还需现场加工,缺基础数据）
 	--控制时间
+	local controlBase = shoot.control
+	local contrilBuffName = 'control'
+	shoot.control = getFinalValueOperation(playerID,controlBase,contrilBuffName,AbilityLevel,owner)
+	--[[
 	shoot.control_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel]
 	shoot.control_precent_base_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel..'_precent_base']
 	shoot.control_precent_final_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel..'_precent_final']
@@ -297,7 +304,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.control_match_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel]
 	shoot.control_match_precent_base_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel..'_precent_base']
 	shoot.control_match_precent_final_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel..'_precent_final']
-	
+	]]
 	
 end
 
@@ -329,8 +336,8 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
 	local durationPrecentFinal = 0 
 	--local modifierName = 
 	print("getFinalValueOperation")
-	print(precentBase..","..bonusValue..","..precentFinal)
-	print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
+	--print(precentBase..","..bonusValue..","..precentFinal)
+	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
 	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
 	local returnValue = 0
 	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + durationPrecentBase) + bonusValue + tempBonusValue + durationBonusValue) * (1 + precentFinal + tempPrecentFinal + durationPrecentFinal)
@@ -367,8 +374,8 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackDistance,beatBackSpeed,canSec
 	local ability = keys.ability
 	local powerLv = shoot.power_lv
 	hitTarget.power_lv = powerLv
-	--击退距离受加强削弱影响
-	beatBackDistance = powerLevelOperation(powerLv, beatBackDistance) 
+	--击退距离受加强削弱影响(此处如果是带走的就有问题了)
+	--beatBackDistance = powerLevelOperation(powerLv, beatBackDistance) 
 	local hitTargetDebuff = keys.hitTargetDebuff
 	--hitTarget:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = control_time} )--需要调用lua的modefier
 	ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
