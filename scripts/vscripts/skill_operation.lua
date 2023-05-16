@@ -2,20 +2,31 @@ require('player_power')
 --LinkLuaModifier( "modifier_stone_beat_back_aoe_lua", "abilities/modifier_stone_beat_back_aoe_lua.lua",LUA_MODIFIER_MOTION_NONE )
 ----伤害计算(keys, 子弹实体)
 function getApplyDamageValue(shoot)
-	local damage = powerLevelOperation(shoot.power_lv, shoot.damage) --克制增强运算
+	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, shoot.damage) --克制增强运算
 	if damage < 0 then
 		damage = 0  --伤害保底
 	end
 	return damage
 end
 --克制增强运算
-function powerLevelOperation(powerLv, value)
+function powerLevelOperation(shoot, abilityName, powerLv, value)
 	--print("powerLevelOperation",powerLv,"=",damage)
+	local buffName = 'damage_match_helper'
+	local baseValue = 1
+	local matchPower = 0
+	--print("powerLevelOperation:"..#shoot.matchUnitsID)
+	for i = 1, #shoot.matchUnitsID do
+		local valueID = shoot.matchUnitsID[i]
+		local abilityLevel = shoot.matchAbilityLevel[i]
+		--print("matchUnitsID:"..shoot.unit_type.."=="..valueID.."=="..abilityLevel)
+		matchPower = matchPower + (getFinalValueOperation(valueID,baseValue,buffName,abilityLevel,nil) - 1)
+	end
+	print("matchPower",matchPower)
 	if powerLv > 0 then
-		value = value * 1.25
+		value = value * (1.25 + matchPower)
 	end
 	if powerLv < 0 then
-		value = value * 0.75
+		value = value * 0.75 
 	end
 	return value
 end
@@ -25,7 +36,18 @@ end
 --加强削弱运算(被搜索目标实体，自身实体，aoe类型,是否敌对减弱否则加强)
 function reinforceEach(unit,shoot,aoeType)
 	local shootTeam = shoot:GetTeam()
+	--local shootOwner = shoot.owner
+	--local shootOwnerID = shootOwner:GetPlayerID()
 	local unitTeam = unit:GetTeam()
+	local unitOwner = unit.owner
+	--print("owner2",unit.owner)
+	--print("owner3",unit:GetOwner())
+	local unitOwnerID = unitOwner:GetPlayerID()
+	local unitLevel = unit.abilityLevel
+	table.insert(shoot.matchUnitsID,unitOwnerID)
+	table.insert(shoot.matchAbilityLevel,unitLevel)
+	print("reinforceEachID:=="..unitOwnerID.."=="..unitLevel.."==="..#shoot.matchUnitsID)
+
 	local flag
 	if shootTeam ~= unitTeam then
 		flag = true
@@ -41,7 +63,7 @@ function reinforceEach(unit,shoot,aoeType)
 	if aoeType ~=nil then
 		shootType = aoeType
 	end
-	--print("shoot-nuit-Type:",shootType,unitType)
+	print("shoot-nuit-Type:",shootType,unitType)
 	if shootType == "huo" then
 		if flag then
 			if unitType == "lei" then

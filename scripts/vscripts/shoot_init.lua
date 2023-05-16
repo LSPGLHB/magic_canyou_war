@@ -1,10 +1,10 @@
 require('skill_operation')
 require('player_power')
 function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
-	print('moveShoot1:'..shoot.speed)
+	--print('moveShoot1:'..shoot.speed)
 	--影响弹道的buff--测试速度调整可删除
 	shoot.speed = skillSpeedOperation(keys,shoot.speed)
-	print('moveShoot2:'..shoot.speed)
+	--print('moveShoot2:'..shoot.speed)
 	--实现延迟满法魂效果
 
 	local shootHealthMax = shoot:GetHealth()
@@ -19,9 +19,7 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
 		if shoot.traveled_distance < shoot.max_distance then
 			moveShootTimerRun(keys,shoot)
-
 			--实现延迟满法魂效果
-			
 			if shootHealthSend < shootHealthMax then
 				shootHealthSend = shootHealthSend + shootHealthStep
 				shoot:SetHealth(shootHealthSend)
@@ -227,8 +225,6 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	local caster = keys.caster
 	local ability = keys.ability
 	local playerID = caster:GetPlayerID()
-	local AbilityLevel = keys.AbilityLevel
-
 
 	if(shoot.control == nil) then
 		shoot.control = 0
@@ -237,13 +233,19 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.traveled_distance = 0 --初始化已经飞行的距离0
 	shoot.shootHight = 100 --子弹高度
 	shoot.isBreak = 0 --初始化不跳出
-
+	shoot.owner = owner
 	shoot:SetOwner(owner)
 	shoot.unit_type = keys.unitType --用于计算克制和加强
+	print("unit_type"..shoot.unit_type)
 	shoot.power_lv = 0 --用于实现克制和加强
 	shoot.power_flag = 0 --用于实现克制和加强
 	shoot.hitUnits = {}--用于记录命中的目标
-	shoot.abilityLevel = AbilityLevel
+	shoot.matchUnitsID ={}--记录被什么技能加强的过
+	shoot.matchAbilityLevel ={}--记录被什么等级技能加强的过
+	--shoot.matchPower = 0 -- 克制加强系数
+	shoot.abilityLevel = keys.AbilityLevel
+	local AbilityLevel = keys.AbilityLevel
+	--print("shoot:"..shoot.abilityLevel)
 
 	--已处理
 	--蓝耗
@@ -266,8 +268,8 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot:RemoveModifierByName('modifier_health_debuff')
     shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
 	shoot:RemoveAbility('ability_health_control')
-	print("abilityEnergy",abilityEnergy)
-	print("energy_bonus",shoot.energy_bonus)
+	--print("abilityEnergy",abilityEnergy)
+	--print("energy_bonus",shoot.energy_bonus)
 
 	--直接可用数据
 	--伤害
@@ -318,42 +320,7 @@ function initDurationBuff(keys)
 end
 
 
-function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
-	
-	local abilityBuffName = buffName.."_"..abilityLevel
-	print("getFinalValueOperation"..playerID..abilityBuffName)
-	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
-	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
-	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
-	
-	local tempPrecentBase = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_base'] / 100
-	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
-	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
 
-	--临时带持续时间的加强的功能还没做
-	local durationPrecentBase = 0
-	local durationBonusValue = 0
-	local durationPrecentFinal = 0 
-	--local modifierName = 
-	print("getFinalValueOperation")
-	--print(precentBase..","..bonusValue..","..precentFinal)
-	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
-	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
-	local returnValue = 0
-	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + durationPrecentBase) + bonusValue + tempBonusValue + durationBonusValue) * (1 + precentFinal + tempPrecentFinal + durationPrecentFinal)
-	
-	if (flag == 1) then
-		returnValue = operationValue
-	end
-	if( flag == 0 and returnValue <= baseValue)then
-		returnValue = operationValue
-	end
-	if (flag == 0 and returnValue > baseValue) then
-		returnValue = baseValue
-	end
-	print("flag:"..flag..",baseValue:"..baseValue..",returnValue"..returnValue)
-	return returnValue
-end
 
 function shootKill(shoot)
 	shoot:ForceKill(true)

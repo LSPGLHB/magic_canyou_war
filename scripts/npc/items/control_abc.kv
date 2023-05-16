@@ -1,18 +1,18 @@
 "DOTAAbilities"
 {
-    "item_dragon_gem"
+    "item_control_abc.kv"
     {
-        "ID"			"6020"
+        "ID"			"6270"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "point_booster_lg"
+        "AbilityTextureName"        "null_talisman_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/point_booster_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_dragon_gem"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_dragon_gem_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/null_talisman_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_control_abc"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_control_abc_Description" 
         "ItemCost"               "5"
 
 
@@ -29,20 +29,26 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_health"              "10"  
+                "item_control_a_precent_base"              "10"  
             }
-            "02"
+            "022"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_vision"              "100"  
+                "item_control_b_precent_base"              "10"  
             }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_c_precent_base"              "10"  
+            }
+
 
         }
 
 
         "Modifiers"
         {
-            "modifier_item_dragon_gem_datadriven"
+            "modifier_item_control_abc_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -51,8 +57,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_gem.lua"
-                        "Function"			"modifier_item_dragon_gem_on_created"
+                        "ScriptFile"		"items/control_abc.lua"
+                        "Function"			"modifier_item_control_abc_on_created"
                     }
                 }
                 
@@ -60,8 +66,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_gem.lua"
-                        "Function"			"modifier_item_dragon_gem_on_destroy"
+                        "ScriptFile"		"items/control_abc.lua"
+                        "Function"			"modifier_item_control_abc_on_destroy"
                     }
                 }
             }
@@ -70,19 +76,19 @@
         }
     }
 
-"item_dragon_gem_2"
+"item_control_abc_2"
     {
-        "ID"			"6021"
+        "ID"			"6271"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "moon_shard_lg"
+        "AbilityTextureName"        "sphere_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/moon_shard_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_dragon_health_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_dragon_health_2_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/sphere_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_control_abc_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_control_abc_2_Description" 
         "ItemCost"               "0"
 
 
@@ -94,25 +100,31 @@
         "ItemPermanent"                 "0"		//永久的
 
         
-       "AbilitySpecial"
+        "AbilitySpecial"
         {
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_health"              "20"  
+                "item_control_a_precent_base"              "15"  
             }
-            "02"
+            "022"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_vision"              "200"  
+                "item_control_b_precent_base"              "15"  
             }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_c_precent_base"              "15"  
+            }
+
 
         }
 
 
         "Modifiers"
         {
-            "modifier_item_dragon_gem_2_datadriven"
+            "modifier_item_control_abc_2_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -121,8 +133,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_gem.lua"
-                        "Function"			"modifier_item_dragon_gem_on_created"
+                        "ScriptFile"		"items/control_abc.lua"
+                        "Function"			"modifier_item_control_abc_on_created"
                     }
                 }
                 
@@ -130,25 +142,25 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/dragon_gem.lua"
-                        "Function"			"modifier_item_dragon_gem_on_destroy"
+                        "ScriptFile"		"items/control_abc.lua"
+                        "Function"			"modifier_item_control_abc_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "item_recipe_dragon_gem_2"
+    "item_recipe_control_abc_2"
     {
-        "ID"                         "6022"
-        "BaseClass"                  "item_recipe_arcane_boots"
-        "ItemCost"                   "0"        
+        "ID"                                        "6272"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
 
         ItemRecipe                 "1" 
-        ItemResult                  "item_dragon_gem_2"
+        ItemResult                  "item_control_abc_2"
         ItemRequirements   
         {
-                "01"    "item_dragon_gem;item_dragon_gem"
+                "01"    "item_control_abc;item_control_abc"
         }
 
     }

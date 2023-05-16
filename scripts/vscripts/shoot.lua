@@ -83,9 +83,9 @@ function createShoot(keys)
 		local target = keys.target
 
 		if(target ~= nil) then
-			print("target",target:GetAbsOrigin())
+			--print("target",target:GetAbsOrigin())
 		else
-			print("point",ability:GetCursorPosition())
+		--	print("point",ability:GetCursorPosition())
 		end
 
 		--local starting_distance = ability:GetLevelSpecialValueFor( "starting_distance", ability:GetLevel() - 1 )

@@ -1,10 +1,6 @@
 //#base items/lvxie.kv
 //#base items/sacrificial_robe.kv
-//#base items/lvxie3.kv
-//#base items/lvxie4.kv
-//#base items/lvxie5.kv
-//#base items/lvxie6.kv
-//#base items/lvxie7.kv
+
 
 #base items/dragon_eye.kv
 #base items/dragon_claw.kv
@@ -18,20 +14,29 @@
 #base items/ability_speed_c.kv
 #base items/ability_speed_b.kv
 #base items/ability_speed_a.kv
+#base items/ability_speed_abc.kv
 
 #base items/range_c.kv
 #base items/range_b.kv
 #base items/range_a.kv
+#base items/range_abc.kv
 
 #base items/damage_c.kv
 #base items/damage_b.kv
 #base items/damage_a.kv
+#base items/damage_abc.kv
+
+#base items/damage_match_helper_abc.kv
 
 #base items/control_c.kv
 #base items/control_b.kv
 #base items/control_a.kv
+#base items/control_abc.kv
 
 #base items/energy_c.kv
+#base items/energy_b.kv
+#base items/energy_a.kv
+#base items/energy_abc.kv
 
 
 

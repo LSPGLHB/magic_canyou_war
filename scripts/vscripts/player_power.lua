@@ -129,7 +129,7 @@ function setPlayerPower(playerID, powerName, isAdd, value)
     end
     print(powerName.."=="..value)
     PlayerPower[playerID][powerName] = PlayerPower[playerID][powerName] + value
-    print("PlayerPower=="..PlayerPower[playerID][powerName])
+    --print("PlayerPower=="..PlayerPower[playerID][powerName])
 end
 
 function setPlayerPowerFlag(playerID, powerName, value)
@@ -157,11 +157,45 @@ function getPlayerPowerValueByName(hero, powerName, playerBaseValue)
     return stackCount
 end
 
+--能力数值运算
+function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
+	
+	local abilityBuffName = buffName.."_"..abilityLevel
+	print("getFinalValueOperation"..playerID..abilityBuffName)
+	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
+	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
+	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
+	
+	local tempPrecentBase = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_base'] / 100
+	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
+	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
 
+	--临时带持续时间的加强的功能还没做
+	local durationPrecentBase = 0
+	local durationBonusValue = 0
+	local durationPrecentFinal = 0 
+	--local modifierName = 
+	--print("getFinalValueOperation")
+	print(precentBase..","..bonusValue..","..precentFinal)
+	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
+	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
+	local returnValue = 0
+	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + durationPrecentBase) + bonusValue + tempBonusValue + durationBonusValue) * (1 + precentFinal + tempPrecentFinal + durationPrecentFinal)
+	
+	if (flag == 1) then
+		returnValue = operationValue
+	end
+	if( flag == 0 and returnValue <= baseValue)then
+		returnValue = operationValue
+	end
+	if (flag == 0 and returnValue > baseValue) then
+		returnValue = baseValue
+	end
+	--print("flag:"..flag..",baseValue:"..baseValue..",returnValue"..returnValue)
+	return returnValue
+end
 
-
-
-
+--基础属性数据包
 function initPlayerPower()
     PlayerPower={}
 
@@ -438,6 +472,45 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_match_duration'] = 0
         PlayerPower[playerID]['player_damage_match_flag'] = 1
 
+        PlayerPower[playerID]['player_damage_match_helper_d'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_c'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_b'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_a'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_d'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_c'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_b'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_a'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_d'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_c'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_b'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_a'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['duration_damage_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_duration'] = 0
+        PlayerPower[playerID]['player_damage_match_helper_flag'] = 1
+
         PlayerPower[playerID]['player_control_d'] = 0
         PlayerPower[playerID]['player_control_d_precent_base'] = 0
         PlayerPower[playerID]['player_control_d_precent_final'] = 0
@@ -516,6 +589,45 @@ function initPlayerPower()
         PlayerPower[playerID]['player_control_match_duration'] = 0
         PlayerPower[playerID]['player_control_match_flag'] = 1
         
+        PlayerPower[playerID]['player_control_match_helper_d'] = 0
+        PlayerPower[playerID]['player_control_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['player_control_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['player_control_match_helper_c'] = 0
+        PlayerPower[playerID]['player_control_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['player_control_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['player_control_match_helper_b'] = 0
+        PlayerPower[playerID]['player_control_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['player_control_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['player_control_match_helper_a'] = 0
+        PlayerPower[playerID]['player_control_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['player_control_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_d'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_c'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_b'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_a'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_d'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_c'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_b'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_a'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['duration_control_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['player_control_match_helper_duration'] = 0
+        PlayerPower[playerID]['player_control_match_helper_flag'] = 1
+
         PlayerPower[playerID]['player_energy_d'] = 0
         PlayerPower[playerID]['player_energy_d_precent_base'] = 0
         PlayerPower[playerID]['player_energy_d_precent_final'] = 0
@@ -594,8 +706,45 @@ function initPlayerPower()
         PlayerPower[playerID]['player_energy_match_duration'] = 0
         PlayerPower[playerID]['player_energy_match_flag'] = 1
 
-        
-  
+        PlayerPower[playerID]['player_energy_match_helper_d'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_c'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_b'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_a'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_d'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_c'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_b'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_a'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_d'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_c'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_b'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_a'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['duration_energy_match_helper_a_precent_final'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_duration'] = 0
+        PlayerPower[playerID]['player_energy_match_helper_flag'] = 1
+
     end
 end
 
@@ -685,6 +834,19 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_damage_match_a_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_match_a_precent_final'] = 0
 
+        PlayerPower[playerID]['temp_damage_match_helper_d'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_c'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_b'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_a'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_damage_match_helper_a_precent_final'] = 0
+
         PlayerPower[playerID]['temp_control_d'] = 0
         PlayerPower[playerID]['temp_control_d_precent_base'] = 0
         PlayerPower[playerID]['temp_control_d_precent_final'] = 0
@@ -710,6 +872,19 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_control_match_a'] = 0
         PlayerPower[playerID]['temp_control_match_a_precent_base'] = 0
         PlayerPower[playerID]['temp_control_match_a_precent_final'] = 0
+
+        PlayerPower[playerID]['temp_control_match_helper_d'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_c'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_b'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_a'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_control_match_helper_a_precent_final'] = 0
       
         PlayerPower[playerID]['temp_energy_d'] = 0
         PlayerPower[playerID]['temp_energy_d_precent_base'] = 0
@@ -736,6 +911,19 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_energy_match_a'] = 0
         PlayerPower[playerID]['temp_energy_match_a_precent_base'] = 0
         PlayerPower[playerID]['temp_energy_match_a_precent_final'] = 0
+
+        PlayerPower[playerID]['temp_energy_match_helper_d'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_c'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_b'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_a'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_energy_match_helper_a_precent_final'] = 0
 
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
             print("removeremove",playerID)
