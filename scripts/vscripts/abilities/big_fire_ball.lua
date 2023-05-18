@@ -46,6 +46,7 @@ function dealSkillbigFireBallBoom(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
 	local radius = ability:GetSpecialValueFor("aoe_boom_radius") --AOE爆炸范围
+    
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
 	
@@ -64,8 +65,8 @@ function dealSkillbigFireBallBoom(keys,shoot)
 		local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
 		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
-            local beat_back_one = ability:GetSpecialValueFor("beat_back_one")
-	        local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed")
+            local beat_back_one = ability:GetSpecialValueFor("beat_back_one") 
+	        local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed")   
             local tempDistance = (shoot:GetAbsOrigin() - unit:GetAbsOrigin()):Length2D()
             local beatBackDistance = beat_back_one - tempDistance   --只击退到AOE的600码
             beatBackUnit(keys,shoot,unit,beatBackDistance,beatBackSpeed,1,1)
@@ -73,8 +74,9 @@ function dealSkillbigFireBallBoom(keys,shoot)
 			ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 		end
 		--如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
-		if lable == GameRules.skillLabel and unitHealth ~= 0 then
-			reinforceEach(unit,shoot,nil)
+
+		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+            checkHitAbilityToMark(shoot, unit)
 		end
 	end
 end
@@ -82,12 +84,21 @@ end
 function bigFireBallDuration(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
+    local playerID = caster:GetPlayerID()
+    local AbilityLevel = shoot.abilityLevel
     local visionDebuff = keys.modifierDebuffName
     local aoe_duration_radius = ability:GetSpecialValueFor("aoe_duration_radius") --AOE持续作用范围
     local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
+    aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',AbilityLevel,owner)
+    aoe_duration = getApplyControlValue(shoot, aoe_duration)
+    shoot.control = aoe_duration
+    print("aoe_duration:"..aoe_duration)
     --local vision_radius = ability:GetSpecialValueFor("vision_radius") --视野debuff范围
     local debuff_duration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    local position=shoot:GetAbsOrigin()
+    debuff_duration = getFinalValueOperation(playerID,debuff_duration,'control',AbilityLevel,owner)
+    debuff_duration = getApplyControlValue(shoot, debuff_duration)
+    print("debuff_duration:"..debuff_duration)
+    local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
     local tempTimer = 0
     local particleBoom = staticStromRenderParticles(keys,shoot)
@@ -126,8 +137,8 @@ function bigFireBallDuration(keys,shoot)
                 end
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
-            if lable == GameRules.skillLabel and unitHealth ~= 0 then
-                reinforceEach(unit,shoot,nil)
+            if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+                checkHitAbilityToMark(shoot, unit)
             end
         end
         if tempTimer < aoe_duration then
@@ -146,7 +157,8 @@ end
 function staticStromRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
-	local duration = ability:GetSpecialValueFor("debuff_duration") --持续时间
+	local duration = shoot.control--ability:GetSpecialValueFor("aoe_duration") --持续时间
+   
 	local radius = ability:GetSpecialValueFor("aoe_duration_radius")
 	local particleBoom = ParticleManager:CreateParticle(keys.durationParticlesBoom, PATTACH_WORLDORIGIN, caster)
     local shootPos = shoot:GetAbsOrigin()

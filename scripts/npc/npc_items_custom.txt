@@ -25,18 +25,19 @@
 #base items/damage_b.kv
 #base items/damage_a.kv
 #base items/damage_abc.kv
-
 #base items/damage_match_helper_abc.kv
 
 #base items/control_c.kv
 #base items/control_b.kv
 #base items/control_a.kv
 #base items/control_abc.kv
+#base items/control_match_helper_abc.kv
 
 #base items/energy_c.kv
 #base items/energy_b.kv
 #base items/energy_a.kv
 #base items/energy_abc.kv
+#base items/energy_match_helper_abc.kv
 
 
 

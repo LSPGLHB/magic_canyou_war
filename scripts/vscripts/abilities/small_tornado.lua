@@ -6,6 +6,7 @@ function createSmallTornado(keys)
 		local speed = ability:GetSpecialValueFor("speed")
 		local max_distance = ability:GetSpecialValueFor("max_distance")
 		local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
+		aoe_duration = getApplyControlValue(shoot, aoe_duration)
 		local position = caster:GetAbsOrigin()
 		local direction = (ability:GetCursorPosition() - position):Normalized()
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
@@ -58,7 +59,7 @@ function smallTornadoDuration(keys,shoot)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 then
-                reinforceEach(unit,shoot,nil)
+                checkHitAbilityToMark(shoot, unit)
             end
         end
         if tempTimer < aoe_duration then

@@ -1,18 +1,18 @@
 "DOTAAbilities"
 {
-    "item_energy_b"
+    "item_energy_match_helper_abc"
     {
-        "ID"			"6220"
+        "ID"			"6310"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "oblivion_staff_lg"
+        "AbilityTextureName"        "rapier_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/oblivion_staff_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_energy_b"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_energy_b_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/rapier_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_energy_match_helper_abc"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_energy_match_helper_abc_Description" 
         "ItemCost"               "5"
 
 
@@ -29,12 +29,19 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_energy_b_precent_base"              "25"  
+                "item_energy_match_helper_c_precent_base"              "25"  
             }
-            "02"
+
+            "03"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_mana_cost_c_precent_base"              "40"  
+                "item_energy_match_helper_b_precent_base"              "25"  
+            }
+
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_energy_match_helper_a_precent_base"              "25"  
             }
 
 
@@ -43,7 +50,7 @@
 
         "Modifiers"
         {
-            "modifier_item_energy_b_datadriven"
+            "modifier_item_energy_match_helper_abc_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -52,8 +59,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/energy_b.lua"
-                        "Function"			"modifier_item_energy_b_on_created"
+                        "ScriptFile"		"items/energy_match_helper_abc.lua"
+                        "Function"			"modifier_item_energy_match_helper_abc_on_created"
                     }
                 }
                 
@@ -61,8 +68,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/energy_b.lua"
-                        "Function"			"modifier_item_energy_b_on_destroy"
+                        "ScriptFile"		"items/energy_match_helper_abc.lua"
+                        "Function"			"modifier_item_energy_match_helper_abc_on_destroy"
                     }
                 }
             }
@@ -71,19 +78,19 @@
         }
     }
 
-"item_energy_b_2"
+"item_energy_match_helper_abc_2"
     {
-        "ID"			"6221"
+        "ID"			"6311"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "wind_waker_lg"
+        "AbilityTextureName"        "aether_lens_lg"
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/wind_waker_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_energy_b_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_energy_b_2_Description" 
+        "IconSrc"                "file://{images}/custom_game/shop_item/aether_lens_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_energy_match_helper_abc_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_energy_match_helper_abc_2_Description" 
         "ItemCost"               "0"
 
 
@@ -100,7 +107,7 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_energy_b_precent_base"              "50"  
+                "item_energy_match_helper_abc_precent_base"              "50"  
             }
             "02"
             {
@@ -114,7 +121,7 @@
 
         "Modifiers"
         {
-            "modifier_item_energy_b_2_datadriven"
+            "modifier_item_energy_match_helper_abc_2_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -123,8 +130,8 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/energy_b.lua"
-                        "Function"			"modifier_item_energy_b_on_created"
+                        "ScriptFile"		"items/energy_match_helper_abc.lua"
+                        "Function"			"modifier_item_energy_match_helper_abc_on_created"
                     }
                 }
                 
@@ -132,28 +139,26 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"items/energy_b.lua"
-                        "Function"			"modifier_item_energy_b_on_destroy"
+                        "ScriptFile"		"items/energy_match_helper_abc.lua"
+                        "Function"			"modifier_item_energy_match_helper_abc_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "item_recipe_energy_b_2"
-    {
-        "ID"                                        "6222"
-        "BaseClass"                        "item_recipe_arcane_boots"
-        "ItemCost"                        "0"        
-
-        ItemRecipe                 "1" 
-        ItemResult                  "item_energy_b_2"
-        ItemRequirements   
-        {
-                "01"    "item_energy_b;item_energy_b"
-        }
-
-    }
+    //"item_recipe_energy_match_helper_abc_2"
+   // {
+    //    "ID"                                        "6312"
+    //    "BaseClass"                        "item_recipe_arcane_boots"
+    //    "ItemCost"                        "0"        
+    //    ItemRecipe                 "1" 
+   //     ItemResult                  "item_energy_match_helper_abc_2"
+    //    ItemRequirements   
+    //    {
+   //             "01"    "item_energy_match_helper_abc;item_energy_match_helper_abc"
+    //    }
+   // }
 
 
 }

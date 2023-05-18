@@ -94,6 +94,7 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 										0,
 										false)
 	local isHitUnit = true   --初始化设单位为可击中状态
+	--local isHitShoot = true
 	local searchUnits = {}
 	local returnVal = 0
 	for k,unit in pairs(aroundUnits) do
@@ -101,12 +102,15 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 		local unitTeam = unit:GetTeam()
 		local unitHealth = unit.isHealth
 		local shootHealth = shoot.isHealth
+		--[[已初始化
 		if shoot.hitUnits == nil then
 			shoot.hitUnits = {}
-		end
+		end]]
 		--让不可多次碰撞的子弹跟目标只碰撞一次
 		--子弹忽略自己，忽略发射者，忽略友军，忽略子弹(标签不是技能子弹)
 		if shoot ~= unit and unit ~= caster and unitTeam ~= casterTeam and GameRules.skillLabel ~= lable  then
+			isHitUnit = checkHitUnitToMark(shoot.hitUnits, isHitUnit, unit)
+			--[[
 			for i = 1, #shoot.hitUnits do
 				if shoot.hitUnits[i] == unit then
 					isHitUnit = false  --如果已经击中过就不再击中
@@ -115,7 +119,7 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 			end
 			if isHitUnit then
 				table.insert(shoot.hitUnits,unit)
-			end
+			end]]
 		end
 		if keys.isMultipleHit == 1 then --可多次碰撞的技能(穿透弹道)
 			isHitUnit = true
@@ -125,7 +129,13 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 			if(GameRules.skillLabel == lable and unitHealth ~= 0) then --如果碰到的是子弹，且法魂不为0：此处需要比拼法魂大小
 				--获取触碰双方的属性--print("shoot-nuit-Type:",shoot.unit_type,unit.unit_type)
 				--法魂计算过程(还需加入克制计算)
-				local tempHealth = shoot:GetHealth() - unit:GetHealth()
+				local shootHealth = shoot:GetHealth()
+				--shootHealth = getApplyEnergyValue(shoot, shootHealth)
+				local unitHealth = unit:GetHealth()
+				--unitHealth = getApplyEnergyValue(unit, unitHealth)
+				local tempHealth = shootHealth - unitHealth
+
+
 				if(tempHealth > 0) then
 					shoot:SetHealth(tempHealth)
 					--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
@@ -156,18 +166,72 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 					returnVal = hitType
 				end
 			end
-		else--相同队伍的触碰    	 
-			 --不搜索自己，标签为子弹
+		else--相同队伍的触碰 --不搜索自己，标签为子弹
 			if shoot ~= unit and GameRules.skillLabel == lable and isHitUnit then
-				--fireStormFlag用于标记该aoe是否已经起作用
-				if unit.shootPowerFlag == nil  then
-					reinforceEach(unit,shoot,nil) --加强运算记录在shoot.power_lv
-					unit.shootPowerFlag = 1;--与unit.power_flag是否同一个东西？？？？
+				--shootPowerFlag用于标记该aoe是否已经起作用(此处标记应该在里面或者用数组标记所有接触过的子弹名字)
+				--if shoot.shootPowerFlag == nil  then
+				--[[
+				for i = 1, #shoot.hitShoot do
+					if shoot.hitShoot[i] == unit then
+						isHitShoot = false  --如果已经击中过就不再击中
+						break
+					end
 				end
+				if isHitShoot then
+					table.insert(shoot.hitShoot,unit)
+					reinforceEach(unit,shoot,nil) --加强运算记录在shoot.power_lv
+				end]]
+					--shoot.shootPowerFlag = 1;--标记已经加强
+				--end
+				checkHitAbilityToMark(shoot, unit)
 			end
 		end
 	end
 	return returnVal
+end
+
+--记录击中技能目标
+function checkHitAbilityToMark(shoot, unit)	
+	local isHitFlag = true
+	for i = 1, #shoot.hitShoot do
+		if shoot.hitShoot[i] == unit then
+			isHitFlag = false  --如果已经击中过就不再击中
+			--print('checkHitAbilityToMark1')
+			break
+		end
+	end
+	if isHitFlag then
+		table.insert(shoot.hitShoot, unit)
+		reinforceEach(unit,shoot,nil) --加强运算记录在shoot.power_lv
+	end
+
+	local tempFlag = true
+	for j = 1, #unit.hitShoot do
+		if unit.hitShoot[j] == shoot then
+			tempFlag = false  --如果已经击中过就不再击中
+			--print('checkHitAbilityToMark2')
+			break
+		end
+	end
+	if tempFlag then
+		table.insert(unit.hitShoot, shoot)
+		reinforceEach(shoot,unit,nil) --加强运算记录在shoot.power_lv
+	end
+end
+
+--记录击中单位目标到数组，返回标记（true：未击中过，false：已经击中过）
+function checkHitUnitToMark(hitArray, isHitFlag, unit)
+	for i = 1, #hitArray do
+		if hitArray[i] == unit then
+			isHitFlag = false  --如果已经击中过就不再击中
+			--print('checkHitUnitToMark')
+			break
+		end
+	end
+	if isHitFlag then
+		table.insert(hitArray, unit)
+	end
+	return isHitFlag
 end
 
 function moveShootTimerRun(keys,shoot)
@@ -236,16 +300,18 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.owner = owner
 	shoot:SetOwner(owner)
 	shoot.unit_type = keys.unitType --用于计算克制和加强
-	print("unit_type"..shoot.unit_type)
+	--print("unit_type"..shoot.unit_type)
 	shoot.power_lv = 0 --用于实现克制和加强
-	shoot.power_flag = 0 --用于实现克制和加强
+	shoot.power_flag = 0 --用于实现克制和加强，标记粒子效果使用
 	shoot.hitUnits = {}--用于记录命中的目标
+	shoot.hitShoot = {} -- 用于记录击中过的子弹，避免重复运算
 	shoot.matchUnitsID ={}--记录被什么技能加强的过
 	shoot.matchAbilityLevel ={}--记录被什么等级技能加强的过
 	--shoot.matchPower = 0 -- 克制加强系数
 	shoot.abilityLevel = keys.AbilityLevel
 	local AbilityLevel = keys.AbilityLevel
 	--print("shoot:"..shoot.abilityLevel)
+	
 
 	--已处理
 	--蓝耗
@@ -259,17 +325,17 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--法魂
 	local abilityEnergy = shoot:GetHealth()
 	local energyBuffName = 'energy'
-	local energyMatchBuffName = 'energy_match'
+	
 	--shoot.energy_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_'..AbilityLevel],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_final']) - abilityEnergy
 	--shoot.energy_match_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_match_'..AbilityLevel],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_final']) - abilityEnergy
-	shoot.energy_bonus = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner)
-	shoot.energy_match_bonus = getFinalValueOperation(playerID,shoot.energy_bonus,energyMatchBuffName,AbilityLevel,owner)
+	local tempEnergy = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner) 
+	shoot.energy_bonus = tempEnergy - abilityEnergy
 	shoot:AddAbility('ability_health_control'):SetLevel(1)
 	shoot:RemoveModifierByName('modifier_health_debuff')
     shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
 	shoot:RemoveAbility('ability_health_control')
 	--print("abilityEnergy",abilityEnergy)
-	--print("energy_bonus",shoot.energy_bonus)
+	print("energy_bonus",shoot.energy_bonus)
 
 	--直接可用数据
 	--伤害
@@ -295,9 +361,11 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 	--半成品（还需现场加工,缺基础数据）
 	--控制时间
+	--[[
 	local controlBase = shoot.control
 	local contrilBuffName = 'control'
-	shoot.control = getFinalValueOperation(playerID,controlBase,contrilBuffName,AbilityLevel,owner)
+	shoot.control = getFinalValueOperation(playerID,controlBase,'control',AbilityLevel,owner)
+	]]
 	--[[
 	shoot.control_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel]
 	shoot.control_precent_base_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel..'_precent_base']

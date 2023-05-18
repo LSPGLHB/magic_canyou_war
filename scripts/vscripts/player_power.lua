@@ -161,7 +161,7 @@ end
 function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
 	
 	local abilityBuffName = buffName.."_"..abilityLevel
-	print("getFinalValueOperation"..playerID..abilityBuffName)
+	--print("getFinalValueOperation"..playerID..abilityBuffName)
 	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
 	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
 	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
@@ -176,7 +176,7 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
 	local durationPrecentFinal = 0 
 	--local modifierName = 
 	--print("getFinalValueOperation")
-	print(precentBase..","..bonusValue..","..precentFinal)
+	--print(precentBase..","..bonusValue..","..precentFinal)
 	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
 	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
 	local returnValue = 0

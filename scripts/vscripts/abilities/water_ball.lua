@@ -113,7 +113,7 @@ function dealSkillBoom(keys,shoot)
 		end
 		--如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
 		if lable == GameRules.skillLabel and unitHealth ~= 0 then
-			reinforceEach(unit,shoot,nil)
+			checkHitAbilityToMark(shoot, unit)
 		end
 	end
 end

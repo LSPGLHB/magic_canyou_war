@@ -1,24 +1,38 @@
 require('player_power')
 --LinkLuaModifier( "modifier_stone_beat_back_aoe_lua", "abilities/modifier_stone_beat_back_aoe_lua.lua",LUA_MODIFIER_MOTION_NONE )
-----伤害计算(keys, 子弹实体)
+----伤害相生增强计算(子弹实体)
 function getApplyDamageValue(shoot)
 	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, shoot.damage) --克制增强运算
 	if damage < 0 then
-		damage = 0  --伤害保底
+		damage = 1  --伤害保底
 	end
 	return damage
+end
+function getApplyControlValue(shoot, controlValue)
+	local control = powerLevelOperation(shoot, 'control', shoot.power_lv, controlValue) --克制增强运算
+	if control < 0 then
+		control = 0  --伤害保底
+	end
+	return control
+end
+function getApplyEnergyValue(shoot, shootEnergy)
+	local energy = powerLevelOperation(shoot, 'energy', shoot.power_lv, shootEnergy) --克制增强运算
+	if energy < 0 then
+		energy = 1  --伤害保底
+	end
+	return energy
 end
 --克制增强运算
 function powerLevelOperation(shoot, abilityName, powerLv, value)
 	--print("powerLevelOperation",powerLv,"=",damage)
-	local buffName = 'damage_match_helper'
+	local buffName = abilityName..'_match_helper'
 	local baseValue = 1
 	local matchPower = 0
-	--print("powerLevelOperation:"..#shoot.matchUnitsID)
+	print("powerLevelOperation:"..#shoot.matchUnitsID)
 	for i = 1, #shoot.matchUnitsID do
 		local valueID = shoot.matchUnitsID[i]
 		local abilityLevel = shoot.matchAbilityLevel[i]
-		--print("matchUnitsID:"..shoot.unit_type.."=="..valueID.."=="..abilityLevel)
+		print("matchUnitsID:"..shoot.unit_type.."=="..valueID.."=="..abilityLevel)
 		matchPower = matchPower + (getFinalValueOperation(valueID,baseValue,buffName,abilityLevel,nil) - 1)
 	end
 	print("matchPower",matchPower)
@@ -36,23 +50,22 @@ end
 --加强削弱运算(被搜索目标实体，自身实体，aoe类型,是否敌对减弱否则加强)
 function reinforceEach(unit,shoot,aoeType)
 	local shootTeam = shoot:GetTeam()
-	--local shootOwner = shoot.owner
-	--local shootOwnerID = shootOwner:GetPlayerID()
+	local shootOwner = shoot.owner
+	local shootOwnerID = shootOwner:GetPlayerID()
+	local shootLevel = shoot.abilityLevel
 	local unitTeam = unit:GetTeam()
 	local unitOwner = unit.owner
 	--print("owner2",unit.owner)
 	--print("owner3",unit:GetOwner())
 	local unitOwnerID = unitOwner:GetPlayerID()
 	local unitLevel = unit.abilityLevel
-	table.insert(shoot.matchUnitsID,unitOwnerID)
-	table.insert(shoot.matchAbilityLevel,unitLevel)
-	print("reinforceEachID:=="..unitOwnerID.."=="..unitLevel.."==="..#shoot.matchUnitsID)
 
-	local flag
+	local matchFlag = false
+	local teamFlag
 	if shootTeam ~= unitTeam then
-		flag = true
+		teamFlag = true
 	else
-		flag = false	
+		teamFlag = false	
 	end
 	--获取触碰双方的属性
 	local unitType = unit.unit_type
@@ -65,69 +78,106 @@ function reinforceEach(unit,shoot,aoeType)
 	end
 	print("shoot-nuit-Type:",shootType,unitType)
 	if shootType == "huo" then
-		if flag then
+		if teamFlag then
 			if unitType == "lei" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
+				--matchFlag = true
 			end
 		else
 			if unitType == "tu" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
+				matchFlag = true
 			end
 		end
  	end
 	if shootType == "feng" then
-		if flag then
+		if teamFlag then
 			if unitType == "tu" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
+				--matchFlag = true
 			end
 		else
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
+				matchFlag = true
 			end
 		end
 	end
 	if shootType == "shui" then
-		if flag then
+		if teamFlag then
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
+				--matchFlag = true
 			end
 		else
 			if unitType == "feng" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
+				matchFlag = true
 			end
 		end
 	end
 	if shootType == "lei" then
-		if flag then
+		if teamFlag then
 			if unitType == "feng" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
+				--matchFlag = true
 			end
 		else
 			if unitType == "shui" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
+				matchFlag = true
 			end
 		end
 	end
 	if shootType == "tu" then
-		if flag then
+		if teamFlag then
 			if unitType == "shui" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
+				--matchFlag = true
 			end
 		else
 			if unitType == "lei" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
+				matchFlag = true
 			end
 		end
+	end
+	if matchFlag then
+		--不能所有都加，只有加强的才加，减弱的目前没加后续再看
+		--加强伤害，控制等效果使用
+		table.insert(unit.matchUnitsID,shootOwnerID)
+		table.insert(unit.matchAbilityLevel,shootLevel)
+		--魔魂需要现在加强
+		local energyMatchBuffName = 'energy_match'
+		local unitHealth = unit:GetHealth()
+		unit.energy_match_bonus = getFinalValueOperation(unitOwnerID,unitHealth,energyMatchBuffName,unitLevel,unitOwner) - unitHealth
+		unit.energy_match_bonus = getApplyEnergyValue(unit, unit.energy_match_bonus)
+
+		if unit:HasModifier('modifier_health_debuff') then
+			unit:RemoveModifierByName('modifier_health_debuff')
+		end
+		if unit:HasModifier('modifier_health_buff') then
+			unit:RemoveModifierByName('modifier_health_buff')
+		end
+		unit:AddAbility('ability_health_control'):SetLevel(1)
+		unit:RemoveModifierByName('modifier_health_debuff')
+		unit:SetModifierStackCount('modifier_health_buff', unit, unit.energy_match_bonus)
+		unit:RemoveAbility('ability_health_control')
+
+		
+
+		print("reinforceEachID:=="..shootOwnerID.."=="..shootLevel.."=="..#unit.matchUnitsID)
+		print("energy_match_bonus:"..unit.energy_match_bonus)
 	end
 	--限制层数为1
 	if unit.power_lv > 1 then

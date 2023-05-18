@@ -1,11 +1,11 @@
 require('player_power')
 
-function modifier_item_energy_a_on_created(keys)
+function modifier_item_energy_abc_on_created(keys)
     print("onCreated")
     refreshItemBuff(keys,true)
 end
 
-function modifier_item_energy_a_on_destroy(keys)
+function modifier_item_energy_abc_on_destroy(keys)
     print("onDestroy")
     refreshItemBuff(keys,false)
 end
