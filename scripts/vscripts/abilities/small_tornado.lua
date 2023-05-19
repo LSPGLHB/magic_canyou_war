@@ -6,13 +6,13 @@ function createSmallTornado(keys)
 		local speed = ability:GetSpecialValueFor("speed")
 		local max_distance = ability:GetSpecialValueFor("max_distance")
 		local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
-		aoe_duration = getApplyControlValue(shoot, aoe_duration)
 		local position = caster:GetAbsOrigin()
 		local direction = (ability:GetCursorPosition() - position):Normalized()
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
-		shoot.control = aoe_duration
         creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
+		aoe_duration = getApplyControlValue(shoot, aoe_duration)
+		shoot.control = aoe_duration	
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		moveShoot(keys, shoot, particleID, smallTornadoBoomCallBack, smallTornadoTakeAwayCallBack)
@@ -27,14 +27,16 @@ function smallTornadoDuration(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
     local aoeDebuff = keys.hitTargetDebuff
+	shoot.debuffName = aoeDebuff
     local aoe_duration_radius = ability:GetSpecialValueFor("aoe_duration_radius") --AOE持续作用范围
-    print("smallTornadoDuration:"..shoot.control)
+    --print("smallTornadoDuration:"..shoot.control)
 	local aoe_duration = shoot.control
     local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
     local tempTimer = 0
-	local interval = 0.1
+	local interval = 0.02
     local particleBoom = smallTornadoRenderParticles(keys,shoot)
+	
     Timers:CreateTimer(0,function ()
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
@@ -53,16 +55,16 @@ function smallTornadoDuration(keys,shoot)
             if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
 				local damage = getApplyDamageValue(shoot)
 				damage = damage * interval
+				checkHitUnitToMark(shoot.hitUnits, true, unit)
 				ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 				blackHole(keys, shoot, unit, aoeDebuff, interval, tempTimer, aoe_duration)
-				
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 then
                 checkHitAbilityToMark(shoot, unit)
             end
         end
-        if tempTimer < aoe_duration then
+        if tempTimer < aoe_duration then --这里产生误差，需要换算法
             tempTimer = tempTimer + interval
             return interval
         else 

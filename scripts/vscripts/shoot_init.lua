@@ -6,16 +6,13 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 	shoot.speed = skillSpeedOperation(keys,shoot.speed)
 	--print('moveShoot2:'..shoot.speed)
 	--实现延迟满法魂效果
-
 	local shootHealthMax = shoot:GetHealth()
 	local shootHealthSend = shootHealthMax * 0.8
 	local shootHealthStep = shootHealthMax * 0.2 * shoot.speed / 10
 	shoot:SetHealth(shootHealthSend)
 
-
 	shoot.max_distance = shoot.max_distance_operation
 	--local direction = shoot.direction
-
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
 		if shoot.traveled_distance < shoot.max_distance then
 			moveShootTimerRun(keys,shoot)
@@ -44,7 +41,6 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 			if isHitType == 3 then
 				return 0.02
 			end
-
 			--子弹法魂为0，法魂被击破，行程结束
 			if shoot.isHealth == 0  then
 				if shoot then
@@ -110,16 +106,6 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 		--子弹忽略自己，忽略发射者，忽略友军，忽略子弹(标签不是技能子弹)
 		if shoot ~= unit and unit ~= caster and unitTeam ~= casterTeam and GameRules.skillLabel ~= lable  then
 			isHitUnit = checkHitUnitToMark(shoot.hitUnits, isHitUnit, unit)
-			--[[
-			for i = 1, #shoot.hitUnits do
-				if shoot.hitUnits[i] == unit then
-					isHitUnit = false  --如果已经击中过就不再击中
-					break
-				end
-			end
-			if isHitUnit then
-				table.insert(shoot.hitUnits,unit)
-			end]]
 		end
 		if keys.isMultipleHit == 1 then --可多次碰撞的技能(穿透弹道)
 			isHitUnit = true
@@ -135,12 +121,13 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 				--unitHealth = getApplyEnergyValue(unit, unitHealth)
 				local tempHealth = shootHealth - unitHealth
 
-
 				if(tempHealth > 0) then
 					shoot:SetHealth(tempHealth)
 					--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
 					unit.isHealth = 0
 					shootKill(unit)--直接kill掉进程
+					--此处将被子弹控制的单位debuff去除
+					clearUnitsModifierByName(unit,unit.debuffName)
 				else
 					if tempHealth == 0 then
 						unit.isHealth = 0
@@ -150,8 +137,10 @@ function shootHit(keys, shoot,hitType, hitUnitCallBack)
 					shootKill(shoot)
 					tempHealth = tempHealth * -1
 					unit:SetHealth(tempHealth)
+					--此处将被子弹控制的单位debuff去除
+					clearUnitsModifierByName(shoot,shoot.debuffName)
 				end
-				returnVal = 0
+				returnVal = 0 --此处控制是否爆炸
 			else --如果碰到的不是子弹
 				--返回中弹标记，出发中弹效果
 				if hitType == 1 or hitType == 2 then --爆炸弹，--穿透弹,--并实现伤害
@@ -367,9 +356,6 @@ function initDurationBuff(keys)
 	setPlayerDurationBuffByName(keys,"mana_regen",GameRules.playerBaseManaRegen)
 end
 
-
-
-
 function shootKill(shoot)
 	shoot:ForceKill(true)
 	shoot:AddNoDraw()
@@ -379,7 +365,10 @@ function clearUnitsModifierByName(shoot,modifierName)
 	for i = 1, #shoot.hitUnits  do
 		local unit = shoot.hitUnits[i]
 		unit:InterruptMotionControllers( true )
-		unit:RemoveModifierByName(modifierName)
+		if unit:HasModifier(modifierName) then
+			unit:RemoveModifierByName(modifierName)
+		end
+
 	end
 end
 
@@ -485,7 +474,7 @@ function blackHole(keys, shoot, unit, modifierDebuffName, interval, tempTimer, b
 	local caster = keys.caster
 	local ability = keys.ability
 	local debuffTable = unit:FindModifierByName(modifierDebuffName)
-	if debuffTable == nil then
+	if debuffTable == nil then --此处可清除原来Debuff，加其他的
 		ability:ApplyDataDrivenModifier(caster, unit, modifierDebuffName, {Duration = -1})
 	end
 	local G_Speed = ability:GetSpecialValueFor("G_speed")

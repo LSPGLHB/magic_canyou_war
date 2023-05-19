@@ -142,8 +142,8 @@ function bigFireBallDuration(keys,shoot)
             end
         end
         if tempTimer < aoe_duration then
-            tempTimer = tempTimer + 0.1
-            return 0.1
+            tempTimer = tempTimer + 0.02
+            return 0.02
         else 
             ParticleManager:DestroyParticle(particleBoom, true)
             EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)	
