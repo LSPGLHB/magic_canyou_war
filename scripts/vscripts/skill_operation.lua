@@ -2,45 +2,49 @@ require('player_power')
 --LinkLuaModifier( "modifier_stone_beat_back_aoe_lua", "abilities/modifier_stone_beat_back_aoe_lua.lua",LUA_MODIFIER_MOTION_NONE )
 ----伤害相生增强计算(子弹实体)
 function getApplyDamageValue(shoot)
-	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, shoot.damage) --克制增强运算
+	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, shoot.damage) 
 	if damage < 0 then
 		damage = 1  --伤害保底
 	end
 	return damage
 end
 function getApplyControlValue(shoot, controlValue)
-	local control = powerLevelOperation(shoot, 'control', shoot.power_lv, controlValue) --克制增强运算
+	local control = powerLevelOperation(shoot, 'control', shoot.power_lv, controlValue) 
 	if control < 0 then
-		control = 0  --伤害保底
+		control = 0.1  --伤害保底
 	end
 	return control
 end
 function getApplyEnergyValue(shoot, shootEnergy)
-	local energy = powerLevelOperation(shoot, 'energy', shoot.power_lv, shootEnergy) --克制增强运算
+	local energy = powerLevelOperation(shoot, 'energy', shoot.power_lv, shootEnergy) 
 	if energy < 0 then
 		energy = 1  --伤害保底
 	end
 	return energy
 end
---克制增强运算
+--克制增强运算（依赖match_helper数值）
 function powerLevelOperation(shoot, abilityName, powerLv, value)
 	--print("powerLevelOperation",powerLv,"=",damage)
-	local buffName = abilityName..'_match_helper'
-	local baseValue = 1
-	local matchPower = 0
-	print("powerLevelOperation:"..#shoot.matchUnitsID)
+	local owner = shoot.owner
+	local playerID = owner:GetPlayerID()
+	local matchBuffName = abilityName..'_match'
+	local matchValue = getFinalValueOperation(playerID,value,matchBuffName,shoot.abilityLevel,owner)
+	print(matchBuffName..':'..matchValue)
+	--print("powerLevelOperation:"..#shoot.matchUnitsID)
+	local helperBuffName = abilityName..'_match_helper'
+	local matchHelperValue = matchValue
 	for i = 1, #shoot.matchUnitsID do
 		local valueID = shoot.matchUnitsID[i]
 		local abilityLevel = shoot.matchAbilityLevel[i]
 		print("matchUnitsID:"..shoot.unit_type.."=="..valueID.."=="..abilityLevel)
-		matchPower = matchPower + (getFinalValueOperation(valueID,baseValue,buffName,abilityLevel,nil) - 1)
+		matchHelperValue = getFinalValueOperation(valueID,matchHelperValue,helperBuffName,abilityLevel,nil)
 	end
-	print("matchPower",matchPower)
+	print('matchHelperValue:'..matchHelperValue)
 	if powerLv > 0 then
-		value = value * (1.25 + matchPower)
+		value = matchHelperValue * 1.25
 	end
 	if powerLv < 0 then
-		value = value * 0.75 
+		value = matchHelperValue * 0.75 
 	end
 	return value
 end
@@ -160,8 +164,8 @@ function reinforceEach(unit,shoot,aoeType)
 		--魔魂需要现在加强
 		local energyMatchBuffName = 'energy_match'
 		local unitHealth = unit:GetHealth()
-		unit.energy_match_bonus = getFinalValueOperation(unitOwnerID,unitHealth,energyMatchBuffName,unitLevel,unitOwner) - unitHealth
-		unit.energy_match_bonus = getApplyEnergyValue(unit, unit.energy_match_bonus)
+		local tempEnergy = getFinalValueOperation(unitOwnerID,unitHealth,energyMatchBuffName,unitLevel,unitOwner)
+		unit.energy_match_bonus = getApplyEnergyValue(unit, tempEnergy) - tempEnergy
 
 		if unit:HasModifier('modifier_health_debuff') then
 			unit:RemoveModifierByName('modifier_health_debuff')
@@ -173,8 +177,6 @@ function reinforceEach(unit,shoot,aoeType)
 		unit:RemoveModifierByName('modifier_health_debuff')
 		unit:SetModifierStackCount('modifier_health_buff', unit, unit.energy_match_bonus)
 		unit:RemoveAbility('ability_health_control')
-
-		
 
 		print("reinforceEachID:=="..shootOwnerID.."=="..shootLevel.."=="..#unit.matchUnitsID)
 		print("energy_match_bonus:"..unit.energy_match_bonus)

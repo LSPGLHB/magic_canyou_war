@@ -92,12 +92,12 @@ function bigFireBallDuration(keys,shoot)
     aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',AbilityLevel,owner)
     aoe_duration = getApplyControlValue(shoot, aoe_duration)
     shoot.control = aoe_duration
-    print("aoe_duration:"..aoe_duration)
+    --print("aoe_duration:"..aoe_duration)
     --local vision_radius = ability:GetSpecialValueFor("vision_radius") --视野debuff范围
     local debuff_duration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuff_duration = getFinalValueOperation(playerID,debuff_duration,'control',AbilityLevel,owner)
     debuff_duration = getApplyControlValue(shoot, debuff_duration)
-    print("debuff_duration:"..debuff_duration)
+    --print("debuff_duration:"..debuff_duration)
     local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
     local tempTimer = 0

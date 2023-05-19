@@ -22,9 +22,9 @@ function refreshItemBuff(keys,flag)
     local item_mana_cost_a_precent_base = ability:GetSpecialValueFor("item_mana_cost_a_precent_base")
 
     setPlayerPower(playerID, "player_energy_c_precent_base", flag, item_energy_c_precent_base)
-    setPlayerPower(playerID, "player_mana_cost_c_precent_base", flag, item_mana_cost_b_precent_base)
+    setPlayerPower(playerID, "player_mana_cost_c_precent_base", flag, item_mana_cost_c_precent_base)
     setPlayerPower(playerID, "player_energy_b_precent_base", flag, item_energy_b_precent_base)
-    setPlayerPower(playerID, "player_mana_cost_b_precent_base", flag, item_mana_costb_precent_base)
+    setPlayerPower(playerID, "player_mana_cost_b_precent_base", flag, item_mana_cost_b_precent_base)
     setPlayerPower(playerID, "player_energy_a_precent_base", flag, item_energy_a_precent_base)
     setPlayerPower(playerID, "player_mana_cost_a_precent_base", flag, item_mana_cost_a_precent_base)
 

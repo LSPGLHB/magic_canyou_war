@@ -325,9 +325,6 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--法魂
 	local abilityEnergy = shoot:GetHealth()
 	local energyBuffName = 'energy'
-	
-	--shoot.energy_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_'..AbilityLevel],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_'..AbilityLevel..'_precent_final']) - abilityEnergy
-	--shoot.energy_match_bonus = finalValueOperation(abilityEnergy,PlayerPower[playerID]['player_energy_match_'..AbilityLevel],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_energy_match_'..AbilityLevel..'_precent_final']) - abilityEnergy
 	local tempEnergy = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner) 
 	shoot.energy_bonus = tempEnergy - abilityEnergy
 	shoot:AddAbility('ability_health_control'):SetLevel(1)
@@ -342,15 +339,12 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	local damageBase = ability:GetSpecialValueFor("damage")
 	local damageBuffName = 'damage'
 	local damageMatchBuffName = 'damage_match'
-	--shoot.damage = finalValueOperation(damageBase, PlayerPower[playerID]['player_damage_'..AbilityLevel],PlayerPower[playerID]['player_damage_'..AbilityLevel..'_precent_base'], PlayerPower[playerID]['player_damage_'..AbilityLevel..'_precent_final'])
-	--shoot.damage_match = finalValueOperation(shoot.damage, PlayerPower[playerID]['player_damage_match_'..AbilityLevel],PlayerPower[playerID]['player_damage_match_'..AbilityLevel..'_precent_base'] ,PlayerPower[playerID]['player_damage_match_'..AbilityLevel..'_precent_final'])
 	shoot.damage = getFinalValueOperation(playerID,damageBase,damageBuffName,AbilityLevel,owner)
-	shoot.damage_match = getFinalValueOperation(playerID,shoot.damage,damageMatchBuffName,AbilityLevel,owner)
+	
 	--print("damage",shoot.damage)
 	--弹道速度
 	local speedBase =  ability:GetSpecialValueFor("speed")
 	local speedBuffName = 'ability_speed'
-	--shoot.speed = finalValueOperation(speedBase,PlayerPower[playerID]['player_ability_speed_'..AbilityLevel],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_base'],PlayerPower[playerID]['player_ability_speed_'..AbilityLevel..'_precent_final'])
 	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * 0.02
 
 	--射程
@@ -359,22 +353,8 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.max_distance_operation = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
 
 
-	--半成品（还需现场加工,缺基础数据）
-	--控制时间
-	--[[
-	local controlBase = shoot.control
-	local contrilBuffName = 'control'
-	shoot.control = getFinalValueOperation(playerID,controlBase,'control',AbilityLevel,owner)
-	]]
-	--[[
-	shoot.control_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel]
-	shoot.control_precent_base_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel..'_precent_base']
-	shoot.control_precent_final_bonus = PlayerPower[playerID]['player_control_'..AbilityLevel..'_precent_final']
-	
-	shoot.control_match_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel]
-	shoot.control_match_precent_base_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel..'_precent_base']
-	shoot.control_match_precent_final_bonus = PlayerPower[playerID]['player_control_match_'..AbilityLevel..'_precent_final']
-	]]
+	--控制时间(在其他地方执行)
+
 	
 end
 
