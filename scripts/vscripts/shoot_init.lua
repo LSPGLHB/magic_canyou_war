@@ -368,7 +368,7 @@ function clearUnitsModifierByName(shoot,modifierName)
 		if unit:HasModifier(modifierName) then
 			unit:RemoveModifierByName(modifierName)
 		end
-
+		FindClearSpaceForUnit( unit, unit:GetAbsOrigin(), false )
 	end
 end
 
@@ -470,7 +470,7 @@ function takeAwayUnit(keys,shoot,hitTarget)
 end
 
 --黑洞效果
-function blackHole(keys, shoot, unit, modifierDebuffName, interval, tempTimer, blackHoleDuration)
+function blackHole(keys, shoot, unit, modifierDebuffName, interval)
 	local caster = keys.caster
 	local ability = keys.ability
 	local debuffTable = unit:FindModifierByName(modifierDebuffName)
@@ -484,15 +484,9 @@ function blackHole(keys, shoot, unit, modifierDebuffName, interval, tempTimer, b
 	local vectorDistance = Vector(shootPos.x,shootPos.y,0) - Vector(unitPos.x,unitPos.y,0)
 	local G_Direction = (vectorDistance):Normalized()
 	local G_Distance = (vectorDistance):Length2D()
-	if G_Distance < 50 then --此处还需调整
-		G_Speed = G_Distance
-	end
 	local newPosition = unitPos +  G_Direction * G_Speed
 	local groundPos = GetGroundPosition(newPosition, unit)
 	unit:SetAbsOrigin(groundPos)
-	if tempTimer >= blackHoleDuration then
-		FindClearSpaceForUnit( unit, groundPos, false )
-	end
 end
 
 --未注入灵魂

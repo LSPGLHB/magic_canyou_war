@@ -29,17 +29,17 @@ function powerLevelOperation(shoot, abilityName, powerLv, value)
 	local playerID = owner:GetPlayerID()
 	local matchBuffName = abilityName..'_match'
 	local matchValue = getFinalValueOperation(playerID,value,matchBuffName,shoot.abilityLevel,owner)
-	print(matchBuffName..':'..matchValue)
+	--print(matchBuffName..':'..matchValue)
 	--print("powerLevelOperation:"..#shoot.matchUnitsID)
 	local helperBuffName = abilityName..'_match_helper'
 	local matchHelperValue = matchValue
 	for i = 1, #shoot.matchUnitsID do
 		local valueID = shoot.matchUnitsID[i]
 		local abilityLevel = shoot.matchAbilityLevel[i]
-		print("matchUnitsID:"..shoot.unit_type.."=="..valueID.."=="..abilityLevel)
+		--print("matchUnitsID:"..shoot.unit_type.."=="..valueID.."=="..abilityLevel)
 		matchHelperValue = getFinalValueOperation(valueID,matchHelperValue,helperBuffName,abilityLevel,nil)
 	end
-	print('matchHelperValue:'..matchHelperValue)
+	--print('matchHelperValue:'..matchHelperValue)
 	if powerLv > 0 then
 		value = matchHelperValue * 1.25
 	end

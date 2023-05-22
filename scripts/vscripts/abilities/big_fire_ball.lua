@@ -97,12 +97,16 @@ function bigFireBallDuration(keys,shoot)
     local debuff_duration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuff_duration = getFinalValueOperation(playerID,debuff_duration,'control',AbilityLevel,owner)
     debuff_duration = getApplyControlValue(shoot, debuff_duration)
-    --print("debuff_duration:"..debuff_duration)
+    print("debuff_duration:"..debuff_duration)
     local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-    local tempTimer = 0
+    local interval = 0.02
     local particleBoom = staticStromRenderParticles(keys,shoot)
     Timers:CreateTimer(0,function ()
+        --子弹被销毁的话结束计时器进程
+		if shoot.isKill == 1 then
+			return nil
+		end
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -141,16 +145,17 @@ function bigFireBallDuration(keys,shoot)
                 checkHitAbilityToMark(shoot, unit)
             end
         end
-        if tempTimer < aoe_duration then
-            tempTimer = tempTimer + 0.02
-            return 0.02
-        else 
-            ParticleManager:DestroyParticle(particleBoom, true)
-            EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)	
-            shoot:ForceKill(true)
-            shoot:AddNoDraw()
-            return nil
-        end
+
+        return interval
+    end)
+
+    Timers:CreateTimer(aoe_duration,function ()
+        shoot.isKill = 1
+        ParticleManager:DestroyParticle(particleBoom, true)
+        EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)	
+        shoot:ForceKill(true)
+        shoot:AddNoDraw()
+        return nil
 	end)
 end
 

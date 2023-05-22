@@ -33,11 +33,14 @@ function smallTornadoDuration(keys,shoot)
 	local aoe_duration = shoot.control
     local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-    local tempTimer = 0
 	local interval = 0.02
     local particleBoom = smallTornadoRenderParticles(keys,shoot)
 	
     Timers:CreateTimer(0,function ()
+		--子弹被销毁的话结束计时器进程
+		if shoot.isKill == 1 then
+			return nil
+		end
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -57,25 +60,29 @@ function smallTornadoDuration(keys,shoot)
 				damage = damage * interval
 				checkHitUnitToMark(shoot.hitUnits, true, unit)
 				ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
-				blackHole(keys, shoot, unit, aoeDebuff, interval, tempTimer, aoe_duration)
+				blackHole(keys, shoot, unit, aoeDebuff, interval)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 then
                 checkHitAbilityToMark(shoot, unit)
             end
         end
-        if tempTimer < aoe_duration then --这里产生误差，需要换算法
-            tempTimer = tempTimer + interval
-            return interval
-        else 
-			clearUnitsModifierByName(shoot,aoeDebuff)
-            ParticleManager:DestroyParticle(particleBoom, true)
-            EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)	
-            shoot:ForceKill(true)
-            shoot:AddNoDraw()
-            return nil
-        end
+        return interval
+
 	end)
+	--print("aoe_duration:"..aoe_duration)
+	--启动计时器，时间到了结束debuff销毁子弹
+	Timers:CreateTimer(aoe_duration,function ()
+		--print("timeOver")
+		shoot.isKill = 1
+		clearUnitsModifierByName(shoot,aoeDebuff)
+		ParticleManager:DestroyParticle(particleBoom, true)
+		EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)	
+		shoot:ForceKill(true)
+		shoot:AddNoDraw()
+		return nil
+	end)
+
 end
 
 --特效显示效果

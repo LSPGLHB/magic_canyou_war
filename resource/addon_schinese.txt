@@ -26,14 +26,6 @@
         "DOTA_Tooltip_ability_make_friend_datadriven_Note0"                "这是召唤物"
 
 
-
-
-
-
-
-
-	
-
 		"huoren"                      "召唤火人"
 		"yang"						  "召唤物"
 		"niu"			              "召唤物"	
@@ -70,59 +62,173 @@
 		"DOTA_Tooltip_ability_item_sacrificial_robe_bonus_shoot_speed"  "速度："
 
 
-		"DOTA_Tooltip_ability_item_lvxie3"   "绿鞋3"
-		"DOTA_Tooltip_ability_item_lvxie3_Description"  "攻击力和速度增加2"
-
-		"DOTA_Tooltip_ability_item_lvxie4"   "绿鞋4"
-		"DOTA_Tooltip_ability_item_lvxie4_Description"  "攻击力和速度增加2"
-
-		"DOTA_Tooltip_ability_item_lvxie5"   "绿鞋5"
-		"DOTA_Tooltip_ability_item_lvxie5_Description"  "攻击力和速度增加2"
-
-
-		"DOTA_Tooltip_ability_item_lvxie6"   "绿鞋6"
-		"DOTA_Tooltip_ability_item_lvxie6_Description"  "合成用+7=1"
-
-		"DOTA_Tooltip_ability_item_lvxie7"   "绿鞋7"
-		"DOTA_Tooltip_ability_item_lvxie7_Description"  "合成用+6=1"
 
 
 
 		"DOTA_Tooltip_ability_item_dragon_eye"   "奥妮克希亚的头环"
-		"DOTA_Tooltip_ability_item_dragon_eye_Description"  "+视野：150，两个可合成奥妮克希亚之眼"
+		"DOTA_Tooltip_ability_item_dragon_eye_Description"  "+150视野\n两个可合成奥妮克希亚之眼"
 		"DOTA_Tooltip_ability_item_dragon_eye_2"   "奥妮克希亚之眼"
-		"DOTA_Tooltip_ability_item_dragon_eye_2_Description"  "+视野：300"
+		"DOTA_Tooltip_ability_item_dragon_eye_2_Description"  "+300视野"
 
 		"DOTA_Tooltip_ability_item_dragon_heart"   "艾瑞斯之血"
-		"DOTA_Tooltip_ability_item_dragon_heart_Description"  "+生命：20，两个可合成艾瑞斯之心"
+		"DOTA_Tooltip_ability_item_dragon_heart_Description"  "+20生命\n两个可合成艾瑞斯之心"
 		"DOTA_Tooltip_ability_item_dragon_heart_2"   "艾瑞斯之心"
-		"DOTA_Tooltip_ability_item_dragon_heart_2_Description"  "+生命：40"
+		"DOTA_Tooltip_ability_item_dragon_heart_2_Description"  "+40生命"
 
 		"DOTA_Tooltip_ability_item_dragon_gem"   "泰拉尔结晶"
-		"DOTA_Tooltip_ability_item_dragon_gem_Description"  "+生命：10，+视野：100，两个可合成泰拉尔宝石"
+		"DOTA_Tooltip_ability_item_dragon_gem_Description"  "+10生命\n+100视野\n两个可合成泰拉尔宝石"
 		"DOTA_Tooltip_ability_item_dragon_gem_2"   "泰拉尔宝石"
-		"DOTA_Tooltip_ability_item_dragon_gem_2_Description"  "+生命：20，+视野：200
+		"DOTA_Tooltip_ability_item_dragon_gem_2_Description"  "+20生命\n+200视野"
 
-		"DOTA_Tooltip_ability_item_dragon_squama"   "艾瑞斯的皮毛"
-		"DOTA_Tooltip_ability_item_dragon_squama_Description"  "+免伤：10%，两个可合成艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_dragon_squama"   "艾瑞斯之皮"
+		"DOTA_Tooltip_ability_item_dragon_squama_Description"  "+10%免伤\n两个可合成艾瑞斯之鳞"
 		"DOTA_Tooltip_ability_item_dragon_squama_2"   "艾瑞斯之鳞"
-		"DOTA_Tooltip_ability_item_dragon_squama_2_Description"  "+免伤：20%"
+		"DOTA_Tooltip_ability_item_dragon_squama_2_Description"  "+20%免伤"
 
 		"DOTA_Tooltip_ability_item_speed_shoe"   "布鞋"
-		"DOTA_Tooltip_ability_item_speed_shoe_Description"  "+移动速度：20，两个可合成速度鞋"
+		"DOTA_Tooltip_ability_item_speed_shoe_Description"  "+20移动速度\n两个可合成速度鞋"
 		"DOTA_Tooltip_ability_item_speed_shoe_2"   "速度鞋"
-		"DOTA_Tooltip_ability_item_speed_shoe_2_Description"  "+移动速度：45"
+		"DOTA_Tooltip_ability_item_speed_shoe_2_Description"  "+45移动速度"
 
 		"DOTA_Tooltip_ability_item_dragon_claw"   "凯旋腿甲"
-		"DOTA_Tooltip_ability_item_dragon_claw_Description"  "+移速：15，+视野：100，两个可合成元帅腿甲"
+		"DOTA_Tooltip_ability_item_dragon_claw_Description"  "+15移速\n+100视野\n两个可合成元帅腿甲"
 		"DOTA_Tooltip_ability_item_dragon_claw_2"   "元帅腿甲"
-		"DOTA_Tooltip_ability_item_dragon_claw_2_Description"  "+移速：25，+视野：200"
+		"DOTA_Tooltip_ability_item_dragon_claw_2_Description"  "+25移速\n+200视野"
 
 		"DOTA_Tooltip_ability_item_energy_shoe"   "动力鞋"
-		"DOTA_Tooltip_ability_item_energy_shoe_Description"  "+移速：10%（每次施放技能后触发，持续1.25秒），两个可合成艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_energy_shoe_Description"  "+10%移速（每次施放技能后触发，持续1.25秒）\n两个可合成艾瑞斯之鳞"
 		"DOTA_Tooltip_ability_item_energy_shoe_2"   "能量鞋"
-		"DOTA_Tooltip_ability_item_energy_shoe_2_Description"  "+移速：20%（每次施放技能后触发，持续1.25秒）"
+		"DOTA_Tooltip_ability_item_energy_shoe_2_Description"  "+20%移速（每次施放技能后触发，持续1.25秒）"
 
+		"DOTA_Tooltip_ability_item_magic_staff"   "魔力法杖"
+		"DOTA_Tooltip_ability_item_magic_staff_Description"  "+20魔法\n两个可合成魔能权杖"
+		"DOTA_Tooltip_ability_item_magic_staff_2"   "魔能权杖"
+		"DOTA_Tooltip_ability_item_magic_staff_2_Description"  "+40魔法"
+
+		"DOTA_Tooltip_ability_item_magic_gem"   "虚无宝石"
+		"DOTA_Tooltip_ability_item_magic_gem_Description"  "+1每秒魔法回复速度\n两个可合成魔能水晶"
+		"DOTA_Tooltip_ability_item_magic_gem_2"   "魔能水晶"
+		"DOTA_Tooltip_ability_item_magic_gem_2_Description"  "+2每秒魔法回复速度"
+
+		"DOTA_Tooltip_ability_item_ability_speed_c"   "附魔匕首"
+		"DOTA_Tooltip_ability_item_ability_speed_c_Description"  "+70初级技能飞行速度\n+7%初级技能飞行速度\n两个可合成魔刃"
+		"DOTA_Tooltip_ability_item_ability_speed_c_2"   "蓝色闪光"
+		"DOTA_Tooltip_ability_item_ability_speed_c_2_Description"  "+100初级技能飞行速度\n+10%初级技能飞行速度"
+
+		"DOTA_Tooltip_ability_item_ability_speed_b"   "精制短剑"
+		"DOTA_Tooltip_ability_item_ability_speed_b_Description"  "+70中级技能飞行速度\n+7%中级技能飞行速度\n两个可合成魔刃"
+		"DOTA_Tooltip_ability_item_ability_speed_b_2"   "魔剑"
+		"DOTA_Tooltip_ability_item_ability_speed_b_2_Description"  "+100中级技能飞行速度\n+10%中级技能飞行速度"
+
+		"DOTA_Tooltip_ability_item_ability_speed_a"   "骑士长剑"
+		"DOTA_Tooltip_ability_item_ability_speed_a_Description"  "+70高级技能飞行速度\n+7%高级技能飞行速度\n两个可合成魔刃"
+		"DOTA_Tooltip_ability_item_ability_speed_a_2"   "魔灵之刃"
+		"DOTA_Tooltip_ability_item_ability_speed_a_2_Description"  "+100高级技能飞行速度\n+10%高级技能飞行速度"
+
+		"DOTA_Tooltip_ability_item_ability_speed_abc"   "猎鹰长弓"
+		"DOTA_Tooltip_ability_item_ability_speed_abc_Description"  "+10%技能飞行速度\n两个可合成魔刃"
+		"DOTA_Tooltip_ability_item_ability_speed_abc_2"   "冰霜之斧"
+		"DOTA_Tooltip_ability_item_ability_speed_abc_2_Description"  "+15%技能飞行速度"
+
+		"DOTA_Tooltip_ability_item_range_c"   "魔力树枝"
+		"DOTA_Tooltip_ability_item_range_c_Description"  "+120初级技能射程\n+6%初级技能射程\n两个可合成"
+		"DOTA_Tooltip_ability_item_range_c_2"   "魔能法杖"
+		"DOTA_Tooltip_ability_item_range_c_2_Description"  "+200初级技能射程\n+10%初级技能射程"
+
+		"DOTA_Tooltip_ability_item_range_b"   "魔力树枝"
+		"DOTA_Tooltip_ability_item_range_b_Description"  "+120中级技能射程\n+6%中级技能射程\n两个可合成"
+		"DOTA_Tooltip_ability_item_range_b_2"   "魔能法杖"
+		"DOTA_Tooltip_ability_item_range_b_2_Description"  "+200中级技能射程\n+10%中级技能射程"
+
+		"DOTA_Tooltip_ability_item_range_a"   "魔力树枝"
+		"DOTA_Tooltip_ability_item_range_a_Description"  "+120高级技能射程\n+6%高级技能射程\n两个可合成"
+		"DOTA_Tooltip_ability_item_range_a_2"   "魔能法杖"
+		"DOTA_Tooltip_ability_item_range_a_2_Description"  "+200高级技能射程\n+10%高级技能射程"
+
+		"DOTA_Tooltip_ability_item_range_abc"   "寒冰之杖"
+		"DOTA_Tooltip_ability_item_range_abc_Description"  "+12%技能射程\n两个可合成"
+		"DOTA_Tooltip_ability_item_range_abc_2"   "潜能法杖"
+		"DOTA_Tooltip_ability_item_range_abc_2_Description"  "+17%技能射程"
+
+		"DOTA_Tooltip_ability_item_damage_c"   "大地之怒"
+		"DOTA_Tooltip_ability_item_damage_c_Description"  "+4初级技能伤害\n+20%初级技能伤害\n两个可合成"
+		"DOTA_Tooltip_ability_item_damage_c_2"   "绝望之刃"
+		"DOTA_Tooltip_ability_item_damage_c_2_Description"  "+7初级技能伤害\n+45%初级技能伤害"
+
+		"DOTA_Tooltip_ability_item_damage_b"   "雷霆"
+		"DOTA_Tooltip_ability_item_damage_b_Description"  "+4中级技能伤害\n+20%中级技能伤害\n两个可合成"
+		"DOTA_Tooltip_ability_item_damage_b_2"   "风暴使者"
+		"DOTA_Tooltip_ability_item_damage_b_2_Description"  "+7中级技能伤害\n+45%中级技能伤害"
+
+		"DOTA_Tooltip_ability_item_damage_a"   "嗜血魔剑"
+		"DOTA_Tooltip_ability_item_damage_a_Description"  "+4高级技能伤害\n+20%高级技能伤害\n两个可合成"
+		"DOTA_Tooltip_ability_item_damage_a_2"   "龙骑之弩"
+		"DOTA_Tooltip_ability_item_damage_a_2_Description"  "+7高级技能伤害\n+45%高级技能伤害"
+
+		"DOTA_Tooltip_ability_item_damage_abc"   "圣光之锤"
+		"DOTA_Tooltip_ability_item_damage_abc_Description"  "+20%技能伤害\n两个可合成"
+		"DOTA_Tooltip_ability_item_damage_abc_2"   "烈焰风暴"
+		"DOTA_Tooltip_ability_item_damage_abc_2_Description"  "+30%技能伤害"
+
+		"DOTA_Tooltip_ability_item_control_c"   "巫术缚法指环"
+		"DOTA_Tooltip_ability_item_control_c_Description"  "+15%初级技能控制时间\n两个可合成"
+		"DOTA_Tooltip_ability_item_control_c_2"   "多彩莲花浮雕"
+		"DOTA_Tooltip_ability_item_control_c_2_Description"  "+25%初级技能控制时间"
+
+		"DOTA_Tooltip_ability_item_control_b"   "混沌缠丝陵玉"
+		"DOTA_Tooltip_ability_item_control_b_Description"  "+15%中级技能控制时间\n两个可合成"
+		"DOTA_Tooltip_ability_item_control_b_2"   "致密晶化核心"
+		"DOTA_Tooltip_ability_item_control_b_2_Description"  "+25%中级技能控制时间"
+
+		"DOTA_Tooltip_ability_item_control_a"   "相位指环"
+		"DOTA_Tooltip_ability_item_control_a_Description"  "+15%高级技能控制时间\n两个可合成"
+		"DOTA_Tooltip_ability_item_control_a_2"   "混沌虚空之源"
+		"DOTA_Tooltip_ability_item_control_a_2_Description"  "+25%高级技能控制时间"
+
+		"DOTA_Tooltip_ability_item_control_abc"   "魔力项链"
+		"DOTA_Tooltip_ability_item_control_abc_Description"  "+10%技能控制时间\n两个可合成"
+		"DOTA_Tooltip_ability_item_control_abc_2"   "混沌法球"
+		"DOTA_Tooltip_ability_item_control_abc_2_Description"  "+15%技能控制时间"
+
+		"DOTA_Tooltip_ability_item_energy_c"   "独角兽缰绳"
+		"DOTA_Tooltip_ability_item_energy_c_Description"  "+25%初级技能法魂\n+40%魔法损耗\n两个可合成"
+		"DOTA_Tooltip_ability_item_energy_c_2"   "远古灵纹锤"
+		"DOTA_Tooltip_ability_item_energy_c_2_Description"  "+45%初级技能法魂\n+40%魔法损耗"
+
+		"DOTA_Tooltip_ability_item_energy_b"   "古老法杖"
+		"DOTA_Tooltip_ability_item_energy_b_Description"  "+25%中级技能法魂\n+40%魔法损耗\n两个可合成"
+		"DOTA_Tooltip_ability_item_energy_b_2"   "风纹法杖"
+		"DOTA_Tooltip_ability_item_energy_b_2_Description"  "+45%中级技能法魂\n+40%魔法损耗"
+
+		"DOTA_Tooltip_ability_item_energy_a"   "幽魂法杖"
+		"DOTA_Tooltip_ability_item_energy_a_Description"  "+25%高级技能法魂\n+40%魔法损耗\n两个可合成"
+		"DOTA_Tooltip_ability_item_energy_a_2"   "远古灵剑"
+		"DOTA_Tooltip_ability_item_energy_a_2_Description"  "+45%高级技能法魂\n+40%魔法损耗"
+
+		"DOTA_Tooltip_ability_item_energy_abc"   "远古幽魂灵镜"
+		"DOTA_Tooltip_ability_item_energy_abc_Description"  "+25%技能法魂\n+30%魔法损耗"
+		"DOTA_Tooltip_ability_item_energy_abc_2"   "远古幽魂灵镜"
+		"DOTA_Tooltip_ability_item_energy_abc_2_Description"  "+45%技能法魂\n+30%魔法损耗"
+
+		"DOTA_Tooltip_ability_item_damage_match_helper_abc"   "嗜血大刀"
+		"DOTA_Tooltip_ability_item_damage_match_helper_abc_Description"  "+10%技能相生加强伤害\n两个可合成"
+		"DOTA_Tooltip_ability_item_damage_match_helper_abc_2"   "水晶剑"
+		"DOTA_Tooltip_ability_item_damage_match_helper_abc_2_Description"  "+25%技能相生加强伤害"
+
+		"DOTA_Tooltip_ability_item_control_match_helper_abc"   "泉守之刃"
+		"DOTA_Tooltip_ability_item_control_match_helper_abc_Description"  "+10%技能相生加强控制效果\n两个可合成"
+		"DOTA_Tooltip_ability_item_control_match_helper_abc_2"   "魔能剑"
+		"DOTA_Tooltip_ability_item_control_match_helper_abc_2_Description"  "+20%技能相生加强控制效果"
+
+		"DOTA_Tooltip_ability_item_energy_match_helper_abc"   "皇家守护者之剑"
+		"DOTA_Tooltip_ability_item_energy_match_helper_abc_Description"  "+20%技能相生加强法魂"
+		"DOTA_Tooltip_ability_item_energy_match_helper_abc_2"   "皇家守护者之剑"
+		"DOTA_Tooltip_ability_item_energy_match_helper_abc_2_Description"  "+20%技能相生加强法魂"
+
+		"DOTA_Tooltip_ability_item_sky_eye"   "希望之光"
+		"DOTA_Tooltip_ability_item_sky_eye_Description"  "使用：获得顺畅视野3秒
+		"DOTA_Tooltip_ability_item_sky_eye_2"   "月蚀之石"
+		"DOTA_Tooltip_ability_item_sky_eye_Description_2"  "使用：获得顺畅视野5秒
 
 
 
