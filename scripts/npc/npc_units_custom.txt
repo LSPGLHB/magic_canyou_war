@@ -492,12 +492,12 @@
 
 	"sky_eye"
 	{
-		"BaseClass"	"npc_dota_base_additive"//"npc_dota_creature"
+		"BaseClass"	"npc_dota_creature"//"npc_dota_base_additive"//
 		"Model"	 "models/heroes/snapfire/snapfire_magma_projectile.vmdl"
 		"ModelScale"	"0.1"
 		// 小地图图标尺寸
 		"MinimapIconSize"	"5"
-		//"UnitLabel"	"huoren"
+		//"UnitLabel"	"sky_eye"
 		// 技能 1.
 		"Ability1"	""
 		// 技能 2.
@@ -585,7 +585,7 @@
 		// 状态设置
 		// ----------------------------------------------------------------
 		// 基础生命值
-		"StatusHealth"	"0"
+		"StatusHealth"	"10000"
 		// 生命恢复速度，负值无效
 		"StatusHealthRegen"	"0"
 		// 基础魔法值，设置为0会导致没有魔法条
@@ -602,9 +602,9 @@
 		// 视野设置
 		// ----------------------------------------------------------------
 		// 白天视野范围
-		"VisionDaytimeRange"	"2200"
+		"VisionDaytimeRange"	"1200"
 		// 夜晚视野范围
-		"VisionNighttimeRange"	"2200"
+		"VisionNighttimeRange"	"1200"
 
 	}
 

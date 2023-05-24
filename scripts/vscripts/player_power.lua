@@ -9,13 +9,7 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
     local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]
     local modifierStackCount =  getPlayerPowerValueByName(hero, modifierName, baseValue)
-   -- setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
---end
---function setPlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff, modifierStackCount, modifierNameFlag)
-    --local caster = keys.caster
-    --local playerID = caster:GetPlayerID()
-    --local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-    --local player = PlayerResource:GetPlayer(playerID)
+
     local modifierNameAdd
     local modifierNameRemove
     --print("setPlayerBuffByAbilityAndModifier",abilityName)
@@ -44,7 +38,6 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
         hero:RemoveAbility(abilityName)
-      
     end
 end
 
