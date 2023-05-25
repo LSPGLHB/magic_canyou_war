@@ -21,13 +21,16 @@
 #base abilities/stone_spirit.kv
 #base abilities/thunder_ball.kv
 #base abilities/stone_double_twine.kv
-#base abilities/big_fire_ball.kv
+
 #base abilities/small_tornado.kv
 #base abilities/stone_spear.kv
 #base abilities/ice_arrow.kv
 
 #base contract/contract_all.kv
 #base contract/ability_buff.kv
+
+#base magic/big_fire_ball.kv
+
 
 
 "DOTAAbilities"

@@ -143,9 +143,6 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseManaRegen = 10
 	GameRules.playerBaseDefense = 0
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
-
-
-
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)
 	GameRules:GetGameModeEntity():SetPauseEnabled(false)
@@ -167,9 +164,6 @@ function magicCanyouWar:InitGameMode()
 	GameRules.itemList = LoadKeyValues("scripts/npc/npc_items_custom.txt")--导入装备表
 
 	GameRules.contractList = LoadKeyValues("scripts/npc/contract/contract_all.kv")--导入契约表
-
-
-
 
 
 	--设置4*4队伍组合

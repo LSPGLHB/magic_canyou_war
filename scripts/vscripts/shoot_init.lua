@@ -22,7 +22,7 @@ function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)-
 				shoot:SetHealth(shootHealthSend)
 			end
 			--技能加强或减弱粒子效果实现
-			powerShootParticleOperation(keys,shoot,particleID)
+			particleID = powerShootParticleOperation(keys,shoot,particleID)
 			shoot.traveled_distance = shoot.traveled_distance + shoot.speed
 			--子弹命中目标
 			local isHitType = shootHit(keys, shoot, isHitType, hitUnitCallBack)
@@ -334,7 +334,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--弹道速度
 	local speedBase =  ability:GetSpecialValueFor("speed")
 	local speedBuffName = 'ability_speed'
-	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * 0.02
+	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * 1.66 * 0.02
 
 	--射程
 	local rangeBase = max_distance
@@ -487,6 +487,50 @@ function blackHole(keys, shoot, unit, modifierDebuffName, interval)
 	local newPosition = unitPos +  G_Direction * G_Speed
 	local groundPos = GetGroundPosition(newPosition, unit)
 	unit:SetAbsOrigin(groundPos)
+end
+
+--控制效果
+function controlTurn(caster, shoot, controlDuration)
+	local timeCount = 0
+	local interval = 0.1
+	caster:SetContextThink( DoUniqueString( "updateStoneSpear" ), function ( )
+	--GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"), function ()
+		-- Interrupted
+		if not caster:HasModifier( casterBuff ) then
+			return nil
+		end
+		--朝向为0-360
+		local shootAngles = shoot:GetAnglesAsVector().y
+		local casterAngles	= caster:GetAnglesAsVector().y
+		local Steering = 1
+		if shootAngles ~= casterAngles then
+			local resultAngle = casterAngles - shootAngles
+			resultAngle = math.abs(resultAngle)
+			if resultAngle > 180 then
+				if shootAngles < casterAngles then
+					Steering = -1
+				end
+			else
+				if shootAngles > casterAngles then
+					Steering = -1
+				end
+			end
+			local currentDirection =  shoot:GetForwardVector()
+			
+			local newX2 = math.cos(math.atan2(currentDirection.y, currentDirection.x) + angleRate * Steering)
+			local newY2 = math.sin(math.atan2(currentDirection.y, currentDirection.x) + angleRate * Steering)
+			local tempDirection = Vector(newX2, newY2, currentDirection.z)
+			shoot:SetForwardVector(tempDirection)
+			shoot.direction = tempDirection
+		end
+
+		if timeCount < controlDuration then
+			timeCount = timeCount + interval
+			return interval
+		else
+			return nil
+		end
+	end, 0)
 end
 
 --未注入灵魂

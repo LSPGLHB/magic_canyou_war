@@ -228,16 +228,23 @@ end
 
 --技能加强或减弱粒子效果实现
 function powerShootParticleOperation(keys,shoot,particleID)
+	local new_particleID = particleID
 	if shoot.power_lv > 0 and shoot.power_flag == 1 then
-		ParticleManager:DestroyParticle(particleID, true)
-		particleID = ParticleManager:CreateParticle(keys.particles_power, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		Timers:CreateTimer(0.3,function ()
+			ParticleManager:DestroyParticle(particleID, true)
+			return nil
+		end)
+		new_particleID = ParticleManager:CreateParticle(keys.particles_power, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		ParticleManager:SetParticleControlEnt(new_particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.power_flag = 0
 	end
 	if shoot.power_lv < 0 and shoot.power_flag == 1  then
 		ParticleManager:DestroyParticle(particleID, true)
-		particleID = ParticleManager:CreateParticle(keys.particles_weak, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		new_particleID = ParticleManager:CreateParticle(keys.particles_weak, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.power_flag = 0
 	end
+	return new_particleID
 end
 
 function shootBoomParticleOperation(shoot,destroyParticleID,showParticlesName,soundName,particlesDur)

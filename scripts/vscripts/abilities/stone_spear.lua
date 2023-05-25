@@ -14,7 +14,7 @@ function createStoneSpear(keys)
         shoot:SetForwardVector(direction)
 		
         local casterBuff = keys.modifier_caster_name
-		local flyDuration = max_distance / speed * 1.65
+		local flyDuration = max_distance / speed * 1.66
         ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = flyDuration})
 
 		local ability_a_name	= keys.ability_a_name
@@ -29,8 +29,6 @@ function createStoneSpear(keys)
 
 		local timeCount = 0
 		local interval = 0.1
-
-
 		caster:SetContextThink( DoUniqueString( "updateStoneSpear" ), function ( )
 		--GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"), function ()
 			-- Interrupted
@@ -102,7 +100,7 @@ function EndStoneSpear( keys )
 end
 
 
-
+--貌似未使用生效
 function CheckToInterrupt( keys )
 	local caster = keys.caster
 	if caster:IsStunned() or caster:IsHexed() or caster:IsFrozen() or caster:IsNightmared() or caster:IsOutOfGame() then
