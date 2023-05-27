@@ -12,16 +12,15 @@ function createBigFireBall(keys)
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
 
-    shoot:SetForwardVector(direction)
-		
+	--[[遥控技能用
+    shoot:SetForwardVector(direction)	
     local casterBuff = keys.modifier_caster_name
     local controlDuration = max_distance / speed * 1.66
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = controlDuration})
-
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
-
+	]]
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
@@ -30,6 +29,8 @@ function createBigFireBall(keys)
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     moveShoot(keys, shoot, particleID, bigFireBallBoomCallBack, nil)
+
+	--[[遥控用
     local timeCount = 0
 	local interval = 0.1
 	caster:SetContextThink( DoUniqueString( "updateBigFireBall" ), function ( )
@@ -68,7 +69,7 @@ function createBigFireBall(keys)
 		else
 			return nil
 		end
-	end, 0)
+	end, 0)]]
 end
 
 --技能爆炸,单次伤害
@@ -77,10 +78,11 @@ function bigFireBallBoomCallBack(keys,shoot,particleID)
     local particleBoom = bigFireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
     dealSkillbigFireBallBoom(keys,shoot) --实现aoe爆炸效果
     --bigFireBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
-    EndShootControl(keys)
+    EmitSoundOn("magic_big_fire_ball_boom", shoot)
+	--EndShootControl(keys)--遥控用
     Timers:CreateTimer(1,function ()
         ParticleManager:DestroyParticle(particleBoom, true)
-        EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)
+        --EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)
         shoot:ForceKill(true)
         shoot:AddNoDraw()
         return nil
@@ -90,16 +92,19 @@ end
 function bigFireBallRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
-	local radius = ability:GetLevelSpecialValueFor("aoe_boom_radius", ability:GetLevel() -1)
+	local radius = ability:GetSpecialValueFor("aoe_boom_radius") / 6
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particleBoom, 3, shoot:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(100, 1, 0))
+	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 0))
     return particleBoom
 end
 
 function dealSkillbigFireBallBoom(keys,shoot)
 	local caster = keys.caster
+	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
+	local AbilityLevel = shoot.abilityLevel
+    local visionDebuff = keys.modifierDebuffName
 	local radius = ability:GetSpecialValueFor("aoe_boom_radius") --AOE爆炸范围
     
 	local position=shoot:GetAbsOrigin()
@@ -122,14 +127,38 @@ function dealSkillbigFireBallBoom(keys,shoot)
 		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
             local beat_back_one = ability:GetSpecialValueFor("beat_back_one") 
 	        local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed")   
-            local tempDistance = (shoot:GetAbsOrigin() - unit:GetAbsOrigin()):Length2D()
-            local beatBackDistance = beat_back_one - tempDistance   --只击退到AOE的600码
-            beatBackUnit(keys,shoot,unit,beatBackDistance,beatBackSpeed,1,1)
+            --local tempDistance = (shoot:GetAbsOrigin() - unit:GetAbsOrigin()):Length2D()
+            --local beatBackDistance = beat_back_one - tempDistance   --只击退到AOE的600码
+            beatBackUnit(keys,shoot,unit,beat_back_one,beatBackSpeed,1,1)
 			local damage = getApplyDamageValue(shoot)
 			ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
-		end
-		--如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
 
+			
+			local debuff_duration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+			debuff_duration = getFinalValueOperation(playerID,debuff_duration,'control',AbilityLevel,owner)
+			debuff_duration = getApplyControlValue(shoot, debuff_duration)
+
+			local faceAngle = ability:GetSpecialValueFor("face_angle")
+			local blindDirection = shoot:GetAbsOrigin()  - unit:GetAbsOrigin()
+			local blindRadian = math.atan2(blindDirection.y, blindDirection.x) * 180 
+			local blindAngle = blindRadian / math.pi
+			--单位朝向是0-360，相对方向是0~180,0~-180，需要换算
+			if blindAngle < 0 then
+				blindAngle = blindAngle + 360
+			end
+			local victimAngle = unit:GetAnglesAsVector().y
+			local resultAngle = blindAngle - victimAngle
+			resultAngle = math.abs(resultAngle)
+			if resultAngle > 180 then
+				resultAngle = 360 - resultAngle
+			end
+			if faceAngle > resultAngle then --固定角度减视野
+				ability:ApplyDataDrivenModifier(caster, unit, visionDebuff, {Duration = debuff_duration})
+			end
+            
+
+		end
+		--如果是技能则进行加强或减弱操作
 		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
             checkHitAbilityToMark(shoot, unit)
 		end
@@ -232,6 +261,9 @@ function staticStromRenderParticles(keys,shoot)
 	return particleBoom
 end
 ]]
+
+--遥控用
+--[[
 function EndShootControl(keys)
     local caster = keys.caster
 	caster:RemoveModifierByName( keys.modifier_caster_name )
@@ -264,3 +296,4 @@ function LevelUpAbility(keys)
 		ability_handle:SetLevel(this_abilityLevel)
 	end
 end
+]]

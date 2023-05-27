@@ -65,11 +65,11 @@ function reinforceEach(unit,shoot,aoeType)
 	local unitLevel = unit.abilityLevel
 
 	local matchFlag = false
-	local teamFlag
+	local hostileFlag
 	if shootTeam ~= unitTeam then
-		teamFlag = true
+		hostileFlag = true
 	else
-		teamFlag = false	
+		hostileFlag = false	
 	end
 	--获取触碰双方的属性
 	local unitType = unit.unit_type
@@ -82,7 +82,7 @@ function reinforceEach(unit,shoot,aoeType)
 	end
 	print("shoot-nuit-Type:",shootType,unitType)
 	if shootType == "huo" then
-		if teamFlag then
+		if hostileFlag then
 			if unitType == "lei" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
@@ -97,7 +97,7 @@ function reinforceEach(unit,shoot,aoeType)
 		end
  	end
 	if shootType == "feng" then
-		if teamFlag then
+		if hostileFlag then
 			if unitType == "tu" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
@@ -112,7 +112,7 @@ function reinforceEach(unit,shoot,aoeType)
 		end
 	end
 	if shootType == "shui" then
-		if teamFlag then
+		if hostileFlag then
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
@@ -127,7 +127,7 @@ function reinforceEach(unit,shoot,aoeType)
 		end
 	end
 	if shootType == "lei" then
-		if teamFlag then
+		if hostileFlag then
 			if unitType == "feng" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
@@ -142,7 +142,7 @@ function reinforceEach(unit,shoot,aoeType)
 		end
 	end
 	if shootType == "tu" then
-		if teamFlag then
+		if hostileFlag then
 			if unitType == "shui" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
@@ -247,12 +247,12 @@ function powerShootParticleOperation(keys,shoot,particleID)
 	return new_particleID
 end
 
+--非AOE（简单的）子弹爆炸用
 function shootBoomParticleOperation(shoot,destroyParticleID,showParticlesName,soundName,particlesDur)
 	--消除子弹以及中弹粒子效果
 	shoot:ForceKill(true)
 	--中弹粒子效果
 	ParticleManager:CreateParticle(showParticlesName, PATTACH_ABSORIGIN_FOLLOW, shoot)
-	
 	--中弹声音
 	EmitSoundOn(soundName, shoot)
 	--消除粒子效果
@@ -262,6 +262,7 @@ function shootBoomParticleOperation(shoot,destroyParticleID,showParticlesName,so
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function () shoot:AddNoDraw() end, particlesDur) --命中后动画持续时间
 end
 
+--击退单位处理
 function shootPenetrateParticleOperation(keys,shoot)
 	--中弹粒子效果
 	ParticleManager:CreateParticle(keys.particles_hit, PATTACH_ABSORIGIN_FOLLOW, shoot) 

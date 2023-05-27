@@ -11,9 +11,9 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"lina_dragon_slave"
+		"AbilityTextureName"			"ember_spirit_flame_guard"
 		"MaxLevel"                      "1"
-		"AOERadius"                     "450"
+		"AOERadius"                     "225"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
@@ -23,7 +23,8 @@
 		
 		"precache"						
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+			//"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
 	
 		
@@ -61,7 +62,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"beat_back_speed"		"615"
+				"beat_back_speed"		"1800"
 			}
 
 			"05"
@@ -82,18 +83,19 @@
             "08"
             {
                 "var_type"					"FIELD_FLOAT"
-				"aoe_boom_radius"				"450"
+				"aoe_boom_radius"				"225"
             }
 			"09"
             {
                 "var_type"					"FIELD_FLOAT"
 				"max_distance"				"1450"
             }
-			"10"
-            {
-                "var_type"					"FIELD_FLOAT"
-				"angle_rate"				"0.02"
-            }
+			//遥控用
+			//"10"
+            //{
+            //    "var_type"					"FIELD_FLOAT"
+			//	"angle_rate"				"0.02"
+            //}
            
             "11"
             {
@@ -118,7 +120,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"			"Hero_Mirana.ArrowCast"
+				"EffectName"			"magic_big_fire_ball_cast"
 				"Target"				"CASTER"
 			}
 		
@@ -167,8 +169,8 @@
 			"modifier_beat_back"
 			{
 				"IsDebuff"				"1"
-				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
-				"EffectAttachType"	"follow_overhead"
+				"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -178,9 +180,8 @@
 			"modifier_big_fire_ball_debuff_datadriven"
 			{
 				"IsDebuff"				"1"
-				"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"	"2"
+				"EffectName"		"particles/zhimang_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
@@ -188,9 +189,10 @@
 				}
 			}
 
+			//遥控用
 			"modifier_big_fire_ball_under_control"
 			{
-				"IsBuff"				"1"
+				"IsBuff"			"1"
 				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
 				"EffectAttachType"	"follow_overhead"
 				"States"
@@ -227,7 +229,6 @@
 						"Target"			"CASTER"
 					}
 				}
-
 			}
 		}
 	}

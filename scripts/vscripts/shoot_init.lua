@@ -390,7 +390,10 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackDistance,beatBackSpeed,canSec
 	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)--把目标的高度降到0用于计算
 	local beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
 	local interval = 0.02
-	local speedmod = beatBackSpeed * interval
+	local acceleration = -3000 
+	local V0 = beatBackSpeed * interval--(beatBackDistance - 0.5 * acceleration * (beatBackDistance / beatBackSpeed) ^ 2) * (beatBackSpeed / beatBackDistance) * interval
+	local speedmod = V0
+	acceleration = acceleration * interval
 	local bufferTempDis = hitTarget:GetPaddedCollisionRadius()
 	local traveled_distance = 0
 	--记录击退时间
@@ -400,6 +403,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackDistance,beatBackSpeed,canSec
 	function ()
 		if traveled_distance < beatBackDistance and beatTime == hitTarget.lastBeatBackTime then --如果击退时间没被更改继续执行
 			local newPosition = hitTarget:GetAbsOrigin() +  beatBackDirection * speedmod -- Vector(beatBackDirection.x, beatBackDirection.y, 0) * speedmod
+			speedmod = speedmod + acceleration * interval
 			local groundPos = GetGroundPosition(newPosition, hitTarget)
 			--中途可穿模，最后不能穿
 			local tempLastDis = beatBackDistance - traveled_distance
@@ -409,6 +413,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackDistance,beatBackSpeed,canSec
 				FindClearSpaceForUnit( hitTarget, groundPos, false )
 			end
 			traveled_distance = traveled_distance + speedmod
+			print("traveled_distance:"..speedmod.."="..traveled_distance)
 			if canSecHit == 1 then --进入第二次撞击
 				checkSecondHit(keys,hitTarget)
 			end

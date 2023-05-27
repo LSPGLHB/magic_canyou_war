@@ -86,6 +86,9 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
 	PrecacheUnitByNameSync("npc_dota_hero_enigma", context)
 
+	--此处开始比较有用
+	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_magic.vsndevts", context)
+	
 --[[
 	print("Precache...")
     local precache_list = require("precache")
