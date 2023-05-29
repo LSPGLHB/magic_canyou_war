@@ -9,6 +9,4 @@ function createFriend(keys)
     local new_unit = CreateUnitByName("huoren", position, true, nil, nil, DOTA_TEAM_BADGUYS)--unit:GetTeam())--
     new_unit:SetControllableByPlayer(player, true)
     new_unit:SetForwardVector(chaoxiang)
-
-
 end

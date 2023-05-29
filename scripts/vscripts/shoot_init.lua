@@ -249,7 +249,6 @@ end
 --先
 function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	print("creatSkillShootInit")
-
 	if keys.hitType == nil then--hitType：1碰撞伤害，2穿透伤害，3直达指定位置，不命中单位
 		keys.hitType = 1
 	end
@@ -277,6 +276,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 	local caster = keys.caster
 	local ability = keys.ability
+
 	local playerID = caster:GetPlayerID()
 
 	if(shoot.control == nil) then
@@ -304,7 +304,6 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 	--已处理
 	--蓝耗
-	
 	local manaCost = ability:GetManaCost(1)
 	local manaCostBuffName = 'mana_cost'
 	shoot.mana_cost_bonus = getFinalValueOperation(playerID,manaCost,manaCostBuffName,AbilityLevel,owner) - manaCost
@@ -343,6 +342,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 
 	--控制时间(在其他地方执行)
+	
 
 	
 end
@@ -413,7 +413,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackDistance,beatBackSpeed,canSec
 				FindClearSpaceForUnit( hitTarget, groundPos, false )
 			end
 			traveled_distance = traveled_distance + speedmod
-			print("traveled_distance:"..speedmod.."="..traveled_distance)
+			--print("traveled_distance:"..speedmod.."="..traveled_distance)
 			if canSecHit == 1 then --进入第二次撞击
 				checkSecondHit(keys,hitTarget)
 			end

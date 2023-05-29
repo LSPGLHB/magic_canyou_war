@@ -65,6 +65,7 @@ function reinforceEach(unit,shoot,aoeType)
 	local unitLevel = unit.abilityLevel
 
 	local matchFlag = false
+	local restrainFlag = false
 	local hostileFlag
 	if shootTeam ~= unitTeam then
 		hostileFlag = true
@@ -82,91 +83,96 @@ function reinforceEach(unit,shoot,aoeType)
 	end
 	print("shoot-nuit-Type:",shootType,unitType)
 	if shootType == "huo" then
-		if hostileFlag then
+		--if hostileFlag then  --注释部分是区分是否同一队伍，用于加强削弱区分
 			if unitType == "lei" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
-				--matchFlag = true
+				restrainFlag = true
 			end
-		else
+		--else
 			if unitType == "tu" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
 			end
-		end
+		--end
  	end
 	if shootType == "feng" then
-		if hostileFlag then
+		--if hostileFlag then
 			if unitType == "tu" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
-				--matchFlag = true
+				restrainFlag = true
 			end
-		else
+		--else
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
+				EmitSoundOn("magic_fire_power_up", unit)
 				matchFlag = true
 			end
-		end
+		--end
 	end
 	if shootType == "shui" then
-		if hostileFlag then
+		--if hostileFlag then
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
-				--matchFlag = true
+				EmitSoundOn("magic_fire_power_down", unit)
+				restrainFlag = true
 			end
-		else
+		--else
 			if unitType == "feng" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
 			end
-		end
+		--end
 	end
 	if shootType == "lei" then
-		if hostileFlag then
+		--if hostileFlag then
 			if unitType == "feng" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
-				--matchFlag = true
+				restrainFlag = true
 			end
-		else
+		--else
 			if unitType == "shui" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
 			end
-		end
+		--end
 	end
 	if shootType == "tu" then
-		if hostileFlag then
+		--if hostileFlag then
 			if unitType == "shui" then
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
-				--matchFlag = true
+				restrainFlag = true
 			end
-		else
+		--else
 			if unitType == "lei" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
 			end
-		end
+		--end
 	end
-	if matchFlag then
-		--不能所有都加，只有加强的才加，减弱的目前没加后续再看
+	
+	if matchFlag or restrainFlag then
+		--不能所有都加，只有加强的才加，减弱的目前没加后续，再看
 		--加强伤害，控制等效果使用
-		table.insert(unit.matchUnitsID,shootOwnerID)
-		table.insert(unit.matchAbilityLevel,shootLevel)
+		if matchFlag then --用于match_helper加强
+			table.insert(unit.matchUnitsID,shootOwnerID)
+			table.insert(unit.matchAbilityLevel,shootLevel)
+		end
 		--魔魂需要现在加强
 		local energyMatchBuffName = 'energy_match'
 		local unitHealth = unit:GetHealth()
 		local tempEnergy = getFinalValueOperation(unitOwnerID,unitHealth,energyMatchBuffName,unitLevel,unitOwner)
 		unit.energy_match_bonus = getApplyEnergyValue(unit, tempEnergy) - tempEnergy
-
+		
 		if unit:HasModifier('modifier_health_debuff') then
 			unit:RemoveModifierByName('modifier_health_debuff')
 		end
@@ -174,10 +180,15 @@ function reinforceEach(unit,shoot,aoeType)
 			unit:RemoveModifierByName('modifier_health_buff')
 		end
 		unit:AddAbility('ability_health_control'):SetLevel(1)
-		unit:RemoveModifierByName('modifier_health_debuff')
-		unit:SetModifierStackCount('modifier_health_buff', unit, unit.energy_match_bonus)
+		if unit.energy_match_bonus > 0 then
+			unit:RemoveModifierByName('modifier_health_debuff')
+			unit:SetModifierStackCount('modifier_health_buff', unit, unit.energy_match_bonus)
+		end
+		if unit.energy_match_bonus < 0 then
+			unit:RemoveModifierByName('modifier_health_buff')
+			unit:SetModifierStackCount('modifier_health_debuff', unit, unit.energy_match_bonus * -1)
+		end
 		unit:RemoveAbility('ability_health_control')
-
 		print("reinforceEachID:=="..shootOwnerID.."=="..shootLevel.."=="..#unit.matchUnitsID)
 		print("energy_match_bonus:"..unit.energy_match_bonus)
 	end
@@ -188,42 +199,6 @@ function reinforceEach(unit,shoot,aoeType)
 	if unit.power_lv < -1 then
 		unit.power_lv = -1
 	end
-end
-
---获得buff的能力，目前是测试物品lvxie用到
-function setShootPower(caster, powerName, isAdd, value)
-    initShootPower(caster)
-    if( not isAdd ) then
-        value = value * -1
-    end
-    if(powerName == "item_damage") then       
-        caster.item_bonus_damage = caster.item_bonus_damage + value 
-    end
-    if(powerName == "item_shoot_speed") then       
-        caster.item_bonus_shoot_speed = caster.item_bonus_shoot_speed + value 
-    end 
-end
-
---获得buff的能力，目前是测试物品lvxie用到
-function getShootPower(caster, powerName)
-    local value
-    if(powerName == "item_damage") then       
-        value = caster.item_bonus_damage
-    end
-    if(powerName == "item_shoot_speed") then    
-        value = caster.item_bonus_shoot_speed
-    end
-    return value
-end
-
-function initShootPower(caster)
-    if caster.item_bonus_damage == nil then
-        caster.item_bonus_damage = 0
-    end
-
-    if caster.item_bonus_shoot_speed == nil then
-        caster.item_bonus_shoot_speed = 0
-    end
 end
 
 --技能加强或减弱粒子效果实现
@@ -239,9 +214,12 @@ function powerShootParticleOperation(keys,shoot,particleID)
 		shoot.power_flag = 0
 	end
 	if shoot.power_lv < 0 and shoot.power_flag == 1  then
-		ParticleManager:DestroyParticle(particleID, true)
+		Timers:CreateTimer(0.3,function ()
+			ParticleManager:DestroyParticle(particleID, true)
+			return nil
+		end)
 		new_particleID = ParticleManager:CreateParticle(keys.particles_weak, PATTACH_ABSORIGIN_FOLLOW , shoot)
-		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(new_particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.power_flag = 0
 	end
 	return new_particleID
@@ -271,12 +249,9 @@ function shootPenetrateParticleOperation(keys,shoot)
 end
 
 
-
-
-
-
 --影响弹道的buff
 --测试速度调整
+--[[
 function skillSpeedOperation(keys,speed)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -297,7 +272,7 @@ function skillSpeedOperation(keys,speed)
 	speed = (speed  + buff_speed_up  + item_bonus_shoot_speed) 
 	return speed
 end
-
+]]
 
 
 

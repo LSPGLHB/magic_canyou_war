@@ -30,6 +30,7 @@
 #base contract/ability_buff.kv
 
 #base magic/big_fire_ball.kv
+#base magic/fire_bottle.kv
 
 
 

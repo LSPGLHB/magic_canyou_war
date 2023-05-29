@@ -18,28 +18,30 @@
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
 		"AbilityLevel"					"a"
-		"IconSrc" "file://{images}/custom_game/ability_button/invoker_cold_snap.png"  //选择框图标
+		"IconSrc" "file://{images}/custom_game/ability_button/ember_spirit_flame_guard.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
 		{
 			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
-			//"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
 	
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1450"   //施法距离
+		//施法距离
+		"AbilityCastRange"				"1450" 
+		//技能施法前摇
 		"AbilityCastPoint"				"0.3"
+		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"0.1" //"20"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"38"
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
@@ -78,7 +80,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"hit_range"					"175"
+				"hit_range"					"100"
 			}
             "08"
             {
@@ -129,7 +131,7 @@
 				"ScriptFile"		"magic/big_fire_ball.lua"
 				"Function"			"createBigFireBall"
 				"Target"			"POINT"
-				"unitModel"			"shootUnit"
+				"unitModel"			"shootUnit-L"
 				"AbilityLevel"		"a"
 				"unitType"          "huo"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
@@ -147,21 +149,23 @@
                 "hitTargetDebuff"  "modifier_beat_back"
 				"modifierDebuffName"  "modifier_big_fire_ball_debuff_datadriven"
 
-				"modifier_caster_name"	   "modifier_big_fire_ball_under_control"
-				"ability_a_name"		   "big_fire_ball_datadriven"
-				"ability_b_name"		   "big_fire_ball_stage_b_datadriven"
+				//遥控用
+				//"modifier_caster_name"	   "modifier_big_fire_ball_under_control"
+				//"ability_a_name"		   "big_fire_ball_datadriven"
+				//"ability_b_name"		   "big_fire_ball_stage_b_datadriven"
 			}
 		}
 
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"magic/big_fire_ball.lua"
-				"Function"		"LevelUpAbility"
-				"ability_b_name"	"big_fire_ball_stage_b_datadriven"
-			}
-		}
+		//遥控用
+		//"OnUpgrade"
+		//{
+		//	"RunScript"
+		//	{
+		//		"ScriptFile"	"magic/big_fire_ball.lua"
+		//		"Function"		"LevelUpAbility"
+		//		"ability_b_name"	"big_fire_ball_stage_b_datadriven"
+		//	}
+		//}
 
 		
 		"Modifiers"
@@ -233,7 +237,7 @@
 		}
 	}
 
-
+	//遥控用
 	"big_fire_ball_stage_b_datadriven"
 	{
 		// General
