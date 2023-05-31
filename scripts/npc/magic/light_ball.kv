@@ -67,17 +67,63 @@
             "06"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_debuff_duration"		"4"
+                "debuff_duration"		"4"
             }
             "07"
             {
                 "var_type"			"FIELD_FLOAT"
-                "vision_debuff"		"-700"
+                "vision_radius"		"-500"
+            }
+			"08"
+            {
+                "var_type"			"FIELD_FLOAT"
+				"face_angle"		"50"
             }
         }
 
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"magic_light_ball_cast"
+				"Target"				"CASTER"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/light_ball.lua"
+				"Function"			"createLightBall"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"c"
+				"unitType"          "huo"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                "isAOE"             "1"
+				"particles_nm"      "particles/01yaoyanguangqiu_shengcheng.vpcf"
+				//"particles_hit"     "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+				"particles_hit_dur" "0.7"
+				"particles_power" 	"particles/01yaoyanguangqiu_jiaqiang.vpcf"
+				"particles_weak" 	"particles/01yaoyanguangqiu_xueruo.vpcf"
+				"cp"				"3"
 
+                "particlesBoom" 	"particles/yaoyanguangqiubaozha.vpcf"
+				"modifierDebuffName"  "modifier_light_ball_debuff_datadriven"
+			}
+		}
 
-
+		"Modifiers"
+		{
+			"modifier_light_ball_debuff_datadriven"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/zhimang_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
+                    "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
+				}
+			}
+		}
     }
 }

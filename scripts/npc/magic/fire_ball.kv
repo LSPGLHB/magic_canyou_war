@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "fire_bottle_datadriven"
+    "fire_ball_datadriven"
 	{
     // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,14 +11,14 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"batrider_flamebreak"
+		"AbilityTextureName"			"invoker_exort"
 		"MaxLevel"                      "1"
-		"AOERadius"                     "250"
+		"AOERadius"                     "200"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
-		"AbilityLevel"					"a"
-		"IconSrc" "file://{images}/custom_game/ability_button/batrider_flamebreak.png"  //选择框图标
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/invoker_exort.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -29,7 +29,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"   //施法距离
+		"AbilityCastRange"				"1250"   //施法距离
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
@@ -38,19 +38,19 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"26"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"450"
+				"speed"				"620"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1200"
+				"max_distance"		"1250"
 			}
             "03"
 			{
@@ -60,49 +60,70 @@
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "24"
+				"damage"		    "13"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_radius"		"250"
+                "aoe_radius"		"200"
             }
             "06"
-            {
-                "var_type"			"FIELD_FLOAT"
-                "aoe_duration"		"3"
-            }
+			{
+				"var_type"			"FIELD_FLOAT"
+				"beat_back_one"		"400"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"beat_back_two"			"250"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"beat_back_speed"		"1800"
+			}
         }
 
         "OnSpellStart"
 		{
 			"FireSound"
 			{
-				"EffectName"			"magic_fire_bottle_cast"
+				"EffectName"			"magic_fire_ball_cast"
 				"Target"				"CASTER"
 			}
 		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/fire_bottle.lua"
-				"Function"			"createFireBottle"
+				"ScriptFile"		"magic/fire_ball.lua"
+				"Function"			"createFireBall"
 				"Target"			"POINT"
 				"unitModel"			"shootUnit-M"
-				"AbilityLevel"		"a"
+				"AbilityLevel"		"b"
 				"unitType"          "huo"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isAOE"             "1"
-				"particles_nm"      "particles/11huoyaoping_shengcheng.vpcf"
-				//"particles_hit"     "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+				"particles_nm"      "particles/06huoqiushu_shengcheng.vpcf"
 				"particles_hit_dur" "0.7"
-				"particles_power" 	"particles/11huoyaoping_jiaqiang.vpcf"
-				"particles_weak" 	"particles/11huoyaoping_xueruo.vpcf"
-				//"sound_hit"			"Hero_Gyrocopter.HomingMissile.Destroy"
+				"particles_power" 	"particles/06huoqiushu_jiaqiang.vpcf"
+				"particles_weak" 	"particles/06huoqiushu_xueruo.vpcf"
 				"cp"				"3"
-
-                "particlesBoom" 	"particles/11huoyaopingbaozha.vpcf"
-	
+                "particlesBoom" 	"particles/06huoqiushu_baozha.vpcf"
+                "hitTargetDebuff"    "modifier_beat_back"
 			}
 		}
+
+        "Modifiers"
+		{
+			"modifier_beat_back"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+        }
     }
 }

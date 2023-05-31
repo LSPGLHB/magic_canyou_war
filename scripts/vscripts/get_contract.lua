@@ -103,7 +103,7 @@ function learnContractByNameJSTOLUA( index,keys )
 	local player = PlayerResource:GetPlayer(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local randomContractNumList = GameRules.randomContractNumList
-
+    print("learnContractByNameJSTOLUA"..playerID)
     local contractNameList = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
     local contractShowNameList = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
     local contractIconList = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
@@ -121,7 +121,7 @@ function learnContractByNameJSTOLUA( index,keys )
         hHero:RemoveAbility(player.contract)
     end
     player.contract = contractName
-
+    print("contractName"..contractName)
     hHero:AddAbility(player.contract):SetLevel(1)
 
 

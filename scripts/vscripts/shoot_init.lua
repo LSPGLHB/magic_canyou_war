@@ -1,10 +1,7 @@
 require('skill_operation')
 require('player_power')
 function moveShoot(keys, shoot, particleID, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
-	--print('moveShoot1:'..shoot.speed)
-	--影响弹道的buff--测试速度调整可删除
-	shoot.speed = skillSpeedOperation(keys,shoot.speed)
-	--print('moveShoot2:'..shoot.speed)
+
 	--实现延迟满法魂效果
 	local shootHealthMax = shoot:GetHealth()
 	local shootHealthSend = shootHealthMax * 0.8
@@ -536,6 +533,100 @@ function controlTurn(caster, shoot, controlDuration)
 			return nil
 		end
 	end, 0)
+end
+
+--角度计算
+function setDebuffByFaceAngle(shoot, unit, faceAngle, debuffName ,debuffDuration, caster, ability)
+    local blindDirection = shoot:GetAbsOrigin()  - unit:GetAbsOrigin()
+    local blindRadian = math.atan2(blindDirection.y, blindDirection.x) * 180 
+    local blindAngle = blindRadian / math.pi
+    --单位朝向是0-360，相对方向是0~180,0~-180，需要换算
+    if blindAngle < 0 then
+        blindAngle = blindAngle + 360
+    end
+    local victimAngle = unit:GetAnglesAsVector().y
+    local resultAngle = blindAngle - victimAngle
+    resultAngle = math.abs(resultAngle)
+	--print("faceAngle:"..victimAngle..">>>"..blindAngle)
+	--print("resultAngle:"..resultAngle)
+    if resultAngle > 180 then
+        resultAngle = 360 - resultAngle
+    end
+	--print("resultAngle:"..resultAngle)
+    if faceAngle > resultAngle then --固定角度减视野
+        ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    end
+end
+
+--aoe伤害执行
+function durationAOEDamage(keys, shoot, interval, particleBoom, callback)
+    local caster = keys.caster
+	local ability = keys.ability
+    local playerID = caster:GetPlayerID()
+    local AbilityLevel = shoot.abilityLevel
+    local radius = ability:GetSpecialValueFor("aoe_radius") --AOE持续作用范围
+    local duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
+    local position = shoot:GetAbsOrigin()
+	local casterTeam = caster:GetTeam()
+    
+    local damageTotal = getApplyDamageValue(shoot)
+    local damageCount = 0 
+	local timeCount = 0 
+--[[
+	Timers:CreateTimer(duration, function ()
+        shoot.isKill = 1
+        EmitSoundOn("magic_voice_stop", shoot)
+        ParticleManager:DestroyParticle(particleBoom, true)
+        shoot:ForceKill(true)
+        shoot:AddNoDraw()
+        return nil
+	end)
+]]
+    Timers:CreateTimer(0,function ()   
+		--print("damageCount"..damageCount)
+		local aroundUnits = FindUnitsInRadius(casterTeam, 
+										position,
+										nil,
+										radius,
+										DOTA_UNIT_TARGET_TEAM_BOTH,
+										DOTA_UNIT_TARGET_ALL,
+										0,
+										0,
+										false)
+        for k,unit in pairs(aroundUnits) do
+            local unitTeam = unit:GetTeam()
+            local unitHealth = unit.isHealth
+            local lable = unit:GetUnitLabel()
+            local shootPos = shoot:GetAbsOrigin()
+            local unitPos = unit:GetAbsOrigin()
+            --只作用于敌方,非技能单位
+            if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then  
+				local damage = damageTotal / (duration / interval)           
+				if callback ~= nil then
+					damage = callback(shootPos, unitPos, radius, damage)
+				end
+			    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+            end
+            --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
+            if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+                checkHitAbilityToMark(shoot, unit)
+            end
+        end
+
+		--子弹被销毁的话结束计时器进程
+		timeCount = timeCount + interval
+		if timeCount >= duration then
+			EmitSoundOn("magic_voice_stop", shoot)
+			ParticleManager:DestroyParticle(particleBoom, true)
+			shoot:ForceKill(true)
+			shoot:AddNoDraw()
+			return nil
+		end
+        
+        return interval
+    end)
+
+    
 end
 
 --未注入灵魂

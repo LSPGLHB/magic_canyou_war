@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "fire_bottle_datadriven"
+    "vision_down_light_ball_datadriven"
 	{
     // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,14 +11,14 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"batrider_flamebreak"
+		"AbilityTextureName"			"jakiro_liquid_fire"
 		"MaxLevel"                      "1"
-		"AOERadius"                     "250"
+		"AOERadius"                     "325"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
-		"AbilityLevel"					"a"
-		"IconSrc" "file://{images}/custom_game/ability_button/batrider_flamebreak.png"  //选择框图标
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/jakiro_liquid_fire.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -29,7 +29,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"   //施法距离
+		"AbilityCastRange"				"1600"   //施法距离
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
@@ -38,71 +38,103 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"18"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"450"
+				"speed"				"900"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1200"
+				"max_distance"		"1600"
 			}
             "03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "85"
+				"hit_range"		    "75"
 			}
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "24"
+				"damage"		    "15"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_radius"		"250"
+                "aoe_radius"		"325"
             }
             "06"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_duration"		"3"
+                "aoe_duration"		"5"
             }
+            "07"
+            {
+                "var_type"					"FIELD_FLOAT"
+				"vision_radius"			    "-500"
+            }
+            "08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"debuff_duration"			"4"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"face_angle"				"50"
+			}
+            "10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_time"				"1.8"
+			}
         }
 
         "OnSpellStart"
 		{
 			"FireSound"
 			{
-				"EffectName"			"magic_fire_bottle_cast"
+				"EffectName"			"magic_vision_down_light_ball_cast"
 				"Target"				"CASTER"
 			}
 		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/fire_bottle.lua"
-				"Function"			"createFireBottle"
+				"ScriptFile"		"magic/vision_down_light_ball.lua"
+				"Function"			"createVisionDownLightBall"
 				"Target"			"POINT"
-				"unitModel"			"shootUnit-M"
-				"AbilityLevel"		"a"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"b"
 				"unitType"          "huo"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isAOE"             "1"
-				"particles_nm"      "particles/11huoyaoping_shengcheng.vpcf"
-				//"particles_hit"     "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+				"particles_nm"      "particles/16jinshiguangqiu_shengcheng.vpcf"
 				"particles_hit_dur" "0.7"
-				"particles_power" 	"particles/11huoyaoping_jiaqiang.vpcf"
-				"particles_weak" 	"particles/11huoyaoping_xueruo.vpcf"
-				//"sound_hit"			"Hero_Gyrocopter.HomingMissile.Destroy"
+				"particles_power" 	"particles/16jinshiguangqiu_jiaqiang.vpcf"
+				"particles_weak" 	"particles/16jinshiguangqiu_xueruo.vpcf"
 				"cp"				"3"
-
-                "particlesBoom" 	"particles/11huoyaopingbaozha.vpcf"
-	
+                "particlesBoom" 	"particles/jinshiguangqiubaozha.vpcf"
+                "modifierDebuffName"  "modifier_vision_down_light_ball_debuff_datadriven"
 			}
 		}
+
+        "Modifiers"
+		{
+			"modifier_vision_down_light_ball_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/zhimang_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
+                    "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
+				}
+			}
+        }
     }
 }

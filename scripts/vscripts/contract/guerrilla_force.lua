@@ -14,15 +14,20 @@ function refreshContractBuff(keys,flag)
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
 
-    local contract_health_precent_final = ability:GetSpecialValueFor( "contract_health_precent_final")
-    local contract_speed_flag = ability:GetSpecialValueFor( "contract_speed_flag")
+    local contract_speed = ability:GetSpecialValueFor( "contract_speed")
+    local contract_vision = ability:GetSpecialValueFor( "contract_vision")
+
+    local contract_vision_flag = ability:GetSpecialValueFor( "contract_vision_flag")
     if (not flag) then
         contract_speed_flag = 1
     end
 
-    setPlayerPower(playerID, "player_health_precent_final", flag, contract_health_precent_final)
-    setPlayerPowerFlag(playerID, "player_speed_flag", contract_speed_flag)
+    setPlayerPower(playerID, "player_speed", flag, contract_speed)
+    setPlayerPower(playerID, "player_vision", flag, contract_vision)
 
-    setPlayerBuffByNameAndBValue(caster,"health",GameRules.playerBaseHealth)
-    setPlayerBuffByNameAndBValue(caster,"speed",GameRules.playerBaseSpeed)
+    setPlayerPowerFlag(playerID, "player_vision_flag", contract_vision_flag)
+
+    
+    setPlayerBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
+    setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
 end

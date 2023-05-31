@@ -7,22 +7,22 @@
 	{
 		"override_hero"	"npc_dota_hero_rubick"
 		"AbilityLayout"         "6"
-		"Ability1"	"shoot_datadriven"//"stone_spear_datadriven"
-		"Ability2"	"big_fire_ball_datadriven"//""//"multi_stage_skills_a_datadriven"//"powershot_datadriven"//"mirana_arrow"//"pudge_meat_hook_lua_reb"
-		"Ability3"	"fire_bottle_datadriven"//"stone_spear_datadriven"//"make_friend_datadriven"//"multi_stage_skills_a_datadriven"//
-		"Ability4"  "stone_ball_datadriven"//"nothing_c"//"fire_storm_datadriven"
-		"Ability5"  "stone_spirit_datadriven"//"speed_up_stack_datadriven"//"cannon_datadriven"
-		"Ability6"  "thunder_ball_datadriven"//"speed_down_stack_datadriven"//"multi_stage_skills_a_datadriven"
-		"Ability7"  "stone_double_twine_datadriven"//"bloodseeker_thirst"//"running_fire_datadriven"
-		"Ability8"	"make_friend_datadriven"//"shoot_speed_up_stack_datadriven"
-		"Ability9" 	"small_tornado_datadriven"
+		"Ability1"	"shoot_datadriven"
+		"Ability2"	"vision_down_light_ball_datadriven"
+		"Ability3"	"fire_bottle_datadriven"
+		"Ability4"  "light_ball_datadriven"
+		"Ability5"  "fire_ball_datadriven"
+		"Ability6"  "big_fire_ball_datadriven"
+		"Ability7"  ""
+		"Ability8"	""
+		"Ability9" 	""
 
-		"Ability10" "ice_arrow_datadriven"
+		"Ability10" "make_friend_datadriven"
 
 
 		"Ability11"  "ice_arrow_launch_ready_datadriven"
 		"Ability12"  "stone_spear_stage_b_datadriven"
-		"Ability13"  "big_fire_ball_stage_b_datadriven"
+
 
 
 
@@ -46,7 +46,7 @@
 		//转身速度
 		"MovementTurnRate"	"1.0"
 		//移动速度
-		 "MovementSpeed"             "470"
+		 "MovementSpeed"             "200"
 
 		 "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
 

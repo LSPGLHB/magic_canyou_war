@@ -35,8 +35,8 @@ function refreshContractBuff(keys,flag)
     setPlayerPowerFlag(playerID, "player_control_flag", contract_control_flag)
     setPlayerPowerFlag(playerID, "player_energy_flag", contract_energy_flag)
 
-    setPlayerBuffByNameAndBValue(caster,"mana",GameRules.playerBaseMana)
-    setPlayerBuffByNameAndBValue(caster,"vision",GameRules.playerBaseVision)
+    setPlayerBuffByNameAndBValue(keys,"mana",GameRules.playerBaseMana)
+    setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
 
 
 end
