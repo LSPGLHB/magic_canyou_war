@@ -8,12 +8,12 @@
 		"override_hero"	"npc_dota_hero_rubick"
 		"AbilityLayout"         "6"
 		"Ability1"	"shoot_datadriven"
-		"Ability2"	"vision_down_light_ball_datadriven"
+		"Ability2"	"small_hurricane_datadriven"
 		"Ability3"	"fire_bottle_datadriven"
 		"Ability4"  "light_ball_datadriven"
 		"Ability5"  "fire_ball_datadriven"
 		"Ability6"  "big_fire_ball_datadriven"
-		"Ability7"  ""
+		"Ability7"  "vision_down_light_ball_datadriven"
 		"Ability8"	""
 		"Ability9" 	""
 
@@ -46,7 +46,7 @@
 		//转身速度
 		"MovementTurnRate"	"1.0"
 		//移动速度
-		 "MovementSpeed"             "200"
+		 "MovementSpeed"             "400"
 
 		 "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
 
@@ -56,9 +56,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"2200"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"2200"
 
 		// 主属性类型
 		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"

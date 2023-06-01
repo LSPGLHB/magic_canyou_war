@@ -5,6 +5,8 @@ function createFireBottle(keys)
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
+    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+    local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -13,6 +15,8 @@ function createFireBottle(keys)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
+    shoot.aoe_radius = aoe_radius
+    shoot.aoe_duration = aoe_duration
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     moveShoot(keys, shoot, particleID, fireBottleBoomCallBack, nil)
@@ -28,30 +32,24 @@ end
 
 
 function fireBottleDuration(keys,shoot)
-   
     local interval = 0.5
-    local particleBoom = fireBottleRenderParticles(keys,shoot)
-
+    fireBottleRenderParticles(keys,shoot)
     Timers:CreateTimer(0.8,function ()
         EmitSoundOn("magic_fire_bottle_duration", shoot)
         return nil
     end)
-
-    durationAOEDamage(keys, shoot, interval, particleBoom, radiusDamagePower)
+    durationAOEDamage(keys, shoot, interval, radiusDamagePower)
 end
 
 
 function fireBottleRenderParticles(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
-	local radius = ability:GetSpecialValueFor("aoe_radius")
-    local duration = ability:GetSpecialValueFor("aoe_duration")    
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
     local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
-    ParticleManager:SetParticleControl(particleBoom, 11, Vector(duration, 0, 0))
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 0))
-    return particleBoom
+    ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 1, 0))
+    ParticleManager:SetParticleControl(particleBoom, 11, Vector(shoot.aoe_duration, 0, 0))
 end
 
 

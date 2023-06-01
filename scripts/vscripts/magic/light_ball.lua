@@ -7,6 +7,8 @@ function createLightBall(keys)
     local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
+    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+    
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
 
@@ -24,7 +26,7 @@ function createLightBall(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
-        initDurationBuff(keys)
+        shoot.aoe_radius = aoe_radius
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         moveShoot(keys, shoot, particleID, lightBallBoomCallBack, nil)
@@ -34,11 +36,11 @@ end
 --技能爆炸,单次伤害
 function lightBallBoomCallBack(keys,shoot,particleID)
     ParticleManager:DestroyParticle(particleID, true) --子弹特效消失
-    local particleBoom = lightBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
+    lightBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
     dealSkilllightBallBoom(keys,shoot) --实现aoe爆炸效果
     EmitSoundOn("magic_light_ball_boom", shoot)
     Timers:CreateTimer(keys.particles_hit_dur,function ()
-        ParticleManager:DestroyParticle(particleBoom, true)
+        --ParticleManager:DestroyParticle(particleBoom, true)
         shoot:ForceKill(true)
         shoot:AddNoDraw()
         return nil
@@ -48,12 +50,11 @@ end
 function lightBallRenderParticles(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
-	local radius = ability:GetSpecialValueFor("aoe_radius")
+	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius")
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 1))
-    return particleBoom
 end
 
 function dealSkilllightBallBoom(keys,shoot)
@@ -62,11 +63,9 @@ function dealSkilllightBallBoom(keys,shoot)
 	local ability = keys.ability
 	local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.modifierDebuffName
-	local radius = ability:GetSpecialValueFor("aoe_radius") --AOE爆炸范围
-    
+	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE爆炸范围 
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-	
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -89,7 +88,10 @@ function dealSkilllightBallBoom(keys,shoot)
 			debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
 			debuffDuration = getApplyControlValue(shoot, debuffDuration)
 			local faceAngle = ability:GetSpecialValueFor("face_angle")
-            setDebuffByFaceAngle(shoot, unit, faceAngle, debuffName ,debuffDuration, caster, ability)
+            local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
+            if flag then
+                ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+            end
 		end
 		--如果是技能则进行加强或减弱操作
 		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then

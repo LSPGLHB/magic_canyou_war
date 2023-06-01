@@ -1,0 +1,137 @@
+"DOTAAbilities"
+{
+	"small_hurricane_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"skywrath_mage_mystic_flare"
+        "MaxLevel"                      "1"
+
+		"UnitType"         				"feng"
+		"AbilityLevel"					"b"
+		"IconSrc" 					"file://{images}/custom_game/ability_button/skywrath_mage_mystic_flare.png"  //选择框图标
+		"AbilityShowName" 			"#UIButton4"
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1850"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"1"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_distance"				"1850"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed"						"550"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage"					"15"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hit_range"					"85"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aoe_radius"		        "400"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"G_speed"				    "50"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aoe_duration"				"3"
+			}
+
+		
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Hero_Mirana.ArrowCast"
+				"Target"				"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"magic/small_hurricane.lua"
+				"Function"			"createSmallHurricane"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-M"
+				"AbilityLevel"		"b"
+				"unitType"          "feng"
+				"hitType" 			"2"   //3不触碰，2穿透弹，1触碰结束
+				"isMultipleHit"		"1"  //子弹可多次击中同一单位
+				"isAOE"				"1"
+				"particles_nm"      "particles/40xiaojufeng_shengcheng.vpcf"
+				"particles_hit_dur" "0.7"
+				"particles_power" 	"particles/40xiaojufeng_jiaqiang.vpcf"
+				"particles_weak" 	"particles/40xiaojufeng_xueruo.vpcf"	
+				"cp"				"3"
+				"particlesDurationBoom" 	"particles/40xiaojufeng_baozha.vpcf"
+				
+				"hitTargetDebuff"	"modifier_small_hurricane_hit_debuff"	
+				"aoeTargetDebuff"	"modifier_small_hurricane_aoe_debuff"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_small_hurricane_hit_debuff"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"OverrideAnimation"     "ACT_DOTA_FLAIL"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"	
+				}	
+			}
+			"modifier_small_hurricane_aoe_debuff"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				//"OverrideAnimation"     "ACT_DOTA_FLAIL"
+				"States"
+				{
+					//"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"	
+				}	
+			}
+		}
+	}
+}

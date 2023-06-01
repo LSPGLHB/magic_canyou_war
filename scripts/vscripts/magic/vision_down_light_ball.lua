@@ -1,12 +1,15 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function createVisionDownLightBall(keys)
     local caster = keys.caster
     local ability = keys.ability
+    local playerID = caster:GetPlayerID()
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
-    --local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
+    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+    local aoe_duration = ability:GetSpecialValueFor("aoe_duration")    
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -14,10 +17,14 @@ function createVisionDownLightBall(keys)
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
+    local AbilityLevel = shoot.abilityLevel
+    aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',AbilityLevel,nil)--数值加强
+    aoe_duration = getApplyControlValue(shoot, aoe_duration)--克制加强
+    shoot.aoe_duration = aoe_duration	
+    shoot.aoe_radius = aoe_radius
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     moveShoot(keys, shoot, particleID, visionDownLightBallBoomCallBack, nil)
-
 end
 
 function visionDownLightBallBoomCallBack(keys,shoot,particleID)
@@ -29,22 +36,20 @@ end
 
 
 function visionDownLightBallDuration(keys,shoot)
-    local interval = 0.5
-    local particleBoom = visionDownLightBallRenderParticles(keys,shoot)
-    durationAOEDamage(keys, shoot, interval, particleBoom, nil)
+    local interval = 0.5--伤害间隔
+    visionDownLightBallRenderParticles(keys,shoot)
+    durationAOEDamage(keys, shoot, interval, nil)
 end
 
 
 function visionDownLightBallRenderParticles(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
-	local radius = ability:GetSpecialValueFor("aoe_radius")
-    local duration = ability:GetSpecialValueFor("aoe_duration")    
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
     local groundPos = shoot:GetAbsOrigin()--GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
-    ParticleManager:SetParticleControl(particleBoom, 11, Vector(duration, 0, 0))
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 0))
-    return particleBoom
+    ParticleManager:SetParticleControl(particleBoom, 11, Vector(shoot.aoe_duration, 0, 0))
+	ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 1, 0))
 end
 
+function 

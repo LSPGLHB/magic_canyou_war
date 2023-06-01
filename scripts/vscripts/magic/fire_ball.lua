@@ -5,6 +5,7 @@ function createFireBall(keys)
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
+	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -13,6 +14,7 @@ function createFireBall(keys)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
+	shoot.aoe_radius = aoe_radius
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     moveShoot(keys, shoot, particleID, FireBallBoomCallBack, nil)
@@ -21,13 +23,13 @@ end
 --技能爆炸,单次伤害
 function FireBallBoomCallBack(keys,shoot,particleID)
     ParticleManager:DestroyParticle(particleID, true) --子弹特效消失
-    local particleBoom = fireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
+    fireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
     dealSkillFireBallBoom(keys,shoot) --实现aoe爆炸效果
     --FireBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
     EmitSoundOn("magic_fire_ball_boom", shoot)
 	--EndShootControl(keys)--遥控用
     Timers:CreateTimer(1,function ()
-        ParticleManager:DestroyParticle(particleBoom, true)
+        --ParticleManager:DestroyParticle(particleBoom, true)
         --EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)
         shoot:ForceKill(true)
         shoot:AddNoDraw()
@@ -38,12 +40,11 @@ end
 function fireBallRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
-	local radius = ability:GetSpecialValueFor("aoe_radius") 
+	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") 
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
-    return particleBoom
 end
 
 function dealSkillFireBallBoom(keys,shoot)
@@ -52,7 +53,7 @@ function dealSkillFireBallBoom(keys,shoot)
 	local ability = keys.ability
 	local AbilityLevel = shoot.abilityLevel
 
-	local radius = ability:GetSpecialValueFor("aoe_radius") --AOE爆炸范围
+	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE爆炸范围
     
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
