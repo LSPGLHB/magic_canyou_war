@@ -1,0 +1,133 @@
+"DOTAAbilities"
+{
+    "frost_blast_datadriven"
+	{
+    // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"lich_chain_frost"
+		"MaxLevel"                      "1"
+		"AOERadius"                     "400"
+		"UnitType"         				"shui"
+		"AbilityLevel"					"a"
+		"IconSrc" 						"file://{images}/custom_game/ability_button/lich_chain_frost.png"  //选择框图标
+		"AbilityShowName" 				"#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1800"   //施法距离
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"46"
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"480"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1800"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "100"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "14"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_radius"		"400"
+            }
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_duration"	"5"
+            }
+            "07"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_speed_percent"		"40"
+            }
+            "08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_turn_rate_percent"		"50"
+            }
+			"09"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "diffuse_speed"		"250"
+            }
+			
+        }
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"magic_frost_blast_cast"
+				"Target"				"CASTER"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/frost_blast.lua"
+				"Function"			"createFrostBlast"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-L"
+				"AbilityLevel"		"a"
+				"unitType"          "shui"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                "isAOE"             "1"
+				"particles_nm"      "particles/44bingshuangchongji_shengcheng.vpcf"
+				"particles_hit_dur" "0.7"
+				"particles_power" 	"particles/44bingshuangchongji_jiaqiang.vpcf"
+				"particles_weak" 	"particles/44bingshuangchongji_xueruo.vpcf"
+				"cp"				"3"
+
+                "particlesBoom" 	"particles/44bingshuangchongji_baozha.vpcf"
+	
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_frost_blast_debuff_datadriven"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/zhimang_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+				"Properties"
+				{
+					
+				}
+			}
+		
+		}
+    }
+}

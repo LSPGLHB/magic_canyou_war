@@ -1,11 +1,11 @@
 require('shoot_init')
 require('skill_operation')
-function createFireBall(keys)
+function createFrostBlast(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
-	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
+	local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -18,43 +18,54 @@ function createFireBall(keys)
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
-    moveShoot(keys, shoot, FireBallBoomCallBack, nil)
+    moveShoot(keys, shoot, frostBlastBoomCallBack, nil)
 end
 
 --技能爆炸,单次伤害
-function FireBallBoomCallBack(keys,shoot)
+function frostBlastBoomCallBack(keys,shoot)
     ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
-    fireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
-    --dealSkillFireBallBoom(keys,shoot) --实现aoe爆炸效果
-	boomAOEOperation(keys, shoot, AOEOperationCallback)
-    --FireBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
-    EmitSoundOn("magic_fire_ball_boom", shoot)
+    frostBlastRenderParticles(keys,shoot) --爆炸粒子效果生成		  
+	diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
+    EmitSoundOn("magic_big_fire_ball_boom", shoot)
     Timers:CreateTimer(1,function ()
-        --ParticleManager:DestroyParticle(particleBoom, true)
-        --EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)
         shoot:ForceKill(true)
         shoot:AddNoDraw()
         return nil
     end)
 end
 
-function fireBallRenderParticles(keys,shoot)
+function frostBlastRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
-	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") 
+    --local aoe_radius = shoot.aoe_radius
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
+	ParticleManager:SetParticleControl(particleBoom, 1, Vector(100, 1, 250))--未实现传参
 end
 
 function AOEOperationCallback(keys,shoot,unit)
 	local caster = keys.caster
+	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
-	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance)
-	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	local AbilityLevel = shoot.abilityLevel
+    local debuffName = keys.modifierDebuffName
+
+    
+    local hitFlag = checkHitUnitToMark(shoot.hitUnits, isHitUnit, unit)
+
+    if hitFlag then 
+        local damage = getApplyDamageValue(shoot)
+        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+        debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
+        debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强
+
+        ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    end
+
 end
+
+
+
 

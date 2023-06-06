@@ -19,17 +19,15 @@ function createFireBottle(keys)
     shoot.aoe_duration = aoe_duration
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-    moveShoot(keys, shoot, particleID, fireBottleBoomCallBack, nil)
+    shoot.particleID = particleID
+    moveShoot(keys, shoot, fireBottleBoomCallBack, nil)
 end
 
-
-function fireBottleBoomCallBack(keys,shoot,particleID)
-    ParticleManager:DestroyParticle(particleID, true) --子弹特效消失 
+function fireBottleBoomCallBack(keys,shoot)
+    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失 
     fireBottleDuration(keys,shoot) --实现持续光环效果以及粒子效果
     EmitSoundOn("magic_fire_bottle_boom", shoot)
 end
-
-
 
 function fireBottleDuration(keys,shoot)
     local interval = 0.5
@@ -38,9 +36,8 @@ function fireBottleDuration(keys,shoot)
         EmitSoundOn("magic_fire_bottle_duration", shoot)
         return nil
     end)
-    durationAOEDamage(keys, shoot, interval, radiusDamagePower)
+    durationAOEDamage(keys, shoot, interval, fireBottleDamageCallback)
 end
-
 
 function fireBottleRenderParticles(keys,shoot)
     local caster = keys.caster
@@ -52,11 +49,17 @@ function fireBottleRenderParticles(keys,shoot)
     ParticleManager:SetParticleControl(particleBoom, 11, Vector(shoot.aoe_duration, 0, 0))
 end
 
-
-function radiusDamagePower(shootPos, unitPos, radius, damage)
+function fireBottleDamageCallback(keys, shoot, unit, interval)
+    local shootPos = shoot:GetAbsOrigin()
+    local unitPos = unit:GetAbsOrigin()
+    local radius = shoot.aoe_radius
+    local ability = keys.ability
+    local duration = shoot.aoe_duration
+    local damageTotal = getApplyDamageValue(shoot)
+    local damage = damageTotal / (duration / interval)           
     local distance = (shootPos - unitPos):Length2D()
     if distance < 0.5 * radius then
         damage = damage * 2
     end
-    return damage
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

@@ -8,10 +8,8 @@ function createLightBall(keys)
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
     local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
-    
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
-
     local directionTable ={}
     local angle23 = 0.05 * math.pi
     local newX2 = math.cos(math.atan2(direction.y, direction.x) - angle23)
@@ -29,15 +27,17 @@ function createLightBall(keys)
         shoot.aoe_radius = aoe_radius
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-        moveShoot(keys, shoot, particleID, lightBallBoomCallBack, nil)
+        shoot.particleID = particleID
+        moveShoot(keys, shoot, lightBallBoomCallBack, nil)
     end
 end
 
 --技能爆炸,单次伤害
-function lightBallBoomCallBack(keys,shoot,particleID)
-    ParticleManager:DestroyParticle(particleID, true) --子弹特效消失
+function lightBallBoomCallBack(keys,shoot)
+    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     lightBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
-    dealSkilllightBallBoom(keys,shoot) --实现aoe爆炸效果
+    --dealSkilllightBallBoom(keys,shoot) --实现aoe爆炸效果
+    boomAOEOperation(keys, shoot, AOEOperationCallback)
     EmitSoundOn("magic_light_ball_boom", shoot)
     Timers:CreateTimer(keys.particles_hit_dur,function ()
         --ParticleManager:DestroyParticle(particleBoom, true)
@@ -57,47 +57,24 @@ function lightBallRenderParticles(keys,shoot)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 1))
 end
 
-function dealSkilllightBallBoom(keys,shoot)
+function AOEOperationCallback(keys,shoot,unit)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
-	local AbilityLevel = shoot.abilityLevel
+    local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.modifierDebuffName
-	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE爆炸范围 
-	local position=shoot:GetAbsOrigin()
-	local casterTeam = caster:GetTeam()
-	local aroundUnits = FindUnitsInRadius(casterTeam, 
-										position,
-										nil,
-										radius,
-										DOTA_UNIT_TARGET_TEAM_BOTH,
-										DOTA_UNIT_TARGET_ALL,
-										0,
-										0,
-										false)
-	for k,unit in pairs(aroundUnits) do
-		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.isHealth
-		local lable = unit:GetUnitLabel()
-		--只作用于敌方,非技能单位
-		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
-			local damage = getApplyDamageValue(shoot)
-			ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
-		
-			local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-			debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
-			debuffDuration = getApplyControlValue(shoot, debuffDuration)
-			local faceAngle = ability:GetSpecialValueFor("face_angle")
-            local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
-            if flag then
-                ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
-            end
-		end
-		--如果是技能则进行加强或减弱操作
-		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-            checkHitAbilityToMark(shoot, unit)
-		end
-	end 
+    local damage = getApplyDamageValue(shoot)
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+    debuffDuration = getApplyControlValue(shoot, debuffDuration)
+    local faceAngle = ability:GetSpecialValueFor("face_angle")
+    local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
+    if flag then
+        ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    end
+
 end 
 
 

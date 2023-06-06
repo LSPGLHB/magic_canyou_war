@@ -19,18 +19,19 @@ function createSmallHurricane(keys)
         shoot.aoe_radius = aoe_radius
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-		moveShoot(keys, shoot, particleID, smallHurricaneBoomCallBack, smallHurricaneTakeAwayCallBack)
+		shoot.particleID = particleID
+		moveShoot(keys, shoot, smallHurricaneBoomCallBack, smallHurricaneTakeAwayCallBack)
 end
 
-function smallHurricaneBoomCallBack(keys,shoot,particleID)
-    ParticleManager:DestroyParticle(particleID, true) --子弹特效消失
+function smallHurricaneBoomCallBack(keys,shoot)
+    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     smallHurricaneDuration(keys,shoot) --实现持续光环效果以及粒子效果
 end
 
 function smallHurricaneDuration(keys,shoot)
 	local interval = 0.5
     smallHurricaneRenderParticles(keys,shoot)
-    durationAOEDamage(keys, shoot, interval, nil)
+    durationAOEDamage(keys, shoot, interval, damageCallback)
     blackHole(keys, shoot)
 end
 

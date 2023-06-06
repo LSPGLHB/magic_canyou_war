@@ -138,6 +138,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.PreTime = 10
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules.skillLabel = "skillLabel"
+	GameRules.stoneLabel = "stoneLabel"
 	GameRules.shopLabel ="shopLabel"
 	GameRules.playerBaseHealth = 50
 	GameRules.playerBaseMana = 100

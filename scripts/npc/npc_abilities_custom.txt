@@ -37,8 +37,12 @@
 #base magic/fire_ball.kv
 #base magic/vision_down_light_ball.kv
 
+
 //风系
 #base magic/small_hurricane.kv
+
+//水系
+#base magic/frost_blast.kv
 
 "DOTAAbilities"
 {

@@ -24,23 +24,25 @@ function createVisionDownLightBall(keys)
     shoot.aoe_radius = aoe_radius
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-    moveShoot(keys, shoot, particleID, visionDownLightBallBoomCallBack, nil)
+    shoot.particleID = particleID
+    moveShoot(keys, shoot, visionDownLightBallBoomCallBack, nil)
 end
 
-function visionDownLightBallBoomCallBack(keys,shoot,particleID)
-    ParticleManager:DestroyParticle(particleID, true) --子弹特效消失 
+function visionDownLightBallBoomCallBack(keys,shoot)
+    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失 
     visionDownLightBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
     EmitSoundOn("magic_vision_down_light_ball_duration", shoot)
 end
 
-
-
 function visionDownLightBallDuration(keys,shoot)
     local interval = 0.5--伤害间隔
     visionDownLightBallRenderParticles(keys,shoot)
-    durationAOEDamage(keys, shoot, interval, nil)
+    durationAOEDamage(keys, shoot, interval, damageCallback)
+    local ability = keys.ability
+    local faceAngle = ability:GetSpecialValueFor("face_angle")
+    local judgeTime = ability:GetSpecialValueFor("vision_time")
+    durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime,visionDebuffCallback)
 end
-
 
 function visionDownLightBallRenderParticles(keys,shoot)
     local caster = keys.caster
@@ -52,4 +54,16 @@ function visionDownLightBallRenderParticles(keys,shoot)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 1, 0))
 end
 
-function 
+--视野debuff触发
+function visionDebuffCallback(keys,shoot,unit)
+    local caster = keys.caster
+    local ability = keys.ability
+    local playerID = caster:GetPlayerID()
+    local AbilityLevel = shoot.abilityLevel
+    local debuffName = keys.modifierDebuffName
+    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
+    debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强
+    ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+end
+
