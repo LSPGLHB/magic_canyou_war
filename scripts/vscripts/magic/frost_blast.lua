@@ -49,19 +49,17 @@ function AOEOperationCallback(keys,shoot,unit)
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
 	local AbilityLevel = shoot.abilityLevel
-    local debuffName = keys.modifierDebuffName
+    local aoeTargetDebuff = keys.aoeTargetDebuff
 
-    
-    local hitFlag = checkHitUnitToMark(shoot.hitUnits, isHitUnit, unit)
+    local isHitUnit = checkHitUnitToMark(shoot, true, unit)
 
-    if hitFlag then 
+    if isHitUnit then 
         local damage = getApplyDamageValue(shoot)
         ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
         debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
         debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强
-
-        ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+        ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = debuffDuration})
     end
 
 end

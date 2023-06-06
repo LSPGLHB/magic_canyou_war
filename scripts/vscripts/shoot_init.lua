@@ -1,7 +1,6 @@
 require('skill_operation')
 require('player_power')
 function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
-
 	--实现延迟满法魂效果
 	--[[local shootHealthMax = shoot:GetHealth()
 	local shootHealthSend = shootHealthMax * 0.8
@@ -25,7 +24,7 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			--击中目标，行程结束
 			if isHitType == 1 then	
 				if skillBoomCallback ~= nil then	
-					clearUnitsModifierByName(shoot, keys.hitTargetDebuff)
+					clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 					skillBoomCallback(keys,shoot) --到达尽头启动AOE
 				end
 				return nil
@@ -38,11 +37,10 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			if isHitType == 3 then
 				return 0.02
 			end
-
 		else
 			--超出射程没有命中
 			if shoot then		
-				clearUnitsModifierByName(shoot, keys.hitTargetDebuff)
+				clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 				if keys.isAOE == 1 and skillBoomCallback ~= nil then --直达尽头发动AOE	
 					--启动AOE
 					skillBoomCallback(keys,shoot)
@@ -58,7 +56,6 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
       return 0.02
      end,0)
 end
-
 
 function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 	local caster = keys.caster
@@ -82,20 +79,23 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 										0,
 										0,
 										false)
-	local isHitUnit = true   --初始化设单位为可击中状态
+	local isHitUnit = true   --初始化设单位为可击中状态 
 	--local isHitShoot = true
 	shoot.tempHitUnits = {}
 	local returnVal = 0--返回子弹碰撞后有什么反应的标志
 	for k,unit in pairs(aroundUnits) do
 		local lable = unit:GetUnitLabel() --该单位为技能子弹
 		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.isHealth
-		local shootHealth = shoot.isHealth
-
+		local unitHealth = unit.energyHealth
+		local shootHealth = shoot.energyHealth
 		--让不可多次碰撞的子弹跟目标只碰撞一次
 		--子弹忽略自己，忽略发射者，忽略友军，忽略子弹(标签不是技能子弹)
 		if shoot ~= unit and unit ~= caster and unitTeam ~= casterTeam and GameRules.skillLabel ~= lable  then
 			isHitUnit = checkHitUnitToMark(shoot, isHitUnit, unit)
+			--如果子弹有aoedebuff则需要做好准备做检测掉出aoe的单位
+			if shoot.shootAoeDebuff ~= nil then
+				table.insert(shoot.tempHitUnits, unit)
+			end
 		end
 		if keys.isMultipleHit == 1 then --可多次碰撞的技能(穿透弹道)
 			isHitUnit = true
@@ -114,7 +114,7 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 				if(tempHealth > 0) then
 					shoot:SetHealth(tempHealth)
 					--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
-					unit.isHealth = 0
+					unit.energyHealth = 0
 					--此处需要有多个玩家进行游戏才能测试
 					if shoot.isMisfire == 1 then
 						shootKill(unit)
@@ -123,13 +123,13 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 						skillBoomCallback(keys,unit) 
 					end
 					--此处将被子弹控制的单位debuff去除
-					clearUnitsModifierByName(unit,unit.hitTargetDebuff)
+					clearUnitsModifierByName(unit,unit.shootAoeDebuff)
 				else
 					if tempHealth == 0 then
-						unit.isHealth = 0
+						unit.energyHealth = 0
 					end
 					--shoot:SetHealth(0.1)
-					shoot.isHealth = 0
+					shoot.energyHealth = 0
 					--此处需要有多个玩家进行游戏才能测试
 					if shoot.isMisfire == 1 then
 						shootKill(shoot)
@@ -140,7 +140,7 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 					tempHealth = tempHealth * -1
 					unit:SetHealth(tempHealth)
 					--此处将被子弹控制的单位debuff去除
-					clearUnitsModifierByName(shoot,shoot.hitTargetDebuff)
+					clearUnitsModifierByName(shoot,shoot.shootAoeDebuff)
 				end
 				returnVal = 0 --此处可控制是否马上爆炸
 			else --如果碰到的不是子弹
@@ -150,7 +150,6 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 					if hitUnitCallBack ~= nil then--会产生撞击
 						--print("shoot3",shoot.power_lv,shoot.damage)
 						hitUnitCallBack(keys, shoot, unit)
-						--table.insert(shoot.tempHitUnits, unit)
 					end
 					returnVal = hitType
 				end
@@ -165,9 +164,8 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 			end
 		end
 	end
-
-	--refreshBuffByArray(shoot, shoot.hitTargetDebuff) 
-
+	--处理掉出aoe的单位的debuff
+	refreshBuffByArray(shoot,shoot.shootAoeDebuff)
 	return returnVal
 end
 
@@ -246,13 +244,10 @@ function moveShootTimerRun(keys,shoot)
 	shoot:SetAbsOrigin(shootPos)
 end
 
---先
+--初始化
 function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	print("creatSkillShootInit")
 	if keys.hitType == nil then--hitType：1碰撞伤害，2穿透伤害，3直达指定位置，不命中单位
-		keys.hitType = 1
-	end
-	if keys.hitType == nil then--hitType：1爆炸，2穿透，3直达指定位置，不命中单位
 		keys.hitType = 1
 	end
 	if keys.isHitCallBack == nil then  --击中有效果，仅类型2穿透技能使用
@@ -273,15 +268,10 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	if keys.isControl == nil then
 		keys.isControl = 0
 	end 
-	if keys.hitTargetDebuff ~= nil then
-		shoot.hitTargetDebuff = keys.hitTargetDebuff
-	end
 
 	local caster = keys.caster
 	local ability = keys.ability
-
 	local playerID = caster:GetPlayerID()
-
 	shoot.aoe_duration = 0
 	shoot.debuff_duration = 0
 	shoot.direction = direction
@@ -301,10 +291,19 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.matchAbilityLevel ={}--记录被什么等级技能加强的过
 	--shoot.matchPower = 0 -- 克制加强系数
 	shoot.abilityLevel = keys.AbilityLevel
-	local AbilityLevel = keys.AbilityLevel
+	local AbilityLevel = shoot.abilityLevel
 	--print("shoot:"..shoot.abilityLevel)
-	
 
+	if keys.hitTargetDebuff ~= nil then
+		shoot.hitTargetDebuff = keys.hitTargetDebuff
+	end
+	if keys.aoeTargetDebuff ~= nil then
+		shoot.aoeTargetDebuff = keys.aoeTargetDebuff
+	end
+	if keys.shootAoeDebuff ~= nil then
+		shoot.shootAoeDebuff = keys.shootAoeDebuff
+	end
+	
 	--已处理
 	--蓝耗
 	local manaCost = ability:GetManaCost(1)
@@ -323,7 +322,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
     shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
 	shoot:RemoveAbility('ability_health_control')
 	--print("abilityEnergy",abilityEnergy)
-	print("energy_bonus",shoot.energy_bonus)
+	--print("energy_bonus",shoot.energy_bonus)
 
 	--直接可用数据
 	--伤害
@@ -459,20 +458,22 @@ function takeAwayUnit(keys,shoot,hitTarget)
 	local ability = keys.ability
 	local speed = shoot.speed 
 	local direction = shoot.direction
-	local hitTargetDebuff = keys.hitTargetDebuff
-	local debuffTable = hitTarget:FindModifierByName(hitTargetDebuff)
+	local shootAoeDebuff = keys.shootAoeDebuff
+	local debuffTable = hitTarget:FindModifierByName(shootAoeDebuff)
 
 	if hitTarget.shootFloatingAir == nil or hitTarget.shootFloatingAir == 0 then
-		hitTarget.shootFloatingAir = shoot   --浮空状态，不能被其他位移控制取代
+		hitTarget.shootFloatingAir = 1   --浮空状态，不能被其他位移控制取代
 	end
-	if hitTarget.shootFloatingAir == shoot then
-		if debuffTable == nil then
-			ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
+	--if hitTarget.shootFloatingAir == 1 then
+		--print("debuffTable:", debuffTable)
+		if debuffTable == nil then		
+			print("debuffTableINININN")
+			ability:ApplyDataDrivenModifier(caster, hitTarget, shootAoeDebuff, {Duration = -1})
 		end
 		local newPosition = hitTarget:GetAbsOrigin() +  direction * speed 
 		local groundPos = GetGroundPosition(newPosition, hitTarget)
 		hitTarget:SetAbsOrigin(groundPos)
-	end
+	--end	
 end
 
 --黑洞效果
@@ -481,18 +482,15 @@ function blackHole(keys, shoot)
 	local caster = keys.caster
 	local ability = keys.ability
 	local playerID = caster:GetPlayerID()
-    --local hitTargetDebuff = keys.hitTargetDebuff
-	local aoeTargetDebuff = keys.aoeTargetDebuff
-	shoot.aoeTargetDebuff = aoeTargetDebuff
+	local aoeTargetDebuff = shoot.aoeTargetDebuff 
     local aoe_radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE持续作用范围
     --print("blackHoleDuration:"..shoot.aoe_duration)
 	local aoe_duration = shoot.aoe_duration
     local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-	--clearUnitsModifierByName(shoot,hitTargetDebuff)
 	--启动计时器，时间到了结束debuff销毁子弹
 	Timers:CreateTimer(aoe_duration,function ()
-		print("timeOver")
+		--print("timeOver")
 		shoot.isKill = 1
 		clearUnitsModifierByName(shoot,aoeTargetDebuff)
 		return nil
@@ -512,14 +510,12 @@ function blackHole(keys, shoot)
 										0,
 										0,
 										false)
-		
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            local unitHealth = unit.isHealth
+            local unitHealth = unit.energyHealth
             local lable = unit:GetUnitLabel()
             --只作用于敌方,非技能单位，或石头单位
             if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel or lable == GameRules.stoneLabel then
-				--local debuffTable = unit:FindModifierByName(hitTargetDebuff)
 				local G_Speed = ability:GetSpecialValueFor("G_speed") * 1.66
 				G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值加强
 				G_Speed = getApplyControlValue(shoot, G_Speed)--克制加强
@@ -547,9 +543,7 @@ function blackHole(keys, shoot)
 		if shoot.isKill == 1 then
 			return nil
 		end
-		shoot.tempHitUnits = nil
 		shoot.tempHitUnits = {}
-		--print("shoot.hitUnits"..#shoot.hitUnits)
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -561,7 +555,7 @@ function blackHole(keys, shoot)
 										false)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
-			local unitHealth = unit.isHealth
+			local unitHealth = unit.energyHealth
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
@@ -573,11 +567,11 @@ function blackHole(keys, shoot)
 			end
 		end
 		refreshBuffByArray(shoot,shoot.aoeTargetDebuff)
-		
 		return buffInterval
 	end)
 end
 
+--去除掉出AOE范围的debuff，并更新数组
 function refreshBuffByArray(shoot, modifierName)
 	local oldArray = {}
 	oldArray = shoot.hitUnits
@@ -692,7 +686,7 @@ function durationAOEDamage(keys, shoot, interval, damageCallbackFunc)
 										false)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            local unitHealth = unit.isHealth
+            local unitHealth = unit.energyHealth
             local lable = unit:GetUnitLabel()
             
             --只作用于敌方,非技能单位
@@ -759,7 +753,7 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
                                             false)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            local unitHealth = unit.isHealth
+            local unitHealth = unit.energyHealth
             local lable = unit:GetUnitLabel()
             --只作用于敌方,非技能单位
             if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then    
@@ -804,7 +798,7 @@ function boomAOEOperation(keys, shoot, AOEOperationCallback)
 										false)
 	for k,unit in pairs(aroundUnits) do
 		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.isHealth
+		local unitHealth = unit.energyHealth
 		local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
 		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
@@ -845,7 +839,7 @@ function diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
 											false)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
-			local unitHealth = unit.isHealth
+			local unitHealth = unit.energyHealth
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then

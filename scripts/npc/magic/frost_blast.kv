@@ -71,17 +71,17 @@
             "07"
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_speed_percent"		"40"
+                "debuff_speed_percent"		"-40"
             }
             "08"
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_turn_rate_percent"		"50"
+                "debuff_turn_rate_percent"		"-50"
             }
 			"09"
             {
                 "var_type"			"FIELD_FLOAT"
-                "diffuse_speed"		"250"
+                "diffuse_speed"		"150"
             }
 			
         }
@@ -111,6 +111,7 @@
 				"cp"				"3"
 
                 "particlesBoom" 	"particles/44bingshuangchongji_baozha.vpcf"
+				"aoeTargetDebuff"   "modifier_frost_blast_debuff_datadriven"
 	
 			}
 		}
@@ -124,7 +125,8 @@
 				"EffectAttachType"	"follow_chest"
 				"Properties"
 				{
-					
+					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"  "%debuff_turn_rate_percent"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%debuff_speed_percent"
 				}
 			}
 		
