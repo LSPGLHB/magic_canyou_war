@@ -120,6 +120,8 @@ function createShoot(keys)
 
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+		shoot.particleID = particleID
+		EmitSoundOn(keys.soundCast, caster)
 		moveShoot(keys, shoot, particleID, shootBoom, nil)
 	else
 		keys.ability:RefundManaCost()

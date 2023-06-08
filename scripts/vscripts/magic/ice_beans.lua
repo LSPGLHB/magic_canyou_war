@@ -77,7 +77,7 @@ function LaunchFire(keys)
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.particleID = particleID
-		EmitSoundOn(keys.soundCast, shoot)
+		EmitSoundOn(keys.soundCast, caster)
 		moveShoot(keys, shoot, iceBeansHitCallBack, nil)
 		tempCount = tempCount+1
 		if tempCount == shootCount then

@@ -25,6 +25,7 @@ function createVisionDownLightBall(keys)
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     shoot.particleID = particleID
+    EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, visionDownLightBallBoomCallBack, nil)
 end
 
