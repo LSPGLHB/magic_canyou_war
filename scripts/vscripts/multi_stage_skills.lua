@@ -23,8 +23,6 @@ function stageOne (keys)
     local ability_b_name	= keys.ability_b_name
 	local ability_a_name	= ability:GetAbilityName()
 	caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
-
-
 end
 
 function LaunchFire(keys)

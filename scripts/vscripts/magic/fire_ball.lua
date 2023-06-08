@@ -25,17 +25,8 @@ end
 function FireBallBoomCallBack(keys,shoot)
     ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     fireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
-    --dealSkillFireBallBoom(keys,shoot) --实现aoe爆炸效果
 	boomAOEOperation(keys, shoot, AOEOperationCallback)
-    --FireBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
-    EmitSoundOn("magic_fire_ball_boom", shoot)
-    Timers:CreateTimer(1,function ()
-        --ParticleManager:DestroyParticle(particleBoom, true)
-        --EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)
-        shoot:ForceKill(true)
-        shoot:AddNoDraw()
-        return nil
-    end)
+
 end
 
 function fireBallRenderParticles(keys,shoot)
@@ -53,7 +44,7 @@ function AOEOperationCallback(keys,shoot,unit)
 	local ability = keys.ability
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance)
+	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

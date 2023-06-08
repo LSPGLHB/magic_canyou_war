@@ -64,6 +64,7 @@ function reinforceEach(unit,shoot,aoeType)
 	local unitOwnerID = unitOwner:GetPlayerID()
 	local unitLevel = unit.abilityLevel
 
+	local powerSound
 	local matchFlag = false
 	local restrainFlag = false
 	local hostileFlag
@@ -88,12 +89,14 @@ function reinforceEach(unit,shoot,aoeType)
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
 				restrainFlag = true
+				powerSound = keys.soundWeak
 			end
 		--else
 			if unitType == "tu" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
+				powerSound = keys.soundPower
 			end
 		--end
  	end
@@ -103,13 +106,14 @@ function reinforceEach(unit,shoot,aoeType)
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
 				restrainFlag = true
+				powerSound = keys.soundWeak
 			end
 		--else
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
-				EmitSoundOn("magic_fire_power_up", unit)
 				matchFlag = true
+				powerSound = keys.soundPower
 			end
 		--end
 	end
@@ -117,15 +121,16 @@ function reinforceEach(unit,shoot,aoeType)
 		--if hostileFlag then
 			if unitType == "huo" then
 				unit.power_lv =  unit.power_lv - 1
-				unit.power_flag = 1
-				EmitSoundOn("magic_fire_power_down", unit)
+				unit.power_flag = 1	
 				restrainFlag = true
+				powerSound = keys.soundWeak
 			end
 		--else
 			if unitType == "feng" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
+				powerSound = keys.soundPower
 			end
 		--end
 	end
@@ -135,12 +140,14 @@ function reinforceEach(unit,shoot,aoeType)
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
 				restrainFlag = true
+				powerSound = keys.soundWeak
 			end
 		--else
 			if unitType == "shui" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
+				powerSound = keys.soundPower
 			end
 		--end
 	end
@@ -150,12 +157,14 @@ function reinforceEach(unit,shoot,aoeType)
 				unit.power_lv =  unit.power_lv - 1
 				unit.power_flag = 1
 				restrainFlag = true
+				powerSound = keys.soundWeak
 			end
 		--else
 			if unitType == "lei" then
 				unit.power_lv =  unit.power_lv + 1
 				unit.power_flag = 1
 				matchFlag = true
+				powerSound = keys.soundPower
 			end
 		--end
 	end
@@ -163,6 +172,7 @@ function reinforceEach(unit,shoot,aoeType)
 	if matchFlag or restrainFlag then
 		--不能所有都加，只有加强的才加，减弱的目前没加后续，再看
 		--加强伤害，控制等效果使用
+		EmitSoundOn(powerSound, unit)
 		if matchFlag then --用于match_helper加强
 			table.insert(unit.matchUnitsID,shootOwnerID)
 			table.insert(unit.matchAbilityLevel,shootLevel)
@@ -202,8 +212,9 @@ function reinforceEach(unit,shoot,aoeType)
 end
 
 --技能加强或减弱粒子效果实现
-function powerShootParticleOperation(keys,shoot,particleID)
-	local new_particleID = particleID
+function powerShootParticleOperation(keys,shoot)
+	local new_particleID = shoot.particleID
+	local particleID = shoot.particleID
 	if shoot.power_lv > 0 and shoot.power_flag == 1 then
 		Timers:CreateTimer(0.3,function ()
 			ParticleManager:DestroyParticle(particleID, true)
@@ -222,57 +233,12 @@ function powerShootParticleOperation(keys,shoot,particleID)
 		ParticleManager:SetParticleControlEnt(new_particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.power_flag = 0
 	end
-	return new_particleID
-end
-
---非AOE（简单的）子弹爆炸用
-function shootBoomParticleOperation(shoot,destroyParticleID,showParticlesName,soundName,particlesDur)
-	--消除子弹以及中弹粒子效果
-	shoot:ForceKill(true)
-	--中弹粒子效果
-	ParticleManager:CreateParticle(showParticlesName, PATTACH_ABSORIGIN_FOLLOW, shoot)
-	--中弹声音
-	EmitSoundOn(soundName, shoot)
-	--消除粒子效果
-	if destroyParticleID then
-		ParticleManager:DestroyParticle(destroyParticleID, true)
-	end
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function () shoot:AddNoDraw() end, particlesDur) --命中后动画持续时间
-end
-
---击退单位处理
-function shootPenetrateParticleOperation(keys,shoot)
-	--中弹粒子效果
-	ParticleManager:CreateParticle(keys.particles_hit, PATTACH_ABSORIGIN_FOLLOW, shoot) 
-	--中弹声音
-	EmitSoundOn(keys.sound_hit, shoot)
+	shoot.particleID = new_particleID
 end
 
 
---影响弹道的buff
---测试速度调整
---[[
-function skillSpeedOperation(keys,speed)
-	local caster = keys.caster
-	local ability = keys.ability
-	local speed_up_per_stack = caster.speed_up_per_stack
-	local item_bonus_shoot_speed = getShootPower(caster, "item_shoot_speed")--caster.item_bonus_shoot_speed
-	if speed_up_per_stack == nil then
-		speed_up_per_stack = 0
-	end
-	if item_bonus_shoot_speed == nil then
-		item_bonus_shoot_speed = 0
-	end
-	local buff_modifier = "modifier_shoot_speed_up_buff"
-	local speed_up_stacks = 0
-	if caster:HasModifier(buff_modifier) then
-		speed_up_stacks = caster:GetModifierStackCount(buff_modifier, ability)
-	end
-	local buff_speed_up = speed_up_stacks * speed_up_per_stack
-	speed = (speed  + buff_speed_up  + item_bonus_shoot_speed) 
-	return speed
-end
-]]
+
+
 
 
 

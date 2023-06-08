@@ -149,10 +149,9 @@ function shootBoom(keys,shoot,particleID)
 		local unit = shoot.hitUnits[1]
 		ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})	
 	end
-	if particleID ~= nil then
-		ParticleManager:DestroyParticle(particleID, true)
-	end
-	shootBoomParticleOperation(shoot,particleID,keys.particles_hit,keys.sound_hit,keys.particles_hit_dur)
+
+	--shootKill(keys, shoot, "hit")
+	--shootBoomParticleOperation(shoot,particleID,keys.particles_hit,keys.sound_hit,keys.particles_hit_dur)
 end
 
 

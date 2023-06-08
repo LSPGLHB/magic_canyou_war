@@ -1,0 +1,277 @@
+"DOTAAbilities"
+{
+    "ice_beans_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"invoker_cold_snap"
+		"MaxLevel"                      "1"
+		"UnitType"         				"shui"
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/invoker_cold_snap.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"1800"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+        "AbilityChannelTime"			"1.5"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"30"
+
+        "AbilitySpecial"
+		{
+           "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"channel_time"		"1.5"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"charge_count"		"2"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stage_duration"		"5"
+			}
+        }
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"magic_ice_beans_channel"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_ice_beans_charge_datadriven"
+			}
+		}
+        
+        "OnChannelSucceeded"
+		{			
+			"FireSound"
+			{
+				"EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+				"Target"			"CASTER"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_ice_beans_stage_a_datadriven"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"		    "magic/ice_beans.lua"
+				"Function"			    "stageOne"
+				"modifier_stage_a_name"	"modifier_ice_beans_stage_a_datadriven"
+				"ability_b_name"		"ice_beans_stage_b_datadriven"
+			}
+		}
+
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"magic/ice_beans.lua"
+				"Function"		"LevelUpAbility"
+				"ability_b_name"	"ice_beans_stage_b_datadriven"
+			}
+		}
+
+        "Modifiers"
+		{
+			"modifier_ice_beans_charge_datadriven"
+			{
+				"Duration"				"%channel_time"
+			
+				"States"
+				{
+				    //"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"	//无法攻击
+				    //"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"	//禁止移动	
+					
+				    //"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"	
+				}
+				"Properties"
+				{
+				//	"MODIFIER_PROPERTY_DISABLE_TURNING "  "1"
+				}
+			}
+
+
+			"modifier_ice_beans_stage_a_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%stage_duration"
+				"EffectName"		"particles/39bingdou_buff.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/ice_beans.lua"
+						"Function"			"initStage"
+						"ability_b_name"	"ice_beans_stage_b_datadriven"
+					}
+				}
+			}
+		}
+    }
+
+
+
+
+
+    "ice_beans_stage_b_datadriven"
+	{   
+        "BaseClass"				        "ability_datadriven"
+		 "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"invoker_cold_snap"
+		"MaxLevel"                      "1"
+
+        "precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1800"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"810"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1800"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "60"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "4"
+			}
+
+            "06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"shoot_count"		"2"
+			}
+
+
+            "08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_speed_percent"		"-20"
+            }
+			"09"
+            {
+                "var_type"			"FIELD_FLOAT"
+				"debuff_duration"		"2"
+            }
+        }
+
+		"OnSpellStart"
+		{
+
+		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/ice_beans.lua"
+				"Function"			"LaunchFire"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-XS"
+				"AbilityLevel"		"b"
+				"unitType"          "shui"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"             "1"
+				"particles_nm"      "particles/39bingdou_shengcheng.vpcf"
+				"soundCast" 		"magic_light_ball_cast"
+                "particles_hit"     "particles/39bingdou_mingzhong.vpcf" 
+				"soundHit"			"magic_ice_beans_hit"
+
+				"particles_hit_dur" "0.7"
+
+                "particles_misfire" "particles/39bingdou_jiluo.vpcf"
+				"soundMisFire"		"Hero_Gyrocopter.HomingMissile.Destroy"
+                "particles_miss"    "particles/39bingdou_xiaoshi.vpcf"
+				"soundMiss"			"Hero_Gyrocopter.HomingMissile.Destroy"
+				"particles_power" 	"particles/39bingdou_jiaqiang.vpcf"
+				"soundPower"		"magic_ice_power_up"
+				"particles_weak" 	"particles/39bingdou_xueruo.vpcf"
+				"soundWeak"			"magic_ice_power_down"
+				"cp"				"3"
+
+				"hitTargetDebuff"  "modifier_ice_bean_debuff_datadriven"
+				"ability_a_name"			"ice_beans_datadriven"
+				"modifier_stage_a_name"		"modifier_ice_beans_stage_a_datadriven"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_ice_bean_debuff_datadriven"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/zhimang_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%debuff_speed_percent"  //暂时，放在这里后面要搬去lua做叠加
+				}
+			}
+		}
+
+    }
+}

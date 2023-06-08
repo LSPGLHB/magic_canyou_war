@@ -24,7 +24,6 @@ function createSmallHurricane(keys)
 end
 
 function smallHurricaneBoomCallBack(keys,shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     smallHurricaneDuration(keys,shoot) --实现持续光环效果以及粒子效果
 end
 

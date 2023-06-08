@@ -7,7 +7,7 @@ function createLightBall(keys)
     local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
-    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+    --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
     local directionTable ={}
@@ -24,7 +24,7 @@ function createLightBall(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
-        shoot.aoe_radius = aoe_radius
+        --shoot.aoe_radius = aoe_radius
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID
@@ -38,13 +38,6 @@ function lightBallBoomCallBack(keys,shoot)
     lightBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
     --dealSkilllightBallBoom(keys,shoot) --实现aoe爆炸效果
     boomAOEOperation(keys, shoot, AOEOperationCallback)
-    EmitSoundOn("magic_light_ball_boom", shoot)
-    Timers:CreateTimer(keys.particles_hit_dur,function ()
-        --ParticleManager:DestroyParticle(particleBoom, true)
-        shoot:ForceKill(true)
-        shoot:AddNoDraw()
-        return nil
-    end)
 end
 
 function lightBallRenderParticles(keys,shoot)

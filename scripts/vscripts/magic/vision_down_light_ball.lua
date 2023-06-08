@@ -29,9 +29,7 @@ function createVisionDownLightBall(keys)
 end
 
 function visionDownLightBallBoomCallBack(keys,shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失 
     visionDownLightBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
-    EmitSoundOn("magic_vision_down_light_ball_duration", shoot)
 end
 
 function visionDownLightBallDuration(keys,shoot)

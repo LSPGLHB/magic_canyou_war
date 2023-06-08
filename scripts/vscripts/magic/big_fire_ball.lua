@@ -24,26 +24,18 @@ end
 
 --技能爆炸,单次伤害
 function bigFireBallBoomCallBack(keys,shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
+   
     bigFireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
     --dealSkillbigFireBallBoom(keys,shoot) --实现aoe爆炸效果
 	boomAOEOperation(keys, shoot, AOEOperationCallback)
     --bigFireBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
-    EmitSoundOn("magic_big_fire_ball_boom", shoot)
 	--EndShootControl(keys)--遥控用
-    Timers:CreateTimer(1,function ()
-        --ParticleManager:DestroyParticle(particleBoom, true)
-        --EmitSoundOn("Hero_Disruptor.StaticStorm", shoot)
-        shoot:ForceKill(true)
-        shoot:AddNoDraw()
-        return nil
-    end)
+	
 end
 
 function bigFireBallRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
-	--local radius = ability:GetSpecialValueFor("aoe_radius") / 6
 	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
@@ -58,7 +50,7 @@ function AOEOperationCallback(keys,shoot,unit)
     local debuffName = keys.modifierDebuffName
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance)
+	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间

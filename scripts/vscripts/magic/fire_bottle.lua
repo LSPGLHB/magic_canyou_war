@@ -24,18 +24,14 @@ function createFireBottle(keys)
 end
 
 function fireBottleBoomCallBack(keys,shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失 
+    --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失 
     fireBottleDuration(keys,shoot) --实现持续光环效果以及粒子效果
-    EmitSoundOn("magic_fire_bottle_boom", shoot)
+    EmitSoundOn(keys.soundBoom, shoot)
 end
 
 function fireBottleDuration(keys,shoot)
     local interval = 0.5
     fireBottleRenderParticles(keys,shoot)
-    Timers:CreateTimer(0.8,function ()
-        EmitSoundOn("magic_fire_bottle_duration", shoot)
-        return nil
-    end)
     durationAOEDamage(keys, shoot, interval, fireBottleDamageCallback)
 end
 
