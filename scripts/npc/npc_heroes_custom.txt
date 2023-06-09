@@ -6,9 +6,9 @@
 	"npc_dota_hero_rubick" 
 	{
 		"override_hero"	"npc_dota_hero_rubick"
-		"AbilityLayout"         "6"
+		//"AbilityLayout"         "6"
 		"Ability1"	"shoot_datadriven"
-		"Ability2"	"ice_beans_datadriven"
+		"Ability2"	"scatter_thunder_ball_datadriven"
 		"Ability3"	"fire_bottle_datadriven"
 		"Ability4"  "light_ball_datadriven"
 		"Ability5"  "fire_ball_datadriven"
@@ -16,12 +16,12 @@
 		"Ability7"  "vision_down_light_ball_datadriven"
 		"Ability8"	"small_hurricane_datadriven"
 		"Ability9" 	"frost_blast_datadriven"
+		"Ability10" "ice_beans_datadriven"
+		"Ability11" "make_friend_datadriven"
 
-		"Ability10" "make_friend_datadriven"
 
-
-		"Ability11"  "ice_beans_stage_b_datadriven"
-		"Ability12"  ""
+		"Ability20"  "ice_beans_stage_b_datadriven"
+		"Ability21"  ""
 
 
 

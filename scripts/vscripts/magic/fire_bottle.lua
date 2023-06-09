@@ -25,7 +25,6 @@ function createFireBottle(keys)
 end
 
 function fireBottleBoomCallBack(keys,shoot)
-    --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失 
     fireBottleDuration(keys,shoot) --实现持续光环效果以及粒子效果
     EmitSoundOn(keys.soundBoom, shoot)
 end
@@ -39,7 +38,7 @@ end
 function fireBottleRenderParticles(keys,shoot)
     local caster = keys.caster
 	local ability = keys.ability
-	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
+	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
     local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
     ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 1, 0))

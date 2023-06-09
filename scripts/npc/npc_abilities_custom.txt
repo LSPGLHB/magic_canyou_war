@@ -45,6 +45,9 @@
 #base magic/frost_blast.kv
 #base magic/ice_beans.kv
 
+//雷系
+#base magic/scatter_thunder_ball.kv
+
 "DOTAAbilities"
 {
 	//屠夫钩重建

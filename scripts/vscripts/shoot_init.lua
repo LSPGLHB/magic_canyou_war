@@ -26,7 +26,7 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 				if skillBoomCallback ~= nil then	
 					clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 					skillBoomCallback(keys,shoot) --启动AOE
-					shootSoundAndParticle(keys, shoot, "hit")
+					shootSoundAndParticle(keys, shoot, "hit") --boom系进入会没效果
 					shootKill(keys, shoot)
 				end
 				return nil
@@ -364,7 +364,7 @@ function initDurationBuff(keys)
 	setPlayerDurationBuffByName(keys,"mana_regen",GameRules.playerBaseManaRegen)
 end
 
-function shootSoundAndParticle(keys, shoot, type)
+function shootSoundAndParticle(keys, shoot, type)--type为nil只发声
 	local particlesName
 	local soundName
 	local soundDelay = 0
@@ -384,23 +384,26 @@ function shootSoundAndParticle(keys, shoot, type)
 			particlesName = keys.particles_hit
 			soundName = keys.soundHit
 		end
-		if type ==	"boom" then
-			particlesName = keys.particles_boom
+		if type ==	"boom" then  --复杂效果，在本文件内做
+			--particlesName = keys.particles_boom
 			soundName = keys.soundBoom
 		end
-		if type ==	"duration" then
-			particlesName = keys.particles_duration
+		if type ==	"duration" then --复杂效果，在本文件内做
+			--particlesName = keys.particles_duration
 			soundName = keys.soundDuration
 		end
 		--粒子效果
-		local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
-		ParticleManager:SetParticleControlEnt(newParticlesID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+		if particlesName ~= nil then
+			local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+			ParticleManager:SetParticleControlEnt(newParticlesID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+		end
 	end
 	--声音
-	print("soundDelay:",soundDelay)
-	Timers:CreateTimer(soundDelay,function ()
-		EmitSoundOn(soundName, shoot)
-	end)
+	if soundName ~= nil then
+		Timers:CreateTimer(soundDelay,function ()
+			EmitSoundOn(soundName, shoot)
+		end)
+	end
 end
 
 --子弹消除
@@ -796,7 +799,7 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
 	local ability = keys.ability
 	local aoe_radius = shoot.aoe_radius --AOE爆炸范围
     local aoe_duration = shoot.aoe_duration
-	local position=shoot:GetAbsOrigin()
+	local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
     local interval = 0.1
     Timers:CreateTimer(aoe_duration,function ()
@@ -880,7 +883,6 @@ function boomAOEOperation(keys, shoot, AOEOperationCallback)
             checkHitAbilityToMark(shoot, unit)
 		end
 	end 
-	
 	shootKill(keys, shoot)
 end
 

@@ -122,7 +122,7 @@ function createShoot(keys)
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.particleID = particleID
 		EmitSoundOn(keys.soundCast, caster)
-		moveShoot(keys, shoot, particleID, shootBoom, nil)
+		moveShoot(keys, shoot, shootBoom, nil)
 	else
 		keys.ability:RefundManaCost()
 	end
@@ -148,10 +148,9 @@ function shootBoom(keys,shoot,particleID)
 	local ability = keys.ability
 	local damage = getApplyDamageValue(shoot)
 	for i = 1, #shoot.hitUnits  do
-		local unit = shoot.hitUnits[1]
+		local unit = shoot.hitUnits[i]
 		ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})	
 	end
-
 	--shootKill(keys, shoot, "hit")
 	--shootBoomParticleOperation(shoot,particleID,keys.particles_hit,keys.sound_hit,keys.particles_hit_dur)
 end

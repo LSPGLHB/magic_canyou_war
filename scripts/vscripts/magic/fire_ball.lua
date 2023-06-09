@@ -34,7 +34,7 @@ function fireBallRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
 	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") 
-	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
+	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))

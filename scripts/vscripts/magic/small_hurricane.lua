@@ -41,7 +41,7 @@ function smallHurricaneRenderParticles(keys,shoot)
 	local ability = keys.ability
 	local aoe_radius = shoot.aoe_radius
     local aoe_duration = shoot.aoe_duration
-	local particleBoom = ParticleManager:CreateParticle(keys.particlesDurationBoom, PATTACH_WORLDORIGIN, caster)
+	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
     local shootPos = shoot:GetAbsOrigin()
 	ParticleManager:SetParticleControl(particleBoom, 3, Vector(shootPos.x,shootPos.y,shootPos.z))
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(aoe_radius, 0, 0))

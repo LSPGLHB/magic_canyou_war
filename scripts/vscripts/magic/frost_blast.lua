@@ -26,23 +26,22 @@ end
 function frostBlastBoomCallBack(keys,shoot)
     ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     frostBlastRenderParticles(keys,shoot) --爆炸粒子效果生成		  
-	diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
-
+	diffuseBoomAOEOperation(keys, shoot, frostBlastAOECallback)
 end
-
+--调用特效
 function frostBlastRenderParticles(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
     local aoe_radius = shoot.aoe_radius
     local diffuseSpeed = ability:GetSpecialValueFor("diffuse_speed") * 1.66
     local cp1Y = aoe_radius / diffuseSpeed
-	local particleBoom = ParticleManager:CreateParticle(keys.particlesBoom, PATTACH_WORLDORIGIN, caster)
+	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
 	ParticleManager:SetParticleControl(particleBoom, 1, Vector(diffuseSpeed, cp1Y, 0))--未实现传参
 end
-
-function AOEOperationCallback(keys,shoot,unit)
+--伤害和buff运算
+function frostBlastAOECallback(keys,shoot,unit)
 	local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
@@ -51,6 +50,7 @@ function AOEOperationCallback(keys,shoot,unit)
     local isHitUnit = checkHitUnitToMark(shoot, true, unit)
     if isHitUnit then 
         local damage = getApplyDamageValue(shoot)
+        EmitSoundOn(keys.soundHit, unit)
         ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
         debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强

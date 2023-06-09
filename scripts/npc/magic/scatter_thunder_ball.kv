@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "light_ball_datadriven"
+    "scatter_thunder_ball_datadriven"
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,11 +11,11 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"wisp_overcharge"
+		"AbilityTextureName"			"leshrac_lightning_storm"
 		"MaxLevel"                      "1"
-		"UnitType"         				"huo"
+		"UnitType"         				"lei"
 		"AbilityLevel"					"c"
-		"IconSrc" "file://{images}/custom_game/ability_button/wisp_overcharge.png"  //选择框图标
+		"IconSrc" "file://{images}/custom_game/ability_button/leshrac_lightning_storm.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -25,7 +25,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"   //施法距离
+		"AbilityCastRange"				"1600"   //施法距离
 		"AbilityCastPoint"				"0.1"
 
 		// Time		
@@ -34,7 +34,7 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"18"
+		"AbilityManaCost"				"19"
 
 
         "AbilitySpecial"
@@ -42,44 +42,29 @@
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"700"
+				"speed"				"860"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1200"
+				"max_distance"		"1600"
 			}
             "03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "75"
+				"hit_range"		    "60"
 			}
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "10"
+				"damage"		    "4"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_radius"		"250"
+                "debuff_duration"		"3"
             }
-            "06"
-            {
-                "var_type"			"FIELD_FLOAT"
-                "debuff_duration"		"4"
-            }
-            "07"
-            {
-                "var_type"			"FIELD_FLOAT"
-                "vision_radius"		"-500"
-            }
-			"08"
-            {
-                "var_type"			"FIELD_FLOAT"
-				"face_angle"		"90"
-            }
-			"09"
+			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"angle_rate"		"0.05"
@@ -90,40 +75,45 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/light_ball.lua"
-				"Function"			"createLightBall"
+				"ScriptFile"		"magic/scatter_thunder_ball.lua"
+				"Function"			"createScatterThunderBall"
 				"Target"			"POINT"
-				"unitModel"			"shootUnit-S"
+				"unitModel"			"shootUnit-XS"
 				"AbilityLevel"		"c"
-				"unitType"          "huo"
+				"unitType"          "lei"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
-                "isAOE"             "1"
-				"particles_nm"      "particles/01yaoyanguangqiu_shengcheng.vpcf"
-				"soundCast" 		"magic_light_ball_cast"
+                //"isAOE"           "1"
 				"particles_hit_dur" "0.7"
-				"particles_power" 	"particles/01yaoyanguangqiu_jiaqiang.vpcf"
-				"soundPower"		"magic_light_power_up"
-				"particles_weak" 	"particles/01yaoyanguangqiu_xueruo.vpcf"
-				"soundWeak"			"magic_light_power_down"
-				"cp"				"3"
+                "cp"				 "3"
 
-                "particles_boom" 	"particles/yaoyanguangqiubaozha.vpcf"
-				"soundBoom"			"magic_light_ball_boom"
-				"modifierDebuffName"  "modifier_light_ball_debuff_datadriven"
+				"particles_nm"      "particles/03dianqiu_shengcheng.vpcf"
+				"soundCast" 		"magic_scatter_thunder_ball_cast"
+				"particles_misfire" "particles/39bingdou_jiluo.vpcf"
+				"soundMisFire"		"magic_thunder_mis_fire"
+                "particles_miss"    "particles/39bingdou_xiaoshi.vpcf"
+				"soundMiss"			"magic_thunder_miss"
+				"particles_power" 	"particles/03dianqiu_jiaqiang.vpcf"
+				"soundPower"		"magic_thunder_power_up"
+				"particles_weak" 	"particles/03dianqiu_xueruo.vpcf"
+				"soundWeak"			"magic_thunder_power_down"	
+                "particles_hit" 	"particles/03dianqiu_mingzhong.vpcf"
+				"soundHit"			"magic_scatter_thunder_ball_hit"
+				"hitTargetDebuff"   "modifier_scatter_thunder_ball_debuff_datadriven"
+				
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_light_ball_debuff_datadriven"
+			"modifier_scatter_thunder_ball_debuff_datadriven"
 			{
 				"IsDebuff"				"1"
 				"EffectName"		"particles/zhimang_debuff.vpcf"
 				"EffectAttachType"	"follow_chest"
-				"Properties"
+                "OverrideAnimation"     "ACT_DOTA_DISABLED"
+				"States"
 				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
-                    "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
+					"MODIFIER_STATE_STUNNED"  "MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}

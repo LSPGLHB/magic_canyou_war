@@ -5,14 +5,12 @@ function stageOne (keys)
 	local ability	= keys.ability
     local modifierStageName	= keys.modifier_stage_a_name
 	local chargeCount	= ability:GetSpecialValueFor("charge_count")
-
     --[[
     pfx = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
 	caster.fire_spirits_pfx			= pfx
     ]]
     caster.fire_spirits_numSpirits	= chargeCount
 	caster:SetModifierStackCount( modifierStageName, ability, chargeCount )
-
     local ability_b_name	= keys.ability_b_name
 	local ability_a_name	= ability:GetAbilityName()
 	caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
@@ -40,14 +38,11 @@ end
 function initStage(keys)
     local caster	= keys.caster
 	local ability	= keys.ability
-
---[[
-	local pfx = caster.fire_spirits_pfx
+--[[local pfx = caster.fire_spirits_pfx
 	ParticleManager:DestroyParticle( pfx, false )
-]]
-	-- Swap main ability
-	local ability_a_name	= ability:GetAbilityName()
-	local ability_b_name	= keys.ability_b_name
+]]-- Swap main ability
+	local ability_a_name = ability:GetAbilityName()
+	local ability_b_name = keys.ability_b_name
 	caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
 end
 
@@ -109,9 +104,8 @@ end
 
 --技能爆炸,单次伤害
 function iceBeansHitCallBack(keys,shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
+    --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     boomAOEOperation(keys, shoot, AOEOperationCallback)
-	--shootKill(keys, shoot, "hit")
 end
 
 
@@ -120,15 +114,18 @@ function AOEOperationCallback(keys,shoot,unit)
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
-    local debuffName = keys.modifierDebuffName
+    local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot)
     ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
+	local abilityName = caster:FindAbilityByName(ability:GetAbilityName())
+	local currentStack = unit:GetModifierStackCount( hitTargetDebuff, abilityName)
+	currentStack = currentStack + 1
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-
-    ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
-
+	debuffDuration = debuffDuration * currentStack
+    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
+	unit:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
 
 end 
