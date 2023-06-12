@@ -47,6 +47,8 @@
 
 //雷系
 #base magic/scatter_thunder_ball.kv
+#base magic/penetrate_thunder_ball.kv
+
 
 "DOTAAbilities"
 {

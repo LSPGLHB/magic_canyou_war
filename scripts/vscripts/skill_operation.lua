@@ -52,7 +52,7 @@ end
 --power_lv：标记增强等级
 --power_flag: 标记是否实现增强效果
 --加强削弱运算(被搜索目标实体，自身实体，aoe类型,是否敌对减弱否则加强)
-function reinforceEach(unit,shoot,aoeType)
+function reinforceEach(keys,unit,shoot,aoeType)
 	local shootTeam = shoot:GetTeam()
 	local shootOwner = shoot.owner
 	local shootOwnerID = shootOwner:GetPlayerID()

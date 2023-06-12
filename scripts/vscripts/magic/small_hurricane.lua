@@ -29,10 +29,13 @@ function smallHurricaneBoomCallBack(keys,shoot)
 end
 
 function smallHurricaneDuration(keys,shoot)
+	local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant
+	G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
+	G_Speed = getApplyControlValue(shoot, G_Speed)--克制计算
 	local interval = 0.5
     smallHurricaneRenderParticles(keys,shoot)
     durationAOEDamage(keys, shoot, interval, damageCallback)
-    blackHole(keys, shoot)
+    blackHole(keys, shoot, G_Speed)
 end
 
 --特效显示效果

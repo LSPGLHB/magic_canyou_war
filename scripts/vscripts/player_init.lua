@@ -14,7 +14,7 @@ function initMapStats()
 
     --刷怪
     for i=1, 8 ,1 do
-        createUnit('yang',DOTA_TEAM_NOTEAM)
+        createUnit('yang',DOTA_TEAM_BADGUYS)
     end
     
    

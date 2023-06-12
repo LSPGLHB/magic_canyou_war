@@ -46,6 +46,7 @@ end
 function setPlayerDurationBuffByName(keys,buffName,baseValue)
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
+
     local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]    
     --print("setPlayerDurationBuffByName",buffName)
     if (PlayerPower[playerID]['player_'..buffName..'_duration'] > 0) then --（目前不计算正只计算负）
@@ -150,31 +151,26 @@ function getPlayerPowerValueByName(hero, powerName, playerBaseValue)
     return stackCount
 end
 
---能力数值运算
+--能力数值运算，获取装备与辅助buff的计算值
 function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
-	
 	local abilityBuffName = buffName.."_"..abilityLevel
 	--print("getFinalValueOperation"..playerID..abilityBuffName)
 	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
 	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
 	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
-	
 	local tempPrecentBase = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_base'] / 100
 	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
 	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
-
 	--临时带持续时间的加强的功能还没做
 	local durationPrecentBase = 0
 	local durationBonusValue = 0
 	local durationPrecentFinal = 0 
-	--local modifierName = 
 	--print("getFinalValueOperation")
 	--print(precentBase..","..bonusValue..","..precentFinal)
 	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
 	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
 	local returnValue = 0
 	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + durationPrecentBase) + bonusValue + tempBonusValue + durationBonusValue) * (1 + precentFinal + tempPrecentFinal + durationPrecentFinal)
-	
 	if (flag == 1) then
 		returnValue = operationValue
 	end

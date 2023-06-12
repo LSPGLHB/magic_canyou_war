@@ -6,13 +6,13 @@ function createScatterThunderBall(keys)
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
-    local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
+    local angleRate = ability:GetSpecialValueFor("angle_rate")
     --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
     local directionTable ={}
     table.insert(directionTable,direction)
-    local angle23 = 0.05 * math.pi
+    local angle23 = angleRate * math.pi
     local newX2 = math.cos(math.atan2(direction.y, direction.x) - angle23)
     local newY2 = math.sin(math.atan2(direction.y, direction.x) - angle23)
     local newX3 = math.cos(math.atan2(direction.y, direction.x) + angle23)
@@ -40,7 +40,6 @@ function scatterThunderBallBoomCallBack(keys,shoot)
 end
 
 
-
 function AOEOperationCallback(keys,shoot,unit)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
@@ -55,8 +54,6 @@ function AOEOperationCallback(keys,shoot,unit)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 
     ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
-
-
 end 
 
 

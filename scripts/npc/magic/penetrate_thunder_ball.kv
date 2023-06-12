@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "scatter_thunder_ball_datadriven"
+    "penetrate_thunder_ball_datadriven"
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,11 +11,11 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"leshrac_lightning_storm"
+		"AbilityTextureName"			"invoker_emp"
 		"MaxLevel"                      "1"
 		"UnitType"         				"lei"
 		"AbilityLevel"					"c"
-		"IconSrc" "file://{images}/custom_game/ability_button/leshrac_lightning_storm.png"  //选择框图标
+		"IconSrc" "file://{images}/custom_game/ability_button/invoker_emp.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -25,7 +25,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1600"   //施法距离
+		"AbilityCastRange"				"1800"   //施法距离
 		"AbilityCastPoint"				"0.1"
 
 		// Time		
@@ -34,7 +34,7 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"19"
+		"AbilityManaCost"				"21"
 
 
         "AbilitySpecial"
@@ -42,62 +42,56 @@
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"860"
+				"speed"				"900"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1600"
+				"max_distance"		"1800"
 			}
             "03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "60"
+				"hit_range"		    "75"
 			}
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "4"
+				"damage"		    "9"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
                 "debuff_duration"		"3"
             }
-			"06"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"angle_rate"		"0.05"
-			}
         }
 
 		"OnSpellStart"
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/scatter_thunder_ball.lua"
-				"Function"			"createScatterThunderBall"
-				//"Target"			"POINT"
-				"unitModel"			"shootUnit-XS"
+				"ScriptFile"		"magic/penetrate_thunder_ball.lua"
+				"Function"			"createPenetrateThunderBall"
+				"unitModel"			"shootUnit-S"
 				"AbilityLevel"		"c"
 				"unitType"          "lei"
-				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+				"hitType" 			"2"   //3直达不触碰,2穿透弹,1触碰爆炸
                 //"isAOE"           "1"
 				"particles_hit_dur" "0.7"
                 "cp"				 "3"
 
-				"particles_nm"      "particles/03dianqiu_shengcheng.vpcf"
-				"soundCast" 		"magic_scatter_thunder_ball_cast"
-				"particles_misfire" "particles/39bingdou_jiluo.vpcf"
+				"particles_nm"      "particles/33guanchuanleiqiu_shengcheng.vpcf"
+				"soundCast" 		"magic_penetrate_thunder_ball_cast"
+				"particles_misfire" "particles/33guanchuanleiqiu_jiluo.vpcf"
 				"soundMisFire"		"magic_thunder_mis_fire"
-                "particles_miss"    "particles/39bingdou_xiaoshi.vpcf"
+                "particles_miss"    "particles/33guanchuanleiqiu_xiaoshi.vpcf"
 				"soundMiss"			"magic_thunder_miss"
-				"particles_power" 	"particles/03dianqiu_jiaqiang.vpcf"
+				"particles_power" 	"particles/33guanchuanleiqiu_jiaqiang.vpcf"
 				"soundPower"		"magic_thunder_power_up"
-				"particles_weak" 	"particles/03dianqiu_xueruo.vpcf"
+				"particles_weak" 	"particles/33guanchuanleiqiu_xueruo.vpcf"
 				"soundWeak"			"magic_thunder_power_down"	
-                "particles_hit" 	"particles/03dianqiu_mingzhong.vpcf"
-				"soundHit"			"magic_scatter_thunder_ball_hit"
+                "particles_pass" 	"particles/33guanchuanleiqiu_mingzhong.vpcf"
+				"soundPass"			"magic_penetrate_thunder_ball_hit"
 				"hitTargetDebuff"   "modifier_sleep_debuff_datadriven"
 				
 			}
@@ -127,11 +121,12 @@
 
 				"OnTakeDamage"
 				{
-					"FireSound"
+                    "FireSound"
 					{
 						"EffectName"			"magic_wake_up"
 						"Target"				"UNIT"
 					}
+                    
 					"RemoveModifier"
 					{
 						"Target"                      "UNIT"     //Target是光环作用的目标（未证实），unit是光环载体（证实）

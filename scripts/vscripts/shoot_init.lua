@@ -92,7 +92,9 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 		--子弹忽略自己，忽略发射者，忽略友军，忽略子弹(标签不是技能子弹)
 		if shoot ~= unit and unit ~= caster and unitTeam ~= casterTeam and GameRules.skillLabel ~= lable  then
 			isHitUnit = checkHitUnitToMark(shoot, isHitUnit, unit)
+			--print("isHitUnit:",isHitUnit)
 			--如果子弹有aoedebuff则需要做好准备做检测掉出aoe的单位
+			
 			if shoot.shootAoeDebuff ~= nil then
 				table.insert(shoot.tempHitUnits, unit)
 			end
@@ -110,7 +112,6 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 				local unitHealth = unit:GetHealth()
 				--unitHealth = getApplyEnergyValue(unit, unitHealth)
 				local tempHealth = shootHealth - unitHealth
-
 				if(tempHealth > 0) then
 					shoot:SetHealth(tempHealth)
 					--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
@@ -160,9 +161,13 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 				end
 			end
 		else--相同队伍的触碰 --不搜索自己，标签为子弹
-			if shoot ~= unit and GameRules.skillLabel == lable and isHitUnit then
+			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel == lable then--and isHitUnit then(不知道是不是可以删除)
 				--shootPowerFlag用于标记该aoe是否已经起作用(此处标记应该在里面或者用数组标记所有接触过的子弹名字)
-				checkHitAbilityToMark(shoot, unit)
+				checkHitAbilityToMark(keys, shoot, unit)
+			end
+		
+			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel ~= lable then
+				checkHitTeamerRemoveDebuff(keys, shoot, unit)
 			end
 		end
 	end
@@ -172,7 +177,7 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 end
 
 --记录击中技能目标
-function checkHitAbilityToMark(shoot, unit)	
+function checkHitAbilityToMark(keys, shoot, unit)	
 	local isHitFlag = true
 	for i = 1, #shoot.hitShoot do
 		if shoot.hitShoot[i] == unit then
@@ -183,7 +188,7 @@ function checkHitAbilityToMark(shoot, unit)
 	end
 	if isHitFlag then
 		table.insert(shoot.hitShoot, unit)
-		reinforceEach(unit,shoot,nil) --加强运算记录在shoot.power_lv
+		reinforceEach(keys,unit,shoot,nil) --加强运算记录在shoot.power_lv
 	end
 
 	local tempFlag = true
@@ -196,26 +201,30 @@ function checkHitAbilityToMark(shoot, unit)
 	end
 	if tempFlag then
 		table.insert(unit.hitShoot, shoot)
-		reinforceEach(shoot,unit,nil) --加强运算记录在shoot.power_lv
+		reinforceEach(keys,shoot,unit,nil) --加强运算记录在shoot.power_lv
 	end
 end
 
 --记录击中单位目标到数组，返回标记（true：未击中过，false：已经击中过）
 function checkHitUnitToMark(shoot, isHitFlag, unit)
 	for i = 1, #shoot.hitUnits do
-		if shoot.hitUnits[i] == unit then
+		--print("checkHitUnitToMark:",shoot.hitUnits[i],"=",unit)
+		if shoot.hitUnits[i] == unit then	
 			isHitFlag = false  --如果已经击中过就不再击中
 			break
 		end
 	end
 	if isHitFlag then
+		--print("checkHitUnitToMarkININININI")
 		table.insert(shoot.hitUnits, unit)
 	end
 	return isHitFlag
 end
 
+--清除单位的debuff
 function clearUnitsModifierByName(shoot,modifierName)
 	if modifierName ~= nil then
+		print("clearUnitsModifierByName")
 		for i = 1, #shoot.hitUnits do
 			local tempUnit = shoot.hitUnits[i]
 			tempUnit:InterruptMotionControllers( true )
@@ -227,6 +236,41 @@ function clearUnitsModifierByName(shoot,modifierName)
 		end
 		shoot.hitUnits = {}
 		shoot.tempHitUnits = {}
+	end
+end
+
+--去除掉出AOE范围的debuff，并更新数组
+function refreshBuffByArray(shoot, modifierName)
+	if modifierName ~= nil then
+		print("refreshBuffByArray")
+		local oldArray = {}
+		oldArray = shoot.hitUnits
+		local newArray = {}
+		newArray = shoot.tempHitUnits
+		for i = 1, #oldArray do
+			local flag = true
+			for j = 1, #newArray do
+				if oldArray[i] == newArray[j] then
+					flag = false
+				end
+			end
+			if flag then
+				if oldArray[i]:HasModifier(modifierName) then
+					oldArray[i]:RemoveModifierByName(modifierName)
+				end
+			end
+		end
+		shoot.hitUnits = shoot.tempHitUnits
+	end
+end
+
+--命中友方移除debuff
+function checkHitTeamerRemoveDebuff(keys, shoot, unit)
+	local sleepDebuffName = "modifier_sleep_debuff_datadriven"
+	if unit:HasModifier(sleepDebuffName) then
+		--print("checkHitTeamerRemoveDebuff")
+		unit:RemoveModifierByName(sleepDebuffName)
+		EmitSoundOn("magic_wake_up", unit)
 	end
 end
 
@@ -392,6 +436,10 @@ function shootSoundAndParticle(keys, shoot, type)--type为nil只发声
 			--particlesName = keys.particles_duration
 			soundName = keys.soundDuration
 		end
+		if type == "pass" then
+			particlesName = keys.particles_pass
+			soundName = keys.soundPass
+		end
 		--粒子效果
 		if particlesName ~= nil then
 			local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
@@ -550,8 +598,9 @@ function takeAwayUnit(keys,shoot,hitTarget)
 end
 
 --黑洞效果
-function blackHole(keys, shoot)
+function blackHole(keys, shoot, G_Speed)
 	local interval = 0.02
+	G_Speed = G_Speed * interval
 	local caster = keys.caster
 	local ability = keys.ability
 	local playerID = caster:GetPlayerID()
@@ -588,11 +637,7 @@ function blackHole(keys, shoot)
             local unitHealth = unit.energyHealth
             local lable = unit:GetUnitLabel()
             --只作用于敌方,非技能单位，或石头单位
-            if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel or lable == GameRules.stoneLabel then
-				local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant
-				G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值加强
-				G_Speed = getApplyControlValue(shoot, G_Speed)--克制加强
-				G_Speed = G_Speed * interval
+            if casterTeam ~= unitTeam or lable == GameRules.stoneLabel then
 				local shootPos = shoot:GetAbsOrigin()
 				local unitPos = unit:GetAbsOrigin()
 				local vectorDistance = Vector(shootPos.x,shootPos.y,0) - Vector(unitPos.x,unitPos.y,0)
@@ -604,7 +649,7 @@ function blackHole(keys, shoot)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 then
-                checkHitAbilityToMark(shoot, unit)
+                checkHitAbilityToMark(keys, shoot, unit)
             end
         end
         return interval
@@ -644,27 +689,6 @@ function blackHole(keys, shoot)
 	end)
 end
 
---去除掉出AOE范围的debuff，并更新数组
-function refreshBuffByArray(shoot, modifierName)
-	local oldArray = {}
-	oldArray = shoot.hitUnits
-	local newArray = {}
-	newArray = shoot.tempHitUnits
-	for i = 1, #oldArray do
-		local flag = true
-		for j = 1, #newArray do
-			if oldArray[i] == newArray[j] then
-				flag = false
-			end
-		end
-		if flag then
-			if oldArray[i]:HasModifier(modifierName) then
-				oldArray[i]:RemoveModifierByName(modifierName)
-			end
-		end
-	end
-	shoot.hitUnits = shoot.tempHitUnits
-end
 
 
 --控制效果
@@ -766,7 +790,7 @@ function durationAOEDamage(keys, shoot, interval, damageCallbackFunc)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-                checkHitAbilityToMark(shoot, unit)
+                checkHitAbilityToMark(keys, shoot, unit)
             end
         end
 
@@ -853,11 +877,42 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
     end)
 end
 
+--穿透类的处理
+function passAOEOperation(keys, shoot, unit, passOperationCallback)
+	--local caster = keys.caster
+	--local radius = shoot.aoe_radius --AOE爆炸范围
+	shootSoundAndParticle(keys, shoot, "pass")
+	--[[
+	local position = shoot:GetAbsOrigin()
+	local casterTeam = caster:GetTeam()
+	local aroundUnits = FindUnitsInRadius(casterTeam, 
+										position,
+										nil,
+										radius,
+										DOTA_UNIT_TARGET_TEAM_BOTH,
+										DOTA_UNIT_TARGET_ALL,
+										0,
+										0,
+										false)
+	for k,unit in pairs(aroundUnits) do
+		local unitTeam = unit:GetTeam()
+		local unitHealth = unit.energyHealth
+		local lable = unit:GetUnitLabel()
+		--只作用于敌方,非技能单位
+		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then]]
+			passOperationCallback(keys, shoot, unit)
+		--[[end
+		--如果是技能则进行加强或减弱操作
+		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+            checkHitAbilityToMark(keys, shoot, unit)
+		end
+	end ]]
+end
+
 --非持续AOE伤害以及触发效果
 function boomAOEOperation(keys, shoot, AOEOperationCallback)
 	local caster = keys.caster
 	local radius = shoot.aoe_radius --AOE爆炸范围
-	--print("boomAOEOperation1:",radius)
 	shootSoundAndParticle(keys, shoot, "boom")
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
@@ -880,7 +935,7 @@ function boomAOEOperation(keys, shoot, AOEOperationCallback)
 		end
 		--如果是技能则进行加强或减弱操作
 		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-            checkHitAbilityToMark(shoot, unit)
+            checkHitAbilityToMark(keys, shoot, unit)
 		end
 	end 
 	shootKill(keys, shoot)
@@ -922,7 +977,7 @@ function diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
 			end
 			--如果是技能则进行加强或减弱操作
 			if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-				checkHitAbilityToMark(shoot, unit)
+				checkHitAbilityToMark(keys, shoot, unit)
 			end
 		end 
 		return interval

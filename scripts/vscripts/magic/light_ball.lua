@@ -6,7 +6,7 @@ function createLightBall(keys)
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
-    local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
+    local angleRate = ability:GetSpecialValueFor("angle_rate")
     --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -35,7 +35,7 @@ end
 
 --技能爆炸,单次伤害
 function lightBallBoomCallBack(keys,shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
+    --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     lightBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
     --dealSkilllightBallBoom(keys,shoot) --实现aoe爆炸效果
     boomAOEOperation(keys, shoot, AOEOperationCallback)
