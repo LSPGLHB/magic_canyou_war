@@ -37,6 +37,8 @@
 #base magic/fire_ball.kv
 #base magic/vision_down_light_ball.kv
 
+//土系
+#base magic/twine_soil_ball.kv
 
 //风系
 #base magic/small_hurricane.kv

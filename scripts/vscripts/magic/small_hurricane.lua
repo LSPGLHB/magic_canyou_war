@@ -29,6 +29,9 @@ function smallHurricaneBoomCallBack(keys,shoot)
 end
 
 function smallHurricaneDuration(keys,shoot)
+	local ability = keys.ability
+	local caster = keys.caster
+    local playerID = caster:GetPlayerID()
 	local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant
 	G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
 	G_Speed = getApplyControlValue(shoot, G_Speed)--克制计算

@@ -101,7 +101,7 @@
 		// 状态设置
 		// ----------------------------------------------------------------
 		// 基础生命值
-		"StatusHealth"	"1000"
+		"StatusHealth"	"100"
 		// 生命恢复速度，负值无效
 		"StatusHealthRegen"	"0"
 		// 基础魔法值，设置为0会导致没有魔法条
@@ -121,14 +121,7 @@
 		"VisionDaytimeRange"	"1200"
 		// 夜晚视野范围
 		"VisionNighttimeRange"	"800"
-		"Ability9"	""
-		"Ability10"	""
-		"Ability11"	""
-		"Ability12"	""
-		"Ability13"	""
-		"Ability14"	""
-		"Ability15"	""
-		"Ability16"	""
+
 	}
 
 	"huorenss"
@@ -512,20 +505,21 @@
 		"ArmorPhysical"	"3"
 		// 基础魔抗
 		"MagicalResistance"	"0"
-		// 攻击类型：DOTA_UNIT_CAP_NO_ATTACK         不能攻击
+		
 		"AttackCapabilities"	"DOTA_UNIT_CAP_NO_ATTACK"
+		// 攻击类型：DOTA_UNIT_CAP_NO_ATTACK         不能攻击
 		//           DOTA_UNIT_CAP_MELEE_ATTACK      近战
 		//           DOTA_UNIT_CAP_RANGED_ATTACK     远程
 		// 最小伤害
-		"AttackDamageMin"	"0"
+		"AttackDamageMin"	"1"
 		// 最大伤害
-		"AttackDamageMax"	"0"
+		"AttackDamageMax"	"1"
 		// 攻击间隔
-		"AttackRate"	"0"
+		"AttackRate"	"1"
 		// 攻击前摇
 		"AttackAnimationPoint"	"0.75"
 		// 警戒范围
-		"AttackAcquisitionRange"	"10"
+		"AttackAcquisitionRange"	"0"
 		// 攻击范围
 		"AttackRange"	"600"
 		// 攻击缓冲范围（不会取消攻击的额外射程范围）
@@ -579,7 +573,7 @@
 		// 状态设置
 		// ----------------------------------------------------------------
 		// 基础生命值
-		"StatusHealth"	"20000"
+		"StatusHealth"	"20"
 		// 生命恢复速度，负值无效
 		"StatusHealthRegen"	"10"
 		// 基础魔法值，设置为0会导致没有魔法条
@@ -599,6 +593,8 @@
 		"VisionDaytimeRange"	"1200"
 		// 夜晚视野范围
 		"VisionNighttimeRange"	"800"
+
+		 "HasInventory"              "1"   //物品栏
 	}
 
 	"shootUnit"

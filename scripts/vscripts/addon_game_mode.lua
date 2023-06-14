@@ -138,6 +138,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.PreTime = 10
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules.skillLabel = "skillLabel"
+	GameRules.nothingLabel ="nothingLabel" --抛物线用
 	GameRules.stoneLabel = "stoneLabel"
 	GameRules.shopLabel ="shopLabel"
 	GameRules.playerBaseHealth = 50
@@ -147,6 +148,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseManaRegen = 10
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
+
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)

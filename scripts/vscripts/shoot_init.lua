@@ -314,6 +314,10 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	if keys.isControl == nil then
 		keys.isControl = 0
 	end 
+	shoot.soundCast = keys.soundCast
+	shoot.soundPower = keys.soundPower
+	shoot.soundWeak = keys.soundWeak
+	
 
 	local caster = keys.caster
 	local ability = keys.ability
@@ -797,8 +801,8 @@ function durationAOEDamage(keys, shoot, interval, damageCallbackFunc)
 		timeCount = timeCount + interval
 		if timeCount >= duration then
 			EmitSoundOn("magic_voice_stop", shoot)
-			shoot:ForceKill(true)
-			shoot:AddNoDraw()
+			--shoot:ForceKill(true)
+			--shoot:AddNoDraw()
 			return nil
 		end   
         return interval

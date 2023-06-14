@@ -1,0 +1,162 @@
+"DOTAAbilities"
+{
+    "twine_soil_ball_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"viper_poison_attack"
+		"MaxLevel"                      "1"
+		"UnitType"         				"tu"
+		"AbilityLevel"					"c"
+		"IconSrc" "file://{images}/custom_game/ability_button/viper_poison_attack.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"18"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"200"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1300"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "10"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_duration"		"2.5"
+            }
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "element_debuff_duration"		"5"
+            }
+            "06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_charges"		"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"8"
+			}
+        }
+
+        "OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"magic/twine_soil_ball.lua"
+				"Function"				"shootStartCharge"
+				"modifierCountName"		"modifier_twine_soil_ball_counter_datadriven"
+			}
+		}
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/twine_soil_ball.lua"
+				"Function"			"createTwineSoilBall"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"c"
+				"unitType"          "tu"
+				"hitType" 			"2"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"           "1"
+				"particles_hit_dur" "0.7"
+                "cp"				 "3"
+
+				"particles_nm"      "particles/02tuqiushu_shengcheng.vpcf"
+				"soundCast" 		"magic_twine_soil_ball_cast"
+				"particles_misfire" "particles/02tuqiushu_jiluo.vpcf"
+				"soundMisFire"		"magic_soil_mis_fire"
+                "particles_miss"    "particles/02tuqiushu_xiaoshi.vpcf"
+				"soundMiss"			"magic_soil_miss"
+				
+				"particles_power" 	"particles/02tuqiushu_jiaqiang.vpcf"
+				"soundPower"		"magic_soil_power_up"
+				"particles_weak" 	"particles/02tuqiushu_xueruo.vpcf"
+				"soundWeak"			"magic_soil_power_down"	
+                "particles_pass" 	"particles/02tuqiushu_mingzhong.vpcf"
+				"soundPass"			"magic_twine_soil_ball_hit"
+
+                "modifierCountName" "modifier_twine_soil_ball_counter_datadriven"
+                "hitTargetDebuff"   "modifier_twine_soil_ball_debuff_datadriven"
+				
+			}
+		}
+
+		"Modifiers"
+		{
+            "modifier_twine_soil_ball_counter_datadriven"
+			{
+				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
+			}
+
+			"modifier_twine_soil_ball_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"
+				"EffectAttachType"	"follow_origin"
+                //"OverrideAnimation"     "ACT_DOTA_DISABLED"
+
+				"Properties"
+				{
+					//"MODIFIER_PROPERTY_DISABLE_TURNING" "1"
+				}
+
+				"States"
+				{
+					//"MODIFIER_STATE_SILENCED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_MUTED"	  "MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_NIGHTMARED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				
+			}
+		}
+    }
+}

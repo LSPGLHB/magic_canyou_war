@@ -85,86 +85,87 @@ function reinforceEach(keys,unit,shoot,aoeType)
 	print("shoot-nuit-Type:",shootType,unitType)
 	if shootType == "huo" then
 		--if hostileFlag then  --注释部分是区分是否同一队伍，用于加强削弱区分
-			if unitType == "lei" then
-				unit.power_lv =  unit.power_lv - 1
-				unit.power_flag = 1
+			if unitType == "shui" then
+				shoot.power_lv =  shoot.power_lv - 1
+				shoot.power_flag = 1
 				restrainFlag = true
-				powerSound = keys.soundWeak
+				powerSound = shoot.soundWeak
 			end
 		--else
-			if unitType == "tu" then
-				unit.power_lv =  unit.power_lv + 1
-				unit.power_flag = 1
+			if unitType == "feng" then
+				shoot.power_lv =  shoot.power_lv + 1
+				shoot.power_flag = 1
 				matchFlag = true
-				powerSound = keys.soundPower
+				powerSound = shoot.soundPower
+				--print("111111111")
 			end
 		--end
  	end
 	if shootType == "feng" then
 		--if hostileFlag then
-			if unitType == "tu" then
-				unit.power_lv =  unit.power_lv - 1
-				unit.power_flag = 1
+			if unitType == "lei" then
+				shoot.power_lv =  shoot.power_lv - 1
+				shoot.power_flag = 1
 				restrainFlag = true
-				powerSound = keys.soundWeak
+				powerSound = shoot.soundWeak
 			end
 		--else
-			if unitType == "huo" then
-				unit.power_lv =  unit.power_lv + 1
-				unit.power_flag = 1
+			if unitType == "shui" then
+				shoot.power_lv =  shoot.power_lv + 1
+				shoot.power_flag = 1
 				matchFlag = true
-				powerSound = keys.soundPower
+				powerSound = shoot.soundPower
 			end
 		--end
 	end
 	if shootType == "shui" then
 		--if hostileFlag then
-			if unitType == "huo" then
-				unit.power_lv =  unit.power_lv - 1
-				unit.power_flag = 1	
+			if unitType == "tu" then
+				shoot.power_lv =  shoot.power_lv - 1
+				shoot.power_flag = 1	
 				restrainFlag = true
-				powerSound = keys.soundWeak
+				powerSound = shoot.soundWeak
 			end
 		--else
-			if unitType == "feng" then
-				unit.power_lv =  unit.power_lv + 1
-				unit.power_flag = 1
+			if unitType == "lei" then
+				shoot.power_lv =  shoot.power_lv + 1
+				shoot.power_flag = 1
 				matchFlag = true
-				powerSound = keys.soundPower
+				powerSound = shoot.soundPower
 			end
 		--end
 	end
 	if shootType == "lei" then
 		--if hostileFlag then
-			if unitType == "feng" then
-				unit.power_lv =  unit.power_lv - 1
-				unit.power_flag = 1
+			if unitType == "huo" then
+				shoot.power_lv =  shoot.power_lv - 1
+				shoot.power_flag = 1
 				restrainFlag = true
-				powerSound = keys.soundWeak
+				powerSound = shoot.soundWeak
 			end
 		--else
-			if unitType == "shui" then
-				unit.power_lv =  unit.power_lv + 1
-				unit.power_flag = 1
+			if unitType == "tu" then
+				shoot.power_lv =  shoot.power_lv + 1
+				shoot.power_flag = 1
 				matchFlag = true
-				powerSound = keys.soundPower
+				powerSound = shoot.soundPower
 			end
 		--end
 	end
 	if shootType == "tu" then
 		--if hostileFlag then
-			if unitType == "shui" then
-				unit.power_lv =  unit.power_lv - 1
-				unit.power_flag = 1
+			if unitType == "feng" then
+				shoot.power_lv =  shoot.power_lv - 1
+				shoot.power_flag = 1
 				restrainFlag = true
-				powerSound = keys.soundWeak
+				powerSound = shoot.soundWeak
 			end
 		--else
-			if unitType == "lei" then
-				unit.power_lv =  unit.power_lv + 1
-				unit.power_flag = 1
+			if unitType == "huo" then
+				shoot.power_lv =  shoot.power_lv + 1
+				shoot.power_flag = 1
 				matchFlag = true
-				powerSound = keys.soundPower
+				powerSound = shoot.soundPower
 			end
 		--end
 	end
@@ -172,42 +173,43 @@ function reinforceEach(keys,unit,shoot,aoeType)
 	if matchFlag or restrainFlag then
 		--不能所有都加，只有加强的才加，减弱的目前没加后续，再看
 		--加强伤害，控制等效果使用
-		EmitSoundOn(powerSound, unit)
+		--print("powerSound:",powerSound)
+		EmitSoundOn(powerSound, shoot)
 		if matchFlag then --用于match_helper加强
-			table.insert(unit.matchUnitsID,shootOwnerID)
-			table.insert(unit.matchAbilityLevel,shootLevel)
+			table.insert(shoot.matchUnitsID,shootOwnerID)
+			table.insert(shoot.matchAbilityLevel,shootLevel)
 		end
 		--魔魂需要现在加强
 		local energyMatchBuffName = 'energy_match'
-		local unitHealth = unit:GetHealth()
-		local tempEnergy = getFinalValueOperation(unitOwnerID,unitHealth,energyMatchBuffName,unitLevel,unitOwner)
-		unit.energy_match_bonus = getApplyEnergyValue(unit, tempEnergy) - tempEnergy
+		local shootHealth = shoot:GetHealth()
+		local tempEnergy = getFinalValueOperation(shootOwnerID,shootHealth,energyMatchBuffName,shootLevel,shootOwner)
+		shoot.energy_match_bonus = getApplyEnergyValue(shoot, tempEnergy) - tempEnergy
 		
-		if unit:HasModifier('modifier_health_debuff') then
-			unit:RemoveModifierByName('modifier_health_debuff')
+		if shoot:HasModifier('modifier_health_debuff') then
+			shoot:RemoveModifierByName('modifier_health_debuff')
 		end
-		if unit:HasModifier('modifier_health_buff') then
-			unit:RemoveModifierByName('modifier_health_buff')
+		if shoot:HasModifier('modifier_health_buff') then
+			shoot:RemoveModifierByName('modifier_health_buff')
 		end
-		unit:AddAbility('ability_health_control'):SetLevel(1)
-		if unit.energy_match_bonus > 0 then
-			unit:RemoveModifierByName('modifier_health_debuff')
-			unit:SetModifierStackCount('modifier_health_buff', unit, unit.energy_match_bonus)
+		shoot:AddAbility('ability_health_control'):SetLevel(1)
+		if shoot.energy_match_bonus > 0 then
+			shoot:RemoveModifierByName('modifier_health_debuff')
+			unit:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_match_bonus)
 		end
-		if unit.energy_match_bonus < 0 then
-			unit:RemoveModifierByName('modifier_health_buff')
-			unit:SetModifierStackCount('modifier_health_debuff', unit, unit.energy_match_bonus * -1)
+		if shoot.energy_match_bonus < 0 then
+			shoot:RemoveModifierByName('modifier_health_buff')
+			shoot:SetModifierStackCount('modifier_health_debuff', shoot, shoot.energy_match_bonus * -1)
 		end
-		unit:RemoveAbility('ability_health_control')
-		print("reinforceEachID:=="..shootOwnerID.."=="..shootLevel.."=="..#unit.matchUnitsID)
-		print("energy_match_bonus:"..unit.energy_match_bonus)
+		shoot:RemoveAbility('ability_health_control')
+		print("reinforcesEachID:=="..shootOwnerID.."=="..shootLevel.."=="..#shoot.matchUnitsID)
+		print("energy_match_bonus:"..shoot.energy_match_bonus)
 	end
 	--限制层数为1
-	if unit.power_lv > 1 then
-		unit.power_lv = 1
+	if shoot.power_lv > 1 then
+		shoot.power_lv = 1
 	end
-	if unit.power_lv < -1 then
-		unit.power_lv = -1
+	if shoot.power_lv < -1 then
+		shoot.power_lv = -1
 	end
 end
 
