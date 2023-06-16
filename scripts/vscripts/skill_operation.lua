@@ -46,13 +46,14 @@ function powerLevelOperation(shoot, abilityName, powerLv, value)
 	if powerLv < 0 then
 		value = matchHelperValue * 0.75 
 	end
+	--print("powerLevelOperationval:",value)
 	return value
 end
 
 --power_lv：标记增强等级
 --power_flag: 标记是否实现增强效果
 --加强削弱运算(被搜索目标实体，自身实体，aoe类型,是否敌对减弱否则加强)
-function reinforceEach(keys,unit,shoot,aoeType)
+function reinforceEach(unit,shoot,aoeType)
 	local shootTeam = shoot:GetTeam()
 	local shootOwner = shoot.owner
 	local shootOwnerID = shootOwner:GetPlayerID()
@@ -84,14 +85,14 @@ function reinforceEach(keys,unit,shoot,aoeType)
 	end
 	print("shoot-nuit-Type:",shootType,unitType)
 	if shootType == "huo" then
-		--if hostileFlag then  --注释部分是区分是否同一队伍，用于加强削弱区分
+		if hostileFlag then  --注释部分是区分是否同一队伍，用于加强削弱区分
 			if unitType == "shui" then
 				shoot.power_lv =  shoot.power_lv - 1
 				shoot.power_flag = 1
 				restrainFlag = true
 				powerSound = shoot.soundWeak
 			end
-		--else
+		else
 			if unitType == "feng" then
 				shoot.power_lv =  shoot.power_lv + 1
 				shoot.power_flag = 1
@@ -99,86 +100,87 @@ function reinforceEach(keys,unit,shoot,aoeType)
 				powerSound = shoot.soundPower
 				--print("111111111")
 			end
-		--end
+		end
  	end
 	if shootType == "feng" then
-		--if hostileFlag then
+		if hostileFlag then
 			if unitType == "lei" then
 				shoot.power_lv =  shoot.power_lv - 1
 				shoot.power_flag = 1
 				restrainFlag = true
 				powerSound = shoot.soundWeak
 			end
-		--else
+		else
 			if unitType == "shui" then
 				shoot.power_lv =  shoot.power_lv + 1
 				shoot.power_flag = 1
 				matchFlag = true
 				powerSound = shoot.soundPower
 			end
-		--end
+		end
 	end
 	if shootType == "shui" then
-		--if hostileFlag then
+		if hostileFlag then
 			if unitType == "tu" then
 				shoot.power_lv =  shoot.power_lv - 1
 				shoot.power_flag = 1	
 				restrainFlag = true
 				powerSound = shoot.soundWeak
 			end
-		--else
+		else
 			if unitType == "lei" then
 				shoot.power_lv =  shoot.power_lv + 1
 				shoot.power_flag = 1
 				matchFlag = true
 				powerSound = shoot.soundPower
 			end
-		--end
+		end
 	end
 	if shootType == "lei" then
-		--if hostileFlag then
+		if hostileFlag then
 			if unitType == "huo" then
 				shoot.power_lv =  shoot.power_lv - 1
 				shoot.power_flag = 1
 				restrainFlag = true
 				powerSound = shoot.soundWeak
 			end
-		--else
+		else
 			if unitType == "tu" then
 				shoot.power_lv =  shoot.power_lv + 1
 				shoot.power_flag = 1
 				matchFlag = true
 				powerSound = shoot.soundPower
 			end
-		--end
+		end
 	end
 	if shootType == "tu" then
-		--if hostileFlag then
+		if hostileFlag then
 			if unitType == "feng" then
 				shoot.power_lv =  shoot.power_lv - 1
 				shoot.power_flag = 1
 				restrainFlag = true
 				powerSound = shoot.soundWeak
 			end
-		--else
+		else
 			if unitType == "huo" then
 				shoot.power_lv =  shoot.power_lv + 1
 				shoot.power_flag = 1
 				matchFlag = true
 				powerSound = shoot.soundPower
 			end
-		--end
+		end
 	end
 	
-	if matchFlag or restrainFlag then
+	--如果被增强
+	if matchFlag  then
 		--不能所有都加，只有加强的才加，减弱的目前没加后续，再看
 		--加强伤害，控制等效果使用
 		--print("powerSound:",powerSound)
 		EmitSoundOn(powerSound, shoot)
-		if matchFlag then --用于match_helper加强
-			table.insert(shoot.matchUnitsID,shootOwnerID)
-			table.insert(shoot.matchAbilityLevel,shootLevel)
-		end
+
+		table.insert(shoot.matchUnitsID,shootOwnerID)
+		table.insert(shoot.matchAbilityLevel,shootLevel)
+
 		--魔魂需要现在加强
 		local energyMatchBuffName = 'energy_match'
 		local shootHealth = shoot:GetHealth()
@@ -203,6 +205,11 @@ function reinforceEach(keys,unit,shoot,aoeType)
 		shoot:RemoveAbility('ability_health_control')
 		print("reinforcesEachID:=="..shootOwnerID.."=="..shootLevel.."=="..#shoot.matchUnitsID)
 		print("energy_match_bonus:"..shoot.energy_match_bonus)
+	end
+
+	--如果被克制
+	if restrainFlag then
+		EmitSoundOn(powerSound, shoot)
 	end
 	--限制层数为1
 	if shoot.power_lv > 1 then

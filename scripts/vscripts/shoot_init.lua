@@ -21,27 +21,33 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			shoot.traveled_distance = shoot.traveled_distance + shoot.speed
 			--子弹命中目标
 			local isHitType = shootHit(keys, shoot, isHitType, skillBoomCallback, hitUnitCallBack)
-			--击中目标，行程结束
-			if isHitType == 1 then	
-				if skillBoomCallback ~= nil then	
-					clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
-					skillBoomCallback(keys,shoot) --启动AOE
-					shootSoundAndParticle(keys, shoot, "hit") --boom系进入会没效果
-					shootKill(keys, shoot)
-				end
+			if shoot.energyHealth == 0 then
+				shootKill(keys, shoot)--子弹消失
 				return nil
 			end
-			--击中目标，行程继续
-			if isHitType == 2 then
-				return 0.02
-			end
-			--到达指定位置，不命中目标
-			if isHitType == 3 then
-				return 0.02
+			if shoot.energyHealth ~= 0 then 
+				--击中目标，行程结束
+				if isHitType == 1 then	
+					if skillBoomCallback ~= nil then	
+						clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
+						skillBoomCallback(keys,shoot) --启动AOE
+						shootSoundAndParticle(keys, shoot, "hit") --boom系进入会没效果
+						shootKill(keys, shoot)
+					end
+					return nil
+				end
+				--击中目标，行程继续
+				if isHitType == 2 then
+					return 0.02
+				end
+				--到达指定位置，不命中目标
+				if isHitType == 3 then
+					return 0.02
+				end
 			end
 		else
 			--超出射程没有命中
-			if shoot then		
+			if shoot.energyHealth ~= 0 then		
 				clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 				if keys.isAOE == 1 and skillBoomCallback ~= nil then --直达尽头发动AOE	
 					--启动AOE
@@ -107,45 +113,60 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 			if(GameRules.skillLabel == lable and unitHealth ~= 0) then --如果碰到的是子弹，且法魂不为0：此处需要比拼法魂大小
 				--获取触碰双方的属性--print("shoot-nuit-Type:",shoot.unit_type,unit.unit_type)
 				--法魂计算过程(还需加入克制计算)
+				reinforceEach(unit,shoot,nil)
+				reinforceEach(shoot,unit,nil)
 				local shootHealth = shoot:GetHealth()
-				--shootHealth = getApplyEnergyValue(shoot, shootHealth)
+				shootHealth = getApplyEnergyValue(shoot, shootHealth)
 				local unitHealth = unit:GetHealth()
-				--unitHealth = getApplyEnergyValue(unit, unitHealth)
+				unitHealth = getApplyEnergyValue(unit, unitHealth)
+				
 				local tempHealth = shootHealth - unitHealth
+				print("shootHealth:",shootHealth)
+				print("unitHealth:",unitHealth)
 				if(tempHealth > 0) then
 					shoot:SetHealth(tempHealth)
 					--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
 					unit.energyHealth = 0
-					--此处需要有多个玩家进行游戏才能测试
-					if shoot.isMisfire == 1 then
-						shootSoundAndParticle(keys, shoot, "misFire")
+	
+					if unit.isMisfire == 1 then
+						shootSoundAndParticle(keys, unit, "misFire")
 						shootKill(keys, unit)
 					end
 					if shoot.isMisfire == nil then
 						skillBoomCallback(keys,unit) 
+						shootKill(keys, unit)
 					end
 					--此处将被子弹控制的单位debuff去除
 					clearUnitsModifierByName(unit,unit.shootAoeDebuff)
 				else
 					if tempHealth == 0 then
 						unit.energyHealth = 0
+						if unit.isMisfire == 1 then
+							shootSoundAndParticle(keys, unit, "misFire")
+							shootKill(keys, unit)
+						end
+						if shoot.isMisfire == nil then
+							skillBoomCallback(keys,unit) 
+							shootKill(keys, unit)
+						end
 					end
 					--shoot:SetHealth(0.1)
 					shoot.energyHealth = 0
-					--此处需要有多个玩家进行游戏才能测试
+		
 					if shoot.isMisfire == 1 then
 						shootSoundAndParticle(keys, shoot, "misFire")
 						shootKill(keys, shoot)
 					end
 					if shoot.isMisfire == nil then
 						skillBoomCallback(keys,shoot) 
+						shootKill(keys, shoot)
 					end
 					tempHealth = tempHealth * -1
 					unit:SetHealth(tempHealth)
 					--此处将被子弹控制的单位debuff去除
 					clearUnitsModifierByName(shoot,shoot.shootAoeDebuff)
 				end
-				returnVal = 0 --此处可控制是否马上爆炸
+				returnVal = 0 
 			else --如果碰到的不是子弹
 				--返回中弹标记，出发中弹效果
 				if hitType == 1 or hitType == 2 then --爆炸弹，--穿透弹,--并实现伤害
@@ -188,7 +209,7 @@ function checkHitAbilityToMark(keys, shoot, unit)
 	end
 	if isHitFlag then
 		table.insert(shoot.hitShoot, unit)
-		reinforceEach(keys,unit,shoot,nil) --加强运算记录在shoot.power_lv
+		reinforceEach(unit,shoot,nil) --加强运算记录在shoot.power_lv
 	end
 
 	local tempFlag = true
@@ -201,7 +222,7 @@ function checkHitAbilityToMark(keys, shoot, unit)
 	end
 	if tempFlag then
 		table.insert(unit.hitShoot, shoot)
-		reinforceEach(keys,shoot,unit,nil) --加强运算记录在shoot.power_lv
+		reinforceEach(shoot,unit,nil) --加强运算记录在shoot.power_lv
 	end
 end
 
@@ -242,7 +263,7 @@ end
 --去除掉出AOE范围的debuff，并更新数组
 function refreshBuffByArray(shoot, modifierName)
 	if modifierName ~= nil then
-		print("refreshBuffByArray")
+		--print("refreshBuffByArray")
 		local oldArray = {}
 		oldArray = shoot.hitUnits
 		local newArray = {}
@@ -317,7 +338,18 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.soundCast = keys.soundCast
 	shoot.soundPower = keys.soundPower
 	shoot.soundWeak = keys.soundWeak
-	
+	shoot.soundMiss = keys.soundMiss
+	shoot.soundMisFire = keys.soundMisFire
+	shoot.soundHit = keys.soundHit
+	shoot.soundBoom = keys.soundBoom
+	shoot.soundDuration = keys.soundDuration
+
+	shoot.particles_hit = keys.particles_hit
+	shoot.particles_boom = keys.particles_boom
+	shoot.particles_power = keys.particles_power
+	shoot.particles_weak = keys.particles_weak
+	shoot.particles_miss = keys.particles_miss
+	shoot.particles_misFire = keys.particles_misFire
 
 	local caster = keys.caster
 	local ability = keys.ability
@@ -640,7 +672,7 @@ function blackHole(keys, shoot, G_Speed)
             local unitTeam = unit:GetTeam()
             local unitHealth = unit.energyHealth
             local lable = unit:GetUnitLabel()
-            --只作用于敌方,非技能单位，或石头单位
+            --只作用于敌方，或石头单位
             if casterTeam ~= unitTeam or lable == GameRules.stoneLabel then
 				local shootPos = shoot:GetAbsOrigin()
 				local unitPos = unit:GetAbsOrigin()
