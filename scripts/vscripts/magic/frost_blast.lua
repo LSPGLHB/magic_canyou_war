@@ -4,7 +4,7 @@ function createFrostBlast(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    local speed = ability:GetSpecialValueFor("speed")
+    --local speed = ability:GetSpecialValueFor("speed")
 	local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -23,13 +23,14 @@ function createFrostBlast(keys)
 end
 
 --技能爆炸,单次伤害
-function frostBlastBoomCallBack(keys,shoot)
+function frostBlastBoomCallBack(shoot)
     ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
-    frostBlastRenderParticles(keys,shoot) --爆炸粒子效果生成		  
-	diffuseBoomAOEOperation(keys, shoot, frostBlastAOECallback)
+    frostBlastRenderParticles(shoot) --爆炸粒子效果生成		  
+	diffuseBoomAOEOperation(shoot, frostBlastAOECallback)
 end
 --调用特效
-function frostBlastRenderParticles(keys,shoot)
+function frostBlastRenderParticles(shoot)
+    local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
     local aoe_radius = shoot.aoe_radius
@@ -41,14 +42,15 @@ function frostBlastRenderParticles(keys,shoot)
 	ParticleManager:SetParticleControl(particleBoom, 1, Vector(diffuseSpeed, cp1Y, 0))--未实现传参
 end
 --伤害和buff运算
-function frostBlastAOECallback(keys,shoot,unit)
+function frostBlastAOECallback(shoot,unit)
+    local keys = shoot.keysTable
 	local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
 	local AbilityLevel = shoot.abilityLevel
     local aoeTargetDebuff = keys.aoeTargetDebuff
     local isHitUnit = checkHitUnitToMark(shoot, true, unit)
-    if isHitUnit then 
+    if isHitUnit then
         local damage = getApplyDamageValue(shoot)
         EmitSoundOn(keys.soundHit, unit)
         ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})

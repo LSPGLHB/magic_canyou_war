@@ -1,6 +1,8 @@
 require('skill_operation')
 require('player_power')
 function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
+
+	--local keys = shoot.keysTable
 	--实现延迟满法魂效果
 	--[[local shootHealthMax = shoot:GetHealth()
 	local shootHealthSend = shootHealthMax * 0.8
@@ -20,19 +22,20 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			powerShootParticleOperation(keys,shoot)--此处已刷新shoot.particleID
 			shoot.traveled_distance = shoot.traveled_distance + shoot.speed
 			--子弹命中目标
-			local isHitType = shootHit(keys, shoot, isHitType, skillBoomCallback, hitUnitCallBack)
+			local isHitType = shootHit(shoot, skillBoomCallback, hitUnitCallBack)
 			if shoot.energyHealth == 0 then
-				shootKill(keys, shoot)--子弹消失
+				shootKill(shoot)--子弹消失
 				return nil
 			end
 			if shoot.energyHealth ~= 0 then 
 				--击中目标，行程结束
 				if isHitType == 1 then	
-					if skillBoomCallback ~= nil then	
+					if skillBoomCallback ~= nil then
+						print("over_hit")
 						clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
-						skillBoomCallback(keys,shoot) --启动AOE
-						shootSoundAndParticle(keys, shoot, "hit") --boom系进入会没效果
-						shootKill(keys, shoot)
+						skillBoomCallback(shoot) --启动AOE
+						shootSoundAndParticle(shoot, "hit") --boom系进入会没效果
+						shootKill(shoot)
 					end
 					return nil
 				end
@@ -48,13 +51,14 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 		else
 			--超出射程没有命中
 			if shoot.energyHealth ~= 0 then		
+				print("over_distence")
 				clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 				if keys.isAOE == 1 and skillBoomCallback ~= nil then --直达尽头发动AOE	
 					--启动AOE
-					skillBoomCallback(keys,shoot)
+					skillBoomCallback(shoot)
 				else
-					shootSoundAndParticle(keys, shoot, "miss")
-					shootKill(keys, shoot)--到达尽头消失
+					shootSoundAndParticle(shoot, "miss")
+					shootKill(shoot)--到达尽头消失
 				end
 				return nil
 			end
@@ -63,7 +67,8 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
      end,0)
 end
 
-function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
+function shootHit(shoot, skillBoomCallback, hitUnitCallBack)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
 	local position=shoot:GetAbsOrigin()
@@ -100,7 +105,6 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 			isHitUnit = checkHitUnitToMark(shoot, isHitUnit, unit)
 			--print("isHitUnit:",isHitUnit)
 			--如果子弹有aoedebuff则需要做好准备做检测掉出aoe的单位
-			
 			if shoot.shootAoeDebuff ~= nil then
 				table.insert(shoot.tempHitUnits, unit)
 			end
@@ -129,12 +133,12 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 					unit.energyHealth = 0
 	
 					if unit.isMisfire == 1 then
-						shootSoundAndParticle(keys, unit, "misFire")
-						shootKill(keys, unit)
+						shootSoundAndParticle(unit, "misFire")
+						shootKill(unit)
 					end
 					if shoot.isMisfire == nil then
-						skillBoomCallback(keys,unit) 
-						shootKill(keys, unit)
+						skillBoomCallback(unit) 
+						shootKill(unit)
 					end
 					--此处将被子弹控制的单位debuff去除
 					clearUnitsModifierByName(unit,unit.shootAoeDebuff)
@@ -142,24 +146,25 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 					if tempHealth == 0 then
 						unit.energyHealth = 0
 						if unit.isMisfire == 1 then
-							shootSoundAndParticle(keys, unit, "misFire")
-							shootKill(keys, unit)
+							shootSoundAndParticle(unit, "misFire")
+							shootKill(unit)
 						end
 						if shoot.isMisfire == nil then
-							skillBoomCallback(keys,unit) 
-							shootKill(keys, unit)
+							skillBoomCallback(unit) 
+							shootKill(unit)
 						end
+						clearUnitsModifierByName(unit,unit.shootAoeDebuff)
 					end
 					--shoot:SetHealth(0.1)
 					shoot.energyHealth = 0
 		
 					if shoot.isMisfire == 1 then
-						shootSoundAndParticle(keys, shoot, "misFire")
-						shootKill(keys, shoot)
+						shootSoundAndParticle(shoot, "misFire")
+						shootKill(shoot)
 					end
 					if shoot.isMisfire == nil then
-						skillBoomCallback(keys,shoot) 
-						shootKill(keys, shoot)
+						skillBoomCallback(shoot) 
+						shootKill(shoot)
 					end
 					tempHealth = tempHealth * -1
 					unit:SetHealth(tempHealth)
@@ -173,7 +178,7 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 					--撞开击中单位
 					if hitUnitCallBack ~= nil then--会产生撞击
 						--print("shoot3",shoot.power_lv,shoot.damage)
-						hitUnitCallBack(keys, shoot, unit)
+						hitUnitCallBack(shoot, unit)
 					end
 					returnVal = hitType
 				end
@@ -184,11 +189,11 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 		else--相同队伍的触碰 --不搜索自己，标签为子弹
 			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel == lable then--and isHitUnit then(不知道是不是可以删除)
 				--shootPowerFlag用于标记该aoe是否已经起作用(此处标记应该在里面或者用数组标记所有接触过的子弹名字)
-				checkHitAbilityToMark(keys, shoot, unit)
+				checkHitAbilityToMark(shoot, unit)
 			end
 		
 			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel ~= lable then
-				checkHitTeamerRemoveDebuff(keys, shoot, unit)
+				checkHitTeamerRemoveDebuff(unit)
 			end
 		end
 	end
@@ -198,7 +203,7 @@ function shootHit(keys, shoot, hitType, skillBoomCallback, hitUnitCallBack)
 end
 
 --记录击中技能目标
-function checkHitAbilityToMark(keys, shoot, unit)	
+function checkHitAbilityToMark(shoot, unit)	
 	local isHitFlag = true
 	for i = 1, #shoot.hitShoot do
 		if shoot.hitShoot[i] == unit then
@@ -244,8 +249,8 @@ end
 
 --清除单位的debuff
 function clearUnitsModifierByName(shoot,modifierName)
+	print("clearUnitsModifierByName:", modifierName)
 	if modifierName ~= nil then
-		print("clearUnitsModifierByName")
 		for i = 1, #shoot.hitUnits do
 			local tempUnit = shoot.hitUnits[i]
 			tempUnit:InterruptMotionControllers( true )
@@ -255,9 +260,9 @@ function clearUnitsModifierByName(shoot,modifierName)
 			end
 			FindClearSpaceForUnit( tempUnit, tempUnit:GetAbsOrigin(), false )
 		end
-		shoot.hitUnits = {}
-		shoot.tempHitUnits = {}
 	end
+	shoot.hitUnits = {}
+	shoot.tempHitUnits = {}
 end
 
 --去除掉出AOE范围的debuff，并更新数组
@@ -286,10 +291,9 @@ function refreshBuffByArray(shoot, modifierName)
 end
 
 --命中友方移除debuff
-function checkHitTeamerRemoveDebuff(keys, shoot, unit)
+function checkHitTeamerRemoveDebuff(unit)
 	local sleepDebuffName = "modifier_sleep_debuff_datadriven"
 	if unit:HasModifier(sleepDebuffName) then
-		--print("checkHitTeamerRemoveDebuff")
 		unit:RemoveModifierByName(sleepDebuffName)
 		EmitSoundOn("magic_wake_up", unit)
 	end
@@ -335,6 +339,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	if keys.isControl == nil then
 		keys.isControl = 0
 	end 
+	shoot.keysTable = keys
 	shoot.soundCast = keys.soundCast
 	shoot.soundPower = keys.soundPower
 	shoot.soundWeak = keys.soundWeak
@@ -418,7 +423,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--伤害
 	local damageBase = ability:GetSpecialValueFor("damage")
 	local damageBuffName = 'damage'
-	local damageMatchBuffName = 'damage_match'
+	--local damageMatchBuffName = 'damage_match'
 	shoot.damage = getFinalValueOperation(playerID,damageBase,damageBuffName,AbilityLevel,owner)
 	
 	--print("damage",shoot.damage)
@@ -444,7 +449,8 @@ function initDurationBuff(keys)
 	setPlayerDurationBuffByName(keys,"mana_regen",GameRules.playerBaseManaRegen)
 end
 
-function shootSoundAndParticle(keys, shoot, type)--type为nil只发声
+function shootSoundAndParticle(shoot, type)--type为nil只发声
+	local keys = shoot.keysTable
 	local particlesName
 	local soundName
 	local soundDelay = 0
@@ -491,7 +497,8 @@ function shootSoundAndParticle(keys, shoot, type)--type为nil只发声
 end
 
 --子弹消除
-function shootKill(keys, shoot)
+function shootKill(shoot)
+	local keys = shoot.keysTable
 	--消除粒子效果
 	ParticleManager:DestroyParticle(shoot.particleID, true)
 	--命中后动画持续时间
@@ -504,7 +511,8 @@ end
 
 
 --击退单位处理
-function beatBackPenetrateParticleOperation(keys,shoot)
+function beatBackPenetrateParticleOperation(shoot)
+	local keys = shoot.keysTable
 	--中弹粒子效果
 	ParticleManager:CreateParticle(keys.particles_hit, PATTACH_ABSORIGIN_FOLLOW, shoot) 
 	--中弹声音
@@ -512,7 +520,8 @@ function beatBackPenetrateParticleOperation(keys,shoot)
 end
 
 --击退单位
-function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat)
+function beatBackUnit(shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
 	--local powerLv = shoot.power_lv
@@ -522,7 +531,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	local hitTargetDebuff = keys.hitTargetDebuff
 	--hitTarget:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = control_time} )--需要调用lua的modefier
 	ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
-	beatBackPenetrateParticleOperation(keys,shoot)--中弹效果
+	beatBackPenetrateParticleOperation(shoot)--中弹效果
 	local shootPos = shoot:GetAbsOrigin()
 	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)--把撞击的高度降到0用于计算
 	local targetPos= hitTarget:GetAbsOrigin()
@@ -562,7 +571,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 			--print("traveled_distance:"..speedmod.."="..traveled_distance)
 			local remainDistance = beatBackDistance - traveled_distance
 
-			hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance)
+			hitFlag = checkSecondHit(hitTarget,beatBackSpeed,remainDistance)
 
 			if hitFlag then --速度传给撞击的单位，该单位停止
 				traveled_distance = beatBackDistance
@@ -579,7 +588,8 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 end
 
 --击退的单位二次击退其他单位  (存在全角度搜索BUG，应该将搜索角度限制在90度内，待优化)
-function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance)
+function checkSecondHit(shoot,beatBackSpeed,remainDistance)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
 	local position = shoot:GetAbsOrigin()
@@ -602,7 +612,7 @@ function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance)
 		local unitTeam = unit:GetTeam()
 		if(GameRules.skillLabel ~= lable and shoot ~= unit and casterTeam~=unitTeam and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
 			--unit.beatBackFlag = 1 --碰撞中，变成不可再碰撞状态
-			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,false)
+			beatBackUnit(shoot,unit,beatBackSpeed,remainDistance,false)
 			hitFlag = true
 			return hitFlag
 		end
@@ -611,7 +621,8 @@ function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance)
 end
 
 --带走被撞击单位
-function takeAwayUnit(keys,shoot,hitTarget)
+function takeAwayUnit(shoot,hitTarget)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
 	local speed = shoot.speed 
@@ -634,7 +645,8 @@ function takeAwayUnit(keys,shoot,hitTarget)
 end
 
 --黑洞效果
-function blackHole(keys, shoot, G_Speed)
+function blackHole(shoot, G_Speed)
+	local keys = shoot.keysTable
 	local interval = 0.02
 	G_Speed = G_Speed * interval
 	local caster = keys.caster
@@ -685,7 +697,7 @@ function blackHole(keys, shoot, G_Speed)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 then
-                checkHitAbilityToMark(keys, shoot, unit)
+                checkHitAbilityToMark(shoot, unit)
             end
         end
         return interval
@@ -709,7 +721,7 @@ function blackHole(keys, shoot, G_Speed)
 										false)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
-			local unitHealth = unit.energyHealth
+			--local unitHealth = unit.energyHealth
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
@@ -795,15 +807,16 @@ function setDebuffByFaceAngle(shoot, unit, faceAngle)
 end
 
 --持续aoe伤害执行
-function durationAOEDamage(keys, shoot, interval, damageCallbackFunc)
+function durationAOEDamage(shoot, interval, damageCallbackFunc)
+	local keys = shoot.keysTable
     local caster = keys.caster
-    local playerID = caster:GetPlayerID()
-    local AbilityLevel = shoot.abilityLevel
+    --local playerID = caster:GetPlayerID()
+    --local AbilityLevel = shoot.abilityLevel
     local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE持续作用范围
 	local duration = shoot.aoe_duration
     local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-	shootSoundAndParticle(keys, shoot, "duration")
+	shootSoundAndParticle(shoot, "duration")
 	local timeCount = 0 
     Timers:CreateTimer(0,function ()   
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
@@ -822,11 +835,11 @@ function durationAOEDamage(keys, shoot, interval, damageCallbackFunc)
             
             --只作用于敌方,非技能单位
             if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then  
-				damageCallbackFunc(keys, shoot, unit, interval)
+				damageCallbackFunc(shoot, unit, interval)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
             if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-                checkHitAbilityToMark(keys, shoot, unit)
+                checkHitAbilityToMark(shoot, unit)
             end
         end
 
@@ -840,11 +853,12 @@ function durationAOEDamage(keys, shoot, interval, damageCallbackFunc)
         return interval
     end)  
 	
-	shootKill(keys, shoot)
+	shootKill(shoot)
 end
 
 --普通持续AOE伤害实现
-function damageCallback(keys, shoot, unit, interval)
+function damageCallback(shoot, unit, interval)
+	local keys = shoot.keysTable
     local ability = keys.ability
     local duration = shoot.aoe_duration
     local damageTotal = getApplyDamageValue(shoot)
@@ -854,9 +868,10 @@ end
 
 
 --判断条件，角度是否触发buff
-function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callback)
+function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
+	local keys = shoot.keysTable
     local caster = keys.caster
-	local ability = keys.ability
+	--local ability = keys.ability
 	local aoe_radius = shoot.aoe_radius --AOE爆炸范围
     local aoe_duration = shoot.aoe_duration
 	local position = shoot:GetAbsOrigin()
@@ -874,7 +889,7 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
         if shoot.isKill == 1 then
 			return nil
 		end
-        local aroundUnits = FindUnitsInRadius(casterTeam, 
+        local aroundUnits = FindUnitsInRadius(casterTeam,
                                             position,
                                             nil,
                                             aoe_radius,
@@ -885,10 +900,10 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
                                             false)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            local unitHealth = unit.energyHealth
+            --local unitHealth = unit.energyHealth
             local lable = unit:GetUnitLabel()
             --只作用于敌方,非技能单位
-            if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then    
+            if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel  then    
                 checkHitUnitToMark(shoot, true, unit) --用于事后消除debuff
                 local angelFlag = true 
                 if faceAngle ~= nil then
@@ -904,7 +919,7 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
                     unit.visionDownLightBallTime = unit.visionDownLightBallTime + interval    
                     --print("vision_time:"..unit.visionDownLightBallTime)
                     if unit.visionDownLightBallTime >= judgeTime then
-						callback(keys,shoot,unit)
+						callback(shoot,unit)
                     end
                 end
             end
@@ -914,42 +929,17 @@ function durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime, callb
 end
 
 --穿透类的处理
-function passAOEOperation(keys, shoot, unit, passOperationCallback)
-	--local caster = keys.caster
-	--local radius = shoot.aoe_radius --AOE爆炸范围
-	shootSoundAndParticle(keys, shoot, "pass")
-	--[[
-	local position = shoot:GetAbsOrigin()
-	local casterTeam = caster:GetTeam()
-	local aroundUnits = FindUnitsInRadius(casterTeam, 
-										position,
-										nil,
-										radius,
-										DOTA_UNIT_TARGET_TEAM_BOTH,
-										DOTA_UNIT_TARGET_ALL,
-										0,
-										0,
-										false)
-	for k,unit in pairs(aroundUnits) do
-		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energyHealth
-		local lable = unit:GetUnitLabel()
-		--只作用于敌方,非技能单位
-		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then]]
-			passOperationCallback(keys, shoot, unit)
-		--[[end
-		--如果是技能则进行加强或减弱操作
-		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-            checkHitAbilityToMark(keys, shoot, unit)
-		end
-	end ]]
+function passAOEOperation(shoot, unit, passOperationCallback)
+	shootSoundAndParticle(shoot, "pass")
+	passOperationCallback(shoot, unit)
 end
 
 --非持续AOE伤害以及触发效果
-function boomAOEOperation(keys, shoot, AOEOperationCallback)
+function boomAOEOperation(shoot, AOEOperationCallback)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local radius = shoot.aoe_radius --AOE爆炸范围
-	shootSoundAndParticle(keys, shoot, "boom")
+	shootSoundAndParticle(shoot, "boom")
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
@@ -967,18 +957,19 @@ function boomAOEOperation(keys, shoot, AOEOperationCallback)
 		local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
 		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
-			AOEOperationCallback(keys, shoot, unit)
+			AOEOperationCallback(shoot, unit)
 		end
 		--如果是技能则进行加强或减弱操作
 		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-            checkHitAbilityToMark(keys, shoot, unit)
+            checkHitAbilityToMark(shoot, unit)
 		end
 	end 
-	shootKill(keys, shoot)
+	shootKill(shoot)
 end
 
 --扩散类AOE伤害以及触发效果
-function diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
+function diffuseBoomAOEOperation(shoot, AOEOperationCallback)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
 	local diffuseSpeed = ability:GetSpecialValueFor("diffuse_speed")
@@ -987,7 +978,7 @@ function diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
 	local casterTeam = caster:GetTeam()
 	local diffuseRadius = 0
 	local interval = 0.1
-	shootSoundAndParticle(keys, shoot, "boom")
+	shootSoundAndParticle(shoot, "boom")
     Timers:CreateTimer(0,function ()   
 		diffuseRadius = diffuseRadius + diffuseSpeed * GameRules.speedConstant * interval
 		--print("diffuseRadius:"..diffuseRadius)
@@ -1009,14 +1000,14 @@ function diffuseBoomAOEOperation(keys, shoot, AOEOperationCallback)
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
-				AOEOperationCallback(keys, shoot, unit)
+				AOEOperationCallback(shoot, unit)
 			end
 			--如果是技能则进行加强或减弱操作
 			if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
-				checkHitAbilityToMark(keys, shoot, unit)
+				checkHitAbilityToMark(shoot, unit)
 			end
 		end 
 		return interval
 	end)
-	shootKill(keys, shoot)
+	shootKill(shoot)
 end

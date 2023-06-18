@@ -120,12 +120,13 @@ function createTwineSoilBall(keys)
 end
 
 --技能爆炸,单次伤害
-function twineSoilBallHitCallBack(keys, shoot, unit)
-    passAOEOperation(keys, shoot,unit, passOperationCallback)
+function twineSoilBallHitCallBack(shoot, unit)
+    passAOEOperation(shoot,unit, passOperationCallback)
 end
 
 
-function passOperationCallback(keys,shoot,unit)
+function passOperationCallback(shoot,unit)
+	local keys = shoot.keysTable
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
@@ -135,7 +136,7 @@ function passOperationCallback(keys,shoot,unit)
     ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
 end 

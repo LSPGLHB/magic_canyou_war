@@ -24,26 +24,26 @@ function createBigFireBall(keys)
 end
 
 --技能爆炸,单次伤害
-function bigFireBallBoomCallBack(keys,shoot)
-   
-    bigFireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
+function bigFireBallBoomCallBack(shoot)
+    bigFireBallRenderParticles(shoot) --爆炸粒子效果生成		  
     --dealSkillbigFireBallBoom(keys,shoot) --实现aoe爆炸效果
-	boomAOEOperation(keys, shoot, AOEOperationCallback)
+	boomAOEOperation(shoot, AOEOperationCallback)
     --bigFireBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
 	--EndShootControl(keys)--遥控用
-	
 end
 
-function bigFireBallRenderParticles(keys,shoot)
+function bigFireBallRenderParticles(shoot)
+	local keys = shoot.keysTable
 	local caster = keys.caster
-	local ability = keys.ability
+	--local ability = keys.ability
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 1, 0))
 end
 
-function AOEOperationCallback(keys,shoot,unit)
+function AOEOperationCallback(shoot,unit)
+	local keys = shoot.keysTable
 	local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
@@ -53,7 +53,7 @@ function AOEOperationCallback(keys,shoot,unit)
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
 	beatBackDistance = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
 	beatBackDistance = getApplyControlValue(shoot, debuffDuration)--相生加强
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
+	beatBackUnit(shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间

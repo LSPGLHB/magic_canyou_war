@@ -24,11 +24,12 @@ function createSmallHurricane(keys)
 		moveShoot(keys, shoot, smallHurricaneBoomCallBack, smallHurricaneTakeAwayCallBack)
 end
 
-function smallHurricaneBoomCallBack(keys,shoot)
-    smallHurricaneDuration(keys,shoot) --实现持续光环效果以及粒子效果
+function smallHurricaneBoomCallBack(shoot)
+    smallHurricaneDuration(shoot) --实现持续光环效果以及粒子效果
 end
 
-function smallHurricaneDuration(keys,shoot)
+function smallHurricaneDuration(shoot)
+	local keys = shoot.keysTable
 	local ability = keys.ability
 	local caster = keys.caster
     local playerID = caster:GetPlayerID()
@@ -36,15 +37,16 @@ function smallHurricaneDuration(keys,shoot)
 	G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
 	G_Speed = getApplyControlValue(shoot, G_Speed)--克制计算
 	local interval = 0.5
-    smallHurricaneRenderParticles(keys,shoot)
-    durationAOEDamage(keys, shoot, interval, damageCallback)
-    blackHole(keys, shoot, G_Speed)
+    smallHurricaneRenderParticles(shoot)
+    durationAOEDamage(shoot, interval, damageCallback)
+    blackHole(shoot, G_Speed)
 end
 
 --特效显示效果
-function smallHurricaneRenderParticles(keys,shoot)
+function smallHurricaneRenderParticles(shoot)
+	local keys = shoot.keysTable
     local caster = keys.caster
-	local ability = keys.ability
+	--local ability = keys.ability
 	local aoe_radius = shoot.aoe_radius
     local aoe_duration = shoot.aoe_duration
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
@@ -54,7 +56,7 @@ function smallHurricaneRenderParticles(keys,shoot)
 	ParticleManager:SetParticleControl(particleBoom, 11, Vector(aoe_duration, 0, 0))
 end
 
-function smallHurricaneTakeAwayCallBack(keys, shoot, unit)
-	takeAwayUnit(keys, shoot, unit)
+function smallHurricaneTakeAwayCallBack(shoot, unit)
+	takeAwayUnit(shoot, unit)
 end
 

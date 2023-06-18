@@ -73,11 +73,11 @@ function createShoot(keys)
 		local caster = keys.caster
 		local ability = keys.ability
 	
-		local shoot_speed = ability:GetLevelSpecialValueFor("speed", ability:GetLevel() - 1)
+		--local shoot_speed = ability:GetLevelSpecialValueFor("speed", ability:GetLevel() - 1)
 		local max_distance = ability:GetLevelSpecialValueFor("max_distance", ability:GetLevel() - 1)
 
 
-		local speed = shoot_speed
+		--local speed = shoot_speed
 		--local traveled_distance = 0
 		--local point = ability:GetCursorPosition()
 		local target = keys.target
@@ -143,11 +143,12 @@ function shoot_start_cooldown( caster, charge_replenish_time )
 	)
 end
 
-function shootCallback(keys, shoot)
-	boomAOEOperation(keys, shoot, shootBoom)
+function shootCallback(shoot)
+	boomAOEOperation(shoot, shootBoom)
 end
 
-function shootBoom(keys,shoot,unit)
+function shootBoom(shoot,unit)
+	local keys = shoot.keysTable
 	local ability = keys.ability
 	local damage = getApplyDamageValue(shoot)
 	--for i = 1, #shoot.hitUnits  do

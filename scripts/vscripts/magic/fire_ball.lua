@@ -4,7 +4,7 @@ function createFireBall(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    local speed = ability:GetSpecialValueFor("speed")
+    --local speed = ability:GetSpecialValueFor("speed")
 	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -23,16 +23,17 @@ function createFireBall(keys)
 end
 
 --技能爆炸,单次伤害
-function FireBallBoomCallBack(keys,shoot)
+function FireBallBoomCallBack(shoot)
     ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
-    fireBallRenderParticles(keys,shoot) --爆炸粒子效果生成		  
-	boomAOEOperation(keys, shoot, AOEOperationCallback)
+    fireBallRenderParticles(shoot) --爆炸粒子效果生成		  
+	boomAOEOperation(shoot, AOEOperationCallback)
 
 end
 
-function fireBallRenderParticles(keys,shoot)
+function fireBallRenderParticles(shoot)
+	local keys = shoot.keysTable
 	local caster = keys.caster
-	local ability = keys.ability
+	--local ability = keys.ability
 	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") 
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
@@ -40,12 +41,13 @@ function fireBallRenderParticles(keys,shoot)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
 end
 
-function AOEOperationCallback(keys,shoot,unit)
-	local caster = keys.caster
+function AOEOperationCallback(shoot,unit)
+	local keys = shoot.keysTable
+	--local caster = keys.caster
 	local ability = keys.ability
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
+	beatBackUnit(shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

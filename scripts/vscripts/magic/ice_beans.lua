@@ -26,7 +26,7 @@ function LevelUpAbility(keys)
 
 	-- The ability to level up
 	local ability_b_name = keys.ability_b_name
-	local ability_handle = caster:FindAbilityByName(ability_b_name)	
+	local ability_handle = caster:FindAbilityByName(ability_b_name)
 	local ability_level = ability_handle:GetLevel()
 
 	-- Check to not enter a level up loop
@@ -54,11 +54,11 @@ function LaunchFire(keys)
 	local skillPoint = ability:GetCursorPosition()
 	local casterPoint = caster:GetAbsOrigin()
 	--local casterDirection = caster:GetForwardVector()
-	local speed = ability:GetSpecialValueFor("speed")
+	--local speed = ability:GetSpecialValueFor("speed")
 	local shootCount =  ability:GetSpecialValueFor("shoot_count")
 	local max_distance = ability:GetSpecialValueFor("max_distance")
 	local direction = (skillPoint - casterPoint ):Normalized() 
-	local ability_a_name = caster:FindAbilityByName( keys.ability_a_name )
+	local ability_a_name = caster:FindAbilityByName(keys.ability_a_name)
 
 	local currentStack	= caster:GetModifierStackCount( modifierName, ability_a_name )
 	currentStack = currentStack - 1
@@ -104,13 +104,14 @@ end
 
 
 --技能爆炸,单次伤害
-function iceBeansHitCallBack(keys,shoot)
+function iceBeansHitCallBack(shoot)
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
-    boomAOEOperation(keys, shoot, AOEOperationCallback)
+    boomAOEOperation(shoot, AOEOperationCallback)
 end
 
 
-function AOEOperationCallback(keys,shoot,unit)
+function AOEOperationCallback(shoot,unit)
+	local keys = shoot.keysTable
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
@@ -118,9 +119,8 @@ function AOEOperationCallback(keys,shoot,unit)
     local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot)
     ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
-
 	local abilityName = caster:FindAbilityByName(ability:GetAbilityName())
-	local currentStack = unit:GetModifierStackCount( hitTargetDebuff, abilityName)
+	local currentStack = unit:GetModifierStackCount(hitTargetDebuff, abilityName)
 	currentStack = currentStack + 1
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
@@ -128,5 +128,4 @@ function AOEOperationCallback(keys,shoot,unit)
 	debuffDuration = debuffDuration * currentStack
     ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
 	unit:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
-
-end 
+end

@@ -29,23 +29,25 @@ function createVisionDownLightBall(keys)
     moveShoot(keys, shoot, visionDownLightBallBoomCallBack, nil)
 end
 
-function visionDownLightBallBoomCallBack(keys,shoot)
-    visionDownLightBallDuration(keys,shoot) --实现持续光环效果以及粒子效果
+function visionDownLightBallBoomCallBack(shoot)
+    visionDownLightBallDuration(shoot) --实现持续光环效果以及粒子效果
 end
 
-function visionDownLightBallDuration(keys,shoot)
+function visionDownLightBallDuration(shoot)
+    local keys = shoot.keysTable
     local interval = 0.5--伤害间隔
-    visionDownLightBallRenderParticles(keys,shoot)
-    durationAOEDamage(keys, shoot, interval, damageCallback)
+    visionDownLightBallRenderParticles(shoot)
+    durationAOEDamage(shoot, interval, damageCallback)
     local ability = keys.ability
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local judgeTime = ability:GetSpecialValueFor("vision_time")
-    durationAOEJudgeByAngleAndTime(keys, shoot, faceAngle, judgeTime,visionDebuffCallback)
+    durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime,visionDebuffCallback)
 end
 
-function visionDownLightBallRenderParticles(keys,shoot)
+function visionDownLightBallRenderParticles(shoot)
+    local keys = shoot.keysTable
     local caster = keys.caster
-	local ability = keys.ability
+	--local ability = keys.ability
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
     local groundPos = shoot:GetAbsOrigin()--GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
@@ -54,7 +56,8 @@ function visionDownLightBallRenderParticles(keys,shoot)
 end
 
 --视野debuff触发
-function visionDebuffCallback(keys,shoot,unit)
+function visionDebuffCallback(shoot,unit)
+    local keys = shoot.keysTable
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()

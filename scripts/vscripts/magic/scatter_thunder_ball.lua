@@ -35,12 +35,13 @@ function createScatterThunderBall(keys)
 end
 
 --技能爆炸,单次伤害
-function scatterThunderBallBoomCallBack(keys,shoot)
-    boomAOEOperation(keys, shoot, AOEOperationCallback)
+function scatterThunderBallBoomCallBack(shoot)
+    boomAOEOperation(shoot, AOEOperationCallback)
 end
 
 
-function AOEOperationCallback(keys,shoot,unit)
+function AOEOperationCallback(shoot,unit)
+    local keys = shoot.keysTable
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
@@ -50,7 +51,7 @@ function AOEOperationCallback(keys,shoot,unit)
     ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel, nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 
     ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
