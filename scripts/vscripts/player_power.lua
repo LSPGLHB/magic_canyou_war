@@ -17,8 +17,11 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
     --print("HasModifier")
     --print(hero:HasModifier(modifierNameAdd))  
     print("modifierNameCount=",modifierStackCount)
+
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
+   
     if ( modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0 ) then --增幅且没被禁止，或减幅
+        print("111============================================111")
         if (modifierStackCount > 0) then   
             modifierNameAdd = modifierNameBuff
             modifierNameRemove = modifierNameDebuff
@@ -28,17 +31,20 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
             modifierStackCount = modifierStackCount * -1
         end
         print("modifierNameAdd",modifierNameAdd)
+
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
         hero:RemoveAbility(abilityName)
 
-       --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
+    --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
+
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
         hero:RemoveAbility(abilityName)
     end
+  
 end
 
 
