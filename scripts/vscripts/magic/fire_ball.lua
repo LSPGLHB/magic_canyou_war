@@ -47,7 +47,7 @@ function AOEOperationCallback(shoot,unit)
 	local ability = keys.ability
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(shoot,unit,beatBackSpeed,beatBackDistance,true)
+	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

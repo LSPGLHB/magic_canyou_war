@@ -53,7 +53,7 @@ function AOEOperationCallback(shoot,unit)
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
 	beatBackDistance = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
 	beatBackDistance = getApplyControlValue(shoot, debuffDuration)--相生加强
-	beatBackUnit(shoot,unit,beatBackSpeed,beatBackDistance,true)
+	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间

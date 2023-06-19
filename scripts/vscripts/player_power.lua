@@ -31,14 +31,12 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
             modifierStackCount = modifierStackCount * -1
         end
         print("modifierNameAdd",modifierNameAdd)
-
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
         hero:RemoveAbility(abilityName)
 
     --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
-
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)

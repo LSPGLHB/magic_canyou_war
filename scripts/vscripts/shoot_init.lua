@@ -511,8 +511,7 @@ end
 
 
 --击退单位处理
-function beatBackPenetrateParticleOperation(shoot)
-	local keys = shoot.keysTable
+function beatBackPenetrateParticleOperation(keys,shoot)
 	--中弹粒子效果
 	ParticleManager:CreateParticle(keys.particles_hit, PATTACH_ABSORIGIN_FOLLOW, shoot) 
 	--中弹声音
@@ -520,8 +519,7 @@ function beatBackPenetrateParticleOperation(shoot)
 end
 
 --击退单位
-function beatBackUnit(shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat)
-	local keys = shoot.keysTable
+function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat)
 	local caster = keys.caster
 	local ability = keys.ability
 	--local powerLv = shoot.power_lv
@@ -531,7 +529,7 @@ function beatBackUnit(shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat
 	local hitTargetDebuff = keys.hitTargetDebuff
 	--hitTarget:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = control_time} )--需要调用lua的modefier
 	ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
-	beatBackPenetrateParticleOperation(shoot)--中弹效果
+	beatBackPenetrateParticleOperation(keys,shoot)--中弹效果
 	local shootPos = shoot:GetAbsOrigin()
 	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)--把撞击的高度降到0用于计算
 	local targetPos= hitTarget:GetAbsOrigin()
@@ -571,7 +569,7 @@ function beatBackUnit(shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat
 			--print("traveled_distance:"..speedmod.."="..traveled_distance)
 			local remainDistance = beatBackDistance - traveled_distance
 
-			hitFlag = checkSecondHit(hitTarget,beatBackSpeed,remainDistance)
+			hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance)
 
 			if hitFlag then --速度传给撞击的单位，该单位停止
 				traveled_distance = beatBackDistance
@@ -588,8 +586,7 @@ function beatBackUnit(shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat
 end
 
 --击退的单位二次击退其他单位  (存在全角度搜索BUG，应该将搜索角度限制在90度内，待优化)
-function checkSecondHit(shoot,beatBackSpeed,remainDistance)
-	local keys = shoot.keysTable
+function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance)
 	local caster = keys.caster
 	local ability = keys.ability
 	local position = shoot:GetAbsOrigin()
@@ -612,7 +609,7 @@ function checkSecondHit(shoot,beatBackSpeed,remainDistance)
 		local unitTeam = unit:GetTeam()
 		if(GameRules.skillLabel ~= lable and shoot ~= unit and casterTeam~=unitTeam and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
 			--unit.beatBackFlag = 1 --碰撞中，变成不可再碰撞状态
-			beatBackUnit(shoot,unit,beatBackSpeed,remainDistance,false)
+			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,false)
 			hitFlag = true
 			return hitFlag
 		end
