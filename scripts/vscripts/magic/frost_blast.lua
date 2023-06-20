@@ -20,6 +20,10 @@ function createFrostBlast(keys)
 	shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, frostBlastBoomCallBack, nil)
+    --[[
+    local cooldown = ability:GetCooldownTimeRemaining() - 5
+    ability:EndCooldown()
+    ability:StartCooldown(cooldown)]]
 end
 
 --技能爆炸,单次伤害
