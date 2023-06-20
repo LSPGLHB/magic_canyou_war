@@ -1,7 +1,8 @@
 require('skill_operation')
 require('player_power')
 function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
-
+	shoot.skillBoomCallback = skillBoomCallback
+	shoot.hitUnitCallBack = hitUnitCallBack
 	--local keys = shoot.keysTable
 	--实现延迟满法魂效果
 	--[[local shootHealthMax = shoot:GetHealth()
@@ -67,7 +68,8 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
      end,0)
 end
 
-function shootHit(shoot, skillBoomCallback, hitUnitCallBack)
+function shootHit(shoot)
+	local hitUnitCallBack = shoot.hitUnitCallBack
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
@@ -125,51 +127,14 @@ function shootHit(shoot, skillBoomCallback, hitUnitCallBack)
 				unitHealth = getApplyEnergyValue(unit, unitHealth)
 				
 				local tempHealth = shootHealth - unitHealth
-				print("shootHealth:",shootHealth)
-				print("unitHealth:",unitHealth)
+				print("shootHealth:",shootHealth,"-",unitHealth)
 				if(tempHealth > 0) then
-					shoot:SetHealth(tempHealth)
-					--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
-					unit.energyHealth = 0
-	
-					if unit.isMisfire == 1 then
-						shootSoundAndParticle(unit, "misFire")
-						shootKill(unit)
-					end
-					if shoot.isMisfire == nil then
-						skillBoomCallback(unit) 
-						shootKill(unit)
-					end
-					--此处将被子弹控制的单位debuff去除
-					clearUnitsModifierByName(unit,unit.shootAoeDebuff)
+					energyBattleOperation(shoot, unit, tempHealth)
 				else
 					if tempHealth == 0 then
-						unit.energyHealth = 0
-						if unit.isMisfire == 1 then
-							shootSoundAndParticle(unit, "misFire")
-							shootKill(unit)
-						end
-						if shoot.isMisfire == nil then
-							skillBoomCallback(unit) 
-							shootKill(unit)
-						end
-						clearUnitsModifierByName(unit,unit.shootAoeDebuff)
+						energyBattleOperation(shoot, unit, tempHealth)
 					end
-					--shoot:SetHealth(0.1)
-					shoot.energyHealth = 0
-		
-					if shoot.isMisfire == 1 then
-						shootSoundAndParticle(shoot, "misFire")
-						shootKill(shoot)
-					end
-					if shoot.isMisfire == nil then
-						skillBoomCallback(shoot) 
-						shootKill(shoot)
-					end
-					tempHealth = tempHealth * -1
-					unit:SetHealth(tempHealth)
-					--此处将被子弹控制的单位debuff去除
-					clearUnitsModifierByName(shoot,shoot.shootAoeDebuff)
+					energyBattleOperation(unit, shoot, tempHealth)
 				end
 				returnVal = 0 
 			else --如果碰到的不是子弹
@@ -200,6 +165,28 @@ function shootHit(shoot, skillBoomCallback, hitUnitCallBack)
 	--处理掉出aoe的单位的debuff
 	refreshBuffByArray(shoot,shoot.shootAoeDebuff)
 	return returnVal
+end
+
+function energyBattleOperation(winBall, loseBall, tempHealth)
+	print("energyBattleOperation:",tempHealth)
+	local skillBoomCallback = loseBall.skillBoomCallback
+	if tempHealth ~= 0 then
+		if tempHealth < 0 then
+			tempHealth = tempHealth * -1
+		end
+		winBall:SetHealth(tempHealth)--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
+	end
+	loseBall.energyHealth = 0
+	if loseBall.isMisfire == 1 then
+		shootSoundAndParticle(loseBall, "misFire")
+		shootKill(loseBall)
+	end
+	if loseBall.isAOE == 1 then
+		skillBoomCallback(loseBall)
+		shootKill(loseBall)
+	end
+	--此处将被子弹控制的单位debuff去除
+	clearUnitsModifierByName(loseBall,loseBall.shootAoeDebuff)
 end
 
 --记录击中技能目标
@@ -249,7 +236,7 @@ end
 
 --清除单位的debuff
 function clearUnitsModifierByName(shoot,modifierName)
-	print("clearUnitsModifierByName:", modifierName)
+	--print("clearUnitsModifierByName:", modifierName)
 	if modifierName ~= nil then
 		for i = 1, #shoot.hitUnits do
 			local tempUnit = shoot.hitUnits[i]
@@ -344,7 +331,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.soundPower = keys.soundPower
 	shoot.soundWeak = keys.soundWeak
 	shoot.soundMiss = keys.soundMiss
-	shoot.soundMisFire = keys.soundMisFire
+	shoot.soundMisfire = keys.soundMisfire
 	shoot.soundHit = keys.soundHit
 	shoot.soundBoom = keys.soundBoom
 	shoot.soundDuration = keys.soundDuration
@@ -354,7 +341,9 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.particles_power = keys.particles_power
 	shoot.particles_weak = keys.particles_weak
 	shoot.particles_miss = keys.particles_miss
-	shoot.particles_misFire = keys.particles_misFire
+	shoot.particles_misfire = keys.particles_misfire
+
+	shoot.cp = keys.cp
 
 	local caster = keys.caster
 	local ability = keys.ability
@@ -450,42 +439,42 @@ function initDurationBuff(keys)
 end
 
 function shootSoundAndParticle(shoot, type)--type为nil只发声
-	local keys = shoot.keysTable
+	--local keys = shoot.keysTable
 	local particlesName
 	local soundName
 	local soundDelay = 0
-	if keys.soundDurationDelay ~= nil then
-		soundDelay = keys.soundDurationDelay
+	if shoot.soundDurationDelay ~= nil then
+		soundDelay = shoot.soundDurationDelay
 	end
 	if type ~= nil then
 		if type ==	"miss" then
-			particlesName = keys.particles_miss
-			soundName = keys.soundMiss
+			particlesName = shoot.particles_miss
+			soundName = shoot.soundMiss
 		end
-		if type ==	"misFire" then
-			particlesName = keys.particles_misFire
-			soundName = keys.soundMisFire
+		if type == "misFire" then
+			particlesName = shoot.particles_misfire
+			soundName = shoot.soundMisfire
 		end
 		if type ==	"hit" then
-			particlesName = keys.particles_hit
-			soundName = keys.soundHit
+			particlesName = shoot.particles_hit
+			soundName = shoot.soundHit
 		end
 		if type ==	"boom" then  --复杂效果，在本文件内做
 			--particlesName = keys.particles_boom
-			soundName = keys.soundBoom
+			soundName = shoot.soundBoom
 		end
 		if type ==	"duration" then --复杂效果，在本文件内做
 			--particlesName = keys.particles_duration
-			soundName = keys.soundDuration
+			soundName = shoot.soundDuration
 		end
 		if type == "pass" then
-			particlesName = keys.particles_pass
-			soundName = keys.soundPass
+			particlesName = shoot.particles_pass
+			soundName = shoot.soundPass
 		end
 		--粒子效果
 		if particlesName ~= nil then
 			local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
-			ParticleManager:SetParticleControlEnt(newParticlesID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		end
 	end
 	--声音
