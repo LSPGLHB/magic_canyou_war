@@ -308,24 +308,38 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	if keys.hitType == nil then--hitType：1碰撞伤害，2穿透伤害，3直达指定位置，不命中单位
 		keys.hitType = 1
 	end
+	shoot.hitType = keys.hitType
 	if keys.isHitCallBack == nil then  --击中有效果，仅类型2穿透技能使用
 		keys.isHitCallBack = 0
 	end 
+	shoot.isHitCallBack = keys.isHitCallBack
 	if keys.isTrack == nil then
 		keys.isTrack = 0
 	end
+	shoot.isTrack = keys.isTrack
+	if keys.isMisfire == nil then
+		keys.isMisfire = 0
+	end
+	shoot.isMisfire = keys.isMisfire
 	if keys.isAOE == nil then
 		keys.isAOE = 0
 	end
+	shoot.isAOE = keys.isAOE
+	--[[
 	if keys.canShotDown == nil then
 		keys.canShotDown = 0
 	end 
+	shoot.canShotDown = keys.canShotDown]]
+
 	if keys.isMultipleHit == nil then
 		keys.isMultipleHit = 0
 	end 
+	shoot.isMultipleHit = keys.isMultipleHit
 	if keys.isControl == nil then
 		keys.isControl = 0
 	end 
+	shoot.isControl = keys.isControl
+
 	shoot.keysTable = keys
 	shoot.soundCast = keys.soundCast
 	shoot.soundPower = keys.soundPower
@@ -369,9 +383,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.abilityLevel = keys.AbilityLevel
 	local AbilityLevel = shoot.abilityLevel
 	--print("shoot:"..shoot.abilityLevel)
-	if keys.isMisfire ~= nil then
-		shoot.isMisfire = keys.isMisfire
-	end
+
 
 	shoot.aoe_radius = ability:GetSpecialValueFor("aoe_radius")
 	if shoot.aoe_radius == 0 then
