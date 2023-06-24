@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "fire_ball_datadriven"
+    "fire_spirit_datadriven"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"invoker_exort"
 		"MaxLevel"                      "1"
-		"AOERadius"                     "200"
+		"AOERadius"                     "300"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
@@ -29,7 +29,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1250"   //施法距离
+		"AbilityCastRange"				"1400"   //施法距离
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
@@ -38,19 +38,19 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"26"
+		"AbilityManaCost"				"23"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"620"
+				"speed"				"520"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1250"
+				"max_distance"		"1400"
 			}
             "03"
 			{
@@ -60,22 +60,17 @@
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "13"
+				"damage"		    "40"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_radius"		"200"
+                "aoe_radius"		"300"
             }
             "06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"beat_back_distance"		"300"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"beat_back_speed"		"1800"
+				"boom_delay"		"2"
 			}
         }
 
@@ -83,16 +78,17 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/fire_ball.lua"
-				"Function"			"createFireBall"
+				"ScriptFile"		"magic/fire_spirit.lua"
+				"Function"			"createFireSpirit"
 				"Target"			"POINT"
 				"unitModel"			"shootUnit-M"
 				"AbilityLevel"		"b"
 				"unitType"          "huo"
-				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+				"hitType" 			"3"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isAOE"             "1"
+                "isMisfire"         "1"
 				"particles_nm"      "particles/06huoqiushu_shengcheng.vpcf"
-				"soundCast"			"magic_fire_ball_cast"
+				"soundCast"			"magic_fire_spirit_cast"
 				"particles_hit_dur" "0.7"
 				"particles_power" 	"particles/06huoqiushu_jiaqiang.vpcf"
 				"soundPower"		"magic_fire_power_up"
@@ -100,7 +96,7 @@
 				"soundWeak"			"magic_fire_power_down"
 				"cp"				"3"
                 "particles_boom" 	"particles/06huoqiushu_baozha.vpcf"
-				"soundBoom"			"magic_fire_ball_boom"
+				"soundBoom"			"magic_fire_spirit_boom"
                 "hitTargetDebuff"   "modifier_beat_back"
 			}
 		}

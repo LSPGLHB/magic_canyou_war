@@ -106,9 +106,14 @@ end
 --技能爆炸,单次伤害
 function iceBeansHitCallBack(shoot)
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
+	boomAOERenderParticles(shoot)
     boomAOEOperation(shoot, AOEOperationCallback)
 end
-
+function boomAOERenderParticles(shoot)
+	local particlesName = shoot.particles_boom
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+end
 
 function AOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable

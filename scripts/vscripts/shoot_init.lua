@@ -1,6 +1,6 @@
 require('skill_operation')
 require('player_power')
-function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：技能爆炸形态，hitUnitCallBack：技能中途击中效果（穿透使用）
+function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：AOE技能爆炸形态，hitUnitCallBack：技能击中效果（单体伤害以及穿透使用）
 	shoot.skillBoomCallback = skillBoomCallback
 	shoot.hitUnitCallBack = hitUnitCallBack
 	--local keys = shoot.keysTable
@@ -23,7 +23,7 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			powerShootParticleOperation(keys,shoot)--此处已刷新shoot.particleID
 			shoot.traveled_distance = shoot.traveled_distance + shoot.speed
 			--子弹命中目标
-			local isHitType = shootHit(shoot, skillBoomCallback, hitUnitCallBack)
+			local isHitType = shootHit(shoot)
 			if shoot.energyHealth == 0 then
 				shootKill(shoot)--子弹消失
 				return nil
@@ -31,12 +31,11 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			if shoot.energyHealth ~= 0 then 
 				--击中目标，行程结束
 				if isHitType == 1 then	
-					if skillBoomCallback ~= nil then
-						print("over_hit")
+					if skillBoomCallback ~= nil then--触碰触发AOE（如果技能存在AOE）
+						--print("over_hit")
 						clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 						skillBoomCallback(shoot) --启动AOE
-						shootSoundAndParticle(shoot, "hit") --boom系进入会没效果
-						shootKill(shoot)
+						--shootKill(shoot)
 					end
 					return nil
 				end
@@ -139,11 +138,15 @@ function shootHit(shoot)
 				returnVal = 0 
 			else --如果碰到的不是子弹
 				--返回中弹标记，出发中弹效果
-				if hitType == 1 or hitType == 2 then --爆炸弹，--穿透弹,--并实现伤害
+				if  hitType == 1 then--击中单位停止
+					returnVal = hitType
+				end
+				if hitType == 2 then --爆炸弹，--穿透弹,--并实现伤害
 					--撞开击中单位
-					if hitUnitCallBack ~= nil then--会产生撞击
+					if hitUnitCallBack ~= nil then--单体击中或会产生撞击
 						--print("shoot3",shoot.power_lv,shoot.damage)
 						hitUnitCallBack(shoot, unit)
+						shootSoundAndParticle(shoot, "hit")
 					end
 					returnVal = hitType
 				end
@@ -156,7 +159,7 @@ function shootHit(shoot)
 				--shootPowerFlag用于标记该aoe是否已经起作用(此处标记应该在里面或者用数组标记所有接触过的子弹名字)
 				checkHitAbilityToMark(shoot, unit)
 			end
-		
+			--相同队伍的触碰 --不搜索自己，标签不为子弹
 			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel ~= lable then
 				checkHitTeamerRemoveDebuff(unit)
 			end
@@ -181,7 +184,7 @@ function energyBattleOperation(winBall, loseBall, tempHealth)
 		shootSoundAndParticle(loseBall, "misFire")
 		shootKill(loseBall)
 	end
-	if loseBall.isAOE == 1 then
+	if loseBall.isMisfire ~= 1 then
 		skillBoomCallback(loseBall)
 		shootKill(loseBall)
 	end
@@ -325,12 +328,6 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 		keys.isAOE = 0
 	end
 	shoot.isAOE = keys.isAOE
-	--[[
-	if keys.canShotDown == nil then
-		keys.canShotDown = 0
-	end 
-	shoot.canShotDown = keys.canShotDown]]
-
 	if keys.isMultipleHit == nil then
 		keys.isMultipleHit = 0
 	end 
@@ -471,23 +468,20 @@ function shootSoundAndParticle(shoot, type)--type为nil只发声
 			particlesName = shoot.particles_hit
 			soundName = shoot.soundHit
 		end
-		if type ==	"boom" then  --复杂效果，在本文件内做
+		if type ==	"boom" then  --击中效果，在本文件内做
 			--particlesName = keys.particles_boom
 			soundName = shoot.soundBoom
 		end
-		if type ==	"duration" then --复杂效果，在本文件内做
+		if type ==	"duration" then --持续效果，在本文件内做
 			--particlesName = keys.particles_duration
 			soundName = shoot.soundDuration
 		end
-		if type == "pass" then
-			particlesName = shoot.particles_pass
-			soundName = shoot.soundPass
-		end
-		--粒子效果
-		if particlesName ~= nil then
-			local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
-			ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-		end
+
+	end
+	--粒子效果
+	if particlesName ~= nil then
+		local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	end
 	--声音
 	if soundName ~= nil then

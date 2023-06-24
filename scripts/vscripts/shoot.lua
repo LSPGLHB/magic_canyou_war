@@ -144,7 +144,14 @@ function shoot_start_cooldown( caster, charge_replenish_time )
 end
 
 function shootCallback(shoot)
+	boomAOERenderParticles(shoot)
 	boomAOEOperation(shoot, shootBoom)
+end
+
+function boomAOERenderParticles(shoot)
+	local particlesName = keys.particles_boom
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 end
 
 function shootBoom(shoot,unit)

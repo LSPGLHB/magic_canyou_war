@@ -27,7 +27,6 @@ function FireBallBoomCallBack(shoot)
     ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     fireBallRenderParticles(shoot) --爆炸粒子效果生成		  
 	boomAOEOperation(shoot, AOEOperationCallback)
-
 end
 
 function fireBallRenderParticles(shoot)
