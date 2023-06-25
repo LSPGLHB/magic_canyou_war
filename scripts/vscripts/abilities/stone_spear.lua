@@ -25,7 +25,7 @@ function createStoneSpear(keys)
 		initDurationBuff(keys)
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-		moveShoot(keys, shoot, particleID, stoneSpearHitCallBack, nil)
+		moveShoot(keys, shoot, stoneSpearHitCallBack, nil)
 
 		local timeCount = 0
 		local interval = 0.1

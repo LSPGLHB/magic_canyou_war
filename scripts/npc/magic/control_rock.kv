@@ -1,0 +1,204 @@
+"DOTAmagic"
+{
+	"control_rock_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"earthshaker_fissure"
+
+        "MaxLevel"                      "1"
+		"UnitType"         				"tu"
+		"AbilityLevel"					"b"
+		"IconSrc" 						"file://{images}/custom_game/ability_button/earthshaker_fissure.png"  //选择框图标
+		"AbilityShowName" 				"#UIButton4"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1900"   //施法距离
+		"AbilityCastPoint"				"0.2"
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"1"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_distance"				"1900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed"						"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage"					"39"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hit_range"					"100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"angle_rate"					"0.02"
+			}
+		
+		}
+		
+		"OnSpellStart"
+		{			
+			"RunScript"
+			{
+				"ScriptFile"		"magic/control_rock.lua"
+				"Function"			"createControlRock"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-M"
+				"AbilityLevel"		"b"
+				"unitType"          "tu"
+				"hitType" 			"1"   //3直达施法点，2穿透弹，1为不穿透
+				"isControl"			"1"
+                "isMisfire"         "1"
+                "particles_hit_dur" "0.7"
+				"particles_nm"      "particles/37yinianyanji_shengcheng.vpcf"
+				"soundCast" 		"magic_control_rock_cast"
+                "particles_boom"    "particles/37yinianyanji_mingzhong.vpcf" 
+				"soundBoom"			"magic_control_rock_boom"
+                "particles_misfire" "particles/37yinianyanji_jiluo.vpcf"
+				"soundMisfire"		"magic_stone_mis_fire"
+                "particles_miss"    "particles/37yinianyanji_xiaoshi.vpcf"
+				"soundMiss"			"magic_stone_miss"
+				"particles_power" 	"particles/37yinianyanji_jiaqiang.vpcf"
+				"soundPower"		"magic_stone_power_up"
+				"particles_weak" 	"particles/37yinianyanji_xueruo.vpcf"
+				"soundWeak"			"magic_stone_power_down"
+				"cp"				"3"
+				"modifier_caster_name"	   "modifier_control_rock_under_control"
+				"ability_a_name"		   "control_rock_datadriven"
+				"ability_b_name"		   "control_rock_stage_b_datadriven"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"magic/control_rock.lua"
+				"Function"		"LevelUpAbility"
+				"ability_b_name"	"control_rock_stage_b_datadriven"
+			}
+		}
+
+
+		"Modifiers"
+		{
+			"modifier_control_rock_under_control"
+			{
+				"IsBuff"				"1"
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"States"
+				{
+                    "MODIFIER_STATE_ROOTED"         "MODIFIER_STATE_VALUE_ENABLED"
+				}	
+
+				
+				"OnStateChanged"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/control_rock.lua"
+						"Function"			"CheckToInterrupt"
+						"ability_a_name"	"control_rock_datadriven"
+						"ability_b_name"	"control_rock_stage_b_datadriven"
+						"modifier_caster_name"	"modifier_control_rock_under_control"
+					}
+				}
+
+                "OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/control_rock.lua"
+						"Function"			"initMagicStage"
+						"ability_a_name"	"control_rock_datadriven"
+						"ability_b_name"	"control_rock_stage_b_datadriven"
+					}
+
+				}
+
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/control_rock.lua"
+						"Function"			"OnOrder"
+					
+					}
+				}
+			}
+		}
+	}
+
+	"control_rock_stage_b_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"			"marci_companion_run"
+
+        "MaxLevel"                      "1"
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+		}
+		
+		"OnSpellStart"
+		{
+			
+			"RunScript"
+			{
+				"ScriptFile"		"magic/control_rock.lua"
+				"Function"			"EndControl"
+				"ability_a_name"		   "control_rock_datadriven"
+				"ability_b_name"		   "control_rock_stage_b_datadriven"
+				"modifier_caster_name" 		"modifier_control_rock_under_control"
+		
+			}
+		}	
+	}
+}

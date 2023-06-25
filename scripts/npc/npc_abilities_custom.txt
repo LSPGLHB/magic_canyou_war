@@ -40,6 +40,7 @@
 
 //土系
 #base magic/twine_soil_ball.kv
+#base magic/control_rock.kv
 
 //风系
 #base magic/small_hurricane.kv

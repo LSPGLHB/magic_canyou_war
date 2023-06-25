@@ -10,7 +10,7 @@
 		"Ability1"	"shoot_datadriven"
 		"Ability2"	"scatter_thunder_ball_datadriven"
 		"Ability3"	"penetrate_thunder_ball_datadriven"
-		"Ability4"  "twine_soil_ball_datadriven"
+		"Ability4"  "control_rock_datadriven"
 		"Ability5"  "fire_spirit_datadriven"
 		"Ability6"  "fire_bottle_datadriven"
 		"Ability7"  "vision_down_light_ball_datadriven"
@@ -21,7 +21,7 @@
 
 
 		"Ability20"  "ice_beans_stage_b_datadriven"
-		"Ability21"  ""
+		"Ability21"  "control_rock_stage_b_datadriven"
 
 
 
