@@ -11,7 +11,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"invoker_exort"
+		"AbilityTextureName"			"invoker_forge_spirit"
 		"MaxLevel"                      "1"
 		"AOERadius"                     "300"
 
@@ -87,32 +87,25 @@
 				"hitType" 			"3"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isAOE"             "1"
                 "isMisfire"         "1"
-				"particles_nm"      "particles/06huoqiushu_shengcheng.vpcf"
+				"isDelay"			"1"
+				"particles_nm"      "particles/21huojingling_shengcheng.vpcf"
 				"soundCast"			"magic_fire_spirit_cast"
 				"particles_hit_dur" "0.7"
-				"particles_power" 	"particles/06huoqiushu_jiaqiang.vpcf"
+				"particles_power" 	"particles/21huojingling_jiaqiang.vpcf"
 				"soundPower"		"magic_fire_power_up"
-				"particles_weak" 	"particles/06huoqiushu_xueruo.vpcf"
+				"particles_weak" 	"particles/21huojingling_xueruo.vpcf"
 				"soundWeak"			"magic_fire_power_down"
-				"cp"				"3"
-                "particles_boom" 	"particles/06huoqiushu_baozha.vpcf"
+
+				"particles_misfire" "particles/21huojingling_jiluo.vpcf"
+				"soundMisfire"		"magic_fire_mis_fire"
+				
+                "particles_boom" 	"particles/21huojingling_baozha.vpcf"
 				"soundBoom"			"magic_fire_spirit_boom"
-                "hitTargetDebuff"   "modifier_beat_back"
+                
+
+				"cp"				"3"
 			}
 		}
 
-        "Modifiers"
-		{
-			"modifier_beat_back"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/jituiyangchenbuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-			}
-        }
     }
 }

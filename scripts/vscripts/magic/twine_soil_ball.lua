@@ -62,9 +62,9 @@ function createCharges(keys)
 end
 
 --充能用的冷却，每个技能需要独立一个字段使用，caster下的弹夹需要是唯一的
-function shoot_start_cooldown( caster, charge_replenish_time )
+function shoot_start_cooldown(caster, charge_replenish_time)
 	caster.twine_soil_ball_cooldown = charge_replenish_time
-	Timers:CreateTimer( function()
+	Timers:CreateTimer(function()
 			local current_cooldown = caster.twine_soil_ball_cooldown - 0.1
 			if current_cooldown > 0.1 then
 				caster.twine_soil_ball_cooldown = current_cooldown
@@ -72,8 +72,7 @@ function shoot_start_cooldown( caster, charge_replenish_time )
 			else
 				return nil
 			end
-		end
-	)
+		end)
 end
 
 
@@ -107,7 +106,6 @@ function createTwineSoilBall(keys)
     else
         ability:EndCooldown()
     end
-
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     --shoot.aoe_radius = aoe_radius
@@ -133,7 +131,7 @@ function passOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot)
-    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)

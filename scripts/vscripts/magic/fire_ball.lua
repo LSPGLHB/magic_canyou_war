@@ -24,7 +24,7 @@ end
 
 --技能爆炸,单次伤害
 function FireBallBoomCallBack(shoot)
-    ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
+    --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     fireBallRenderParticles(shoot) --爆炸粒子效果生成		  
 	boomAOEOperation(shoot, AOEOperationCallback)
 end
@@ -42,12 +42,12 @@ end
 
 function AOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
-	--local caster = keys.caster
+	local caster = keys.caster
 	local ability = keys.ability
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
 	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
 	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

@@ -36,6 +36,7 @@
 #base magic/light_ball.kv
 #base magic/fire_ball.kv
 #base magic/vision_down_light_ball.kv
+#base magic/fire_spirit.kv
 
 //土系
 #base magic/twine_soil_ball.kv

@@ -57,7 +57,7 @@ function frostBlastAOECallback(shoot,unit)
     if isHitUnit then
         local damage = getApplyDamageValue(shoot)
         EmitSoundOn(keys.soundHit, unit)
-        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
         debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
         debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强

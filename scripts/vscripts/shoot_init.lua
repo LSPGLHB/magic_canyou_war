@@ -53,7 +53,7 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			if shoot.energyHealth ~= 0 then		
 				print("over_distence")
 				clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
-				if keys.isAOE == 1 and skillBoomCallback ~= nil then --直达尽头发动AOE	
+				if shoot.isAOE == 1 and skillBoomCallback ~= nil then --直达尽头发动AOE	
 					--启动AOE
 					skillBoomCallback(shoot)
 				else
@@ -336,6 +336,11 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 		keys.isControl = 0
 	end 
 	shoot.isControl = keys.isControl
+	if keys.isDelay == nil then
+		keys.isDelay = 0
+	end 
+	shoot.isDelay = keys.isDelay
+	
 
 	shoot.keysTable = keys
 	shoot.soundCast = keys.soundCast
@@ -855,7 +860,7 @@ function damageCallback(shoot, unit, interval)
     local duration = shoot.aoe_duration
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)   
-    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
 
