@@ -15,7 +15,7 @@ function refreshItemBuff(keys,flag)
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
     local item_energy_b_precent_base = ability:GetSpecialValueFor("item_energy_b_precent_base")
-    local item_mana_cost_c_precent_base = ability:GetSpecialValueFor("item_mana_cost_c_precent_base")
+    local item_mana_cost_b_precent_base = ability:GetSpecialValueFor("item_mana_cost_b_precent_base")
 
     setPlayerPower(playerID, "player_energy_b_precent_base", flag, item_energy_b_precent_base)
     setPlayerPower(playerID, "player_mana_cost_b_precent_base", flag, item_mana_cost_b_precent_base)
