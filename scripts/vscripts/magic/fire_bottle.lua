@@ -49,6 +49,7 @@ end
 
 function fireBottleDamageCallback(shoot, unit, interval)
     local keys = shoot.keysTable
+    local caster = keys.caster
     local shootPos = shoot:GetAbsOrigin()
     local unitPos = unit:GetAbsOrigin()
     local radius = shoot.aoe_radius

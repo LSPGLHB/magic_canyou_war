@@ -367,6 +367,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.aoe_duration = 0
 	shoot.debuff_duration = 0
 	shoot.direction = direction
+	shoot:SetForwardVector(direction)
 	shoot.traveled_distance = 0 --初始化已经飞行的距离0
 	shoot.shootHight = 100 --子弹高度
 	shoot.isBreak = 0 --初始化不跳出
@@ -499,6 +500,11 @@ end
 --子弹消除
 function shootKill(shoot)
 	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterBuff = keys.modifier_caster_name
+	if caster:HasModifier( casterBuff ) then
+		caster:RemoveModifierByName( casterBuff )
+	end
 	--消除粒子效果
 	ParticleManager:DestroyParticle(shoot.particleID, true)
 	--命中后动画持续时间
@@ -849,13 +855,13 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
 		end   
         return interval
     end)  
-	
 	shootKill(shoot)
 end
 
 --普通持续AOE伤害实现
 function damageCallback(shoot, unit, interval)
 	local keys = shoot.keysTable
+	local caster = keys.caster
     local ability = keys.ability
     local duration = shoot.aoe_duration
     local damageTotal = getApplyDamageValue(shoot)

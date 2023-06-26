@@ -29,6 +29,48 @@ function createControlRock(keys)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     moveShoot(keys, shoot, ControlRockBoomCallBack, nil)
+
+	local timeCount = 0
+	local interval = 0.1
+
+	Timers:CreateTimer(interval,function()
+		if not caster:HasModifier( casterBuff ) then
+			return nil
+		end
+
+
+		--朝向为0-360
+		local shootAngles = shoot:GetAnglesAsVector().y
+		local casterAngles	= caster:GetAnglesAsVector().y
+		local Steering = 1
+		if shootAngles ~= casterAngles then
+			local resultAngle = casterAngles - shootAngles
+			resultAngle = math.abs(resultAngle)
+			if resultAngle > 180 then
+				if shootAngles < casterAngles then
+					Steering = -1
+				end
+			else
+				if shootAngles > casterAngles then
+					Steering = -1
+				end
+			end
+			local currentDirection =  shoot:GetForwardVector()
+			
+			local newX2 = math.cos(math.atan2(currentDirection.y, currentDirection.x) + angleRate * Steering)
+			local newY2 = math.sin(math.atan2(currentDirection.y, currentDirection.x) + angleRate * Steering)
+			local tempDirection = Vector(newX2, newY2, currentDirection.z)
+			shoot:SetForwardVector(tempDirection)
+			shoot.direction = tempDirection
+		end
+
+		if timeCount < flyDuration then
+			timeCount = timeCount + interval
+			return interval
+		else
+			return nil
+		end
+	end)
 end
 
 --技能爆炸,单次伤害
@@ -68,13 +110,14 @@ end
 
 
 --貌似未使用生效
+--[[
 function CheckToInterrupt( keys )
 	local caster = keys.caster
 	if caster:IsStunned() or caster:IsHexed() or caster:IsFrozen() or caster:IsNightmared() or caster:IsOutOfGame() then
 		-- Interrupt the ability
 		EndStoneSpear(keys)
 	end
-end
+end]]
 
 
 function LevelUpAbility(keys)
