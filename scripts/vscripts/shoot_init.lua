@@ -786,7 +786,7 @@ function controlTurn(caster, shoot, controlDuration)
 end
 
 --角度计算添加buff,满足条件返回true
-function setDebuffByFaceAngle(shoot, unit, faceAngle)
+function isFaceByFaceAngle(shoot, unit, faceAngle)
     local blindDirection = shoot:GetAbsOrigin()  - unit:GetAbsOrigin()
     local blindRadian = math.atan2(blindDirection.y, blindDirection.x) * 180 
     local blindAngle = blindRadian / math.pi
@@ -849,8 +849,6 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
 		timeCount = timeCount + interval
 		if timeCount >= duration then
 			EmitSoundOn("magic_voice_stop", shoot)
-			--shoot:ForceKill(true)
-			--shoot:AddNoDraw()
 			return nil
 		end   
         return interval
@@ -910,7 +908,7 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
                 checkHitUnitToMark(shoot, true, unit) --用于事后消除debuff
                 local angelFlag = true 
                 if faceAngle ~= nil then
-                    angelFlag = setDebuffByFaceAngle(shoot, unit, faceAngle)
+                    angelFlag = isFaceByFaceAngle(shoot, unit, faceAngle)
                 end
                 if judgeTime == nil then
                     judgeTime = 0

@@ -9,7 +9,7 @@
 		//"AbilityLayout"         "6"
 		"Ability1"	"shoot_datadriven"
 		"Ability2"	"scatter_thunder_ball_datadriven"
-		"Ability3"	"penetrate_thunder_ball_datadriven"
+		"Ability3"	"blind_fire_ball_datadriven"
 		"Ability4"  "control_rock_datadriven"
 		"Ability5"  "fire_spirit_datadriven"
 		"Ability6"  "fire_bottle_datadriven"

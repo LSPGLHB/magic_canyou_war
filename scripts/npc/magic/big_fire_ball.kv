@@ -126,6 +126,7 @@
 				"unitType"          "huo"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isAOE"             "1"
+				
 				"particles_nm"      "particles/26dahuoqiushu_shengcheng.vpcf"
 				"soundCast"			"magic_big_fire_ball_cast"
 				"particles_hit_dur" "0.7"
@@ -140,25 +141,9 @@
                 "hitTargetDebuff"   "modifier_beat_back"
 				"modifierDebuffName"  "modifier_big_fire_ball_debuff_datadriven"
 
-				//遥控用
-				//"modifier_caster_name"	   "modifier_big_fire_ball_under_control"
-				//"ability_a_name"		   "big_fire_ball_datadriven"
-				//"ability_b_name"		   "big_fire_ball_stage_b_datadriven"
 			}
 		}
 
-		//遥控用
-		//"OnUpgrade"
-		//{
-		//	"RunScript"
-		//	{
-		//		"ScriptFile"	"magic/big_fire_ball.lua"
-		//		"Function"		"LevelUpAbility"
-		//		"ability_b_name"	"big_fire_ball_stage_b_datadriven"
-		//	}
-		//}
-
-		
 		"Modifiers"
 		{
 			"modifier_beat_back"
@@ -183,101 +168,6 @@
                     "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
 				}
 			}
-
-			//遥控用
-			"modifier_big_fire_ball_under_control"
-			{
-				"IsBuff"			"1"
-				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
-				"EffectAttachType"	"follow_overhead"
-				"States"
-				{
-                    "MODIFIER_STATE_ROOTED"         "MODIFIER_STATE_VALUE_ENABLED"
-				}	
-
-				
-				"OnStateChanged"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"magic/big_fire_ball.lua"
-						"Function"			"CheckToInterrupt"
-						"ability_a_name"	"big_fire_ball_datadriven"
-						"ability_b_name"	"big_fire_ball_stage_b_datadriven"
-						"modifier_caster_name"	"modifier_big_fire_ball_under_control"
-					}
-				}
-
-                "OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"magic/big_fire_ball.lua"
-						"Function"			"initSkillStage"
-						"ability_a_name"	"big_fire_ball_datadriven"
-						"ability_b_name"	"big_fire_ball_stage_b_datadriven"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_Phoenix.FireSpirits.Stop"
-						"Target"			"CASTER"
-					}
-				}
-			}
 		}
-	}
-
-	//遥控用
-	"big_fire_ball_stage_b_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"			"enchantress_natures_attendants"
-
-         "MaxLevel"                      "1"
-	
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			
-			
-
-		
-		}
-		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_Mirana.ArrowCast"
-				"Target"				"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"		"magic/big_fire_ball.lua"
-				"Function"			"EndShootControl"
-				"ability_a_name"		   "big_fire_ball_datadriven"
-				"ability_b_name"		   "big_fire_ball_stage_b_datadriven"
-				"modifier_caster_name" 		"modifier_big_fire_ball_under_control"
-		
-			}
-		}	
 	}
 }

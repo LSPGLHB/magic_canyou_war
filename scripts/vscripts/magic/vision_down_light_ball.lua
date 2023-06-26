@@ -37,11 +37,25 @@ function visionDownLightBallDuration(shoot)
     local keys = shoot.keysTable
     local interval = 0.5--伤害间隔
     visionDownLightBallRenderParticles(shoot)
-    durationAOEDamage(shoot, interval, damageCallback)
+    durationAOEDamage(shoot, interval, visionDownLightBallDamageCallback)
     local ability = keys.ability
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local judgeTime = ability:GetSpecialValueFor("vision_time")
     durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime,visionDebuffCallback)
+end
+
+function visionDownLightBallDamageCallback(shoot, unit, interval)
+	local keys = shoot.keysTable
+	local caster = keys.caster
+    local ability = keys.ability
+    local duration = shoot.aoe_duration
+    local faceAngle = ability:GetSpecialValueFor("face_angle")
+    local damageTotal = getApplyDamageValue(shoot)
+    local damage = damageTotal / (duration / interval)   
+    local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
+    if isface then
+        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    end
 end
 
 function visionDownLightBallRenderParticles(shoot)
