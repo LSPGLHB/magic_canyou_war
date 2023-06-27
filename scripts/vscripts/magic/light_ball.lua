@@ -59,14 +59,14 @@ function AOEOperationCallback(shoot,unit)
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.modifierDebuffName
-    local damage = getApplyDamageValue(shoot)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    local damage = getApplyDamageValue(shoot) / 2
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
     if flag then
+        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
         ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
     end
 end

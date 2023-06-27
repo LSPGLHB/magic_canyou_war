@@ -122,7 +122,7 @@ function AOEOperationCallback(shoot,unit)
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
-    local damage = getApplyDamageValue(shoot)
+    local damage = getApplyDamageValue(shoot) / ability:GetSpecialValueFor("charge_count") / ability:GetSpecialValueFor("shoot_count")
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local abilityName = caster:FindAbilityByName(ability:GetAbilityName())
 	local currentStack = unit:GetModifierStackCount(hitTargetDebuff, abilityName)

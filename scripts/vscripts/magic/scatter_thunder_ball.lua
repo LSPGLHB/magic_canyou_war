@@ -47,7 +47,7 @@ function AOEOperationCallback(shoot,unit)
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.hitTargetDebuff
-    local damage = getApplyDamageValue(shoot)
+    local damage = getApplyDamageValue(shoot) / 3
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间

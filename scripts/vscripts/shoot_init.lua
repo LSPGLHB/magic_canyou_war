@@ -1,6 +1,6 @@
 require('skill_operation')
 require('player_power')
-function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：AOE技能爆炸形态，hitUnitCallBack：技能击中效果（单体伤害以及穿透使用）
+function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCallback：AOE技能爆炸形态，hitUnitCallBack：技能击中效果（单体伤害以及穿透使用）,intervalCallBack:周期启动
 	shoot.skillBoomCallback = skillBoomCallback
 	shoot.hitUnitCallBack = hitUnitCallBack
 	--local keys = shoot.keysTable
@@ -72,8 +72,9 @@ function shootHit(shoot)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
-	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
+	local position=shoot:GetAbsOrigin()
+	
 	--默认不击退
 	if keys.isBeatBack == nil then
 		keys.isBeatBack = 0
@@ -91,31 +92,17 @@ function shootHit(shoot)
 										0,
 										0,
 										false)
-	local isHitUnit = true   --初始化设单位为可击中状态 
 	--local isHitShoot = true
 	shoot.tempHitUnits = {}
 	local returnVal = 0--返回子弹碰撞后有什么反应的标志
 	for k,unit in pairs(aroundUnits) do
-		local lable = unit:GetUnitLabel() --该单位为技能子弹
-		local unitTeam = unit:GetTeam()
+		--local lable = unit:GetUnitLabel() --该单位为技能子弹
+		--local unitTeam = unit:GetTeam()
 		local unitHealth = unit.energyHealth
 		local shootHealth = shoot.energyHealth
-		--让不可多次碰撞的子弹跟目标只碰撞一次
-		--子弹忽略自己，忽略发射者，忽略友军，忽略子弹(标签不是技能子弹)
-		if shoot ~= unit and unit ~= caster and unitTeam ~= casterTeam and GameRules.skillLabel ~= lable  then
-			isHitUnit = checkHitUnitToMark(shoot, isHitUnit, unit)
-			--print("isHitUnit:",isHitUnit)
-			--如果子弹有aoedebuff则需要做好准备做检测掉出aoe的单位
-			if shoot.shootAoeDebuff ~= nil then
-				table.insert(shoot.tempHitUnits, unit)
-			end
-		end
-		if keys.isMultipleHit == 1 then --可多次碰撞的技能(穿透弹道)
-			isHitUnit = true
-		end
 		--遇到敌人实现伤害并返回撞击反馈
-		if(casterTeam ~= unitTeam and shootHealth ~= 0 and isHitUnit) then --触碰到的不是自家队伍，且自身法魂不为0，是否实现撞击
-			if(GameRules.skillLabel == lable and unitHealth ~= 0) then --如果碰到的是子弹，且法魂不为0：此处需要比拼法魂大小
+		if(checkIsEnemy(shoot,unit) and checkIsHitUnit(shoot,unit,nil)) then --触碰到的是不是敌对队伍，且自身法魂不为0，是否实现撞击
+			if( checkIsSkill(shoot,unit) ) then --如果碰到的是子弹，且法魂不为0：此处需要比拼法魂大小
 				--获取触碰双方的属性--print("shoot-nuit-Type:",shoot.unit_type,unit.unit_type)
 				--法魂计算过程(还需加入克制计算)
 				reinforceEach(unit,shoot,nil)
@@ -154,13 +141,12 @@ function shootHit(shoot)
 					returnVal = hitType
 				end
 			end
-		else--相同队伍的触碰 --不搜索自己，标签为子弹
-			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel == lable then--and isHitUnit then(不知道是不是可以删除)
-				--shootPowerFlag用于标记该aoe是否已经起作用(此处标记应该在里面或者用数组标记所有接触过的子弹名字)
+		else
+			if checkIsTeamSkill(shoot,unit) then --相同队伍的触碰 --标签为子弹
+				--此处标记应该在里面或者用数组标记所有接触过的子弹名字
 				checkHitAbilityToMark(shoot, unit)
 			end
-			--相同队伍的触碰 --不搜索自己，标签不为子弹
-			if shoot ~= unit and casterTeam == unitTeam and GameRules.skillLabel ~= lable then
+			if checkIsTeamNoSkill(shoot,unit) then --相同队伍的触碰 --搜英雄
 				checkHitTeamerRemoveDebuff(unit)
 			end
 		end
@@ -169,6 +155,98 @@ function shootHit(shoot)
 	refreshBuffByArray(shoot,shoot.shootAoeDebuff)
 	return returnVal
 end
+
+--让不可多次碰撞的子弹跟目标只碰撞一次--单位能否被击中 
+function checkIsHitUnit(shoot,unit,magicType)
+	local lable = unit:GetUnitLabel() --该单位为技能子弹
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local ability = keys.ability
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local isHitUnit = true --初始化设单位为可击中状态
+	--敌方非技能
+	if checkIsEnemyNoSkill(shoot,unit) then
+		isHitUnit = checkHitUnitToMark(shoot, unit , magicType)
+		--如果子弹有aoedebuff则需要做好准备做检测掉出aoe的单位
+		if shoot.shootAoeDebuff ~= nil then
+			table.insert(shoot.tempHitUnits, unit)
+		end
+	end
+	if keys.isMultipleHit == 1 then --可多次碰撞的技能(穿透弹道)
+		isHitUnit = true
+	end
+	return isHitUnit
+end
+
+--所有敌对
+function checkIsEnemy(shoot,unit)
+	local isEnemy = false
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local shootHealth = shoot.energyHealth
+	if( casterTeam ~= unitTeam and shootHealth ~= 0 ) then
+		isEnemy = true
+	end
+	return isEnemy
+end
+
+--所有技能
+function checkIsSkill(shoot,unit)
+	local isEnemySkill = false
+	local lable = unit:GetUnitLabel()
+	local unitHealth = unit.energyHealth
+	--local shootHealth = shoot.energyHealth
+	if(GameRules.skillLabel == lable and unitHealth ~= 0 and shoot ~= unit) then
+		isEnemySkill = true
+	end
+	return isEnemySkill
+end
+
+--友方技能
+function checkIsTeamSkill(shoot,unit)
+	local isTeamSkill = false
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local lable = unit:GetUnitLabel()
+	if (shoot ~= unit and unit ~= caster and casterTeam == unitTeam and GameRules.skillLabel == lable) then
+		isTeamSkill = true
+	end
+	return isTeamSkill
+end
+
+--友方非技能
+function checkIsTeamNoSkill(shoot,unit)
+	local isTeamHero = false
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local lable = unit:GetUnitLabel()
+	if shoot ~= unit and unit ~= caster and casterTeam == unitTeam and GameRules.skillLabel ~= lable then
+		isTeamHero = true
+	end
+	return isTeamHero
+end
+
+--敌方非技能
+function checkIsEnemyNoSkill(shoot,unit)
+	local isEnemyHero = false
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local lable = unit:GetUnitLabel()
+	if casterTeam ~= unitTeam and shoot ~= unit and unit ~= caster and lable ~= GameRules.skillLabel then
+		isEnemyHero = true
+	end
+	return isEnemyHero
+end
+
 
 function energyBattleOperation(winBall, loseBall, tempHealth)
 	print("energyBattleOperation:",tempHealth)
@@ -222,17 +300,29 @@ function checkHitAbilityToMark(shoot, unit)
 end
 
 --记录击中单位目标到数组，返回标记（true：未击中过，false：已经击中过）
-function checkHitUnitToMark(shoot, isHitFlag, unit)
+function checkHitUnitToMark(shoot, unit, magicType)
+	local isHitFlag = true
+	if magicType == nil then
+		magicType = 0
+	end
+	if unit.hitMagicType == nil then
+		unit.hitMagicType = {}
+	end
 	for i = 1, #shoot.hitUnits do
 		--print("checkHitUnitToMark:",shoot.hitUnits[i],"=",unit)
 		if shoot.hitUnits[i] == unit then	
-			isHitFlag = false  --如果已经击中过就不再击中
-			break
+			for j = 1, #unit.hitMagicType do
+				if unit.hitMagicType[j] == magicType then
+					isHitFlag = false  --如果已经击中过就不再击中
+					break
+				end
+			end
 		end
 	end
 	if isHitFlag then
 		--print("checkHitUnitToMarkININININI")
 		table.insert(shoot.hitUnits, unit)
+		table.insert(unit.hitMagicType , magicType)
 	end
 	return isHitFlag
 end
@@ -301,6 +391,13 @@ function moveShootTimerRun(keys,shoot)
 	local newPos = shootTempPos + direction * speed
 	local groundPos = GetGroundPosition(newPos, shoot)
 	local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + shoot.shootHight)
+
+	--子弹周期性操作
+	if shoot.intervalCallBack ~= nil then
+		local intervalCallBack = shoot.intervalCallBack
+		intervalCallBack(shoot)
+	end
+	
 	--FindClearSpaceForUnit( shoot, groundPos, false )--飞行单位可以穿地形不用这个
 	shoot:SetAbsOrigin(shootPos)
 end
@@ -728,7 +825,7 @@ function blackHole(shoot, G_Speed)
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
-				local newFlag = checkHitUnitToMark(shoot, true, unit)--用于技能结束时清理debuff	
+				local newFlag = checkHitUnitToMark(shoot, unit, nil)--用于技能结束时清理debuff	
 				if newFlag then  --新加入的加上buff
 					ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
 				end
@@ -905,7 +1002,7 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
             local lable = unit:GetUnitLabel()
             --只作用于敌方,非技能单位
             if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel  then    
-                checkHitUnitToMark(shoot, true, unit) --用于事后消除debuff
+                checkHitUnitToMark(shoot, unit , nil) --用于事后消除debuff
                 local angelFlag = true 
                 if faceAngle ~= nil then
                     angelFlag = isFaceByFaceAngle(shoot, unit, faceAngle)

@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "light_ball_datadriven"
+    "glare_light_ball_datadriven"
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,11 +11,11 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"wisp_overcharge"
+		"AbilityTextureName"			"keeper_of_the_light_spirit_form_illuminate"
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
-		"AbilityLevel"					"c"
-		"IconSrc" "file://{images}/custom_game/ability_button/wisp_overcharge.png"  //选择框图标
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/keeper_of_the_light_spirit_form_illuminate.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -25,16 +25,16 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"   //施法距离
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"1700"   //施法距离
+		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"4"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"18"
+		"AbilityManaCost"				"29"
 
 
         "AbilitySpecial"
@@ -42,47 +42,47 @@
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"700"
+				"speed"				"600"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1200"
+				"max_distance"		"1700"
 			}
             "03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "75"
+				"hit_range"		    "85"
 			}
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "20"
+				"damage"		    "12"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_radius"		"250"
+                "debuff_duration"		"4"
             }
             "06"
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_duration"		"4"
-            }
-            "07"
-            {
-                "var_type"			"FIELD_FLOAT"
                 "vision_radius"		"-500"
             }
-			"08"
-            {
-                "var_type"			"FIELD_FLOAT"
-				"face_angle"		"90"
-            }
-			"09"
+            "07"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"angle_rate"		"0.05"
+				"var_type"					"FIELD_FLOAT"
+				"face_angle"					"90"
+			}
+            "08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_aoe_radius"					"100"
+			}
+            "09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"debuff_aoe_radius"					"250"
 			}
         }
 
@@ -90,34 +90,45 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/light_ball.lua"
-				"Function"			"createLightBall"
-				"Target"			"POINT"
-				"unitModel"			"shootUnit-S"
-				"AbilityLevel"		"c"
+				"ScriptFile"		"magic/glare_light_ball.lua"
+				"Function"			"createGlareLightBall"
+				"unitModel"			"shootUnit-M"
+				"AbilityLevel"		"b"
 				"unitType"          "huo"
-				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
-                "isAOE"             "1"
-				"particles_nm"      "particles/01yaoyanguangqiu_shengcheng.vpcf"
-				"soundCast" 		"magic_light_ball_cast"
+				"hitType" 			"3"   //3直达不触碰,2穿透弹,1触碰爆炸
+             
+				"isMisfire"			"1"
 				"particles_hit_dur" "0.7"
-				"particles_power" 	"particles/01yaoyanguangqiu_jiaqiang.vpcf"
-				"soundPower"		"magic_light_power_up"
-				"particles_weak" 	"particles/01yaoyanguangqiu_xueruo.vpcf"
-				"soundWeak"			"magic_light_power_down"
-				"cp"				"3"
+                "cp"				 "3"
 
-                "particles_boom" 	"particles/yaoyanguangqiubaozha.vpcf"
-				"soundBoom"			"magic_light_ball_boom"
-				"modifierDebuffName"  "modifier_light_ball_debuff_datadriven"
+				"particles_nm"      "particles/36ciyanguangbo_shengcheng.vpcf"
+				"soundCast" 		"magic_glare_light_ball_cast"
+				"particles_misfire" "particles/36ciyanguangbo_jiluo.vpcf"
+				"soundMisfire"		"magic_light_mis_fire"
+                "particles_miss"    "particles/36ciyanguangbo_xiaoshi.vpcf"
+				"soundMiss"			"magic_light_miss"
+				
+				"particles_power" 	"particles/36ciyanguangbo_jiaqiang.vpcf"
+				"soundPower"		"magic_light_power_up"
+				"particles_weak" 	"particles/36ciyanguangbo_xueruo.vpcf"
+				"soundWeak"			"magic_light_power_down"	
+				
+                "particles_boom" 	"particles/02tuqiushu_mingzhong.vpcf"
+				"soundBoom"			"magic_glare_light_ball_boom"
+
+                "particles_defense" "particles/duobizhimangbuff_1.vpcf"
+                "soundDefense"      "magic_defence"
+
+                "hitTargetDebuff"   "modifier_glare_light_ball_debuff_datadriven"
+				
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_light_ball_debuff_datadriven"
+			"modifier_glare_light_ball_debuff_datadriven"
 			{
-				"IsDebuff"				"1"
+				"IsDebuff"			"1"
 				"EffectName"		"particles/zhimang_debuff.vpcf"
 				"EffectAttachType"	"follow_chest"
 				"Properties"
