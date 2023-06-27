@@ -5,30 +5,30 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 	shoot.hitUnitCallBack = hitUnitCallBack
 	--local keys = shoot.keysTable
 	--实现延迟满法魂效果
-	--[[local shootHealthMax = shoot:GetHealth()
-	local shootHealthSend = shootHealthMax * 0.8
-	local shootHealthStep = shootHealthMax * 0.2 * shoot.speed / 10
-	shoot:SetHealth(shootHealthSend)]]
+	--[[local shootEnergyMax = shoot:GetHealth()
+	local shootEnergySend = shootEnergyMax * 0.8
+	local shootEnergyStep = shootEnergyMax * 0.2 * shoot.speed / 10
+	shoot:SetHealth(shootEnergySend)]]
 	shoot.max_distance = shoot.max_distance_operation
 	--local direction = shoot.direction
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
 		if shoot.traveled_distance < shoot.max_distance then
 			moveShootTimerRun(keys,shoot)
 			--实现延迟满法魂效果
-			--[[if shootHealthSend < shootHealthMax then
-				shootHealthSend = shootHealthSend + shootHealthStep
-				shoot:SetHealth(shootHealthSend)
+			--[[if shootEnergySend < shootEnergyMax then
+				shootEnergySend = shootEnergySend + shootEnergyStep
+				shoot:SetHealth(shootEnergySend)
 			end]]
 			--技能加强或减弱粒子效果实现
 			powerShootParticleOperation(keys,shoot)--此处已刷新shoot.particleID
 			shoot.traveled_distance = shoot.traveled_distance + shoot.speed
 			--子弹命中目标
 			local isHitType = shootHit(shoot)
-			if shoot.energyHealth == 0 then
+			if shoot.energy_point == 0 then
 				shootKill(shoot)--子弹消失
 				return nil
 			end
-			if shoot.energyHealth ~= 0 then 
+			if shoot.energy_point ~= 0 then 
 				--击中目标，行程结束
 				if isHitType == 1 then	
 					if skillBoomCallback ~= nil then--触碰触发AOE（如果技能存在AOE）
@@ -50,7 +50,7 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 			end
 		else
 			--超出射程没有命中
-			if shoot.energyHealth ~= 0 then		
+			if shoot.energy_point ~= 0 then		
 				print("over_distence")
 				clearUnitsModifierByName(shoot, keys.shootAoeDebuff)
 				if shoot.isAOE == 1 and skillBoomCallback ~= nil then --直达尽头发动AOE	
@@ -98,8 +98,8 @@ function shootHit(shoot)
 	for k,unit in pairs(aroundUnits) do
 		--local lable = unit:GetUnitLabel() --该单位为技能子弹
 		--local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energyHealth
-		local shootHealth = shoot.energyHealth
+		local unitEnergy = unit.energy_point
+		local shootEnergy = shoot.energy_point
 		--遇到敌人实现伤害并返回撞击反馈
 		if(checkIsEnemy(shoot,unit) and checkIsHitUnit(shoot,unit,nil)) then --触碰到的是不是敌对队伍，且自身法魂不为0，是否实现撞击
 			if( checkIsSkill(shoot,unit) ) then --如果碰到的是子弹，且法魂不为0：此处需要比拼法魂大小
@@ -107,13 +107,13 @@ function shootHit(shoot)
 				--法魂计算过程(还需加入克制计算)
 				reinforceEach(unit,shoot,nil)
 				reinforceEach(shoot,unit,nil)
-				local shootHealth = shoot:GetHealth()
-				shootHealth = getApplyEnergyValue(shoot, shootHealth)
-				local unitHealth = unit:GetHealth()
-				unitHealth = getApplyEnergyValue(unit, unitHealth)
+				local shootEnergy = shoot.energy_point
+				shootEnergy = getApplyEnergyValue(shoot, shootEnergy)
+				local unitEnergy = unit.energy_point
+				unitEnergy = getApplyEnergyValue(unit, unitEnergy)
 				
-				local tempHealth = shootHealth - unitHealth
-				print("shootHealth:",shootHealth,"-",unitHealth)
+				local tempHealth = shootEnergy - unitEnergy
+				print("shootEnergy:",shootEnergy,"-",unitEnergy)
 				if(tempHealth > 0) then
 					energyBattleOperation(shoot, unit, tempHealth)
 				else
@@ -186,8 +186,8 @@ function checkIsEnemy(shoot,unit)
 	local caster = keys.caster
 	local casterTeam = caster:GetTeam()
 	local unitTeam = unit:GetTeam()
-	local shootHealth = shoot.energyHealth
-	if( casterTeam ~= unitTeam and shootHealth ~= 0 ) then
+	local shootEnergy = shoot.energy_point
+	if( casterTeam ~= unitTeam and shootEnergy ~= 0 ) then
 		isEnemy = true
 	end
 	return isEnemy
@@ -197,9 +197,9 @@ end
 function checkIsSkill(shoot,unit)
 	local isEnemySkill = false
 	local lable = unit:GetUnitLabel()
-	local unitHealth = unit.energyHealth
-	--local shootHealth = shoot.energyHealth
-	if(GameRules.skillLabel == lable and unitHealth ~= 0 and shoot ~= unit) then
+	local unitEnergy = unit.energy_point
+	--local shootEnergy = shoot.energy_point
+	if(GameRules.skillLabel == lable and unitEnergy ~= 0 and shoot ~= unit) then
 		isEnemySkill = true
 	end
 	return isEnemySkill
@@ -255,9 +255,10 @@ function energyBattleOperation(winBall, loseBall, tempHealth)
 		if tempHealth < 0 then
 			tempHealth = tempHealth * -1
 		end
-		winBall:SetHealth(tempHealth)--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
+		--winBall:SetHealth(tempHealth)--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
+		winBall.energy_ponit = tempHealth
 	end
-	loseBall.energyHealth = 0
+	loseBall.energy_ponit = 0
 	if loseBall.isMisfire == 1 then
 		shootSoundAndParticle(loseBall, "misFire")
 		shootKill(loseBall)
@@ -511,12 +512,11 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--法魂
 	local abilityEnergy = shoot:GetHealth()
 	local energyBuffName = 'energy'
-	local tempEnergy = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner) 
-	shoot.energy_bonus = tempEnergy - abilityEnergy
-	shoot:AddAbility('ability_health_control'):SetLevel(1)
-	shoot:RemoveModifierByName('modifier_health_debuff')
-    shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
-	shoot:RemoveAbility('ability_health_control')
+	shoot.energy_point = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner) 
+	--shoot:AddAbility('ability_health_control'):SetLevel(1)
+	--shoot:RemoveModifierByName('modifier_health_debuff')
+    --shoot:SetModifierStackCount('modifier_health_buff', shoot, shoot.energy_bonus)
+	--shoot:RemoveAbility('ability_health_control')
 	--print("abilityEnergy",abilityEnergy)
 	--print("energy_bonus",shoot.energy_bonus)
 
@@ -782,7 +782,7 @@ function blackHole(shoot, G_Speed)
 										false)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            local unitHealth = unit.energyHealth
+            local unitEnergy = unit.energy_point
             local lable = unit:GetUnitLabel()
             --只作用于敌方，或石头单位
             if casterTeam ~= unitTeam or lable == GameRules.stoneLabel then
@@ -796,7 +796,7 @@ function blackHole(shoot, G_Speed)
 				unit:SetAbsOrigin(groundPos)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
-            if lable == GameRules.skillLabel and unitHealth ~= 0 then
+            if lable == GameRules.skillLabel and unitEnergy ~= 0 then
                 checkHitAbilityToMark(shoot, unit)
             end
         end
@@ -821,7 +821,7 @@ function blackHole(shoot, G_Speed)
 										false)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
-			--local unitHealth = unit.energyHealth
+			--local unitEnergy = unit.energy_point
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
@@ -930,7 +930,7 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
 										false)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            local unitHealth = unit.energyHealth
+            local unitEnergy = unit.energy_point
             local lable = unit:GetUnitLabel()
             
             --只作用于敌方,非技能单位
@@ -938,7 +938,7 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
 				damageCallbackFunc(shoot, unit, interval)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
-            if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+            if lable == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
                 checkHitAbilityToMark(shoot, unit)
             end
         end
@@ -998,7 +998,7 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
                                             false)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
-            --local unitHealth = unit.energyHealth
+            --local unitEnergy = unit.energy_point
             local lable = unit:GetUnitLabel()
             --只作用于敌方,非技能单位
             if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel  then    
@@ -1051,14 +1051,14 @@ function boomAOEOperation(shoot, AOEOperationCallback)
 										false)
 	for k,unit in pairs(aroundUnits) do
 		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energyHealth
+		local unitEnergy = unit.energy_point
 		local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
 		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
 			AOEOperationCallback(shoot, unit)
 		end
 		--如果是技能则进行加强或减弱操作
-		if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+		if lable == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
             checkHitAbilityToMark(shoot, unit)
 		end
 	end 
@@ -1094,14 +1094,14 @@ function diffuseBoomAOEOperation(shoot, AOEOperationCallback)
 											false)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
-			local unitHealth = unit.energyHealth
+			local unitEnergy = unit.energy_point
 			local lable = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
 			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
 				AOEOperationCallback(shoot, unit)
 			end
 			--如果是技能则进行加强或减弱操作
-			if lable == GameRules.skillLabel and unitHealth ~= 0 and unit ~= shoot then
+			if lable == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
 				checkHitAbilityToMark(shoot, unit)
 			end
 		end 
