@@ -80,7 +80,6 @@ function LaunchFire(keys)
 		end
 		return 0.3
 	end)
-	
 	-- Update the particle 
     --[[
 	local pfx = caster.fire_spirits_pfx
@@ -100,7 +99,6 @@ function LaunchFire(keys)
 	end
   
 end
-
 
 
 --技能爆炸,单次伤害

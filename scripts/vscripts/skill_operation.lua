@@ -4,7 +4,7 @@ require('player_power')
 function getApplyDamageValue(shoot)
 	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, shoot.damage) 
 	if damage < 0 then
-		damage = 1  --伤害保底
+		damage = 0  --伤害保底
 	end
 	return damage
 end

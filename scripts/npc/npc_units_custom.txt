@@ -1129,8 +1129,8 @@
         "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
         // Vision
         //----------------------------------------------------------------
-        "VisionDaytimeRange"        "0"       // Range of vision during day light.
-        "VisionNighttimeRange"      "0"       // Range of vision at night time.
+        "VisionDaytimeRange"        "10"       // Range of vision during day light.
+        "VisionNighttimeRange"      "10"       // Range of vision at night time.
         // Bots
         //----------------------------------------------------------------
         "AttackDesire"              "1.0"       // How much bots want to attack them vs other non-hero things
@@ -1219,8 +1219,8 @@
         "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
         // Vision
         //----------------------------------------------------------------
-        "VisionDaytimeRange"        "0"       // Range of vision during day light.
-        "VisionNighttimeRange"      "0"       // Range of vision at night time.
+        "VisionDaytimeRange"        "10"       // Range of vision during day light.
+        "VisionNighttimeRange"      "10"       // Range of vision at night time.
         // Bots
         //----------------------------------------------------------------
         "AttackDesire"              "1.0"       // How much bots want to attack them vs other non-hero things
@@ -1308,8 +1308,8 @@
         "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
         // Vision
         //----------------------------------------------------------------
-        "VisionDaytimeRange"        "0"       // Range of vision during day light.
-        "VisionNighttimeRange"      "0"       // Range of vision at night time.
+        "VisionDaytimeRange"        "10"       // Range of vision during day light.
+        "VisionNighttimeRange"      "10"       // Range of vision at night time.
         // Bots
         //----------------------------------------------------------------
         "AttackDesire"              "1.0"       // How much bots want to attack them vs other non-hero things
@@ -1397,8 +1397,8 @@
         "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
         // Vision
         //----------------------------------------------------------------
-        "VisionDaytimeRange"        "0"       // Range of vision during day light.
-        "VisionNighttimeRange"      "0"       // Range of vision at night time.
+        "VisionDaytimeRange"        "10"       // Range of vision during day light.
+        "VisionNighttimeRange"      "10"       // Range of vision at night time.
         // Bots
         //----------------------------------------------------------------
         "AttackDesire"              "1.0"       // How much bots want to attack them vs other non-hero things

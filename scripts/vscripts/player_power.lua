@@ -194,6 +194,10 @@ function initPlayerPower()
 
     for playerID = 0, 9 do --10个玩家的数据包
         PlayerPower[playerID] = {} 
+
+        --用于记录正负电击的两个电极子弹
+        PlayerPower[playerID]["electric_shock_a"] = nil
+        PlayerPower[playerID]["electric_shock_b"] = nil
         --Modifiers能力
         PlayerPower[playerID]['player_vision'] = 0
         PlayerPower[playerID]['player_vision_precent_base'] = 0
@@ -745,6 +749,9 @@ end
 
 function initTempPlayerPower()
     for playerID = 0, 9 do --10个玩家的数据包 
+        PlayerPower[playerID]["electric_shock_a"] = nil
+        PlayerPower[playerID]["electric_shock_b"] = nil
+
         PlayerPower[playerID]['temp_vision'] = 0
         PlayerPower[playerID]['temp_vision_precent_base'] = 0
         PlayerPower[playerID]['temp_vision_precent_final'] = 0     

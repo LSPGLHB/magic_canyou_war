@@ -255,15 +255,13 @@ function energyBattleOperation(winBall, loseBall, tempHealth)
 		if tempHealth < 0 then
 			tempHealth = tempHealth * -1
 		end
-		--winBall:SetHealth(tempHealth)--unit:SetHealth(0) --不能设为0，否则不能kill掉进程
-		winBall.energy_ponit = tempHealth
+		winBall.energy_point = tempHealth
 	end
-	loseBall.energy_ponit = 0
+	loseBall.energy_point = 0
 	if loseBall.isMisfire == 1 then
 		shootSoundAndParticle(loseBall, "misFire")
 		shootKill(loseBall)
-	end
-	if loseBall.isMisfire ~= 1 then
+	else
 		skillBoomCallback(loseBall)
 		shootKill(loseBall)
 	end

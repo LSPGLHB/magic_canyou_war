@@ -17,7 +17,7 @@ function createGlareLightBall(keys)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
-    shoot.intervalCallBack = glareLightBallBoomCallBack
+    shoot.intervalCallBack = glareLightBallBoomCallBack --周期运行
     moveShoot(keys, shoot, nil, nil)
 end
 

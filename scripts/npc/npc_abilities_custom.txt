@@ -39,6 +39,7 @@
 #base magic/fire_spirit.kv
 #base magic/blind_fire_ball.kv
 #base magic/glare_light_ball.kv
+#base magic/fire_arrow_bomb.kv
 
 //土系
 #base magic/twine_soil_ball.kv
@@ -54,7 +55,7 @@
 //雷系
 #base magic/scatter_thunder_ball.kv
 #base magic/penetrate_thunder_ball.kv
-
+#base magic/electric_ball.kv
 
 "DOTAAbilities"
 {
