@@ -46,7 +46,7 @@ function glareLightBallBoomCallBack(shoot)
 										false)
 	for k,unit in pairs(aroundUnits) do
 		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energyHealth
+		local unitHealth = unit.energy_point
 		local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
 		if checkIsEnemyNoSkill(shoot,unit) and checkIsHitUnit(shoot,unit,0) then
@@ -84,7 +84,7 @@ function glareLightBallBoomCallBack(shoot)
 										false)
 	for k,unit in pairs(aroundUnits) do
 		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energyHealth
+		local unitHealth = unit.energy_point
 		local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
 		if checkIsEnemyNoSkill(shoot,unit) and checkIsHitUnit(shoot,unit,1) then

@@ -47,6 +47,8 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 				if isHitType == 3 then
 					return 0.02
 				end
+			else
+				return nil
 			end
 		else
 			--超出射程没有命中
@@ -527,10 +529,10 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	
 	--print("damage",shoot.damage)
 	--弹道速度
-	local speedBase =  ability:GetSpecialValueFor("speed")
+	local speedBase = ability:GetSpecialValueFor("speed")
 	local speedBuffName = 'ability_speed'
 	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * GameRules.speedConstant * 0.02
-
+	
 	--射程
 	local rangeBase = max_distance
 	local rangeBuffName = 'range'
@@ -604,6 +606,7 @@ function shootKill(shoot)
 	ParticleManager:DestroyParticle(shoot.particleID, true)
 	--命中后动画持续时间
 	shoot:ForceKill(true)
+	shoot.energy_point = 0
 	Timers:CreateTimer(keys.particles_hit_dur,function ()
 		--消除子弹以及中弹粒子效果
 		shoot:AddNoDraw()
@@ -1038,6 +1041,7 @@ function boomAOEOperation(shoot, AOEOperationCallback)
 	shootSoundAndParticle(shoot, "boom")
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
+	print("boomAOEOperation:",radius)
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,

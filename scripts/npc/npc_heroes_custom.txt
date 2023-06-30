@@ -8,7 +8,7 @@
 		"override_hero"	"npc_dota_hero_rubick"
 		//"AbilityLayout"         "6"
 		"Ability1"	"shoot_datadriven"
-		"Ability2"	"fire_arrow_bomb_datadriven"
+		"Ability2"	"electric_shock_datadriven"
 		"Ability3"	"blind_fire_ball_datadriven"
 		"Ability4"  "control_rock_datadriven"
 		"Ability5"  "electric_ball_datadriven"
@@ -22,6 +22,7 @@
 
 		"Ability20"  "ice_beans_stage_b_datadriven"
 		"Ability21"  "control_rock_stage_b_datadriven"
+		"Ability22"	 "electric_shock_stage_b_datadriven"
 
 
 

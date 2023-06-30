@@ -5,18 +5,18 @@
     // General
 	//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				        "ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"storm_spirit_ball_lightning"
+		"AbilityTextureName"			"storm_spirit_electric_vortex"
 		"MaxLevel"                      "1"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"lei"
 		"AbilityLevel"					"b"
-		"IconSrc"                       "file://{images}/custom_game/ability_button/storm_spirit_ball_lightning.png"  //选择框图标
+		"IconSrc"                       "file://{images}/custom_game/ability_button/storm_spirit_electric_vortex.png"  //选择框图标
 		"AbilityShowName"               "#UIButton4"
 		
 		"precache"						
@@ -39,7 +39,46 @@
 
         "AbilitySpecial"
 		{
-			
+			 "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"200"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1500"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "9"
+			}
+            "05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"aoe_radius"		    "150"
+			}
+            "07"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "stun_debuff_duration"		"1"
+            }
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"magic/electric_shock.lua"
+				"Function"		"LevelUpAbility"
+				"ability_b_name"	"electric_shock_stage_b_datadriven"
+			}
 		}
 		
 		"OnSpellStart"
@@ -48,17 +87,63 @@
 			{
 				"ScriptFile"		"magic/electric_shock.lua"
 				"Function"			"stepOne"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"b"
+				"unitType"          "lei"
+				"hitType" 			"2"   //3直达不触碰,2穿透弹,1触碰爆炸
+                "isMisfire"			"1"
+                "isAOE"             "1"
+                "cp"				"3"
+                "particles_hit_dur" "0.7"
+				"particles_nm"      "particles/23_2zhengfudianji_shengcheng.vpcf"
+				"soundCast"			"magic_electric_shock_cast"
+				
+				"particles_power" 	"particles/23_2zhengfudianji_jiaqiang.vpcf"
+				"soundPower"		"magic_electric_power_up"
+				"particles_weak" 	"particles/23_2zhengfudianji_xueruo.vpcf"
+				"soundWeak"			"magic_electric_power_down"
+                "particles_misfire" "particles/23_2zhengfudianji_jiluo.vpcf"
+				"soundMisfire"		"magic_electric_mis_fire"
+                "particles_miss"    "particles/23_2zhengfudianji_xiaoshi.vpcf"
+				"soundMiss"			"magic_electric_miss"
+
+                "particles_hit" 	"particles/23_2zhengfudianji_mingzhong.vpcf"
+				"soundHit"			"magic_electric_shock_hit"
+				"particles_boom" 	"particles/zhengfudianjibaozha.vpcf"
+				"soundBoom"			"magic_electric_shock_boom"
+
+
+
+                "stunDebuff"        "modifier_electric_shock_stun"
+
+
+                "modifier_caster_name"	   "modifier_electric_shock_datadriven"
 				"ability_a_name"		   "electric_shock_datadriven"
 				"ability_b_name"		   "electric_shock_stage_b_datadriven"
+
+
 				
 			}
 		}	
 
         "Modifiers"
-		{
+		{	
+			"modifier_electric_shock_stun"
+			{
+				"IsHidden"			"1"
+                "EffectName"		"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_stunned_symbol.vpcf"
+				"EffectAttachType"	"follow_overhead"
+                "OverrideAnimation"     "ACT_DOTA_DISABLED"
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+                }  
+			}
+
             "modifier_electric_shock_datadriven"
 			{
-				"Passive"				"1"
+				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 				"IsDebuff"				"0"
@@ -73,18 +158,18 @@
     // General
 	//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				        "ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"storm_spirit_ball_lightning"
+		"AbilityTextureName"			"invoker_alacrity"
 		"MaxLevel"                      "1"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"lei"
 		"AbilityLevel"					"b"
-		"IconSrc"                       "file://{images}/custom_game/ability_button/storm_spirit_ball_lightning.png"  //选择框图标
+		"IconSrc"                       "file://{images}/custom_game/ability_button/invoker_alacrity.png"  //选择框图标
 		"AbilityShowName"               "#UIButton4"
 		
 		"precache"						
@@ -110,7 +195,7 @@
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"650"
+				"speed"				"200"
 			}
             "02"
 			{
@@ -135,7 +220,12 @@
             "07"
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_duration"		"5"
+                "sleep_debuff_duration"		"3"
+            }
+			"08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "stun_debuff_duration"		"1"
             }
 
         }
@@ -155,35 +245,39 @@
                 "isAOE"             "1"
                 "cp"				"3"
                 "particles_hit_dur" "0.7"
-				"particles_nm"      "particles/18sansheleiqiu_shengcheng.vpcf"
+				"particles_nm"      "particles/23_1zhengfudianji_shengcheng.vpcf"
 				"soundCast"			"magic_electric_shock_cast"
 				
-				"particles_power" 	"particles/18sansheleiqiu_jiaqiang.vpcf"
+				"particles_power" 	"particles/23_1zhengfudianji_jiaqiang.vpcf"
 				"soundPower"		"magic_electric_power_up"
-				"particles_weak" 	"particles/18sansheleiqiu_xueruo.vpcf"
+				"particles_weak" 	"particles/23_1zhengfudianji_xueruo.vpcf"
 				"soundWeak"			"magic_electric_power_down"
-                 "particles_misfire" "particles/18sansheleiqiu_jiluo.vpcf"
+                "particles_misfire" "particles/23_1zhengfudianji_jiluo.vpcf"
 				"soundMisfire"		"magic_electric_mis_fire"
-                "particles_miss"    "particles/18sansheleiqiu_xiaoshi.vpcf"
+                "particles_miss"    "particles/23_1zhengfudianji_xiaoshi.vpcf"
 				"soundMiss"			"magic_electric_miss"
-                "particles_boom" 	"particles/18sansheleiqiu_mingzhong.vpcf"
+
+                "particles_hit" 	"particles/23_1zhengfudianji_mingzhong.vpcf"
+				"soundHit"			"magic_electric_shock_hit_2"
+				"particles_boom" 	"particles/zhengfudianjibaozha.vpcf"
 				"soundBoom"			"magic_electric_shock_boom"
 
-                "hitTargetDebuff"   "modifier_electric_shock_debuff"
-                "stunDebuff"        "modifier_electric_shock_stun"
+
+                "sleepDebuff"   "modifier_sleep_debuff_datadriven"
+				"stunDebuff"    "modifier_electric_shock_stun"
 
 
                 "modifier_caster_name"	   "modifier_electric_shock_datadriven"
-				"ability_a_name"		   "electric_shock__datadriven"
-				"ability_b_name"		   "electric_shock__stage_b_datadriven"
+				"ability_a_name"		   "electric_shock_datadriven"
+				"ability_b_name"		   "electric_shock_stage_b_datadriven"
 			}
 		}
 
         "Modifiers"
 		{
-			"modifier_electric_shock_stage_b_debuff"
+			"modifier_electric_shock_stun"
 			{
-				"IsDebuff"			"1"
+				"IsHidden"			"1"
                 "EffectName"		"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_stunned_symbol.vpcf"
 				"EffectAttachType"	"follow_overhead"
                 "OverrideAnimation"     "ACT_DOTA_DISABLED"
@@ -191,11 +285,46 @@
                 {
                     "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
                 }  
-            }
+			}
+			
+			"modifier_sleep_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/hunshui_debuff.vpcf"
+				"EffectAttachType"	"follow_overhead"
+                "OverrideAnimation"     "ACT_DOTA_DISABLED"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_TURNING" "1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MUTED"	  "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NIGHTMARED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"OnTakeDamage"
+				{
+					"FireSound"
+					{
+						"EffectName"			"magic_wake_up"
+						"Target"				"UNIT"
+					}
+					"RemoveModifier"
+					{
+						"Target"                      "UNIT"     //Target是光环作用的目标（未证实），unit是光环载体（证实）
+						"ModifierName"                "modifier_sleep_debuff_datadriven"
+                    }
+				}
+			}
 
             "modifier_electric_shock_datadriven"
 			{
-				"Passive"				"1"
+				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 				"IsDebuff"				"0"
