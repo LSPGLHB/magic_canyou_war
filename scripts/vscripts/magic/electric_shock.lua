@@ -23,7 +23,7 @@ function stepOne(keys)
 	--shoot.max_distance_operation = max_distance
     --initDurationBuff(keys)
 
-    local casterBuff = keys.modifier_caster_name
+    local casterBuff = keys.modifier_caster_syn_name
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
     shoot.launchElectricShock = 0
     Timers:CreateTimer(5 ,function()
@@ -87,8 +87,6 @@ function stepTwo(keys)
 	--shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
 
-    --local casterBuff = keys.modifier_caster_name
-    --ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
 
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name

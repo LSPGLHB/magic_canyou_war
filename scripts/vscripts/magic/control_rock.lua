@@ -13,7 +13,7 @@ function createControlRock(keys)
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     shoot.angleRate = angleRate
-    local casterBuff = keys.modifier_caster_name
+    local casterBuff = keys.modifier_caster_syn_name
 	local flyDuration = shoot.max_distance_operation / speed 
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = flyDuration})
 
@@ -105,7 +105,7 @@ end
 
 function EndControl( keys )
 	local caster = keys.caster
-	caster:RemoveModifierByName( keys.modifier_caster_name )
+	caster:RemoveModifierByName( keys.modifier_caster_syn_name )
 end
 
 

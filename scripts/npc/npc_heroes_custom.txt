@@ -11,7 +11,7 @@
 		"Ability2"	"electric_shock_datadriven"
 		"Ability3"	"blind_fire_ball_datadriven"
 		"Ability4"  "trace_stone_ball_datadriven"
-		"Ability5"  "electric_ball_datadriven"
+		"Ability5"  "twice_stone_ball_datadriven"
 		"Ability6"  "glare_light_ball_datadriven"
 		"Ability7"  "vision_down_light_ball_datadriven"
 		"Ability8"	"small_hurricane_datadriven"
@@ -23,6 +23,7 @@
 		"Ability20"  "ice_beans_stage_b_datadriven"
 		"Ability21"  "control_rock_stage_b_datadriven"
 		"Ability22"	 "electric_shock_stage_b_datadriven"
+		"Ability23"  "twice_stone_ball_stage_b_datadriven"
 
 
 

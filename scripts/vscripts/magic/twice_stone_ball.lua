@@ -16,14 +16,20 @@ function stepOne(keys)
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
-
+    caster.twic_stone_ball_on = 1
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
-
+    local casterBuff = keys.modifier_caster_stage_name
+    ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
     Timers:CreateTimer(5, function()
-        initStage(keys)
+        if caster.twic_stone_ball_on == 1 then
+            initStage(keys)
+            if caster:HasModifier(casterBuff) then
+                caster:RemoveModifierByName(casterBuff) 
+            end
+        end
         return nil
     end)
 
@@ -50,12 +56,16 @@ function stepTwo(keys)
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
-
+    caster.twic_stone_ball_on = 0
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     initStage(keys)
+    local casterBuff = keys.modifier_caster_stage_name
+    if caster:HasModifier(casterBuff) then
+        caster:RemoveModifierByName(casterBuff) 
+    end
     moveShoot(keys, shoot, twiceStoneBallBoomCallBackSp2, nil)
 end
 
@@ -70,13 +80,9 @@ function twiceStoneBallBoomCallBackSp2(shoot)
 end
 
 function twiceStoneBallBoomAOERenderParticles(shoot)
-    local keys = shoot.keysTable
-	local caster = keys.caster
-	local radius = shoot.aoe_radius
-	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
-	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
-	ParticleManager:SetParticleControl(particleBoom, 0, groundPos)
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
+    local particlesName = shoot.particles_boom
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 end
 
 function twiceStoneBallAOEOperationCallbackSp1(shoot,unit)
@@ -84,11 +90,23 @@ function twiceStoneBallAOEOperationCallbackSp1(shoot,unit)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
-    local AbilityLevel = shoot.abilityLevel
-    local stunDebuff = keys.stunDebuff
-    local sleepDebuff = keys.sleepDebuff
-    local damage = getApplyDamageValue(shoot) / 2 
+
+    local damage = getApplyDamageValue(shoot) * (8 / 30)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+    local AbilityLevel = shoot.abilityLevel
+    local debuffDelay = ability:GetSpecialValueFor("debuff_delay")
+    local hitTargetDebuffDelay = keys.hitTargetDebuffDelay
+    local hitTargetDebuff = keys.hitTargetDebuff
+    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuffDelay, {Duration = debuffDelay})
+    Timers:CreateTimer(debuffDelay, function()
+        local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+        debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+        debuffDuration = getApplyControlValue(shoot, debuffDuration)
+        ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+    end)
+    
+    
     
 end
 
@@ -98,9 +116,8 @@ function twiceStoneBallAOEOperationCallbackSp2(shoot,unit)
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
-    local stunDebuff = keys.stunDebuff  
-    local sleepDebuff = keys.sleepDebuff
-    local damage = getApplyDamageValue(shoot) / 2 
+
+    local damage = getApplyDamageValue(shoot) * (22 / 30)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

@@ -602,7 +602,7 @@ end
 function shootKill(shoot)
 	local keys = shoot.keysTable
 	local caster = keys.caster
-	local casterBuff = keys.modifier_caster_name
+	local casterBuff = keys.modifier_caster_syn_name
 	if caster:HasModifier( casterBuff ) then
 		caster:RemoveModifierByName( casterBuff )
 	end

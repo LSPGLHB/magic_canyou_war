@@ -46,6 +46,8 @@
 #base magic/control_rock.kv
 #base magic/stone_ball.kv
 #base magic/trace_stone_ball.kv
+#base magic/twice_stone_ball.kv
+
 
 //风系
 #base magic/small_hurricane.kv

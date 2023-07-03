@@ -10,13 +10,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"storm_spirit_electric_vortex"
+		"AbilityTextureName"			"hoodwink_acorn_shot"
 		"MaxLevel"                      "1"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"tu"
 		"AbilityLevel"					"c"
-		"IconSrc"                       "file://{images}/custom_game/ability_button/storm_spirit_electric_vortex.png"  //选择框图标
+		"IconSrc"                       "file://{images}/custom_game/ability_button/hoodwink_acorn_shot.png"  //选择框图标
 		"AbilityShowName"               "#UIButton4"
 		
 		"precache"						
@@ -62,7 +62,7 @@
             "06"
             {
                 "var_type"			"FIELD_FLOAT"
-                "delay_debuff"		"1.5"
+                "debuff_delay"		"1.5"
             }
             "07"
             {
@@ -100,24 +100,24 @@
 				"soundCast"			"magic_twice_stone_ball_cast"
 				
 				"particles_power" 	"particles/17_1tuqiushu_jiaqiang.vpcf"
-				"soundPower"		"magic_electric_power_up"
+				"soundPower"		"magic_stone_power_up"
 				"particles_weak" 	"particles/17_1tuqiushu_xueruo.vpcf"
-				"soundWeak"			"magic_electric_power_down"
+				"soundWeak"			"magic_stone_power_down"
                 "particles_misfire" "particles/17_1tuqiushu_jiluo.vpcf"
-				"soundMisfire"		"magic_electric_mis_fire"
+				"soundMisfire"		"magic_stone_mis_fire"
 
                 "particles_miss"    "particles/17_1tuqiushu_xiaoshi.vpcf"
-				"soundMiss"			"magic_electric_miss"
+				"soundMiss"			"magic_stone_miss"
 
 				"particles_boom" 	"particles/17_1tuqiushu_mingzhong.vpcf"
 				"soundBoom"			"magic_twice_stone_ball_boom"
 
 
-                "hitUnitDebuffDelay"	"modifier_twice_stone_ball_debuff_delay"
-				"hitUnitDebuff"        "modifier_twice_stone_ball_debuff"
+                "hitTargetDebuffDelay"	"modifier_twice_stone_ball_debuff_delay"
+				"hitTargetDebuff"        "modifier_twice_stone_ball_debuff"
 
 
-                "modifier_caster_name"	   "modifier_twice_stone_ball_buff"
+				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_buff"
 				"ability_a_name"		   "twice_stone_ball_datadriven"
 				"ability_b_name"		   "twice_stone_ball_stage_b_datadriven"
 				
@@ -146,13 +146,15 @@
 				"IsDebuff"				"0"
 			}
 
-			 "modifier_twice_stone_ball_buff"
+			"modifier_twice_stone_ball_buff"
 			{
 				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 				"IsDebuff"				"0"
 			}
+
+
         }
         
 
@@ -168,13 +170,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"invoker_alacrity"
+		"AbilityTextureName"			"alchemist_unstable_concoction"
 		"MaxLevel"                      "1"
 
 		"MaxLevel"                      "1"
 		"UnitType"         				"tu"
 		"AbilityLevel"					"c"
-		"IconSrc"                       "file://{images}/custom_game/ability_button/invoker_alacrity.png"  //选择框图标
+		"IconSrc"                       "file://{images}/custom_game/ability_button/alchemist_unstable_concoction.png"  //选择框图标
 		"AbilityShowName"               "#UIButton4"
 		
 		"precache"						
@@ -239,13 +241,13 @@
 				"soundCast"			"magic_twice_stone_ball_cast"
 				
 				"particles_power" 	"particles/17_2boliping_jiaqiang.vpcf"
-				"soundPower"		"magic_electric_power_up"
+				"soundPower"		"magic_stone_power_up"
 				"particles_weak" 	"particles/17_2boliping_xueruo.vpcf"
-				"soundWeak"			"magic_electric_power_down"
+				"soundWeak"			"magic_stone_power_down"
                 "particles_misfire" "particles/17_2boliping_jiluo.vpcf"
-				"soundMisfire"		"magic_electric_mis_fire"
+				"soundMisfire"		"magic_stone_mis_fire"
                 "particles_miss"    "particles/17_2boliping_xiaoshi.vpcf"
-				"soundMiss"			"magic_electric_miss"
+				"soundMiss"			"magic_stone_miss"
 
 				"particles_boom" 	"particles/17_2boliping_mingzhong.vpcf"
 				"soundBoom"			"magic_twice_stone_ball_boom"
@@ -254,7 +256,7 @@
 
 
 
-                "modifier_caster_name"	   "modifier_twice_stone_ball_buff"
+                "modifier_caster_stage_name"	   "modifier_twice_stone_ball_buff"
 				"ability_a_name"		   "twice_stone_ball_datadriven"
 				"ability_b_name"		   "twice_stone_ball_stage_b_datadriven"
 			}
