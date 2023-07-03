@@ -77,10 +77,11 @@ function shootHit(shoot)
 	local casterTeam = caster:GetTeam()
 	local position=shoot:GetAbsOrigin()
 	
-	--默认不击退
+	--默认不击退（好像没用了）
+	--[[
 	if keys.isBeatBack == nil then
 		keys.isBeatBack = 0
-	end
+	end]]
 	local hitType = keys.hitType
 	--local PlayerID = caster:GetPlayerID() PlayerResource:GetTeam(PlayerID) print("team========:"..team) print("goodguy2:"..DOTA_TEAM_GOODGUYS) print("badguy3:"..DOTA_TEAM_BADGUYS) print("noteam5:"..DOTA_TEAM_NOTEAM) print("CUSTOM_1=6:"..DOTA_TEAM_CUSTOM_1) print("CUSTOM_2=7:"..DOTA_TEAM_CUSTOM_2)
 	--寻找目标
@@ -381,23 +382,26 @@ function checkHitTeamerRemoveDebuff(unit)
 end
 
 function moveShootTimerRun(keys,shoot)
-	local shootTempPos = shoot:GetAbsOrigin()
-	local speed = shoot.speed
-	--print('moveShootTimerRun-speed:'..speed)
-	local direction = shoot.direction
-	--此处追踪状态，只知道追踪，其他不管
-	if keys.isTrack == 1 then
-		direction = (keys.trackUnit:GetAbsOrigin() - Vector(shootTempPos.x, shootTempPos.y, 0)):Normalized()
-	end
-	local newPos = shootTempPos + direction * speed
-	local groundPos = GetGroundPosition(newPos, shoot)
-	local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + shoot.shootHight)
-
+	
 	--子弹周期性操作
 	if shoot.intervalCallBack ~= nil then
 		local intervalCallBack = shoot.intervalCallBack
 		intervalCallBack(shoot)
 	end
+	
+	local shootTempPos = shoot:GetAbsOrigin()
+	local speed = shoot.speed
+	--print('moveShootTimerRun-speed:'..speed)
+	local direction = shoot.direction
+	--此处追踪状态，只知道追踪，其他不管
+	--if keys.isTrack == 1 then
+	--	direction = (keys.trackUnit:GetAbsOrigin() - Vector(shootTempPos.x, shootTempPos.y, 0)):Normalized()
+	--end
+	local newPos = shootTempPos + direction * speed
+	local groundPos = GetGroundPosition(newPos, shoot)
+	local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + shoot.shootHight)
+
+	
 	
 	--FindClearSpaceForUnit( shoot, groundPos, false )--飞行单位可以穿地形不用这个
 	shoot:SetAbsOrigin(shootPos)

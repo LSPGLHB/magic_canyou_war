@@ -1,0 +1,130 @@
+"DOTAAbilities"
+{
+     "stone_ball_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"earth_spirit_rolling_boulder"
+		"MaxLevel"                      "1"
+		"UnitType"         				"tu"
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/earth_spirit_rolling_boulder.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"650"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1200"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "85"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "17"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_duration"		"2.5"
+            }
+            "06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"beat_back_distance"		"500"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"beat_back_speed"		"1800"
+			}
+        }
+
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/stone_ball.lua"
+				"Function"			"createShoot"
+				"unitModel"			"shootUnit-M"
+				"AbilityLevel"		"b"
+				"unitType"          "tu"
+				"hitType" 			"2"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"           "1"
+				"isMisfire"			"1"
+				"particles_hit_dur" "0.7"
+                "cp"				 "3"
+
+				"particles_nm"      "particles/07shitoushu_shengcheng.vpcf"
+				"soundCast" 		"magic_stone_ball_cast"
+				"particles_misfire" "particles/02tuqiushu_jiluo.vpcf"
+				"soundMisfire"		"magic_stone_mis_fire"
+                "particles_miss"    "particles/02tuqiushu_xiaoshi.vpcf"
+				"soundMiss"			"magic_stone_miss"
+				
+				"particles_power" 	"particles/07shitoushu_jiaqiang.vpcf"
+				"soundPower"		"magic_stone_power_up"
+				"particles_weak" 	"particles/07shitoushu_xueruo.vpcf"
+				"soundWeak"			"magic_stone_power_down"	
+				
+                "particles_hit" 	"particles/07shitoushu_mingzhong.vpcf"
+				"soundHit"			"magic_stone_ball_hit"
+
+
+                "hitTargetDebuff"   "modifier_beat_back"
+				
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_beat_back"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+		}
+    }
+}

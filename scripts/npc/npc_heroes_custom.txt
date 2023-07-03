@@ -10,7 +10,7 @@
 		"Ability1"	"shoot_datadriven"
 		"Ability2"	"electric_shock_datadriven"
 		"Ability3"	"blind_fire_ball_datadriven"
-		"Ability4"  "control_rock_datadriven"
+		"Ability4"  "trace_stone_ball_datadriven"
 		"Ability5"  "electric_ball_datadriven"
 		"Ability6"  "glare_light_ball_datadriven"
 		"Ability7"  "vision_down_light_ball_datadriven"
