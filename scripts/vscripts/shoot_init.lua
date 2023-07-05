@@ -1045,7 +1045,7 @@ function boomAOEOperation(shoot, AOEOperationCallback)
 	shootSoundAndParticle(shoot, "boom")
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-	print("boomAOEOperation:",radius)
+	--print("boomAOEOperation:",radius)
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,

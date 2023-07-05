@@ -139,8 +139,17 @@ function traceStoneBallAOEOperationCallback(shoot,unit)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
+	local double_damage_percentage = ability:GetSpecialValueFor("double_damage_percentage") 
+	--math.randomseed(tostring(GameRules:GetGameTime()):reverse():sub(1,6))
 
+	local randomNum = math.random(0,100)
     local damage = getApplyDamageValue(shoot)
+	local trace_distance = (shoot:GetAbsOrigin() - shoot.position):Length2D()
+	local damagePower = 0.5 + 0.5 * (trace_distance / 500)
+	damage = damage * damagePower
+	if randomNum < double_damage_percentage then
+		damage = damage * 2
+	end
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
@@ -174,6 +183,8 @@ function traceStoneBallIntervalCallBack(shoot)
 			if checkIsEnemyNoSkill(shoot,unit) then
 				shoot.trackUnit = unit
 				shoot.speed = shoot.speed * 2
+				shoot.position = shoot:GetAbsOrigin()
+				shoot.traveled_distance = 0
 			end
 		end
 	end

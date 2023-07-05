@@ -148,7 +148,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseManaRegen = 10
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
-
+	
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)

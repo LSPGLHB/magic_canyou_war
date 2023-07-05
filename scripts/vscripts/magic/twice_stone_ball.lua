@@ -116,9 +116,32 @@ function twiceStoneBallAOEOperationCallbackSp2(shoot,unit)
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
+    local hitTargetDebuff = keys.hitTargetDebuff
 
     local damage = getApplyDamageValue(shoot) * (22 / 30)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+    debuffDuration = getApplyControlValue(shoot, debuffDuration)
+    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+    local interval = 0.1
+    local timeCount = 0
+    unit.tsb_position = unit:GetAbsOrigin()
+    Timers:CreateTimer(interval, function()
+
+        local distance = (unit:GetAbsOrigin() - unit.tsb_position):Length2D()
+        local damage = distance * ability:GetSpecialValueFor("damage_by_distance")
+        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+
+        unit.tsb_position = unit:GetAbsOrigin()
+        timeCount = timeCount + interval
+        if timeCount >=  debuffDuration then
+            return nil
+        end
+        return interval
+    end)
 end
 
 

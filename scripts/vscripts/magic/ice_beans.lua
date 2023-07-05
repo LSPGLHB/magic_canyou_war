@@ -126,7 +126,7 @@ function AOEOperationCallback(shoot,unit)
 	local currentStack = unit:GetModifierStackCount(hitTargetDebuff, abilityName)
 	currentStack = currentStack + 1
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 	debuffDuration = debuffDuration * currentStack
     ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环

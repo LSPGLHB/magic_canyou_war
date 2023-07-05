@@ -7,9 +7,9 @@
 	{
 		"override_hero"	"npc_dota_hero_rubick"
 		//"AbilityLayout"         "6"
-		"Ability1"	"shoot_datadriven"
-		"Ability2"	"electric_shock_datadriven"
-		"Ability3"	"blind_fire_ball_datadriven"
+		"Ability1"	"clay_ball_datadriven"
+		"Ability2"	"x_soil_ball_datadriven"
+		"Ability3"	"swamp_area_datadriven"
 		"Ability4"  "trace_stone_ball_datadriven"
 		"Ability5"  "twice_stone_ball_datadriven"
 		"Ability6"  "glare_light_ball_datadriven"
@@ -297,18 +297,6 @@
 		"Ability14"	""
 		"Ability15"	""
 		"Ability16"	""
-
-		// 夜晚视野
-		"VisionNighttimeRange"	"1800"
-	}
-
-	"npc_dota_hero_pudge" 
-	{
-		"override_hero"	"npc_dota_hero_pudge"
-
-		"Ability1"	""
-		"Ability2"	"pudge_meat_hook_lua"
-		"Ability3"	"pudge_meat_hook"
 
 		// 夜晚视野
 		"VisionNighttimeRange"	"1800"

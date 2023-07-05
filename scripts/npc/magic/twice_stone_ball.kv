@@ -110,7 +110,7 @@
 				"soundMiss"			"magic_stone_miss"
 
 				"particles_boom" 	"particles/17_1tuqiushu_mingzhong.vpcf"
-				"soundBoom"			"magic_twice_stone_ball_boom"
+				"soundBoom"			"magic_twice_stone_ball_boom_sp1"
 
 
                 "hitTargetDebuffDelay"	"modifier_twice_stone_ball_debuff_delay"
@@ -219,6 +219,16 @@
 				"var_type"			"FIELD_FLOAT"
 				"damage"		    "30"
 			}
+			"05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_duration"		"1.5"
+            }
+			"06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "damage_by_distance"		"0.02"
+            }
 
         }
 
@@ -250,37 +260,27 @@
 				"soundMiss"			"magic_stone_miss"
 
 				"particles_boom" 	"particles/17_2boliping_mingzhong.vpcf"
-				"soundBoom"			"magic_twice_stone_ball_boom"
+				"soundBoom"			"magic_twice_stone_ball_boom_sp2"
 
 
 
 
 
-                "modifier_caster_stage_name"	   "modifier_twice_stone_ball_buff"
-				"ability_a_name"		   "twice_stone_ball_datadriven"
-				"ability_b_name"		   "twice_stone_ball_stage_b_datadriven"
+                "hitTargetDebuff"	   "modifier_twice_stone_ball_sp2_debuff"
+				"ability_a_name"	   "twice_stone_ball_datadriven"
+				"ability_b_name"	   "twice_stone_ball_stage_b_datadriven"
 			}
 		}
 		"Modifiers"
 		{	
-			"modifier_twice_stone_ball_sp2_debuff"
-			{
-				"IsHidden"			"1"
-                "EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"
-				"EffectAttachType"	"follow_origin"
-    
-                "States"
-                {
-                    "MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
-                }  
-			}
 
-            "modifier_twice_stone_ball_buff"
+
+            "modifier_twice_stone_ball_sp2_debuff"
 			{
 				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
-				"IsDebuff"				"0"
+				"IsDebuff"				"1"
 			}
         }
     }
