@@ -103,18 +103,34 @@ function electricWallAOEIntervalCallBack(shoot)
             --table.insert(shoot.tempHitUnits, unit)
         end
 
+        local warningRadius = radius - 25
+        local aroundUnitsSp2 = FindUnitsInRadius(casterTeam, 
+										position,
+										nil,
+										warningRadius,
+										DOTA_UNIT_TARGET_TEAM_BOTH,
+										DOTA_UNIT_TARGET_ALL,
+										0,
+										0,
+										false)
+
+        for k,unit in pairs(aroundUnits) do
+            table.insert(shoot.tempHitUnits, unit)
+        end
 
 
-
-
-        for i = 1 , #shoot.hitUnits do
-            local unit = shoot.hitUnits[i]
-            local shootPos = shoot:GetAbsOrigin()
-            local unitPos = unit:GetAbsOrigin()
-            local warningRadius = radius - 25
-            local distance = (unitPos - shootPos):Length2D()
-            if distance > warningRadius then
-                shoot.hitUnits[i] = nil
+        local oldArray = {}
+		oldArray = shoot.hitUnits
+		local newArray = {}
+		newArray = shoot.tempHitUnits
+		for i = 1, #oldArray do
+			local flag = true
+			for j = 1, #newArray do
+				if oldArray[i] == newArray[j] then
+					flag = false
+				end
+			end
+			if flag then
                 local hitTargetStun = keys.hitTargetStun
                 local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
                 debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
@@ -123,9 +139,11 @@ function electricWallAOEIntervalCallBack(shoot)
                 local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
                 local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
                 beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
-            end
-        end
+			end
+		end
+		shoot.hitUnits = shoot.tempHitUnits
 
+        
         timeCount = timeCount + interval
         if timeCount >= duration then
 			return nil

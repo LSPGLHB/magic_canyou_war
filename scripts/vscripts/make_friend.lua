@@ -16,9 +16,9 @@ function createFriend(keys)
     --print("1:",ACT_DOTA_LOADOUT_RATE)
     --print("2:",ACT_DOTA_LOADOUT)
     --print("3:",ACT_DOTA_RUN)
+    --[[
     local i = 1000
     Timers:CreateTimer(0,function()
-        
         print ("i=",i)
         new_unit:StartGesture(i)
         if i < 9999 then
@@ -26,7 +26,7 @@ function createFriend(keys)
         end
         return 0.1
     end)
-   
+   ]]
 
     
     local new_unit2 = CreateUnitByName("huoren", position, true, nil, nil, DOTA_TEAM_BADGUYS)--
