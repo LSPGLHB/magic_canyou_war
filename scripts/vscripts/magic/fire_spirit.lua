@@ -27,7 +27,7 @@ end
 function fireSpiritBoomCallBack(shoot)
     fireSpiritDelayRenderParticles(shoot)
     Timers:CreateTimer(shoot.boomDelay, function()
-        if shoot.energyHealth ~= 0 then
+        if shoot.energy_point ~= 0 then
             fireSpiritRenderParticles(shoot) --爆炸粒子效果生成		  
             boomAOEOperation(shoot, AOEOperationCallback)
         end

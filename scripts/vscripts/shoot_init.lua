@@ -627,7 +627,7 @@ function beatBackPenetrateParticleOperation(keys,shoot)
 end
 
 --击退单位
-function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat)
+function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat,directionFlag)
 	local caster = keys.caster
 	local ability = keys.ability
 	--local powerLv = shoot.power_lv
@@ -642,7 +642,12 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)--把撞击的高度降到0用于计算
 	local targetPos= hitTarget:GetAbsOrigin()
 	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)--把目标的高度降到0用于计算
-	local beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
+	local beatBackDirection
+	if directionFlag then
+		beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
+	else
+		beatBackDirection =  (tempShootPos - tempTargetPos):Normalized()
+	end
 	local interval = 0.02
 	local acceleration = -3000 --加速度
 	local V0 = beatBackSpeed * interval
@@ -766,14 +771,14 @@ function blackHole(shoot, G_Speed)
 	--启动计时器，时间到了结束debuff销毁子弹
 	Timers:CreateTimer(aoe_duration,function ()
 		--print("timeOver")
-		shoot.isKill = 1
+		shoot.isKillAOE = 1
 		clearUnitsModifierByName(shoot,aoeTargetDebuff)
 		return nil
 	end)
 	--管理移动效果计时器
     Timers:CreateTimer(0,function ()
 		--子弹被销毁的话结束计时器进程
-		if shoot.isKill == 1 then
+		if shoot.isKillAOE == 1 then
 			return nil
 		end
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
@@ -811,7 +816,7 @@ function blackHole(shoot, G_Speed)
 	local buffInterval = 0.1
 	Timers:CreateTimer(0,function ()
 		--子弹被销毁的话结束计时器进程
-		if shoot.isKill == 1 then
+		if shoot.isKillAOE == 1 then
 			return nil
 		end
 		shoot.tempHitUnits = {}
@@ -949,6 +954,7 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
         end
 		timeCount = timeCount + interval
 		if timeCount >= duration then
+			shoot.isKillAOE = 1
 			EmitSoundOn("magic_voice_stop", shoot)
 			return nil
 		end   
@@ -980,7 +986,7 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
 	local casterTeam = caster:GetTeam()
     local interval = 0.1
     Timers:CreateTimer(aoe_duration,function ()
-		shoot.isKill = 1
+		shoot.isKillAOE = 1
         for i = 1, #shoot.hitUnits  do
             local unit = shoot.hitUnits[i]
             unit.visionDownLightBallTime = 0
@@ -988,7 +994,7 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
 		return nil
 	end)
     Timers:CreateTimer(0,function ()   
-        if shoot.isKill == 1 then
+        if shoot.isKillAOE == 1 then
 			return nil
 		end
         local aroundUnits = FindUnitsInRadius(casterTeam,

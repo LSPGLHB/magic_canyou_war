@@ -479,7 +479,7 @@
 	"huoren"
 	{
 		"BaseClass"	"npc_dota_hero"//"npc_dota_creature"//
-		"Model"	"models/props_gameplay/divine_sentinel/divine_sentinel.vmdl"//"models/heroes/axe/axe.vmdl"//"models/heroes/invoker/forge_spirit.vmdl"
+		"Model"	"models/heroes/axe/axe.vmdl"//"models/heroes/invoker/forge_spirit.vmdl"//"models/props_gameplay/divine_sentinel/divine_sentinel.vmdl"
 		"ModelScale"	"1.0"
 		// 小地图图标尺寸
 		"MinimapIconSize"	"50"

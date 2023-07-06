@@ -30,7 +30,7 @@ function electricWallBoomCallBack(shoot)
     electricWallDelayRenderParticles(shoot)
     electricWallRenderParticles(shoot) --爆炸粒子效果生成		  
     Timers:CreateTimer(shoot.boomDelay, function()
-        if shoot.energyHealth ~= 0 then 
+        if shoot.energy_point ~= 0 then 
             durationAOEDamage(shoot, interval, electricWallDamageCallback)
             electricWallAOEIntervalCallBack(shoot)
         end
@@ -75,78 +75,110 @@ function electricWallAOEIntervalCallBack(shoot)
     local keys = shoot.keysTable
     local caster = keys.caster
     local ability = keys.ability
-    local AbilityLevel = shoot.abilityLevel
-    local playerID = caster:GetPlayerID()
+    --local AbilityLevel = shoot.abilityLevel
+    --local playerID = caster:GetPlayerID()
     local radius = shoot.aoe_radius
-    local duration = shoot.aoe_duration
-    local interval = 0.02
-    local timeCount = 0 
-    
-    Timers:CreateTimer(0,function ()  
-        shoot.tempHitUnits = {} 
-        local aroundUnits = FindUnitsInRadius(casterTeam, 
-										position,
-										nil,
-										radius,
-										DOTA_UNIT_TARGET_TEAM_BOTH,
-										DOTA_UNIT_TARGET_ALL,
-										0,
-										0,
-										false)
+    --local duration = shoot.aoe_duration
+    local position = shoot:GetAbsOrigin()
+    local casterTeam = caster:GetTeam()
+    local interval = 0.05
 
-        for k,unit in pairs(aroundUnits) do
-            local newFlag = checkHitUnitToMark(shoot, unit, nil)
-            if newFlag then
-                --此处可以加aoe范围内的状态
-            end
+    shoot.hitRangeUnits = {} 
+    local warningRadiusSp1 = radius
+    local aroundUnitsSp1 = FindUnitsInRadius(casterTeam, 
+                                    position,
+                                    nil,
+                                    warningRadiusSp1,
+                                    DOTA_UNIT_TARGET_TEAM_BOTH,
+                                    DOTA_UNIT_TARGET_ALL,
+                                    0,
+                                    0,
+                                    false)
 
-            --table.insert(shoot.tempHitUnits, unit)
+    for k,unit in pairs(aroundUnitsSp1) do
+        local isEnemyNoSkill = checkIsEnemyNoSkill(shoot,unit)
+        if isEnemyNoSkill then
+            table.insert(shoot.hitRangeUnits, unit)
         end
+    end
 
-        local warningRadius = radius - 25
+    Timers:CreateTimer(0,function ()  
+
+        shoot.tempHitRangeUnits = {} 
+        
+        local warningRadiusSp2 = radius
         local aroundUnitsSp2 = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
-										warningRadius,
+										warningRadiusSp2,
 										DOTA_UNIT_TARGET_TEAM_BOTH,
 										DOTA_UNIT_TARGET_ALL,
 										0,
 										0,
 										false)
 
-        for k,unit in pairs(aroundUnits) do
-            table.insert(shoot.tempHitUnits, unit)
+        for k,unit in pairs(aroundUnitsSp2) do
+            local isEnemyNoSkill = checkIsEnemyNoSkill(shoot,unit)
+            if isEnemyNoSkill then
+                table.insert(shoot.tempHitRangeUnits, unit)
+            end
         end
 
-
-        local oldArray = {}
-		oldArray = shoot.hitUnits
-		local newArray = {}
-		newArray = shoot.tempHitUnits
-		for i = 1, #oldArray do
-			local flag = true
-			for j = 1, #newArray do
-				if oldArray[i] == newArray[j] then
-					flag = false
-				end
-			end
-			if flag then
-                local hitTargetStun = keys.hitTargetStun
-                local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-                debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
-                debuffDuration = getApplyControlValue(shoot, debuffDuration)
-                ability:ApplyDataDrivenModifier(caster, unit, hitTargetStun, {Duration = debuffDuration})  
-                local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-                local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-                beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
-			end
-		end
-		shoot.hitUnits = shoot.tempHitUnits
-
-        
-        timeCount = timeCount + interval
-        if timeCount >= duration then
+        electricWallAOEHitRange(shoot)
+		
+        if shoot.isKillAOE == 1 then
 			return nil
 		end   
+        return interval
     end)
+end
+
+function electricWallAOEHitRange(shoot)
+    local keys = shoot.keysTable
+    local caster = keys.caster
+    local ability = keys.ability
+    local AbilityLevel = shoot.abilityLevel
+    local playerID = caster:GetPlayerID()
+    local oldArray = {}
+    oldArray = shoot.hitRangeUnits
+    local newArray = {}
+    newArray = shoot.tempHitRangeUnits
+    --print("hitRangeUnits:",#oldArray,"-",#newArray)
+    for i = 1, #oldArray do
+        local flagSp1 = true
+        for j = 1, #newArray do
+            if oldArray[i] == newArray[j] then
+                flagSp1 = false
+            end
+        end
+        if flagSp1 then
+            local hitTargetStun = keys.hitTargetStun
+            local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+            debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
+            debuffDuration = getApplyControlValue(shoot, debuffDuration)
+            ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetStun, {Duration = debuffDuration})  
+            local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
+            local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
+            beatBackUnit(keys,shoot,oldArray[i],beatBackSpeed,beatBackDistance,true,false)
+        end
+    end
+
+    for x = 1,#newArray do
+        local flagSp2 = true
+        for y = 1, #oldArray do
+            if newArray[x] == oldArray[y] then
+                flagSp2 = false
+            end
+        end
+        if flagSp2 then
+            local hitTargetStun = keys.hitTargetStun
+            local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+            debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
+            debuffDuration = getApplyControlValue(shoot, debuffDuration)
+            ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetStun, {Duration = debuffDuration})  
+            local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
+            local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
+            beatBackUnit(keys,shoot,newArray[x],beatBackSpeed,beatBackDistance,true,true)
+        end
+    end
 end
