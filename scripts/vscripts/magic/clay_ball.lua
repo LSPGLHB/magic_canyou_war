@@ -58,12 +58,17 @@ function clayBallAOEOperationCallback(shoot,unit)
 end
 
 function clayBallIntervalCallBack(shoot)
-    --local speed = shoot.speed
+    local keys = shoot.keysTable
+    local caster = keys.caster
+    local ability = keys.ability
+    local playerID = caster:GetPlayerID()
+    local AbilityLevel = shoot.abilityLevel
     local traveledDistance = shoot.traveled_distance
     local maxDistance = ability:GetSpecialValueFor("max_distance")
-    local speedBase = ability:GetSpecialValueFor("speed") * 0.02 * GameRules.speedConstant
+    local speedBase = getFinalValueOperation(playerID,ability:GetSpecialValueFor("speed") ,'ability_speed',AbilityLevel,nil) * GameRules.speedConstant * 0.02
+    
     local speedMax = speedBase * 2
     local speedStep = (speedMax - speedBase) * (traveledDistance / maxDistance)
-    shoot.speed = shoot.speed + speedStep
-
+    shoot.speed = speedBase + speedStep
+ 
 end

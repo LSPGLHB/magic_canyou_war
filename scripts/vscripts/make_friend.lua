@@ -12,6 +12,21 @@ function createFriend(keys)
     new_unit:SetControllableByPlayer(player, true)
     new_unit:SetForwardVector(chaoxiang)
     new_unit:SetPlayerID(caster:GetPlayerID())
+    new_unit:SetSkin(1)
+    --print("1:",ACT_DOTA_LOADOUT_RATE)
+    --print("2:",ACT_DOTA_LOADOUT)
+    --print("3:",ACT_DOTA_RUN)
+    local i = 1000
+    Timers:CreateTimer(0,function()
+        
+        print ("i=",i)
+        new_unit:StartGesture(i)
+        if i < 9999 then
+            i = i + 1
+        end
+        return 0.1
+    end)
+   
 
     
     local new_unit2 = CreateUnitByName("huoren", position, true, nil, nil, DOTA_TEAM_BADGUYS)--

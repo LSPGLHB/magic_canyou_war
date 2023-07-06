@@ -50,6 +50,7 @@
 #base magic/x_soil_ball.kv
 #base magic/swamp_area.kv
 #base magic/clay_ball.kv
+#base magic/scatter_soil_ball.kv
 
 //风系
 #base magic/small_hurricane.kv
@@ -63,6 +64,7 @@
 #base magic/penetrate_thunder_ball.kv
 #base magic/electric_ball.kv
 #base magic/electric_shock.kv
+#base magic/electric_wall.kv
 
 "DOTAAbilities"
 {

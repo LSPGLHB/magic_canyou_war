@@ -336,7 +336,7 @@ function clearUnitsModifierByName(shoot,modifierName)
 		for i = 1, #shoot.hitUnits do
 			local tempUnit = shoot.hitUnits[i]
 			tempUnit:InterruptMotionControllers( true )
-			tempUnit.shootFloatingAir = 0  --去掉浮空状态
+			tempUnit.shootFloatingAir = 0  --去掉浮空状态(用于击退)
 			if tempUnit:HasModifier(modifierName) then
 				tempUnit:RemoveModifierByName(modifierName)
 			end
@@ -947,7 +947,6 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
                 checkHitAbilityToMark(shoot, unit)
             end
         end
-
 		timeCount = timeCount + interval
 		if timeCount >= duration then
 			EmitSoundOn("magic_voice_stop", shoot)

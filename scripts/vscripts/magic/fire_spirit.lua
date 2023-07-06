@@ -31,6 +31,7 @@ function fireSpiritBoomCallBack(shoot)
             fireSpiritRenderParticles(shoot) --爆炸粒子效果生成		  
             boomAOEOperation(shoot, AOEOperationCallback)
         end
+        return nil
     end)
 end
 
