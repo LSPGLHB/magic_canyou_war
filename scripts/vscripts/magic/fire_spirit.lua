@@ -19,7 +19,7 @@ function createFireSpirit(keys)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
     shoot.boomDelay = ability:GetSpecialValueFor("boom_delay")
-	EmitSoundOn(keys.soundCast, caster)
+	EmitSoundOn(keys.soundCastSp1, shoot)
     moveShoot(keys, shoot, fireSpiritBoomCallBack, nil)
 end
 
@@ -36,6 +36,8 @@ function fireSpiritBoomCallBack(shoot)
 end
 
 function fireSpiritDelayRenderParticles(shoot)
+    local keys = shoot.keysTable
+    EmitSoundOn(keys.soundCastSp2, shoot)
 	ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 1, 0))
 end
 

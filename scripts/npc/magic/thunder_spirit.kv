@@ -1,0 +1,138 @@
+"DOTAAbilities"
+{
+    "thunder_spirit_datadriven"
+	{
+    // General
+	//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"void_spirit_resonant_pulse"
+		"MaxLevel"                      "1"
+
+
+		"MaxLevel"                      "1"
+		"UnitType"         				"lei"
+		"AbilityLevel"					"a"
+		"IconSrc" "file://{images}/custom_game/ability_button/void_spirit_resonant_pulse.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1550"   //施法距离
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		"AbilityChannelTime"			"2.5"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40"
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"460"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1550"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "35"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "face_angle"		"90"
+            }
+
+        }
+
+        "OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/thunder_spirit.lua"
+				"Function"			"createShoot"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"a"
+				"unitType"          "lei"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+				"isMisfire"			"1"
+                //"isAOE"             "1"
+				"particles_hit_dur" "0.7"
+				"cp"				"3"
+                
+				"particles_nm"      "particles/28leijingling_shengcheng.vpcf"
+				"soundCast"			"magic_thunder_spirit_cast"
+				
+				"particles_power" 	"particles/28leijingling_jiaqiang.vpcf"
+				"soundPower"		"magic_thunder_power_up"
+				"particles_weak" 	"particles/28leijingling_xueruo.vpcf"
+				"soundWeak"			"magic_thunder_power_down"
+
+				"particles_misfire" "particles/28leijingling_jiluo.vpcf"
+				"soundMisfire"		"magic_thunder_mis_fire"
+                "particles_miss"    "particles/28leijingling_xiaoshi.vpcf"
+				"soundMiss"			"magic_thunder_miss"
+				
+                "particles_boom" 	"particles/28leijingling_mingzhong.vpcf"
+				"soundBoom"			"magic_thunder_spirit_boom"
+
+				"particles_boom_max" 	"particles/28leijingling_mingzhong_max.vpcf"
+				"soundBoomMax"			"magic_thunder_spirit_boom_max"
+
+                
+                
+                "modifier_caster_name"   "modifier_thunder_spirit_caster_buff"
+			}
+
+
+		}
+
+
+
+        "Modifiers"
+		{
+			"modifier_thunder_spirit_caster_buff"
+			{
+				"IsBuff"			"1"
+				//"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				//"EffectAttachType"	"follow_origin"
+				//"OverrideAnimation"     "ACT_DOTA_ATTACK"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_TURNING"		"1"
+				}
+				"States"	
+				{
+					"MODIFIER_STATE_SILENCED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+        }
+    }
+}

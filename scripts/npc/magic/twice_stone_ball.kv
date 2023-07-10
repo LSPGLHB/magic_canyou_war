@@ -27,7 +27,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1500"   //施法距离
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastPoint"				"0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -128,7 +128,7 @@
 		{	
 			"modifier_twice_stone_ball_debuff"
 			{
-				"IsHidden"			"1"
+				"IsDebuff"				"1"
                 "EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"
 				"EffectAttachType"	"follow_origin"
     
@@ -140,10 +140,9 @@
 
             "modifier_twice_stone_ball_debuff_delay"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
+				"IsDebuff"				"1"
+				"EffectName"			"particles/17_1tuqiushu_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
 			}
 
 			"modifier_twice_stone_ball_buff"
@@ -277,10 +276,9 @@
 
             "modifier_twice_stone_ball_sp2_debuff"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"1"
+				"IsDebuff"			"1"
+				"EffectName"		"particles/17_2tuqiushu_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
         }
     }

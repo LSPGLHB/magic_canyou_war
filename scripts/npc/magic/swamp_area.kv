@@ -32,7 +32,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -96,13 +96,28 @@
 				"soundWeak"			"magic_soil_power_down"
 				
 
-                "particles_boom" 	"particles/27zhaozedidai_baozha.vpcf"
-				"soundBoom"			"magic_swamp_area_boom"
-				
+                "particles_duration" 	"particles/27zhaozedidai_baozha.vpcf"
 				"soundDuration"		"magic_swamp_area_duration"
-				"soundDurationDelay" "0.3"
 	
+
+				"aoeTargetDebuff"	"modifier_swamp_area_debuff_datadriven"
 			}
 		}
+
+		"Modifiers"
+		{
+			"modifier_swamp_area_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+
     }
 }

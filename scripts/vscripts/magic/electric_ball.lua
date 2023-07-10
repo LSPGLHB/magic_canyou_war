@@ -18,7 +18,7 @@ function createShoot(keys)
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
-	EmitSoundOn(keys.soundCast, caster)
+	EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, electricBallBoomCallBack, nil)
 end
 
@@ -54,7 +54,7 @@ function electricBallAOEOperationCallback(shoot,unit)
     Timers:CreateTimer(function()
         ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
         ability:ApplyDataDrivenModifier(caster, unit, stunDebuff, {Duration = 1})
-        EmitSoundOn(keys.soundBoom, caster)
+        EmitSoundOn(keys.soundBoom, shoot)
         timeCount = timeCount + interval
         if timeCount < debuffDuration then
             return interval

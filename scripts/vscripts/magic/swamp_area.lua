@@ -6,7 +6,10 @@ function createShoot(keys)
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
     local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
-    local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
+
+
+
+
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -16,11 +19,16 @@ function createShoot(keys)
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
     shoot.aoe_radius = aoe_radius
+
+    local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
+    aoe_duration = getFinalValueOperation(caster:GetPlayerID(),aoe_duration,'control',keys.AbilityLevel,nil)
+    aoe_duration = getApplyControlValue(shoot, aoe_duration)
     shoot.aoe_duration = aoe_duration
+    
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     shoot.particleID = particleID
-    EmitSoundOn(keys.soundCast, caster)
+    EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, swampAreaBoomCallBack, nil)
 end
 
@@ -34,41 +42,50 @@ function swampAreaDuration(shoot)
     local interval = 0.5
     swampAreaRenderParticles(shoot)
     durationAOEDamage(shoot, interval, swampAreaDamageCallback)
+
 end
 
 function swampAreaRenderParticles(shoot)
     local keys = shoot.keysTable
     local caster = keys.caster
 	local ability = keys.ability
+    local playerID = caster:GetPlayerID()
+    local AbilityLevel = shoot.abilityLevel
+    local aoe_duration = shoot.aoe_duration
 
-    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
-    debuffDuration = getApplyControlValue(shoot, debuffDuration)
-
-	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
+	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
     local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
     ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 0, 0))
-    ParticleManager:SetParticleControl(particleBoom, 11, Vector(debuffDuration, 0, 0))
+    ParticleManager:SetParticleControl(particleBoom, 11, Vector(aoe_duration, 0, 0))
+
+    Timers:CreateTimer(aoe_duration,function ()
+		--print("timeOver")
+		shoot.isKillAOE = 1
+		clearUnitsModifierByName(shoot,keys.aoeTargetDebuff)
+		return nil
+	end)
 end
 
 function swampAreaDamageCallback(shoot, unit, interval)
     local keys = shoot.keysTable
     local caster = keys.caster
+    local playerID = caster:GetPlayerID()
     local shootPos = shoot:GetAbsOrigin()
     local unitPos = unit:GetAbsOrigin()
     local AbilityLevel = shoot.abilityLevel
     local radius = shoot.aoe_radius
     local ability = keys.ability
     local duration = shoot.aoe_duration
+    local aoeTargetDebuff = keys.aoeTargetDebuff
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)
 
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
-    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
-    debuffDuration = getApplyControlValue(shoot, debuffDuration)
+    local newFlag = checkHitUnitToMark(shoot, unit, nil)--用于技能结束时清理debuff	
+    if newFlag then  --新加入的加上buff
+        ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
+    end
 
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
 end

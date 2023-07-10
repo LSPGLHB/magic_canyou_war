@@ -26,7 +26,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		//"AbilityCastRange"				"1800"   //施法距离
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastPoint"				"0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -50,6 +50,12 @@
 				"charge_count"		"2"
 			}
 			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"shoot_count"		"2"
+			}
+
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"stage_duration"		"5"
@@ -202,7 +208,11 @@
 				"var_type"			"FIELD_FLOAT"
 				"damage"		    "16"
 			}
-
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"charge_count"		"2"
+			}
             "06"
 			{
 				"var_type"			"FIELD_FLOAT"
@@ -263,7 +273,7 @@
 			"modifier_ice_bean_debuff_datadriven"
 			{
 				"IsDebuff"				"1"
-				"EffectName"		"particles/zhimang_debuff.vpcf"
+				"EffectName"		"particles/jiansu_debuff.vpcf"
 				"EffectAttachType"	"follow_chest"
 				"Properties"
 				{

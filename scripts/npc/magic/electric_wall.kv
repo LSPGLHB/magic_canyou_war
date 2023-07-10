@@ -82,16 +82,7 @@
 				"var_type"			"FIELD_FLOAT"
 				"debuff_duration"		"2"
 			}
-			"09"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"beat_back_distance"		"100"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"beat_back_speed"		"1600"
-			}
+
         }
 
         "OnSpellStart"
@@ -122,14 +113,14 @@
 				"particles_misfire" "particles/13dianliqiang_jiluo.vpcf"
 				"soundMisfire"		"magic_electric_mis_fire"
 				
-                "particles_boom" 	"particles/13dianliqiang_baozha.vpcf"
-				"soundBoom"			"magic_electric_wall_boom"
+                "particles_duration" 	"particles/13dianliqiang_baozha.vpcf"
+				"soundDurationSp1"			"magic_electric_wall_duration"
 
 
                 "soundStun"			"magic_electric_wall_stun"
 
                 "hitTargetStun"   "modifier_electric_wall_stun"
-				"hitTargetDebuff"  	"modifier_beat_back"
+
 
 				
 			}
@@ -148,16 +139,7 @@
                     "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
                 }  
 			}
-			"modifier_beat_back"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/jituiyangchenbuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-			}
+			
         }
 
     }

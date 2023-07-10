@@ -1,6 +1,6 @@
 require('shoot_init')
 require('skill_operation')
-function createFireBall(keys)
+function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()

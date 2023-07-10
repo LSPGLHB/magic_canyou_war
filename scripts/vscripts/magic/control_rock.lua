@@ -37,8 +37,6 @@ function createControlRock(keys)
 		if not caster:HasModifier( casterBuff ) then
 			return nil
 		end
-
-
 		--朝向为0-360
 		local shootAngles = shoot:GetAnglesAsVector().y
 		local casterAngles	= caster:GetAnglesAsVector().y

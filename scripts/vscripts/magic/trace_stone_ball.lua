@@ -173,12 +173,8 @@ function traceStoneBallIntervalCallBack(shoot)
 											false)
 
 		for k,unit in pairs(aroundUnits) do
-			local unitEnergy = unit.energy_point
-			local shootEnergy = shoot.energy_point
-			if checkIsSkill(shoot,unit) then
-				reinforceEach(unit,shoot,nil)
-				reinforceEach(shoot,unit,nil)
-			end
+			--local unitEnergy = unit.energy_point
+			--local shootEnergy = shoot.energy_point
 
 			if checkIsEnemyNoSkill(shoot,unit) then
 				shoot.trackUnit = unit

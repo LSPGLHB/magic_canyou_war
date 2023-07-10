@@ -1,24 +1,24 @@
 "DOTAAbilities"
 {
-    "fire_ball_datadriven"
+    "electric_arrow_datadriven"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"invoker_exort"
+		"AbilityTextureName"			"templar_assassin_psi_blades"
 		"MaxLevel"                      "1"
-		"AOERadius"                     "200"
+
 
 		"MaxLevel"                      "1"
-		"UnitType"         				"huo"
-		"AbilityLevel"					"b"
-		"IconSrc" "file://{images}/custom_game/ability_button/invoker_exort.png"  //选择框图标
+		"UnitType"         				"lei"
+		"AbilityLevel"					"c"
+		"IconSrc" "file://{images}/custom_game/ability_button/templar_assassin_psi_blades.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -29,96 +29,89 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1250"   //施法距离
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"1850"   //施法距离
+		"AbilityCastPoint"				"0.1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"1"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"26"
+		"AbilityManaCost"				"21"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"620"
+				"speed"				"500"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1250"
+				"max_distance"		"1850"
 			}
             "03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "85"
+				"hit_range"		    "75"
 			}
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "13"
+				"damage"		    "17"
 			}
             "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "aoe_radius"		"200"
+                "damage_percent_sp"		"25"
             }
+
             "06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"beat_back_distance"		"300"
+				"send_delay"		    "0.5"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"beat_back_speed"		"1800"
-			}
+
         }
 
         "OnSpellStart"
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/fire_ball.lua"
+				"ScriptFile"		"magic/electric_arrow.lua"
 				"Function"			"createShoot"
 				"Target"			"POINT"
-				"unitModel"			"shootUnit-M"
-				"AbilityLevel"		"b"
-				"unitType"          "huo"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"c"
+				"unitType"          "lei"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
-                "isAOE"             "1"
+				"isMisfire"			"1"
+                //"isAOE"             "1"
 				"particles_hit_dur" "0.7"
 				"cp"				"3"
-				"particles_nm"      "particles/06huoqiushu_shengcheng.vpcf"
-				"soundCast"			"magic_fire_ball_cast"
+                
+				"particles_nm"      "particles/38dianjian_shengcheng.vpcf"
+				"soundCastSp1"		"magic_electric_arrow_cast_sp1"
+                "soundCastSp2"		"magic_electric_arrow_cast_sp2"
 				
-				"particles_power" 	"particles/06huoqiushu_jiaqiang.vpcf"
-				"soundPower"		"magic_fire_power_up"
-				"particles_weak" 	"particles/06huoqiushu_xueruo.vpcf"
-				"soundWeak"			"magic_fire_power_down"
+				"particles_power" 	"particles/38dianjian_jiaqiang.vpcf"
+				"soundPower"		"magic_electric_power_up"
+				"particles_weak" 	"particles/38dianjian_xueruo.vpcf"
+				"soundWeak"			"magic_electric_power_down"
+
+				"particles_misfire" "particles/38dianjian_jiluo.vpcf"
+				"soundMisfire"		"magic_electric_mis_fire"
+                "particles_miss"    "particles/38dianjian_xiaoshi.vpcf"
+				"soundMiss"			"magic_electric_miss"
 				
-                "particles_boom" 	"particles/06huoqiushu_baozha.vpcf"
-				"soundBoom"			"magic_fire_ball_boom"
-                "hitTargetDebuff"   "modifier_beat_back"
+                "particles_boom" 	"particles/38dianjian_mingzhong.vpcf"
+				"soundBoom"			"magic_electric_arrow_boom"
+
 			}
 		}
 
-        "Modifiers"
-		{
-			"modifier_beat_back"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/jituiyangchenbuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-			}
-        }
+       
     }
 }

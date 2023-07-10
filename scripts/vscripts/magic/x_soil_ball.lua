@@ -22,7 +22,6 @@ function createShoot(keys)
     local shootPos2 = casterPoint + direction2 * 250
     table.insert(shootPosTable,shootPos2)
     local shootPos3 = casterPoint + direction3 * 250
-    
     table.insert(shootPosTable,shootPos3)
 
     initDurationBuff(keys)

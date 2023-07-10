@@ -8,9 +8,9 @@ function stepOne(keys)
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local playerID = caster:GetPlayerID()
     local AbilityLevel = keys.AbilityLevel
-    local set_distance = getFinalValueOperation(playerID,max_distance,'range',AbilityLevel,nil)
+    --local set_distance = getFinalValueOperation(playerID,max_distance,'range',AbilityLevel,nil)
     local direction = (skillPoint - casterPoint):Normalized()
-    local shootPoint = casterPoint + set_distance * direction
+    local shootPoint = skillPoint--casterPoint + set_distance * direction
 
 	
     local shoot = CreateUnitByName(keys.unitModel, shootPoint, true, nil, nil, caster:GetTeam())
@@ -77,10 +77,13 @@ function stepTwo(keys)
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local playerID = caster:GetPlayerID()
     local AbilityLevel = keys.AbilityLevel
-    local set_distance = getFinalValueOperation(playerID,max_distance,'range',AbilityLevel,nil)
+    --local set_distance = getFinalValueOperation(playerID,max_distance,'range',AbilityLevel,nil)
     local direction = (skillPoint - casterPoint):Normalized()
-    local shootPoint = casterPoint + set_distance * direction
+    local shootPoint = skillPoint--casterPoint + set_distance * direction
     local shoot = CreateUnitByName(keys.unitModel, shootPoint, true, nil, nil, caster:GetTeam())
+    local groundPos = GetGroundPosition(shootPoint, shoot)
+    local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + 100)
+    shoot:SetAbsOrigin(shootPos)
     --creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 
     --过滤掉增加施法距离的操作
@@ -102,8 +105,10 @@ function stepTwo(keys)
     local shoot_a =  PlayerPower[playerID]["electric_shock_a"] 
     shoot_a.launchElectricShock = 1
 
-
-    launchElectricShock(keys)
+    Timers:CreateTimer(0.5,function()
+        launchElectricShock(keys)
+    end)
+    
 end
 
 function launchElectricShock(keys)
@@ -232,7 +237,8 @@ function electricShockBoomAOERenderParticles(shoot)
 	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") 
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
-	ParticleManager:SetParticleControl(particleBoom, 0, groundPos)
+    local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + 100)
+	ParticleManager:SetParticleControl(particleBoom, 0, shootPos)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
 end
 
@@ -253,14 +259,15 @@ function electricShockAOEOperationCallback(shoot,unit)
     
     stunDebuffDuration = getFinalValueOperation(playerID,stunDebuffDuration,'control',AbilityLevel,nil)
     stunDebuffDuration = getApplyControlValue(shoot, stunDebuffDuration)
+    stunDebuffDuration = stunDebuffDuration * (shoot.speed -200 * 0.02) / (800 * 0.02)
 
     sleepDebuffDuration = getFinalValueOperation(playerID,sleepDebuffDuration,'control',AbilityLevel,nil)
     sleepDebuffDuration = getApplyControlValue(shoot, sleepDebuffDuration)
-    print("sleepDebuff:",sleepDebuff,"-",sleepDebuffDuration)
+    sleepDebuffDuration = sleepDebuffDuration * (shoot.speed -200 * 0.02) / (800 * 0.02)
+
     ability:ApplyDataDrivenModifier(caster, unit, stunDebuff,  {Duration = stunDebuffDuration})
     ability:ApplyDataDrivenModifier(caster, unit, sleepDebuff, {Duration = sleepDebuffDuration})
-    
-    
+     
 end
 
 

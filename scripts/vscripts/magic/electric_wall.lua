@@ -20,7 +20,7 @@ function createShoot(keys)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
     shoot.boomDelay = ability:GetSpecialValueFor("boom_delay")
-	EmitSoundOn(keys.soundCast, caster)
+	EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, electricWallBoomCallBack, nil)
 end
 
@@ -47,11 +47,13 @@ function electricWallRenderParticles(shoot)
 	local caster = keys.caster
 	local radius = shoot.aoe_radius
     local duration = shoot.aoe_duration
-	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
+	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
     ParticleManager:SetParticleControl(particleBoom, 11, Vector(duration, 0, 0))
+
+    EmitSoundOn(keys.soundDurationSp1, shoot)
 end
 
 function electricWallDamageCallback(shoot, unit, interval)
@@ -103,9 +105,7 @@ function electricWallAOEIntervalCallBack(shoot)
     end
 
     Timers:CreateTimer(0,function ()  
-
-        shoot.tempHitRangeUnits = {} 
-        
+        shoot.tempHitRangeUnits = {}       
         local warningRadiusSp2 = radius
         local aroundUnitsSp2 = FindUnitsInRadius(casterTeam, 
 										position,
@@ -125,7 +125,9 @@ function electricWallAOEIntervalCallBack(shoot)
         end
 
         electricWallAOEHitRange(shoot)
-		
+
+		shoot.hitRangeUnits = shoot.tempHitRangeUnits
+        
         if shoot.isKillAOE == 1 then
 			return nil
 		end   
@@ -133,6 +135,7 @@ function electricWallAOEIntervalCallBack(shoot)
     end)
 end
 
+--检查收否触碰电墙
 function electricWallAOEHitRange(shoot)
     local keys = shoot.keysTable
     local caster = keys.caster
@@ -157,9 +160,9 @@ function electricWallAOEHitRange(shoot)
             debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
             debuffDuration = getApplyControlValue(shoot, debuffDuration)
             ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetStun, {Duration = debuffDuration})  
-            local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-            local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-            beatBackUnit(keys,shoot,oldArray[i],beatBackSpeed,beatBackDistance,true,false)
+            --local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
+            --local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
+            --beatBackUnit(keys,shoot,oldArray[i],beatBackSpeed,beatBackDistance,true,false)
         end
     end
 
@@ -176,9 +179,9 @@ function electricWallAOEHitRange(shoot)
             debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
             debuffDuration = getApplyControlValue(shoot, debuffDuration)
             ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetStun, {Duration = debuffDuration})  
-            local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-            local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-            beatBackUnit(keys,shoot,newArray[x],beatBackSpeed,beatBackDistance,true,true)
+            --local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
+            --local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
+            --beatBackUnit(keys,shoot,newArray[x],beatBackSpeed,beatBackDistance,true,true)
         end
     end
 end
