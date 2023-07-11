@@ -58,6 +58,8 @@
 //水系
 #base magic/frost_blast.kv
 #base magic/ice_beans.kv
+#base magic/ice_ball.kv
+#base magic/water_spirit.kv
 
 //雷系
 #base magic/scatter_thunder_ball.kv
@@ -68,6 +70,7 @@
 #base magic/electric_gather.kv
 #base magic/thunder_spirit.kv
 #base magic/electric_arrow.kv
+#base magic/thunder_area.kv
 
 
 "DOTAAbilities"

@@ -1,0 +1,134 @@
+"DOTAAbilities"
+{
+    "thunder_area_datadriven"
+	{
+    // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"disruptor_static_storm"
+		"MaxLevel"                      "1"
+		"AOERadius"                     "275"
+
+		"UnitType"         				"lei"
+		"AbilityLevel"					"a"
+		"IconSrc" "file://{images}/custom_game/ability_button/disruptor_static_storm.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1750"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"30"
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"530"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1750"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "85"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "18"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_radius"		"250"
+            }
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_duration"		"6"
+            }
+        }
+
+        "OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/thunder_area.lua"
+				"Function"			"createShoot"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-M"
+				"AbilityLevel"		"a"
+				"unitType"          "lei"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                "isAOE"             "1"
+				"particles_hit_dur" "0.7"
+				"cp"				"3"
+				"particles_nm"      "particles/43leidianquyu_shengcheng.vpcf"
+				"soundCast"			"magic_thunder_area_cast"
+				
+				"particles_power" 	"particles/43leidianquyu_jiaqiang.vpcf"
+				"soundPower"		"magic_thunder_power_up"
+
+				"particles_weak" 	"particles/43leidianquyu_xueruo.vpcf"
+				"soundWeak"			"magic_thunder_power_down"
+				
+
+                "particles_duration" 	"particles/43leidianquyu_mingzhong.vpcf"
+				"soundDuration"		"magic_thunder_area_duration"
+                "soundStun"		"magic_thunder_area_stun"
+	
+
+				"aoeTargetDebuff"	"modifier_thunder_area_debuff_datadriven"
+                "aoeTargetStun"     "modifier_thunder_area_stun"
+			}
+		}
+
+		
+		"Modifiers"
+		{
+			"modifier_thunder_area_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+                "EffectName"		"particles/xuanyun_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+			}
+
+            "modifier_thunder_area_stun"
+            {
+                "IsHidden"			"1"
+                "EffectName"		"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_stunned_symbol.vpcf"
+				"EffectAttachType"	"follow_overhead"
+                "OverrideAnimation"     "ACT_DOTA_DISABLED"
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+                }  
+            }
+        
+		}
+
+    }
+}

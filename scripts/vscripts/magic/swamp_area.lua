@@ -42,15 +42,13 @@ function swampAreaDuration(shoot)
     local interval = 0.5
     swampAreaRenderParticles(shoot)
     durationAOEDamage(shoot, interval, swampAreaDamageCallback)
-
+    modifierHole(shoot)
 end
 
 function swampAreaRenderParticles(shoot)
     local keys = shoot.keysTable
     local caster = keys.caster
 	local ability = keys.ability
-    local playerID = caster:GetPlayerID()
-    local AbilityLevel = shoot.abilityLevel
     local aoe_duration = shoot.aoe_duration
 
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
@@ -58,34 +56,14 @@ function swampAreaRenderParticles(shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
     ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 0, 0))
     ParticleManager:SetParticleControl(particleBoom, 11, Vector(aoe_duration, 0, 0))
-
-    Timers:CreateTimer(aoe_duration,function ()
-		--print("timeOver")
-		shoot.isKillAOE = 1
-		clearUnitsModifierByName(shoot,keys.aoeTargetDebuff)
-		return nil
-	end)
 end
 
 function swampAreaDamageCallback(shoot, unit, interval)
     local keys = shoot.keysTable
     local caster = keys.caster
-    local playerID = caster:GetPlayerID()
-    local shootPos = shoot:GetAbsOrigin()
-    local unitPos = unit:GetAbsOrigin()
-    local AbilityLevel = shoot.abilityLevel
-    local radius = shoot.aoe_radius
     local ability = keys.ability
     local duration = shoot.aoe_duration
-    local aoeTargetDebuff = keys.aoeTargetDebuff
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)
-
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-
-    local newFlag = checkHitUnitToMark(shoot, unit, nil)--用于技能结束时清理debuff	
-    if newFlag then  --新加入的加上buff
-        ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
-    end
-
 end

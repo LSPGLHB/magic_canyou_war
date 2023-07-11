@@ -754,31 +754,31 @@ function takeAwayUnit(shoot,hitTarget)
 	--end	
 end
 
---黑洞效果
-function blackHole(shoot, G_Speed)
+function blackHole(shoot)
+	--管理移动效果计时器
 	local keys = shoot.keysTable
-	local interval = 0.02
-	G_Speed = G_Speed * interval
 	local caster = keys.caster
-	local ability = keys.ability
-	local playerID = caster:GetPlayerID()
-	local aoeTargetDebuff = shoot.aoeTargetDebuff 
-    local aoe_radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE持续作用范围
-    --print("blackHoleDuration:"..shoot.aoe_duration)
+	local aoe_radius = shoot.aoe_radius --AOE持续作用范围
 	local aoe_duration = shoot.aoe_duration
-    local position = shoot:GetAbsOrigin()
+	local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-	--启动计时器，时间到了结束debuff销毁子弹
+	local ability = keys.ability
+    local playerID = caster:GetPlayerID()
+
+	local interval = 0.02
+	local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant * interval
+	G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
+	G_Speed = getApplyControlValue(shoot, G_Speed)--克制计算
+	
 	Timers:CreateTimer(aoe_duration,function ()
-		--print("timeOver")
+		--print("blackHole_timeOver")
 		shoot.isKillAOE = 1
-		clearUnitsModifierByName(shoot,aoeTargetDebuff)
 		return nil
 	end)
-	--管理移动效果计时器
-    Timers:CreateTimer(0,function ()
+
+	Timers:CreateTimer(0,function ()
 		--子弹被销毁的话结束计时器进程
-		if shoot.isKillAOE == 1 then
+		if shoot.isKillAOE == 1 then		
 			return nil
 		end
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
@@ -790,30 +790,48 @@ function blackHole(shoot, G_Speed)
 										0,
 										0,
 										false)
-        for k,unit in pairs(aroundUnits) do
-            local unitTeam = unit:GetTeam()
-            local unitEnergy = unit.energy_point
-            local lable = unit:GetUnitLabel()
-            --只作用于敌方，或石头单位
-            if casterTeam ~= unitTeam or lable == GameRules.stoneLabel then
+		for k,unit in pairs(aroundUnits) do
+			local unitTeam = unit:GetTeam()
+			local lable = unit:GetUnitLabel()
+			--只作用于敌方，或石头单位
+			if casterTeam ~= unitTeam or lable == GameRules.stoneLabel then
 				local shootPos = shoot:GetAbsOrigin()
 				local unitPos = unit:GetAbsOrigin()
 				local vectorDistance = Vector(shootPos.x,shootPos.y,0) - Vector(unitPos.x,unitPos.y,0)
 				local G_Direction = (vectorDistance):Normalized()
-				local G_Distance = (vectorDistance):Length2D()
+				--local G_Distance = (vectorDistance):Length2D()
 				local newPosition = unitPos +  G_Direction * G_Speed
 				local groundPos = GetGroundPosition(newPosition, unit)
 				unit:SetAbsOrigin(groundPos)
-            end
-            --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
-            if lable == GameRules.skillLabel and unitEnergy ~= 0 then
-                checkHitAbilityToMark(shoot, unit)
-            end
-        end
-        return interval
+			end
+		end
+		return interval
 	end)
+
+end
+--aoe的buff效果处理
+function modifierHole(shoot)
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local ability = keys.ability
+	local playerID = caster:GetPlayerID()
+	local aoeTargetDebuff = shoot.aoeTargetDebuff 
+    local aoe_radius = shoot.aoe_radius --AOE持续作用范围
+	local aoe_duration = shoot.aoe_duration
+    local position = shoot:GetAbsOrigin()
+	local casterTeam = caster:GetTeam()
+	local interval = 0.1
+
+	--启动计时器，时间到了结束debuff销毁子弹
+	Timers:CreateTimer(aoe_duration,function ()
+		--print("modifierHole_timeOver")
+		shoot.isKillAOE = 1
+		clearUnitsModifierByName(shoot,aoeTargetDebuff)
+		return nil
+	end)
+
 	--管理buff的计时器
-	local buffInterval = 0.1
+
 	Timers:CreateTimer(0,function ()
 		--子弹被销毁的话结束计时器进程
 		if shoot.isKillAOE == 1 then
@@ -842,8 +860,8 @@ function blackHole(shoot, G_Speed)
 				table.insert(shoot.tempHitUnits, unit)
 			end
 		end
-		refreshBuffByArray(shoot,shoot.aoeTargetDebuff)
-		return buffInterval
+		refreshBuffByArray(shoot,aoeTargetDebuff)
+		return interval
 	end)
 end
 
@@ -928,7 +946,17 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
 	local casterTeam = caster:GetTeam()
 	shootSoundAndParticle(shoot, "duration")
 	local timeCount = 0 
+	Timers:CreateTimer(duration,function ()
+		--print("damage_timeOver")
+		shoot.isKillAOE = 1
+		EmitSoundOn("magic_voice_stop", shoot)
+		return nil
+	end)
+
     Timers:CreateTimer(0,function ()   
+		if shoot.isKillAOE == 1 then
+			return nil
+		end
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -952,12 +980,6 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
                 checkHitAbilityToMark(shoot, unit)
             end
         end
-		timeCount = timeCount + interval
-		if timeCount >= duration then
-			shoot.isKillAOE = 1
-			EmitSoundOn("magic_voice_stop", shoot)
-			return nil
-		end   
         return interval
     end)  
 	shootKill(shoot)

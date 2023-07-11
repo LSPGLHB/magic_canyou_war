@@ -116,8 +116,8 @@ end
 function AOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
     local caster = keys.caster
-	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
+	local playerID = caster:GetPlayerID()	
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot) / ability:GetSpecialValueFor("charge_count") / ability:GetSpecialValueFor("shoot_count")
