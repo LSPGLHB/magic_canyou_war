@@ -940,12 +940,12 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
     local caster = keys.caster
     --local playerID = caster:GetPlayerID()
     --local AbilityLevel = shoot.abilityLevel
-    local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") --AOE持续作用范围
+    local radius = shoot.aoe_radius --AOE持续作用范围
 	local duration = shoot.aoe_duration
     local position = shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
 	shootSoundAndParticle(shoot, "duration")
-	local timeCount = 0 
+	--local timeCount = 0 
 	Timers:CreateTimer(duration,function ()
 		--print("damage_timeOver")
 		shoot.isKillAOE = 1

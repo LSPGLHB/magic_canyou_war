@@ -1,0 +1,137 @@
+"DOTAAbilities"
+{
+    "v_ice_ball_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+        
+		"AbilityTextureName"			"tusk_snowball"
+		"MaxLevel"                      "1"
+		"UnitType"         				"shui"
+		"AbilityLevel"					"a"
+		"IconSrc" "file://{images}/custom_game/ability_button/tusk_snowball.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1150"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"38"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"650"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1150"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "85"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "20"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_radius"		"200"
+            }
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_duration"		"2.5"
+            }
+            "07"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "turn_rate_percent"	"-25"
+            }
+			"08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "speed_percent"		"-45"
+            }
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"angle_rate"		"0.07"
+			}
+        }
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/v_ice_ball.lua"
+				"Function"			"createShoot"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-M"
+				"AbilityLevel"		"a"
+				"unitType"          "shui"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                "isAOE"             "1"
+                "cp"				"3"
+                "particles_hit_dur" "0.7"
+
+				"particles_nm"      "particles/14vzibingqiu_shengcheng.vpcf"
+				"soundCast" 		"magic_v_ice_ball_cast"
+				
+				"particles_power" 	"particles/14vzibingqiu_jiaqiang.vpcf"
+				"soundPower"		"magic_ice_power_up"
+				"particles_weak" 	"particles/14vzibingqiu_xueruo.vpcf"
+				"soundWeak"			"magic_ice_power_down"
+				
+
+                "particles_duration" 	"particles/14vzibingqiu_baozha.vpcf"
+				"soundDuration"			"magic_v_ice_ball_boom"
+
+				"aoeTargetDebuff"  "modifier_v_ice_ball_debuff_datadriven"
+			}
+		}
+
+
+        "Modifiers"
+        {
+            "modifier_v_ice_ball_debuff_datadriven"
+            {
+                "IsDebuff"			"1"
+                "EffectName"		"particles/jiansu_debuff.vpcf"
+                "EffectAttachType"	"follow_origin"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE" "%turn_rate_percent"
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_percent"
+                }                
+            }
+        }
+		
+    }
+}

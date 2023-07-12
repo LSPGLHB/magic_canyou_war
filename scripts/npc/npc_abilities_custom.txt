@@ -60,6 +60,7 @@
 #base magic/ice_beans.kv
 #base magic/ice_ball.kv
 #base magic/water_spirit.kv
+#base magic/v_ice_ball.kv
 
 //雷系
 #base magic/scatter_thunder_ball.kv
