@@ -9,7 +9,9 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 	local shootEnergySend = shootEnergyMax * 0.8
 	local shootEnergyStep = shootEnergyMax * 0.2 * shoot.speed / 10
 	shoot:SetHealth(shootEnergySend)]]
+
 	shoot.max_distance = shoot.max_distance_operation
+	
 	--local direction = shoot.direction
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
 		if shoot.traveled_distance < shoot.max_distance then
@@ -815,7 +817,7 @@ function modifierHole(shoot)
 	local caster = keys.caster
 	local ability = keys.ability
 	local playerID = caster:GetPlayerID()
-	local aoeTargetDebuff = shoot.aoeTargetDebuff 
+	local aoeTargetDebuff = shoot.aoeTargetDebuff
     local aoe_radius = shoot.aoe_radius --AOE持续作用范围
 	local aoe_duration = shoot.aoe_duration
     local position = shoot:GetAbsOrigin()

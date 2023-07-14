@@ -73,7 +73,7 @@ function LaunchFire(keys)
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.particleID = particleID
 		EmitSoundOn(keys.soundCast, shoot)
-		moveShoot(keys, shoot, iceBeansHitCallBack, nil)
+		moveShoot(keys, shoot, iceBeansBoomCallBack, nil)
 		tempCount = tempCount+1
 		if tempCount == shootCount then
 			return nil
@@ -102,7 +102,7 @@ end
 
 
 --技能爆炸,单次伤害
-function iceBeansHitCallBack(shoot)
+function iceBeansBoomCallBack(shoot)
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
 	boomAOERenderParticles(shoot)
     boomAOEOperation(shoot, AOEOperationCallback)

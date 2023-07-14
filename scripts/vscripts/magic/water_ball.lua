@@ -19,35 +19,40 @@ function createShoot(keys)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
-    moveShoot(keys, shoot, fireBallBoomCallBack, nil)
+    moveShoot(keys, shoot, waterBallBoomCallBack, nil)
 end
 
 --技能爆炸,单次伤害
-function fireBallBoomCallBack(shoot)
+function waterBallBoomCallBack(shoot)
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
-    fireBallRenderParticles(shoot) --爆炸粒子效果生成		  
-	boomAOEOperation(shoot, AOEOperationCallback)
+    waterBallRenderParticles(shoot) --爆炸粒子效果生成		  
+	boomAOEOperation(shoot, waterBallAOEOperationCallback)
 end
 
-function fireBallRenderParticles(shoot)
+function waterBallRenderParticles(shoot)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	--local ability = keys.ability
 	local radius = shoot.aoe_radius--ability:GetSpecialValueFor("aoe_radius") 
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_boom, PATTACH_WORLDORIGIN, caster)
 	local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
-	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
+	ParticleManager:SetParticleControl(particleBoom, 0, groundPos)
+	ParticleManager:SetParticleControl(particleBoom, 1, Vector(radius, 0, 0))
 end
 
-function AOEOperationCallback(shoot,unit)
+function waterBallAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
-	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true,true)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+    local AbilityLevel = shoot.abilityLevel
+    local hitTargetDebuff = keys.hitTargetDebuff
+    local playerID = caster:GetPlayerID()
+    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
+    debuffDuration = getApplyControlValue(shoot, debuffDuration)
+    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
 end
 

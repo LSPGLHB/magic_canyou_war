@@ -84,12 +84,11 @@ function stepTwo(keys)
     local groundPos = GetGroundPosition(shootPoint, shoot)
     local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + 100)
     shoot:SetAbsOrigin(shootPos)
-    --creatSkillShootInit(keys,shoot,caster,max_distance,direction)
-
+    creatSkillShootInit(keys,shoot,caster,max_distance,direction)
+    shoot.speed = 0
     --过滤掉增加施法距离的操作
 	--shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
-
 
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name

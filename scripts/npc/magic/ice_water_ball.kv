@@ -1,0 +1,157 @@
+"DOTAAbilities"
+{
+    "ice_water_ball_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+        
+		"AbilityTextureName"			"morphling_waveform"
+		"MaxLevel"                      "1"
+		"UnitType"         				"shui"
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/morphling_waveform.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"38"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"550"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1700"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "14"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_radius"		"200"
+            }
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_duration"		"5"
+            }
+            "07"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "turn_rate_percent"	"-70"
+            }
+			"08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "speed_percent"		"-60"
+            }
+
+        }
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/ice_water_ball.lua"
+				"Function"			"createShoot"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"b"
+				"unitType"          "shui"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"             "1"
+                "isMisfire"			"1"
+                "cp"				"3"
+                "particles_hit_dur" "0.7"
+
+				"particles_nm_sp1"      "particles/24_1bingshuishuangdan_shengcheng.vpcf"
+                "particles_nm_sp2"      "particles/24_2bingshuishuangdan_shengcheng.vpcf"
+				"soundCast" 		"magic_ice_water_ball_cast"
+				
+				"particles_power_sp1" 	"particles/24_1bingshuishuangdan_jiaqiang.vpcf"
+                "particles_power_sp2" 	"particles/24_2bingshuishuangdan_jiaqiang.vpcf"
+				"soundPower"		"magic_ice_power_up"
+
+				"particles_weak_sp1" 	"particles/24_1bingshuishuangdan_xueruo.vpcf"
+                "particles_weak_sp2" 	"particles/24_2bingshuishuangdan_xueruo.vpcf"
+				"soundWeak"			"magic_ice_power_down"
+				
+                "particles_misfire_sp1" "particles/24_1bingshuishuangdan_jiluo.vpcf"
+                "particles_misfire_sp2" "particles/24_2bingshuishuangdan_jiluo.vpcf"
+				"soundMisfire"		"magic_ice_mis_fire"
+
+                "particles_miss_sp1"    "particles/24_1bingshuishuangdan_xiaoshi.vpcf"
+                "particles_miss_sp2"    "particles/24_2bingshuishuangdan_xiaoshi.vpcf"
+				"soundMiss"			"magic_ice_miss"
+
+                "particles_boom_sp1" 	"particles/24_1bingshuishuangdan_mingzhong.vpcf"
+                "particles_boom_sp2" 	"particles/24_2bingshuishuangdan_mingzhong.vpcf"
+				"soundBoom"			"magic_ice_water_ball_boom"
+
+				"hitTargetDebuffSp1"  "modifier_ice_water_ball_debuff_sp1"
+                "hitTargetDebuffSp2"  "modifier_ice_water_ball_debuff_sp2"
+			}
+		}
+
+
+        "Modifiers"
+        {
+            "modifier_ice_water_ball_debuff_sp1"
+            {
+                "IsDebuff"			"1"
+                "EffectName"		"particles/jiansu_debuff.vpcf"
+                "EffectAttachType"	"follow_origin"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_percent"
+                }                
+            }
+
+            "modifier_ice_water_ball_debuff_sp2"
+            {
+                "IsDebuff"			"1"
+                "EffectName"		"particles/zhuanshen_debuff.vpcf"
+                "EffectAttachType"	"follow_origin"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE" "%turn_rate_percent"
+                }                
+            }
+        }
+		
+    }
+}

@@ -132,13 +132,15 @@ end
 function iceBallAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
     local caster = keys.caster
-	local playerID = caster:GetPlayerID()
+	
 	local ability = keys.ability
-    local AbilityLevel = shoot.abilityLevel
-    local hitTargetDebuff = keys.hitTargetDebuff
+    
     local damage = getApplyDamageValue(shoot) 
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
+	local AbilityLevel = shoot.abilityLevel
+    local hitTargetDebuff = keys.hitTargetDebuff
+	local playerID = caster:GetPlayerID()
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)

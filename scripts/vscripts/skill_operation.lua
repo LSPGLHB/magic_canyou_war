@@ -229,7 +229,7 @@ function powerShootParticleOperation(keys,shoot)
 			ParticleManager:DestroyParticle(particleID, true)
 			return nil
 		end)
-		new_particleID = ParticleManager:CreateParticle(keys.particles_power, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		new_particleID = ParticleManager:CreateParticle(shoot.particles_power, PATTACH_ABSORIGIN_FOLLOW , shoot)
 		ParticleManager:SetParticleControlEnt(new_particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.power_flag = 0
 	end
@@ -238,7 +238,7 @@ function powerShootParticleOperation(keys,shoot)
 			ParticleManager:DestroyParticle(particleID, true)
 			return nil
 		end)
-		new_particleID = ParticleManager:CreateParticle(keys.particles_weak, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		new_particleID = ParticleManager:CreateParticle(shoot.particles_weak, PATTACH_ABSORIGIN_FOLLOW , shoot)
 		ParticleManager:SetParticleControlEnt(new_particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.power_flag = 0
 	end
