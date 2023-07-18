@@ -137,18 +137,17 @@ function blindFireBallAOEOperationCallback(shoot,unit)
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local damage = getApplyDamageValue(shoot)
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
-    local defenceParticles = keys.particles_defense
 
     if isface then
         ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+		debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
+    	debuffDuration = getApplyControlValue(shoot, debuffDuration)
         ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
     else
-        local defenceParticlesID =ParticleManager:CreateParticle(defenceParticles, PATTACH_OVERHEAD_FOLLOW , unit)
+        local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
         ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-
         EmitSoundOn(keys.soundDefense, unit)
-
         Timers:CreateTimer(0.5, function()
                 ParticleManager:DestroyParticle(defenceParticlesID, true)
                 return nil

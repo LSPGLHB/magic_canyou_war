@@ -1,0 +1,117 @@
+"DOTAAbilities"
+{
+	"space_collapse_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"dark_seer_vacuum"
+        "MaxLevel"                      "1"
+
+		"UnitType"         				"feng"
+		"AbilityLevel"					"a"
+		"IconSrc" 					"file://{images}/custom_game/ability_button/dark_seer_vacuum.png"  //选择框图标
+		"AbilityShowName" 			"#UIButton4"
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"26"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_distance"				"1300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed"						"450"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage"					"13"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hit_range"					"85"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aoe_radius"		        "225"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"G_speed"				    "1200"
+			}
+
+
+		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"magic/space_collapse.lua"
+				"Function"			"createShoot"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-L"
+				"AbilityLevel"		"a"
+				"unitType"          "feng"
+				"hitType" 			"1"   //3不触碰，2穿透弹，1触碰结束
+				"isAOE"				"1"
+                "cp"				"3"
+                "particles_hit_dur" "0.7"
+
+				"particles_nm"      "particles/15kongjiantansuo_shengcheng.vpcf"
+				"soundCast" 		"magic_space_collapse_cast"
+				
+				"particles_power" 	"particles/15kongjiantansuo_jiaqiang.vpcf"
+				"soundWeak"			"magic_wind_power_up"
+				"particles_weak" 	"particles/15kongjiantansuo_xueruo.vpcf"	
+				"soundWeak"			"magic_wind_power_down"
+
+				"particles_boom" 	"particles/15kongjiantansuo_baozha.vpcf"
+				"soundBoom"		    "magic_space_collapse_boom"
+
+				"hitTargetDebuff"	"modifier_space_collapse_aoe_debuff"
+				
+			}
+		}
+
+		"Modifiers"
+		{
+
+			"modifier_space_collapse_aoe_debuff"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+}

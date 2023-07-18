@@ -8,6 +8,7 @@ function createShoot(keys)
 	--local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance") -- (skillPoint - casterPoint ):Length2D()
+
     local direction = (skillPoint - casterPoint):Normalized()
     --casterPoint = casterPoint + direction * 50
     initDurationBuff(keys)
@@ -52,10 +53,9 @@ function electricArrowAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
-
-	local damage = getApplyDamageValue(shoot) 
-
-
+    local damage_percent_sp = ability:GetSpecialValueFor("damage_percent_sp")
+    local damage_bouns = (unit:GetMaxHealth() - unit:GetHealth()) * (damage_percent_sp / 100)
+	local damage = getApplyDamageValue(shoot) + damage_bouns
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

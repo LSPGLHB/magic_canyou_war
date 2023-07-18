@@ -1,0 +1,159 @@
+"DOTAAbilities"
+{
+     "ice_skeleton_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"vengefulspirit_wave_of_terror"
+		"MaxLevel"                      "1"
+		"UnitType"         				"shui"
+		"AbilityLevel"					"a"
+		"IconSrc" "file://{images}/custom_game/ability_button/vengefulspirit_wave_of_terror.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"2"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"18"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"450"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1500"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"search_range"		"300"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "16"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "bouns_damage_percentage"		"30"
+            }
+
+            "06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_charges"		"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"8"
+			}
+			"09"
+            {
+                "var_type"			"FIELD_FLOAT"
+				"debuff_duration"		"1.5"
+            }
+            "10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"face_angle"					"90"
+			}
+        }
+
+        "OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"magic/ice_skeleton.lua"
+				"Function"				"shootStartCharge"
+				"modifierCountName"		"modifier_ice_skeleton_counter_datadriven"
+			}
+		}
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/ice_skeleton.lua"
+				"Function"			"createShoot"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"a"
+				"unitType"          "shui"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"           "1"
+				"isMisfire"			"1"
+				"particles_hit_dur" "0.7"
+                "cp"				 "3"
+
+				"particles_nm"      "particles/29bingkulou_shengcheng.vpcf"
+				"soundCast" 		"magic_ice_skeleton_cast"
+
+				"particles_misfire" "particles/29bingkulou_jiluo.vpcf"
+				"soundMisfire"		"magic_ice_mis_fire"
+                "particles_miss"    "particles/29bingkulou_xiaoshi.vpcf"
+				"soundMiss"			"magic_ice_miss"
+				
+				"particles_power" 	"particles/29bingkulou_jiaqiang.vpcf"
+				"soundPower"		"magic_ice_power_up"
+				"particles_weak" 	"particles/29bingkulou_xueruo.vpcf"
+				"soundWeak"			"magic_ice_power_down"	
+				
+                "particles_boom" 	"particles/29bingkulou_mingzhong.vpcf"
+				"soundBoom"			"magic_ice_skeleton_boom"
+
+                "modifierCountName" "modifier_ice_skeleton_counter_datadriven"
+                "hitTargetDebuff"   "modifier_ice_skeleton_debuff_datadriven"
+				
+				"particles_defense" "particles/duobizhimangbuff_1.vpcf"
+                "soundDefense"      "magic_defence"
+			}
+		}
+
+		"Modifiers"
+		{
+            "modifier_ice_skeleton_counter_datadriven"
+			{
+				"Passive"				"1"
+			}
+
+			"modifier_ice_skeleton_debuff_datadriven"
+			{
+				"IsHidden"			"1"
+                "EffectName"		"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_stunned_symbol.vpcf"
+				"EffectAttachType"	"follow_overhead"
+			}
+		}
+    }
+}

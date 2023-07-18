@@ -1,0 +1,154 @@
+"DOTAAbilities"
+{
+     "wind_dart_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+
+		"AbilityTextureName"			"enchantress_impetus"
+		"MaxLevel"                      "1"
+		"UnitType"         				"feng"
+		"AbilityLevel"					"b"
+		"IconSrc" "file://{images}/custom_game/ability_button/enchantress_impetus.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1550"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"18"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"380"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1550"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "22"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"wind_angle"		    "30"
+			}
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "wind_speed"		"500"
+            }
+            "07"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "wind_damage_percent"		"50"
+            }
+
+            "08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "face_angle"		"90"
+            }
+
+            "09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_charges"		"2"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"9"
+			}
+        }
+
+        "OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"magic/wind_dart.lua"
+				"Function"				"shootStartCharge"
+				"modifierCountName"		"modifier_wind_dart_counter_datadriven"
+			}
+		}
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/wind_dart.lua"
+				"Function"			"createShoot"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"b"
+				"unitType"          "feng"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"           "1"
+				"isMisfire"			"1"
+				"particles_hit_dur" "0.7"
+                "cp"				 "3"
+
+				"particles_nm"      "particles/25fengbiao_shengcheng.vpcf"
+				"soundCast" 		"magic_wind_dart_cast"
+
+				"particles_misfire" "particles/25fengbiao_jiluo.vpcf"
+				"soundMisfire"		"magic_wind_mis_fire"
+                "particles_miss"    "particles/25fengbiao_xiaoshi.vpcf"
+				"soundMiss"			"magic_wind_miss"
+				
+				"particles_power" 	"particles/25fengbiao_jiaqiang.vpcf"
+				"soundPower"		"magic_wind_power_up"
+				"particles_weak" 	"particles/25fengbiao_xueruo.vpcf"
+				"soundWeak"			"magic_wind_power_down"	
+				
+                "particles_boom" 	"particles/25fengbiao_mingzhong.vpcf"
+				"soundBoomS1"			"magic_wind_dart_boom"
+
+                "particles_strike" "particles/25fengbiao_mingzhong_beibu.vpcf"
+                "soundStrike"      "magic_wind_dart_boom_strike"
+
+                "modifierCountName" "modifier_wind_dart_counter_datadriven"
+				
+			}
+		}
+
+		"Modifiers"
+		{
+            "modifier_wind_dart_counter_datadriven"
+			{
+				"Passive"				"1"
+			}
+
+		}
+    }
+}

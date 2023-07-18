@@ -1,0 +1,125 @@
+"DOTAAbilities"
+{
+     "o_boomerang_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"AOERadius"                     "200"
+		"AbilityTextureName"			"hoodwink_hunters_boomerang"
+		"MaxLevel"                      "1"
+		"UnitType"         				"feng"
+		"AbilityLevel"					"c"
+		"IconSrc" "file://{images}/custom_game/ability_button/hoodwink_hunters_boomerang.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1600"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"19"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"550"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1600"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "75"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "10"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"catch_radius"		    "225"
+			}
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "debuff_duration"		"3"
+            }
+
+        }
+
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/o_boomerang.lua"
+				"Function"			"createShoot"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"c"
+				"unitType"          "feng"
+				"hitType" 			"2"   //3直达不触碰,2穿透弹,1触碰爆炸
+                //"isAOE"           "1"
+				"isMisfire"			"1"
+				"particles_hit_dur" "0.7"
+                "cp"				 "3"
+
+				"particles_nm"      "particles/20huixuanbiao_shengcheng.vpcf"
+				"soundCast" 		"magic_o_boomerang_cast"
+				"particles_misfire" "particles/20huixuanbiao_jiluo.vpcf"
+				"soundMisfire"		"magic_wind_mis_fire"
+                "particles_miss"    "particles/20huixuanbiao_jiluo.vpcf"
+				"soundMiss"			"magic_wind_miss"
+				
+				"particles_power" 	"particles/20huixuanbiao_jiaqiang.vpcf"
+				"soundPower"		"magic_wind_power_up"
+				"particles_weak" 	"particles/20huixuanbiao_xueruo.vpcf"
+				"soundWeak"			"magic_wind_power_down"	
+				
+                "particles_hit" 	"particles/20huixuanbiao_mingzhong.vpcf"
+				"soundHit"			"magic_o_boomerang_hit"
+
+                "particles_catch" 	"particles/20huixuanbiao_mingzhong_shufu.vpcf"
+				"soundCatch"		"magic_o_boomerang_catch"
+
+
+                "hitTargetDebuff"   "modifier_o_boomerang_debuff_datadriven"
+				
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_o_boomerang_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				//"EffectName"		"particles/shufu_debuff.vpcf"
+				//"EffectAttachType"	"follow_origin"
+			}
+		}
+    }
+}

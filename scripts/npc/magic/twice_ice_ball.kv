@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "twice_stone_ball_datadriven"
+    "twice_ice_ball_datadriven"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
@@ -10,13 +10,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"hoodwink_acorn_shot"
+		"AbilityTextureName"			"drow_ranger_frost_arrows"
 		"MaxLevel"                      "1"
 
 		"MaxLevel"                      "1"
-		"UnitType"         				"tu"
+		"UnitType"         				"shui"
 		"AbilityLevel"					"c"
-		"IconSrc"                       "file://{images}/custom_game/ability_button/hoodwink_acorn_shot.png"  //选择框图标
+		"IconSrc"                       "file://{images}/custom_game/ability_button/drow_ranger_frost_arrows.png"  //选择框图标
 		"AbilityShowName"               "#UIButton4"
 		
 		"precache"						
@@ -26,28 +26,28 @@
 			
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastRange"				"1800"   //施法距离
 		"AbilityCastPoint"				"0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13"
+		"AbilityCooldown"				"5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"29"
+		"AbilityManaCost"				"25"
 
         "AbilitySpecial"
 		{
 			 "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"850"
+				"speed"				"750"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1500"
+				"max_distance"		"1800"
 			}
             "03"
 			{
@@ -57,17 +57,23 @@
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "30"
+				"damage"		    "18"
 			}
-            "06"
+            "05"
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_delay"		"1.5"
+                "debuff_duration"		"2"
             }
-            "07"
+
+			 "07"
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_duration"		"1.5"
+                "turn_rate_percent"	"-70"
+            }
+			"08"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "speed_percent"		"-55"
             }
 		}
 
@@ -75,9 +81,9 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"magic/twice_stone_ball.lua"
+				"ScriptFile"	"magic/twice_ice_ball.lua"
 				"Function"		"LevelUpAbility"
-				"ability_b_name"	"twice_stone_ball_stage_b_datadriven"
+				"ability_b_name"	"twice_ice_ball_stage_b_datadriven"
 			}
 		}
 		
@@ -85,67 +91,62 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"magic/twice_stone_ball.lua"
+				"ScriptFile"		"magic/twice_ice_ball.lua"
 				"Function"			"stepOne"
 				"Target"			"POINT"
 				"unitModel"			"shootUnit-S"
 				"AbilityLevel"		"c"
-				"unitType"          "tu"
+				"unitType"          "shui"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isMisfire"			"1"
                 //"isAOE"             "1"
                 "cp"				"3"
                 "particles_hit_dur" "0.7"
-				"particles_nm"      "particles/17_1tuqiushu_shengcheng.vpcf"
-				"soundCast"			"magic_twice_stone_ball_cast"
+				"particles_nm"      "particles/34_1bingerlianjian_shengcheng.vpcf"
+				"soundCast"			"magic_twice_ice_ball_cast_sp1"
 				
-				"particles_power" 	"particles/17_1tuqiushu_jiaqiang.vpcf"
-				"soundPower"		"magic_stone_power_up"
-				"particles_weak" 	"particles/17_1tuqiushu_xueruo.vpcf"
-				"soundWeak"			"magic_stone_power_down"
-                "particles_misfire" "particles/17_1tuqiushu_jiluo.vpcf"
-				"soundMisfire"		"magic_stone_mis_fire"
+				"particles_power" 	"particles/34_1bingerlianjian_jiaqiang.vpcf"
+				"soundPower"		"magic_ice_power_up"
+				"particles_weak" 	"particles/34_1bingerlianjian_xueruo.vpcf"
+				"soundWeak"			"magic_ice_power_down"
+                "particles_misfire" "particles/34_1bingerlianjian_jiluo.vpcf"
+				"soundMisfire"		"magic_ice_mis_fire"
 
-                "particles_miss"    "particles/17_1tuqiushu_xiaoshi.vpcf"
-				"soundMiss"			"magic_stone_miss"
+                "particles_miss"    "particles/34_1bingerlianjian_xiaoshi.vpcf"
+				"soundMiss"			"magic_ice_miss"
 
-				"particles_boom" 	"particles/17_1tuqiushu_mingzhong.vpcf"
-				"soundBoom"			"magic_twice_stone_ball_boom_sp1"
-
-
-                "hitTargetDebuffDelay"	"modifier_twice_stone_ball_debuff_delay"
-				"hitTargetDebuff"        "modifier_twice_stone_ball_debuff"
+				"particles_boom" 	"particles/34_1bingerlianjian_mingzhong.vpcf"
+				"soundBoom"			"magic_twice_ice_ball_boom"
 
 
-				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_buff"
-				"ability_a_name"		   "twice_stone_ball_datadriven"
-				"ability_b_name"		   "twice_stone_ball_stage_b_datadriven"
+
+				"hitTargetDebuff"        "modifier_twice_ice_ball_debuff"
+
+
+				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_buff"
+				"ability_a_name"		   "twice_ice_ball_datadriven"
+				"ability_b_name"		   "twice_ice_ball_stage_b_datadriven"
 				
 			}
 		}	
 
         "Modifiers"
 		{	
-			"modifier_twice_stone_ball_debuff"
+			"modifier_twice_ice_ball_debuff"
 			{
-				"IsDebuff"				"1"
-                "EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"
-				"EffectAttachType"	"follow_origin"
-    
-                "States"
+				"IsDebuff"			"1"
+                "EffectName"		"particles/jiansu_debuff.vpcf"
+                "EffectAttachType"	"follow_origin"
+                "Properties"
                 {
-                    "MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
-                }  
+                    "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE" "%turn_rate_percent"
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_percent"
+                }       
 			}
 
-            "modifier_twice_stone_ball_debuff_delay"
-			{
-				"IsDebuff"				"1"
-				"EffectName"			"particles/17_1tuqiushu_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-			}
 
-			"modifier_twice_stone_ball_buff"
+
+			"modifier_twice_ice_ball_buff"
 			{
 				"Passive"				"0"
 				"IsHidden"				"0"
@@ -159,7 +160,7 @@
 
     }
 
-    "twice_stone_ball_stage_b_datadriven"
+    "twice_ice_ball_stage_b_datadriven"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
@@ -169,13 +170,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"alchemist_unstable_concoction"
+		"AbilityTextureName"			"vengefulspirit_wave_of_terror"
 		"MaxLevel"                      "1"
 
 		"MaxLevel"                      "1"
-		"UnitType"         				"tu"
+		"UnitType"         				"shui"
 		"AbilityLevel"					"cb"
-		"IconSrc"                       "file://{images}/custom_game/ability_button/alchemist_unstable_concoction.png"  //选择框图标
+		"IconSrc"                       "file://{images}/custom_game/ability_button/drow_ranger_frost_arrows.png"  //选择框图标
 		"AbilityShowName"               "#UIButton4"
 		
 		"precache"						
@@ -185,7 +186,7 @@
 			
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastRange"				"1800"   //施法距离
 		"AbilityCastPoint"				"0.1"
 
 		// Time		
@@ -201,12 +202,12 @@
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"480"
+				"speed"				"470"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1500"
+				"max_distance"		"1800"
 			}
             "03"
 			{
@@ -216,17 +217,13 @@
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "30"
+				"damage"		    "18"
 			}
-			"05"
-            {
-                "var_type"			"FIELD_FLOAT"
-                "debuff_duration"		"1.5"
-            }
+
 			"06"
             {
                 "var_type"			"FIELD_FLOAT"
-                "damage_by_distance"		"0.02"
+                "damage_by_distance"		"150"
             }
 
         }
@@ -235,51 +232,45 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/twice_stone_ball.lua"
+				"ScriptFile"		"magic/twice_ice_ball.lua"
 				"Function"			"stepTwo"
 				"Target"			"POINT"
 				"unitModel"			"shootUnit-S"
 				"AbilityLevel"		"c"
-				"unitType"          "tu"
+				"unitType"          "shui"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isMisfire"			"1"
                 //"isAOE"             "1"
                 "cp"				"3"
                 "particles_hit_dur" "0.7"
-				"particles_nm"      "particles/17_2boliping_shengcheng.vpcf"
-				"soundCast"			"magic_twice_stone_ball_cast"
+				"particles_nm"      "particles/34_2bingerlianjian_shengcheng.vpcf"
+				"soundCast"			"magic_twice_ice_ball_cast_sp2"
 				
-				"particles_power" 	"particles/17_2boliping_jiaqiang.vpcf"
-				"soundPower"		"magic_stone_power_up"
-				"particles_weak" 	"particles/17_2boliping_xueruo.vpcf"
-				"soundWeak"			"magic_stone_power_down"
-                "particles_misfire" "particles/17_2boliping_jiluo.vpcf"
-				"soundMisfire"		"magic_stone_mis_fire"
-                "particles_miss"    "particles/17_2boliping_xiaoshi.vpcf"
-				"soundMiss"			"magic_stone_miss"
+				"particles_power" 	"particles/34_2bingerlianjian_jiaqiang.vpcf"
+				"soundPower"		"magic_ice_power_up"
+				"particles_weak" 	"particles/34_2bingerlianjian_xueruo.vpcf"
+				"soundWeak"			"magic_ice_power_down"
+                "particles_misfire" "particles/34_2bingerlianjian_jiluo.vpcf"
+				"soundMisfire"		"magic_ice_mis_fire"
+                "particles_miss"    "particles/34_2bingerlianjian_xiaoshi.vpcf"
+				"soundMiss"			"magic_ice_miss"
 
-				"particles_boom" 	"particles/17_2boliping_mingzhong.vpcf"
-				"soundBoom"			"magic_twice_stone_ball_boom_sp2"
-
-
+				"particles_boom" 	"particles/34_2bingerlianjian_mingzhong.vpcf"
+				"soundBoom"			"magic_twice_ice_ball_boom"
 
 
 
-                "hitTargetDebuff"	   "modifier_twice_stone_ball_sp2_debuff"
-				"ability_a_name"	   "twice_stone_ball_datadriven"
-				"ability_b_name"	   "twice_stone_ball_stage_b_datadriven"
+
+				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_buff"
+              
+				"ability_a_name"	   "twice_ice_ball_datadriven"
+				"ability_b_name"	   "twice_ice_ball_stage_b_datadriven"
 			}
 		}
 		"Modifiers"
 		{	
 
 
-            "modifier_twice_stone_ball_sp2_debuff"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/17_2tuqiushu_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-			}
         }
     }
 }

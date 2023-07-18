@@ -655,7 +655,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	local V0 = beatBackSpeed * interval
 	local speedmod = V0
 	acceleration = acceleration * interval
-	local bufferTempDis = hitTarget:GetPaddedCollisionRadius()
+	local bufferTempDis = hitTarget:GetPaddedCollisionRadius() * 2
 	local traveled_distance = 0
 	local hitFlag = false
 	if isFirstBeat then
@@ -768,10 +768,8 @@ function blackHole(shoot)
     local playerID = caster:GetPlayerID()
 
 	local interval = 0.02
-	local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant * interval
-	G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
-	G_Speed = getApplyControlValue(shoot, G_Speed)--克制计算
-	
+	local G_Speed = shoot.G_Speed
+
 	Timers:CreateTimer(aoe_duration,function ()
 		--print("blackHole_timeOver")
 		shoot.isKillAOE = 1
@@ -1143,4 +1141,32 @@ function diffuseBoomAOEOperation(shoot, AOEOperationCallback)
 		return interval
 	end)
 	shootKill(shoot)
+end
+
+--束缚类效果
+function catchAOEOperationCallback(shoot, unit, debuffDuration)
+    local keys = shoot.keysTable
+    local ability = keys.ability
+    local catch_radius = shoot.catch_radius
+    local interval = 0.02
+    local oPos =  unit:GetAbsOrigin()
+    local lastUnitPos
+    Timers:CreateTimer(interval, function()   
+        local unitPos = unit:GetAbsOrigin()
+        local ouDistance = (oPos - unitPos):Length2D()
+        if ouDistance <= catch_radius then
+            lastUnitPos = unitPos
+        else
+            unit:SetAbsOrigin(lastUnitPos)
+        end
+        if shoot.isKill == 1 then
+            return nil
+        end
+        return interval
+    end)
+
+    Timers:CreateTimer(debuffDuration, function()
+        shoot.isKill = 1
+        return nil
+    end)
 end

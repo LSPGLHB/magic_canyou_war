@@ -4,9 +4,10 @@ function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
+	local casterPoint = caster:GetAbsOrigin()
     --local speed = ability:GetSpecialValueFor("speed")
 	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
-    local casterPoint = caster:GetAbsOrigin()
+    
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
@@ -26,7 +27,7 @@ end
 function fireBallBoomCallBack(shoot)
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     fireBallRenderParticles(shoot) --爆炸粒子效果生成		  
-	boomAOEOperation(shoot, AOEOperationCallback)
+	boomAOEOperation(shoot, fireBallAOEOperationCallback)
 end
 
 function fireBallRenderParticles(shoot)
@@ -40,7 +41,7 @@ function fireBallRenderParticles(shoot)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 0, 0))
 end
 
-function AOEOperationCallback(shoot,unit)
+function fireBallAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability

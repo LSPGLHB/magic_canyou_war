@@ -1,6 +1,6 @@
 require('shoot_init')
 require('skill_operation')
-function createSmallHurricane(keys)
+function createShoot(keys)
 		local caster = keys.caster
 		local ability = keys.ability
         local playerID = caster:GetPlayerID()
@@ -13,9 +13,9 @@ function createSmallHurricane(keys)
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
-        aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',shoot.abilityLevel,nil)--数值加强
-		aoe_duration = getApplyControlValue(shoot, aoe_duration)--克制加强
-		local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant * interval
+        --aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',shoot.abilityLevel,nil)--数值加强
+		--aoe_duration = getApplyControlValue(shoot, aoe_duration)--克制加强
+        local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant * 0.02
         G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
         G_Speed = getApplyControlValue(shoot, G_Speed)--克制计算
         shoot.G_Speed = G_Speed
@@ -25,24 +25,24 @@ function createSmallHurricane(keys)
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.particleID = particleID
 		EmitSoundOn(keys.soundCast, shoot)
-		moveShoot(keys, shoot, smallHurricaneBoomCallBack, smallHurricaneTakeAwayCallBack)
+		moveShoot(keys, shoot, snallTornadoBoomCallBack, nil)
 end
 
-function smallHurricaneBoomCallBack(shoot)
-    smallHurricaneDuration(shoot) --实现持续光环效果以及粒子效果
+function snallTornadoBoomCallBack(shoot)
+    snallTornadoRenderParticles(shoot)
+    snallTornadoDuration(shoot) 
 end
 
-function smallHurricaneDuration(shoot)
+function snallTornadoDuration(shoot)
 	local interval = 0.5
-    smallHurricaneRenderParticles(shoot)
+    
     durationAOEDamage(shoot, interval, damageCallback)
-
 	modifierHole(shoot)
 	blackHole(shoot)
 end
 
 --特效显示效果
-function smallHurricaneRenderParticles(shoot)
+function snallTornadoRenderParticles(shoot)
 	local keys = shoot.keysTable
     local caster = keys.caster
 	--local ability = keys.ability
@@ -55,7 +55,5 @@ function smallHurricaneRenderParticles(shoot)
 	ParticleManager:SetParticleControl(particleBoom, 11, Vector(aoe_duration, 0, 0))
 end
 
-function smallHurricaneTakeAwayCallBack(shoot, unit)
-	takeAwayUnit(shoot, unit)
-end
+
 
