@@ -59,6 +59,10 @@
 #base magic/space_collapse.kv
 #base magic/o_boomerang.kv
 #base magic/wind_dart.kv
+#base magic/big_tornado.kv
+#base magic/wind_arrow.kv
+#base magic/whirlwind_axe.kv
+
 
 
 //水系

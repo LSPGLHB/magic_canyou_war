@@ -107,6 +107,7 @@ function iceBeansBoomCallBack(shoot)
 	boomAOERenderParticles(shoot)
     boomAOEOperation(shoot, AOEOperationCallback)
 end
+
 function boomAOERenderParticles(shoot)
 	local particlesName = shoot.particles_boom
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)

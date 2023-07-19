@@ -103,7 +103,7 @@ function createShoot(keys)
     --无弹后启动技能冷却
     if caster.wind_net_charges == 0 then
         ability:StartCooldown(caster.wind_net_cooldown)
-    else
+    --else
         --ability:EndCooldown()
     end
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())

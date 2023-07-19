@@ -1,0 +1,144 @@
+"DOTAAbilities"
+{
+    "whirlwind_axe_datadriven"
+	{
+    // General
+	//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"MaxLevel"                      "1"
+		"MaxLevel"                      "1"
+		"UnitType"         				"feng"
+		"AbilityLevel"					"a"
+		"IconSrc" "file://{images}/custom_game/ability_button/troll_warlord_whirling_axes_ranged.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2000"   //施法距离
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+		"AbilityChannelTime"			"2.5"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40"
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"460"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"2000"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "65"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "40"
+			}
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "shoot_count"		"10"
+            }
+            "06"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "bounds_damage"		"2"
+            }
+            "05"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "bounds_damage_count"		"3"
+            }
+
+        }
+
+        "OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/whirlwind_axe.lua"
+				"Function"			"createShoot"
+				"Target"			"POINT"
+				"unitModel"			"shootUnit-XS"
+				"AbilityLevel"		"a"
+				"unitType"          "feng"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+				"isMisfire"			"1"
+				"particles_hit_dur" "0.7"
+				"cp"				"3"
+                
+				"particles_nm"      "particles/45feifu_shengcheng.vpcf"
+				"soundCast"			"magic_whirlwind_axe_cast"
+				
+				"particles_power" 	"particles/45feifu_jiaqiang.vpcf"
+				"soundPower"		"magic_wind_power_up"
+				"particles_weak" 	"particles/45feifu_xueruo.vpcf"
+				"soundWeak"			"magic_wind_power_down"
+
+				"particles_misfire" "particles/45feifu_jiluo.vpcf"
+				"soundMisfire"		"magic_wind_mis_fire"
+                "particles_miss"    "particles/45feifu_xiaoshi.vpcf"
+				"soundMiss"			"magic_wind_miss"
+				
+                "particles_boom" 	"particles/45feifu_mingzhong.vpcf"
+				"soundBoomNM"			"magic_whirlwind_axe_boom"
+
+				"particles_boom_max" 	"particles/45feifu_mingzhong_max.vpcf"
+				"soundBoomMax"			"magic_whirlwind_axe_boom_max"
+
+                
+                "modifier_caster_hit_buff"     "modifier_whirlwind_axe_hit_debuff"
+                "modifier_caster_name"   "modifier_whirlwind_axe_caster_buff"
+			}
+
+
+		}
+
+
+
+        "Modifiers"
+		{
+			"modifier_whirlwind_axe_caster_buff"
+			{
+				"IsBuff"			"1"
+				"States"	
+				{
+					"MODIFIER_STATE_SILENCED" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
+				}
+                
+			}
+
+            "modifier_whirlwind_axe_hit_debuff"
+            {
+                "IsBuff"			"1"
+            }
+        }
+    }
+}

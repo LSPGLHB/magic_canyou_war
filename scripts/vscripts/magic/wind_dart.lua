@@ -83,6 +83,11 @@ function createShoot(keys)
     local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
 	local catch_radius = ability:GetSpecialValueFor("catch_radius")
+	local windAngle = ability:GetSpecialValueFor("wind_angle")
+	local faceAngle = ability:GetSpecialValueFor("face_angle")
+	local windSpeed = ability:GetSpecialValueFor("wind_speed") * 0.02 * GameRules.speedConstant
+	
+
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
 
@@ -114,7 +119,7 @@ function createShoot(keys)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, windDartBoomCallBack, nil)
-
+	searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, keys.modifierLockDebuff)
 end
 
 --技能爆炸,单次伤害
@@ -151,3 +156,62 @@ function windDartAOEOperationCallback(shoot,unit)
     windDartAOERenderParticles(shoot)
 end
 
+
+function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, modifierLockDebuff)
+	local ability = keys.ability
+	local casterTeam = caster:GetTeam()
+	local casterPos = caster:GetAbsOrigin()
+	local radius = shoot.max_distance
+	local interval = 0.1
+	local shootSpeed = shoot.speed
+	local lockUnit
+	local lessDistance = radius
+
+	local aroundUnits = FindUnitsInRadius(casterTeam, 
+										casterPos,
+										nil,
+										radius,
+										DOTA_UNIT_TARGET_TEAM_BOTH,
+										DOTA_UNIT_TARGET_ALL,
+										0,
+										0,
+										false)
+	--找到符合条件最近的
+	for k,unit in pairs(aroundUnits) do
+		local isEnemyHero = checkIsEnemyNoSkill(shoot,unit)
+		if isEnemyHero then 
+			local isfaceSp1 = isFaceByFaceAngle(unit, shoot, windAngle)
+			if isfaceSp1 then
+				local distance = (unit:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+				if distance < lessDistance then
+					lessDistance = distance
+					lockUnit = unit
+				end
+			end
+		end
+	end
+	
+
+	if lockUnit ~= nil then
+		ability:ApplyDataDrivenModifier(caster, lockUnit, modifierLockDebuff, {Duration = -1})
+		Timers:CreateTimer(function()
+			local isfaceSp2 = isFaceByFaceAngle(shoot, lockUnit, faceAngle)
+
+			if isfaceSp2 then
+				shoot.speed = shootSpeed
+				
+				ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 0, 0))
+			else
+				shoot.speed = shootSpeed + windSpeed
+				ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 1, 0))
+			end
+			if shoot.energy_point == 0 then
+				if lockUnit:HasModifier(modifierLockDebuff) then
+					lockUnit:RemoveModifierByName(modifierLockDebuff)
+				end
+				return nil
+			end
+			return interval
+		end)
+	end
+end

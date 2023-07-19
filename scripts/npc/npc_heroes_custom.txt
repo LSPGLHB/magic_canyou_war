@@ -7,9 +7,9 @@
 	{
 		"override_hero"	"npc_dota_hero_rubick"
 		//"AbilityLayout"         "6"
-		"Ability1"	"space_collapse_datadriven"
-		"Ability2"	"o_boomerang_datadriven"
-		"Ability3"	"ice_water_ball_datadriven"
+		"Ability1"	"whirlwind_axe_datadriven"
+		"Ability2"	"wind_arrow_datadriven"
+		"Ability3"	"big_tornado_datadriven"
 		"Ability4"  "wind_dart_datadriven"
 		"Ability5"  "water_ball_datadriven"
 		"Ability6"  "electric_wall_datadriven"

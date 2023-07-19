@@ -1,6 +1,6 @@
 require('shoot_init')
 require('skill_operation')
-function createSmallHurricane(keys)
+function createShoot(keys)
 		local caster = keys.caster
 		local ability = keys.ability
         local playerID = caster:GetPlayerID()
@@ -25,24 +25,23 @@ function createSmallHurricane(keys)
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 		shoot.particleID = particleID
 		EmitSoundOn(keys.soundCast, shoot)
-		moveShoot(keys, shoot, smallHurricaneBoomCallBack, smallHurricaneTakeAwayCallBack)
+		moveShoot(keys, shoot, bigTornadoBoomCallBack, nil)
 end
 
-function smallHurricaneBoomCallBack(shoot)
-    smallHurricaneDuration(shoot) --实现持续光环效果以及粒子效果
+function bigTornadoBoomCallBack(shoot)
+    bigTornadoDuration(shoot) --实现持续光环效果以及粒子效果
 end
 
-function smallHurricaneDuration(shoot)
+function bigTornadoDuration(shoot)
 	local interval = 0.5
-    smallHurricaneRenderParticles(shoot)
+    bigTornadoRenderParticles(shoot)
     durationAOEDamage(shoot, interval, damageCallback)
-
 	modifierHole(shoot)
 	blackHole(shoot)
 end
 
 --特效显示效果
-function smallHurricaneRenderParticles(shoot)
+function bigTornadoRenderParticles(shoot)
 	local keys = shoot.keysTable
     local caster = keys.caster
 	--local ability = keys.ability
@@ -51,11 +50,9 @@ function smallHurricaneRenderParticles(shoot)
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
     local shootPos = shoot:GetAbsOrigin()
 	ParticleManager:SetParticleControl(particleBoom, 3, Vector(shootPos.x,shootPos.y,shootPos.z))
-	ParticleManager:SetParticleControl(particleBoom, 10, Vector(aoe_radius, 0, 0))
+	ParticleManager:SetParticleControl(particleBoom, 1, Vector(aoe_radius, 0, 0))
 	ParticleManager:SetParticleControl(particleBoom, 11, Vector(aoe_duration, 0, 0))
 end
 
-function smallHurricaneTakeAwayCallBack(shoot, unit)
-	takeAwayUnit(shoot, unit)
-end
+
 

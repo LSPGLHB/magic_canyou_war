@@ -928,7 +928,7 @@ function isFaceByFaceAngle(shoot, unit, faceAngle)
         resultAngle = 360 - resultAngle
     end
 	--print("resultAngle:"..resultAngle)
-    if faceAngle > resultAngle then --固定角度减视野
+    if faceAngle > resultAngle then --固定角度满足条件
 		return true
     end
 	return false
