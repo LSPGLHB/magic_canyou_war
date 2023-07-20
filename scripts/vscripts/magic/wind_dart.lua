@@ -199,7 +199,6 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 
 			if isfaceSp2 then
 				shoot.speed = shootSpeed
-				
 				ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 0, 0))
 			else
 				shoot.speed = shootSpeed + windSpeed

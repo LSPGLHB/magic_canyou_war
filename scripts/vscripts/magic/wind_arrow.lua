@@ -182,7 +182,7 @@ function windArrowIntervalCallBack(shoot)
                 table.insert(shoot.windSpeedUpUnit, unit)
                 if shoot_speed < wind_speed_max then
                     shoot.speed = shoot_speed + wind_speed 
-                    local new_particleID = ParticleManager:CreateParticle(shoot.particles_nm_sp2, PATTACH_ABSORIGIN_FOLLOW , shoot)
+                    local new_particleID = ParticleManager:CreateParticle(keys.particles_nm_sp2, PATTACH_ABSORIGIN_FOLLOW , shoot)
 		            ParticleManager:SetParticleControlEnt(new_particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
                     EmitSoundOn(keys.soundCastSp2, shoot)
                 end
