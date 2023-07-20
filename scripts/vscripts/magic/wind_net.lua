@@ -142,13 +142,17 @@ function windNetAOEOperationCallback(shoot,unit)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
     windNetAOERenderParticles(shoot, unit, debuffDuration)
-    catchAOEOperationCallback(shoot, unit, debuffDuration)
+    catchAOEOperationCallback(shoot, unit, debuffDuration,hitTargetDebuff)
 end
 
 function windNetAOERenderParticles(shoot, unit, debuffDuration)
 	local particlesName = shoot.particles_boom
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , unit)
 	ParticleManager:SetParticleControlEnt(newParticlesID, 0 , unit, PATTACH_POINT_FOLLOW, nil, unit:GetAbsOrigin(), true)
+	if unit.tieParticleId == nil then
+		unit.tieParticleId = {}
+	end
+	table.insert(unit.tieParticleId, newParticlesID)
     Timers:CreateTimer(debuffDuration, function()
         ParticleManager:DestroyParticle(newParticlesID, true)
         return nil

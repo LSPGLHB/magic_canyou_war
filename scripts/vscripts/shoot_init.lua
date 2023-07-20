@@ -338,7 +338,7 @@ function clearUnitsModifierByName(shoot,modifierName)
 		for i = 1, #shoot.hitUnits do
 			local tempUnit = shoot.hitUnits[i]
 			tempUnit:InterruptMotionControllers( true )
-			tempUnit.shootFloatingAir = 0  --去掉浮空状态(用于击退)
+			tempUnit.FloatingAirLevel = nil  --重置浮空状态
 			if tempUnit:HasModifier(modifierName) then
 				tempUnit:RemoveModifierByName(modifierName)
 			end
@@ -664,12 +664,12 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	--记录击退时间
 	local beatTime = GameRules:GetGameTime()
 	hitTarget.lastBeatBackTime = beatTime
-	if hitTarget.shootFloatingAir == nil then 
-		hitTarget.shootFloatingAir = 0
+	if hitTarget.FloatingAirLevel == nil and hitTarget.FloatingAirLevel < 0 then 
+		hitTarget.FloatingAirLevel = 0
 	end
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
 	function ()
-		if traveled_distance < beatBackDistance and beatTime == hitTarget.lastBeatBackTime and hitTarget.shootFloatingAir == 0 then --如果击退时间没被更改继续执行（被其他技能击退则执行新的，旧的不再运行）
+		if traveled_distance < beatBackDistance and beatTime == hitTarget.lastBeatBackTime and hitTarget.FloatingAirLevel == 0 then --如果击退时间没被更改继续执行（被其他技能击退则执行新的，旧的不再运行）
 			local newPosition = hitTarget:GetAbsOrigin() +  beatBackDirection * speedmod -- Vector(beatBackDirection.x, beatBackDirection.y, 0) * speedmod
 			speedmod = speedmod + acceleration * interval
 			local groundPos = GetGroundPosition(newPosition, hitTarget)
@@ -684,13 +684,14 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 			--print("traveled_distance:"..speedmod.."="..traveled_distance)
 			local remainDistance = beatBackDistance - traveled_distance
 
-			hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance)
+			hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance,directionFlag)
 
 			if hitFlag then --速度传给撞击的单位，该单位停止
 				traveled_distance = beatBackDistance
 			end
 		else
 			hitTarget.isFirstBeat = 0
+			hitTarget.FloatingAirLevel = nil
 			hitTarget:InterruptMotionControllers( true )
 			hitTarget:RemoveModifierByName(hitTargetDebuff)		
 			--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
@@ -701,7 +702,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 end
 
 --击退的单位二次击退其他单位  (存在全角度搜索BUG，应该将搜索角度限制在90度内，待优化)
-function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance)
+function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance,directionFlag)
 	local caster = keys.caster
 	local ability = keys.ability
 	local position = shoot:GetAbsOrigin()
@@ -724,7 +725,7 @@ function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance)
 		local unitTeam = unit:GetTeam()
 		if(GameRules.skillLabel ~= lable and shoot ~= unit and casterTeam~=unitTeam and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
 			--unit.beatBackFlag = 1 --碰撞中，变成不可再碰撞状态
-			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,false)
+			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,false,directionFlag)
 			hitFlag = true
 			return hitFlag
 		end
@@ -742,10 +743,16 @@ function takeAwayUnit(shoot,hitTarget)
 	local shootAoeDebuff = keys.shootAoeDebuff
 	local debuffTable = hitTarget:FindModifierByName(shootAoeDebuff)
 
-	if hitTarget.shootFloatingAir == nil or hitTarget.shootFloatingAir == 0 then
-		hitTarget.shootFloatingAir = 1   --浮空状态，不能被其他位移控制取代
+	if hitTarget.lastTakeAwayTime == nil or hitTarget.lastTakeAwayTime < shoot.castTime then
+		hitTarget.lastTakeAwayTime = shoot.castTime
+
 	end
-	--if hitTarget.shootFloatingAir == 1 then
+
+	if hitTarget.FloatingAirLevel == nil or hitTarget.FloatingAirLevel < 1 then
+		hitTarget.FloatingAirLevel = 1   --浮空状态:1,击退为0
+	end
+
+	if hitTarget.FloatingAirLevel == 1 and hitTarget.lastTakeAwayTime == shoot.castTime then
 		--print("debuffTable:", debuffTable)
 		if debuffTable == nil then		
 			ability:ApplyDataDrivenModifier(caster, hitTarget, shootAoeDebuff, {Duration = -1})
@@ -753,7 +760,7 @@ function takeAwayUnit(shoot,hitTarget)
 		local newPosition = hitTarget:GetAbsOrigin() +  direction * speed 
 		local groundPos = GetGroundPosition(newPosition, hitTarget)
 		hitTarget:SetAbsOrigin(groundPos)
-	--end	
+	end	
 end
 
 function blackHole(shoot)
@@ -1144,29 +1151,41 @@ function diffuseBoomAOEOperation(shoot, AOEOperationCallback)
 end
 
 --束缚类效果
-function catchAOEOperationCallback(shoot, unit, debuffDuration)
+function catchAOEOperationCallback(shoot, unit, debuffDuration, hitTargetDebuff)
     local keys = shoot.keysTable
     local ability = keys.ability
     local catch_radius = shoot.catch_radius
     local interval = 0.02
     local oPos =  unit:GetAbsOrigin()
     local lastUnitPos
+	local tieIsOver = 0
     Timers:CreateTimer(interval, function()   
         local unitPos = unit:GetAbsOrigin()
         local ouDistance = (oPos - unitPos):Length2D()
         if ouDistance <= catch_radius then
             lastUnitPos = unitPos
         else
-            unit:SetAbsOrigin(lastUnitPos)
+			if unit.FloatingAirLevel ~= nil and unit.FloatingAirLevel >= 9 then
+				tieIsOver = 1
+
+				for i = 1, #unit.tieParticleId do
+					ParticleManager:DestroyParticle(unit.tieParticleId[i] , true)
+				end
+			else
+				unit:SetAbsOrigin(lastUnitPos)
+			end
         end
-        if shoot.isKill == 1 then
+
+
+        if tieIsOver == 1 then
             return nil
         end
+		
         return interval
     end)
 
     Timers:CreateTimer(debuffDuration, function()
-        shoot.isKill = 1
+        tieIsOver = 1
         return nil
     end)
 end

@@ -47,8 +47,8 @@ function bigTornadoRenderParticles(shoot)
 	--local ability = keys.ability
 	local aoe_radius = shoot.aoe_radius
     local aoe_duration = shoot.aoe_duration
+	local shootPos = shoot:GetAbsOrigin()
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)
-    local shootPos = shoot:GetAbsOrigin()
 	ParticleManager:SetParticleControl(particleBoom, 3, Vector(shootPos.x,shootPos.y,shootPos.z))
 	ParticleManager:SetParticleControl(particleBoom, 1, Vector(aoe_radius, 0, 0))
 	ParticleManager:SetParticleControl(particleBoom, 11, Vector(aoe_duration, 0, 0))

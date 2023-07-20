@@ -142,6 +142,7 @@ function windArrowAOEOperationCallback(shoot,unit)
     local damage = getApplyDamageValue(shoot) + unit:GetHealth() * bounds_damage_percent
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
+	EmitSoundOn(keys.soundCastSp1, shoot)
 end
 
 function windArrowIntervalCallBack(shoot)

@@ -64,7 +64,8 @@ function whirlwindAxeRenderParticles(shoot)
 end
 
 function whirlwindAxeMaxRenderParticles(shoot)
-	local particlesName = shoot.particles_boom_max
+    local keys = shoot.keysTable
+	local particlesName = keys.particles_boom_max
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
 	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 end
@@ -74,12 +75,12 @@ function AOEOperationCallback(shoot,unit)
 	local caster = keys.caster
 	local ability = keys.ability
     local maxCount = ability:GetSpecialValueFor("shoot_count")
-    local hitTargetDebuff = keys.modifier_caster_hit_buff
+    local hitTargetDebuff = keys.modifier_caster_hit_debuff
     local bounds_damage = ability:GetSpecialValueFor("bounds_damage")
 	
     local bounds_damage_count = ability:GetSpecialValueFor("bounds_damage_count")
     local abilityName = caster:FindAbilityByName(ability:GetAbilityName())
-	local currentStack = caster:GetModifierStackCount(hitTargetDebuff, abilityName)
+	local currentStack = unit:GetModifierStackCount(hitTargetDebuff, abilityName)
 
     local damage = getApplyDamageValue(shoot) / maxCount + currentStack * bounds_damage
 
@@ -89,8 +90,8 @@ function AOEOperationCallback(shoot,unit)
 
     if currentStack < bounds_damage_count then
         currentStack = currentStack + 1
-        ability:ApplyDataDrivenModifier(caster, caster, hitTargetDebuff, {Duration = 5})  
-        caster:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
+        ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = 5})  
+        unit:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
         EmitSoundOn(keys.soundBoomNM, shoot)
         whirlwindAxeRenderParticles(shoot) 
     else

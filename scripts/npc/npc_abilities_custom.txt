@@ -29,6 +29,7 @@
 //下面才是正文
 #base contract/contract_all.kv
 #base contract/ability_buff.kv
+#base magic/pull_all.kv
 
 //火系
 #base magic/big_fire_ball.kv

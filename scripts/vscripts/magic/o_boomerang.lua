@@ -33,18 +33,19 @@ function createShoot(keys)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     shoot.intervalCallBack = oBoomerangIntervalCallBack
-    moveShoot(keys, shoot, nil, oBoomerangHitCallBack)
+    moveShoot(keys, shoot, oBoomerangBoomCallBack, nil)
 
 end
 
 --技能爆炸,单次伤害
-function oBoomerangHitCallBack(shoot,unit)
-    passAOEOperation(shoot,unit, oBoomerangPassOperationCallback)
+function oBoomerangBoomCallBack(shoot)
+    oBoomerangRenderParticles(shoot)
+    boomAOEOperation(shoot, oBoomerangAOEOperationCallback)
 end
 
 
 
-function oBoomerangPassOperationCallback(shoot,unit)
+function oBoomerangAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
     local caster = keys.caster
 	
@@ -61,12 +62,20 @@ function oBoomerangPassOperationCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
-    oBoomerangRenderParticles(shoot, unit, debuffDuration)
+    oBoomerangCatchRenderParticles(shoot, unit, debuffDuration)
     catchAOEOperationCallback(shoot, unit, debuffDuration)
 end
 
-function oBoomerangRenderParticles(shoot, unit, debuffDuration)
-	local particlesName = shoot.particles_catch
+function  oBoomerangRenderParticles(shoot)
+    local particlesName = shoot.particles_boom
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+end
+
+function oBoomerangCatchRenderParticles(shoot, unit, debuffDuration)
+    local keys = shoot.keysTable
+	local particlesName = keys.particles_catch
+
 	local catch_radius = shoot.catch_radius
     local unitPos = unit:GetAbsOrigin()
 
@@ -79,6 +88,11 @@ function oBoomerangRenderParticles(shoot, unit, debuffDuration)
     ParticleManager:SetParticleControl(particleBoom, 0, Vector(unitPos.x,unitPos.y,unitPos.z))
 
     ParticleManager:SetParticleControl(particleBoom, 10, Vector(catch_radius, 0, 0))
+
+    if unit.tieParticleId == nil then
+		unit.tieParticleId = {}
+	end
+	table.insert(unit.tieParticleId, newParticlesID)
 
     Timers:CreateTimer(debuffDuration, function()
         ParticleManager:DestroyParticle(particleBoom, true)
