@@ -10,20 +10,36 @@ function initMapStats()
         PlayerStats[i]['changdu'] = 0
     end
 ]]
+
+    --魔法石初始化
+    createMagicStone()
+
    
 
     --刷怪
     for i=1, 8 ,1 do
         createUnit('yang',DOTA_TEAM_BADGUYS)
     end
-    
-   
-
-
 
     creatShop()
     --createHuohai()
     --CreateHeroForPlayer("niu",-1)
+
+end
+
+--魔法石初始化
+function createMagicStone()
+    local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
+    local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
+    local goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    goodMagicStone:SetSkin(1)
+    goodMagicStone:SetContext("name", "magicStone", 0)
+
+    CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+
+
+
+
 
 end
 

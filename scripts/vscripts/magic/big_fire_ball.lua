@@ -63,6 +63,14 @@ function AOEOperationCallback(shoot,unit)
 	local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
 	if flag then
 		ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+	else
+        local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
+        ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+        EmitSoundOn(keys.soundDefense, unit)
+        Timers:CreateTimer(0.5, function()
+                ParticleManager:DestroyParticle(defenceParticlesID, true)
+                return nil
+        end)
 	end
 end
 

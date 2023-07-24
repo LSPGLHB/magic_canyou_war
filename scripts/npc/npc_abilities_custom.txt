@@ -30,6 +30,9 @@
 #base contract/contract_all.kv
 #base contract/ability_buff.kv
 #base magic/pull_all.kv
+#base magic/push_all.kv
+#base magic/common_attack_sp1.kv
+#base magic/common_attack_sp2.kv
 
 //火系
 #base magic/big_fire_ball.kv
@@ -91,6 +94,24 @@
 
 "DOTAAbilities"
 {
-	
+	"no_hp_bar_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 
+         "Modifiers"
+        {
+            "modifier_no_hp_bar_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+
+        }
+    }
 }

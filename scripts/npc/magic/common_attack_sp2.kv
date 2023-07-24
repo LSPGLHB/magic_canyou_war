@@ -1,0 +1,128 @@
+"DOTAAbilities"
+{
+     "common_attack_sp2_datadriven"
+	{
+        // General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				        "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+
+		"AbilityTextureName"			"shadow_demon_disruption"
+		"MaxLevel"                      "1"
+		"UnitType"         				"base"
+		"AbilityLevel"					"d"
+		"IconSrc" "file://{images}/custom_game/ability_button/shadow_demon_disruption.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
+		
+		"precache"						
+		{
+			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastPoint"				"0.15"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"10"
+
+
+        "AbilitySpecial"
+		{
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"450"
+			}
+            "02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1500"
+			}
+            "03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "65"
+			}
+            "04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "8"
+			}
+
+
+            "06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_charges"		"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_replenish_time"	"8"
+			}
+        }
+
+        "OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"magic/common_attack_sp2.lua"
+				"Function"				"shootStartCharge"
+				"modifierCountName"		"modifier_common_attack_sp2_counter_datadriven"
+			}
+		}
+
+		"OnSpellStart"
+		{		
+			"RunScript"
+			{
+				"ScriptFile"		"magic/common_attack_sp2.lua"
+				"Function"			"createShoot"
+				"unitModel"			"shootUnit-S"
+				"AbilityLevel"		"d"
+				"unitType"          "base"
+				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+
+				"isMisfire"			"1"
+				"particles_hit_dur" "0.7"
+                "cp"				 "3"
+
+				"particles_nm"      "particles/yingongji.vpcf"
+				"soundCast" 		"magic_common_attack_sp2_cast"
+
+				"particles_misfire" "particles/yingongji_jiluo.vpcf"
+				"soundMisfire"		"magic_common_attack_sp2_mis_fire"
+                "particles_miss"    "particles/yingongji_xiaoshi.vpcf"
+				"soundMiss"			"magic_common_attack_sp2_miss"
+				
+
+				
+                "particles_boom" 	"particles/yingongji_mingzhong.vpcf"
+				"soundBoom"			"magic_common_attack_sp2_boom"
+
+                "modifierCountName" "modifier_common_attack_sp2_counter_datadriven"
+				
+			}
+		}
+
+		"Modifiers"
+		{
+            "modifier_common_attack_sp2_counter_datadriven"
+			{
+				"Passive"				"1"
+			}
+
+		}
+    }
+}

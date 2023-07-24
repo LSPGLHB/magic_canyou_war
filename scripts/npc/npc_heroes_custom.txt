@@ -7,16 +7,16 @@
 	{
 		"override_hero"	"npc_dota_hero_rubick"
 		//"AbilityLayout"         "6"
-		"Ability1"	"pull_all_datadriven"
-		"Ability2"	"thunder_area_datadriven"
-		"Ability3"	"o_boomerang_datadriven"
-		"Ability4"  "wind_dart_datadriven"
+		"Ability1"	"frost_blast_datadriven"
+		"Ability2"	"push_all_datadriven"
+		"Ability3"	"common_attack_sp1_datadriven"
+		"Ability4"  "common_attack_sp2_datadriven"
 		"Ability5"  "wind_arrow_datadriven"
 		"Ability6"  "whirlwind_axe_datadriven"
 		"Ability7"  "wind_net_datadriven"
 		"Ability8"	"small_hurricane_datadriven"
 		"Ability9" 	"fire_spirit_datadriven"
-		"Ability10" "ice_beans_datadriven"
+		"Ability10" "thunder_area_datadriven"
 		"Ability11" "make_friend_datadriven"
 
 

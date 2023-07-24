@@ -1,25 +1,25 @@
 "DOTAAbilities"
 {
-    "pull_all_datadriven"
+    "push_all_datadriven"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 
-		"AbilityTextureName"			"rubick_telekinesis"
+		"AbilityTextureName"			"marci_grapple"
 		"MaxLevel"                      "1"
 
-
+		"AOERadius"                     "150"
 		"MaxLevel"                      "1"
 		"UnitType"         				"base"
 		"AbilityLevel"					"d"
-		"IconSrc" "file://{images}/custom_game/ability_button/rubick_telekinesis.png"  //选择框图标
-		"AbilityShowName" "#UIButton4"
+		"IconSrc" 						"file://{images}/custom_game/ability_button/marci_grapple.png"  //选择框图标
+		"AbilityShowName" 				"#UIButton4"
 		
 		"precache"						
 		{
@@ -29,7 +29,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"   //施法距离
+		//"AbilityCastRange"				"700"   //施法距离
 		"AbilityCastPoint"				"0.1"
 
 		// Time		
@@ -38,14 +38,24 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"26"
+		"AbilityManaCost"				"0"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"pull_speed"				"600"
+				"push_speed"				"500"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"700"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"search_radius"				"150"
 			}
 
         }
@@ -54,29 +64,29 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/pull_all.lua"
-				"Function"			"getPull"
+				"ScriptFile"		"magic/push_all.lua"
+				"Function"			"getPush"
 				"Target"			"POINT"
 		
 				"AbilityLevel"		"d"
 				"unitType"          "base"
 				
 				
-				"soundPullStaff"	"magic_pull_push_staff"
+				"soundPushStaff"	"magic_pull_push_staff"
 				
 
 				
                 
-				"soundPull"			"magic_pull_all"
+				"soundPush"			"magic_push_all"
 
-                "hitTargetDebuff"   "modifier_pull_all_target_buff"
-				"modifier_caster_name" "modifier_pull_all_caster_buff"
+                "hitTargetDebuff"   "modifier_push_all_target_buff"
+			
 			}
 		}
 
         "Modifiers"
 		{
-			"modifier_pull_all_target_buff"
+			"modifier_push_all_target_buff"
 			{
 				"IsDebuff"			"1"
 				"EffectName"		"particles/jituiyangchenbuff.vpcf"
@@ -88,15 +98,7 @@
 				}	
 			}
 
-			"modifier_pull_all_caster_buff"
-			{
-				"IsBuff"			"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-			}
+		
         }
     }
 }

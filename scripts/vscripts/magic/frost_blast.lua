@@ -53,7 +53,7 @@ function frostBlastAOECallback(shoot,unit)
 	local ability = keys.ability
 	local AbilityLevel = shoot.abilityLevel
     local aoeTargetDebuff = keys.aoeTargetDebuff
-    local isHitUnit = checkHitUnitToMark(shoot, true, unit)
+    local isHitUnit = checkHitUnitToMark(shoot, unit, nil)
     if isHitUnit then
         local damage = getApplyDamageValue(shoot)
         EmitSoundOn(keys.soundHit, unit)

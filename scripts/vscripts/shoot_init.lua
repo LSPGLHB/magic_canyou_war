@@ -79,11 +79,6 @@ function shootHit(shoot)
 	local casterTeam = caster:GetTeam()
 	local position=shoot:GetAbsOrigin()
 	
-	--默认不击退（好像没用了）
-	--[[
-	if keys.isBeatBack == nil then
-		keys.isBeatBack = 0
-	end]]
 	local hitType = keys.hitType
 	--local PlayerID = caster:GetPlayerID() PlayerResource:GetTeam(PlayerID) print("team========:"..team) print("goodguy2:"..DOTA_TEAM_GOODGUYS) print("badguy3:"..DOTA_TEAM_BADGUYS) print("noteam5:"..DOTA_TEAM_NOTEAM) print("CUSTOM_1=6:"..DOTA_TEAM_CUSTOM_1) print("CUSTOM_2=7:"..DOTA_TEAM_CUSTOM_2)
 	--寻找目标
@@ -101,7 +96,7 @@ function shootHit(shoot)
 	shoot.tempHitUnits = {}
 	local returnVal = 0--返回子弹碰撞后有什么反应的标志
 	for k,unit in pairs(aroundUnits) do
-		--local lable = unit:GetUnitLabel() --该单位为技能子弹
+		--local label = unit:GetUnitLabel() --该单位为技能子弹
 		--local unitTeam = unit:GetTeam()
 		local unitEnergy = unit.energy_point
 		local shootEnergy = shoot.energy_point
@@ -163,7 +158,7 @@ end
 
 --让不可多次碰撞的子弹跟目标只碰撞一次--单位能否被击中 
 function checkIsHitUnit(shoot,unit,magicType)
-	local lable = unit:GetUnitLabel() --该单位为技能子弹
+	local label = unit:GetUnitLabel() --该单位为技能子弹
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
@@ -184,6 +179,21 @@ function checkIsHitUnit(shoot,unit,magicType)
 	return isHitUnit
 end
 
+--敌对魔法石
+function checkIsEnemyMagicStone(shoot,unit)
+	local isEnemyMagicStone = false
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local label = unit:GetUnitLabel()
+	local shootEnergy = shoot.energy_point
+	if( casterTeam ~= unitTeam and shootEnergy ~= 0 and label == GameRules.magicStoneLabel) then
+		isEnemyMagicStone = true
+	end
+	return isEnemyMagicStone
+end
+
 --所有敌对
 function checkIsEnemy(shoot,unit)
 	local isEnemy = false
@@ -191,8 +201,9 @@ function checkIsEnemy(shoot,unit)
 	local caster = keys.caster
 	local casterTeam = caster:GetTeam()
 	local unitTeam = unit:GetTeam()
+	local label = unit:GetUnitLabel()
 	local shootEnergy = shoot.energy_point
-	if( casterTeam ~= unitTeam and shootEnergy ~= 0 ) then
+	if( casterTeam ~= unitTeam and shootEnergy ~= 0 and label ~= GameRules.shopLabel) then
 		isEnemy = true
 	end
 	return isEnemy
@@ -201,10 +212,10 @@ end
 --所有技能
 function checkIsSkill(shoot,unit)
 	local isEnemySkill = false
-	local lable = unit:GetUnitLabel()
+	local label = unit:GetUnitLabel()
 	local unitEnergy = unit.energy_point
 	--local shootEnergy = shoot.energy_point
-	if(GameRules.skillLabel == lable and unitEnergy ~= 0 and shoot ~= unit) then
+	if(GameRules.skillLabel == label and unitEnergy ~= 0 and shoot ~= unit) then
 		isEnemySkill = true
 	end
 	return isEnemySkill
@@ -217,8 +228,8 @@ function checkIsTeamSkill(shoot,unit)
 	local caster = keys.caster
 	local casterTeam = caster:GetTeam()
 	local unitTeam = unit:GetTeam()
-	local lable = unit:GetUnitLabel()
-	if (shoot ~= unit and unit ~= caster and casterTeam == unitTeam and GameRules.skillLabel == lable) then
+	local label = unit:GetUnitLabel()
+	if (shoot ~= unit and unit ~= caster and casterTeam == unitTeam and GameRules.skillLabel == label) then
 		isTeamSkill = true
 	end
 	return isTeamSkill
@@ -231,8 +242,8 @@ function checkIsTeamNoSkill(shoot,unit)
 	local caster = keys.caster
 	local casterTeam = caster:GetTeam()
 	local unitTeam = unit:GetTeam()
-	local lable = unit:GetUnitLabel()
-	if shoot ~= unit and unit ~= caster and casterTeam == unitTeam and GameRules.skillLabel ~= lable then
+	local label = unit:GetUnitLabel()
+	if shoot ~= unit and unit ~= caster and casterTeam == unitTeam and GameRules.skillLabel ~= label and label ~= GameRules.shopLabel and label ~= GameRules.magicStoneLabel then
 		isTeamHero = true
 	end
 	return isTeamHero
@@ -245,8 +256,8 @@ function checkIsEnemyNoSkill(shoot,unit)
 	local caster = keys.caster
 	local casterTeam = caster:GetTeam()
 	local unitTeam = unit:GetTeam()
-	local lable = unit:GetUnitLabel()
-	if casterTeam ~= unitTeam and shoot ~= unit and unit ~= caster and lable ~= GameRules.skillLabel then
+	local label = unit:GetUnitLabel()
+	if casterTeam ~= unitTeam and shoot ~= unit and unit ~= caster and label ~= GameRules.skillLabel and label ~= GameRules.shopLabel then
 		isEnemyHero = true
 	end
 	return isEnemyHero
@@ -254,7 +265,7 @@ end
 
 
 function energyBattleOperation(winBall, loseBall, tempHealth)
-	print("energyBattleOperation:",tempHealth)
+	--print("energyBattleOperation:",tempHealth)
 	local skillBoomCallback = loseBall.skillBoomCallback
 	if tempHealth ~= 0 then
 		if tempHealth < 0 then
@@ -638,7 +649,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	--beatBackDistance = powerLevelOperation(powerLv, beatBackDistance) 
 	local hitTargetDebuff = keys.hitTargetDebuff
 	--hitTarget:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = control_time} )--需要调用lua的modefier
-	ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
+	
 	beatBackPenetrateParticleOperation(keys,shoot)--中弹效果
 	local shootPos = shoot:GetAbsOrigin()
 	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)--把撞击的高度降到0用于计算
@@ -655,7 +666,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	local V0 = beatBackSpeed * interval
 	local speedmod = V0
 	acceleration = acceleration * interval
-	local bufferTempDis = hitTarget:GetPaddedCollisionRadius() * 2
+	local bufferTempDis = 100 --hitTarget:GetPaddedCollisionRadius() * 2
 	local traveled_distance = 0
 	local hitFlag = false
 	if isFirstBeat then
@@ -664,42 +675,46 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	--记录击退时间
 	local beatTime = GameRules:GetGameTime()
 	hitTarget.lastBeatBackTime = beatTime
-	if hitTarget.FloatingAirLevel == nil and hitTarget.FloatingAirLevel < 0 then 
+	if hitTarget.FloatingAirLevel == nil or hitTarget.FloatingAirLevel < 0 then 
 		hitTarget.FloatingAirLevel = 0
 	end
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
-	function ()
-		if traveled_distance < beatBackDistance and beatTime == hitTarget.lastBeatBackTime and hitTarget.FloatingAirLevel == 0 then --如果击退时间没被更改继续执行（被其他技能击退则执行新的，旧的不再运行）
-			local newPosition = hitTarget:GetAbsOrigin() +  beatBackDirection * speedmod -- Vector(beatBackDirection.x, beatBackDirection.y, 0) * speedmod
-			speedmod = speedmod + acceleration * interval
-			local groundPos = GetGroundPosition(newPosition, hitTarget)
-			--中途可穿模，最后不能穿
-			local tempLastDis = beatBackDistance - traveled_distance
-			if tempLastDis > bufferTempDis then
-				hitTarget:SetAbsOrigin(groundPos)
-			else
-				FindClearSpaceForUnit( hitTarget, groundPos, false )
-			end
-			traveled_distance = traveled_distance + speedmod
-			--print("traveled_distance:"..speedmod.."="..traveled_distance)
-			local remainDistance = beatBackDistance - traveled_distance
+	targetLabel = hitTarget:GetUnitLabel()
+	if targetLabel ~= GameRules.magicStoneLabel then
+		ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
+			function ()
+				if traveled_distance < beatBackDistance and beatTime == hitTarget.lastBeatBackTime and hitTarget.FloatingAirLevel == 0 then --如果击退时间没被更改继续执行（被其他技能击退则执行新的，旧的不再运行）
+					local newPosition = hitTarget:GetAbsOrigin() +  beatBackDirection * speedmod -- Vector(beatBackDirection.x, beatBackDirection.y, 0) * speedmod
+					speedmod = speedmod + acceleration * interval
+					local groundPos = GetGroundPosition(newPosition, hitTarget)
+					--中途可穿模，最后不能穿
+					local tempLastDis = beatBackDistance - traveled_distance
+					if tempLastDis > bufferTempDis then
+						hitTarget:SetAbsOrigin(groundPos)
+					else
+						FindClearSpaceForUnit( hitTarget, groundPos, false )
+					end
+					traveled_distance = traveled_distance + speedmod
+					--print("traveled_distance:"..speedmod.."="..traveled_distance)
+					local remainDistance = beatBackDistance - traveled_distance
 
-			hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance,directionFlag)
+					hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance,directionFlag)
 
-			if hitFlag then --速度传给撞击的单位，该单位停止
-				traveled_distance = beatBackDistance
-			end
-		else
-			hitTarget.isFirstBeat = 0
-			hitTarget.FloatingAirLevel = nil
-			hitTarget:InterruptMotionControllers( true )
-			hitTarget:RemoveModifierByName(hitTargetDebuff)		
-			--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
-			return nil
+					if hitFlag then --速度传给撞击的单位，该单位停止
+						traveled_distance = beatBackDistance
+					end
+				else
+					hitTarget.isFirstBeat = 0
+					hitTarget.FloatingAirLevel = nil
+					hitTarget:InterruptMotionControllers( true )
+					hitTarget:RemoveModifierByName(hitTargetDebuff)		
+					--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
+					return nil
+				end
+				return interval
+			end,0)
 		end
-		return interval
-	end,0)
-end
+	end
 
 --击退的单位二次击退其他单位  (存在全角度搜索BUG，应该将搜索角度限制在90度内，待优化)
 function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance,directionFlag)
@@ -720,10 +735,10 @@ function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance,directionFlag)
 										false)
 	for k,unit in pairs(aroundUnits) do
 		--local name = unit:GetContext("name")
-		local lable = unit:GetUnitLabel()
+		local label = unit:GetUnitLabel()
 		local casterTeam = caster:GetTeam()
 		local unitTeam = unit:GetTeam()
-		if(GameRules.skillLabel ~= lable and shoot ~= unit and casterTeam~=unitTeam and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
+		if(GameRules.magicStoneLabel ~= label and GameRules.shopLabel ~= label and GameRules.skillLabel ~= label and shoot ~= unit and casterTeam~=unitTeam and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
 			--unit.beatBackFlag = 1 --碰撞中，变成不可再碰撞状态
 			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,false,directionFlag)
 			hitFlag = true
@@ -741,26 +756,29 @@ function takeAwayUnit(shoot,hitTarget)
 	local speed = shoot.speed 
 	local direction = shoot.direction
 	local shootAoeDebuff = keys.shootAoeDebuff
+	local targetLabel = hitTarget:GetUnitLabel()
 	local debuffTable = hitTarget:FindModifierByName(shootAoeDebuff)
+	local isEnemyNoSkill = checkIsEnemyNoSkill(shoot,hitTarget)
+	if isEnemyNoSkill and targetLabel ~= GameRules.magicStoneLabel then
+		if hitTarget.lastTakeAwayTime == nil or hitTarget.lastTakeAwayTime < shoot.castTime then
+			hitTarget.lastTakeAwayTime = shoot.castTime
 
-	if hitTarget.lastTakeAwayTime == nil or hitTarget.lastTakeAwayTime < shoot.castTime then
-		hitTarget.lastTakeAwayTime = shoot.castTime
-
-	end
-
-	if hitTarget.FloatingAirLevel == nil or hitTarget.FloatingAirLevel < 1 then
-		hitTarget.FloatingAirLevel = 1   --浮空状态:1,击退为0
-	end
-
-	if hitTarget.FloatingAirLevel == 1 and hitTarget.lastTakeAwayTime == shoot.castTime then
-		--print("debuffTable:", debuffTable)
-		if debuffTable == nil then		
-			ability:ApplyDataDrivenModifier(caster, hitTarget, shootAoeDebuff, {Duration = -1})
 		end
-		local newPosition = hitTarget:GetAbsOrigin() +  direction * speed 
-		local groundPos = GetGroundPosition(newPosition, hitTarget)
-		hitTarget:SetAbsOrigin(groundPos)
-	end	
+
+		if hitTarget.FloatingAirLevel == nil or hitTarget.FloatingAirLevel < 1 then
+			hitTarget.FloatingAirLevel = 1   --浮空状态:1,击退为0
+		end
+
+		if hitTarget.FloatingAirLevel == 1 and hitTarget.lastTakeAwayTime == shoot.castTime then
+			--print("debuffTable:", debuffTable)
+			if debuffTable == nil then		
+				ability:ApplyDataDrivenModifier(caster, hitTarget, shootAoeDebuff, {Duration = -1})
+			end
+			local newPosition = hitTarget:GetAbsOrigin() +  direction * speed 
+			local groundPos = GetGroundPosition(newPosition, hitTarget)
+			hitTarget:SetAbsOrigin(groundPos)
+		end	
+	end
 end
 
 function blackHole(shoot)
@@ -799,9 +817,9 @@ function blackHole(shoot)
 										false)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
-			local lable = unit:GetUnitLabel()
+			local label = unit:GetUnitLabel()
 			--只作用于敌方，或石头单位
-			if casterTeam ~= unitTeam or lable == GameRules.stoneLabel then
+			if (casterTeam ~= unitTeam or label == GameRules.stoneLabel) and label ~= GameRules.magicStoneLabel  then
 				local shootPos = shoot:GetAbsOrigin()
 				local unitPos = unit:GetAbsOrigin()
 				local vectorDistance = Vector(shootPos.x,shootPos.y,0) - Vector(unitPos.x,unitPos.y,0)
@@ -857,9 +875,10 @@ function modifierHole(shoot)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
 			--local unitEnergy = unit.energy_point
-			local lable = unit:GetUnitLabel()
+			local label = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
-			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
+			local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
+			if isEnemyNoSkill then
 				local newFlag = checkHitUnitToMark(shoot, unit, nil)--用于技能结束时清理debuff	
 				if newFlag then  --新加入的加上buff
 					ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
@@ -976,14 +995,15 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
             local unitEnergy = unit.energy_point
-            local lable = unit:GetUnitLabel()
+            local label = unit:GetUnitLabel()
             
             --只作用于敌方,非技能单位
-            if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then  
+            local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
+			if isEnemyNoSkill then 
 				damageCallbackFunc(shoot, unit, interval)
             end
             --如果是技能则进行加强或减弱操作，AOE对所有队伍技能有效
-            if lable == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
+            if label == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
                 checkHitAbilityToMark(shoot, unit)
             end
         end
@@ -1038,9 +1058,10 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
         for k,unit in pairs(aroundUnits) do
             local unitTeam = unit:GetTeam()
             --local unitEnergy = unit.energy_point
-            local lable = unit:GetUnitLabel()
+            local label = unit:GetUnitLabel()
             --只作用于敌方,非技能单位
-            if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel  then    
+            local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
+			if isEnemyNoSkill then
                 checkHitUnitToMark(shoot, unit , nil) --用于事后消除debuff
                 local angelFlag = true 
                 if faceAngle ~= nil then
@@ -1092,13 +1113,14 @@ function boomAOEOperation(shoot, AOEOperationCallback)
 	for k,unit in pairs(aroundUnits) do
 		local unitTeam = unit:GetTeam()
 		local unitEnergy = unit.energy_point
-		local lable = unit:GetUnitLabel()
+		local label = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
-		if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
+		local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
+		if isEnemyNoSkill then
 			AOEOperationCallback(shoot, unit)
 		end
 		--如果是技能则进行加强或减弱操作
-		if lable == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
+		if label == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
             checkHitAbilityToMark(shoot, unit)
 		end
 	end 
@@ -1135,13 +1157,14 @@ function diffuseBoomAOEOperation(shoot, AOEOperationCallback)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
 			local unitEnergy = unit.energy_point
-			local lable = unit:GetUnitLabel()
+			local label = unit:GetUnitLabel()
 			--只作用于敌方,非技能单位
-			if casterTeam ~= unitTeam and lable ~= GameRules.skillLabel then
+			local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
+			if isEnemyNoSkill then
 				AOEOperationCallback(shoot, unit)
 			end
 			--如果是技能则进行加强或减弱操作
-			if lable == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
+			if label == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
 				checkHitAbilityToMark(shoot, unit)
 			end
 		end 

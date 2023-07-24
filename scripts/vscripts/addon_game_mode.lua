@@ -137,6 +137,7 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 	GameRules.PreTime = 10
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
+	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
 	GameRules.nothingLabel ="nothingLabel" --抛物线用
 	GameRules.stoneLabel = "stoneLabel"
