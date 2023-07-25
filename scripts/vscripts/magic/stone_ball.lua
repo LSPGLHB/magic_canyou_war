@@ -37,7 +37,12 @@ function passOperationCallback(shoot,unit)
 
     local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,true)
+    local shootPos = shoot:GetAbsOrigin()
+	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)
+	local targetPos= unit:GetAbsOrigin()
+	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)
+	local beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
+	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,beatBackDirection,true)
 
     local damage = getApplyDamageValue(shoot)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})

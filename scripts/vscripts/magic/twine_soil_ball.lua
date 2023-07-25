@@ -113,17 +113,23 @@ function createTwineSoilBall(keys)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
-    moveShoot(keys, shoot, nil, twineSoilBallHitCallBack)
+    moveShoot(keys, shoot, twineSoilBallBoomCallBack, nil)
 
 end
 
 --技能爆炸,单次伤害
-function twineSoilBallHitCallBack(shoot, unit)
-    passAOEOperation(shoot,unit, twineSoilBallPassOperationCallback)
+function twineSoilBallBoomCallBack(shoot)
+	twineSoilBalllRenderParticles(shoot)
+    boomAOEOperation(shoot, twineSoilBallBoomOperationCallback)
 end
 
+function twineSoilBalllRenderParticles(shoot)
+	local particlesName = shoot.particles_boom
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+end
 
-function twineSoilBallPassOperationCallback(shoot,unit)
+function twineSoilBallBoomOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
@@ -138,3 +144,4 @@ function twineSoilBallPassOperationCallback(shoot,unit)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
 end 
+

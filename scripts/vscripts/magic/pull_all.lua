@@ -34,10 +34,13 @@ function getPull(keys)
                 else
                     FindClearSpaceForUnit( target, groundPos, false )
                 end
+                if tempLastDis < bufferTempDis * 2 then
+                    caster:RemoveModifierByName(casterBuff)	
+                end
                 traveled_distance = traveled_distance + pullSpeed
             else
                 target:RemoveModifierByName(hitTargetDebuff)
-                caster:RemoveModifierByName(casterBuff)	
+                
                 target.FloatingAirLevel = nil
                 return nil
             end

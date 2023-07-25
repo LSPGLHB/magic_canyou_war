@@ -31,14 +31,20 @@ end
 function createMagicStone()
     local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
     local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
-    local goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
-    goodMagicStone:SetSkin(1)
+    local goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    goodMagicStone:SetSkin(0)
     goodMagicStone:SetContext("name", "magicStone", 0)
+    local goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    goodMagicStonePan:SetSkin(0)
 
-    CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
 
-
-
+    local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone") 
+    local badMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
+    local badMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    badMagicStone:SetSkin(1)
+    badMagicStone:SetContext("name", "magicStone", 0)
+    local badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    badMagicStonePan:SetSkin(1)
 
 
 end

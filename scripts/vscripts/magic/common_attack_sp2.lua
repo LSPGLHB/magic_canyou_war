@@ -133,6 +133,9 @@ function commonAttackSp2AOEOperationCallback(shoot,unit)
 	local caster = keys.caster
 	local ability = keys.ability
 	local damage = getApplyDamageValue(shoot)
+	local unitLabel = unit:GetUnitLabel()
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-
+	if unitLabel == GameRules.magicStoneLabel then
+		ApplyDamage({victim = unit, attacker = caster, damage = 1, damage_type = DAMAGE_TYPE_PURE})
+	end
 end	

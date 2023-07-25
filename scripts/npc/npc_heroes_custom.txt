@@ -7,10 +7,10 @@
 	{
 		"override_hero"	"npc_dota_hero_rubick"
 		//"AbilityLayout"         "6"
-		"Ability1"	"frost_blast_datadriven"
+		"Ability1"	"twine_soil_ball_datadriven"
 		"Ability2"	"push_all_datadriven"
 		"Ability3"	"common_attack_sp1_datadriven"
-		"Ability4"  "common_attack_sp2_datadriven"
+		"Ability4"  "fire_ball_datadriven"
 		"Ability5"  "wind_arrow_datadriven"
 		"Ability6"  "whirlwind_axe_datadriven"
 		"Ability7"  "wind_net_datadriven"

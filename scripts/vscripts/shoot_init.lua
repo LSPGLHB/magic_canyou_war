@@ -634,13 +634,13 @@ end
 --击退单位处理
 function beatBackPenetrateParticleOperation(keys,shoot)
 	--中弹粒子效果
-	ParticleManager:CreateParticle(keys.particles_hit, PATTACH_ABSORIGIN_FOLLOW, shoot) 
+	ParticleManager:CreateParticle(keys.particles_beat, PATTACH_ABSORIGIN_FOLLOW, shoot) 
 	--中弹声音
-	EmitSoundOn(keys.sound_beak, shoot)
+	EmitSoundOn(keys.sound_beat, shoot)
 end
 
 --击退单位
-function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirstBeat,directionFlag)
+function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBackDirection,isFirstBeat)
 	local caster = keys.caster
 	local ability = keys.ability
 	--local powerLv = shoot.power_lv
@@ -651,18 +651,9 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 	--hitTarget:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = control_time} )--需要调用lua的modefier
 	
 	beatBackPenetrateParticleOperation(keys,shoot)--中弹效果
-	local shootPos = shoot:GetAbsOrigin()
-	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)--把撞击的高度降到0用于计算
-	local targetPos= hitTarget:GetAbsOrigin()
-	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)--把目标的高度降到0用于计算
-	local beatBackDirection
-	if directionFlag then
-		beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
-	else
-		beatBackDirection =  (tempShootPos - tempTargetPos):Normalized()
-	end
+
 	local interval = 0.02
-	local acceleration = -3000 --加速度
+	local acceleration = -1000 --加速度
 	local V0 = beatBackSpeed * interval
 	local speedmod = V0
 	acceleration = acceleration * interval
@@ -679,7 +670,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 		hitTarget.FloatingAirLevel = 0
 	end
 	targetLabel = hitTarget:GetUnitLabel()
-	if targetLabel ~= GameRules.magicStoneLabel then
+	if targetLabel ~= GameRules.magicStoneLabel and GameRules.shopLabel ~= targetLabel and GameRules.skillLabel ~= targetLabel then
 		ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
 			function ()
@@ -698,7 +689,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 					--print("traveled_distance:"..speedmod.."="..traveled_distance)
 					local remainDistance = beatBackDistance - traveled_distance
 
-					hitFlag = checkSecondHit(keys,hitTarget,beatBackSpeed,remainDistance,directionFlag)
+					hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection)
 
 					if hitFlag then --速度传给撞击的单位，该单位停止
 						traveled_distance = beatBackDistance
@@ -706,18 +697,17 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,isFirs
 				else
 					hitTarget.isFirstBeat = 0
 					hitTarget.FloatingAirLevel = nil
-					hitTarget:InterruptMotionControllers( true )
 					hitTarget:RemoveModifierByName(hitTargetDebuff)		
 					--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
 					return nil
 				end
 				return interval
 			end,0)
-		end
 	end
+end
 
 --击退的单位二次击退其他单位  (存在全角度搜索BUG，应该将搜索角度限制在90度内，待优化)
-function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance,directionFlag)
+function checkSecondHit(keys,shoot_sp1,shoot,beatBackSpeed,remainDistance,beatBackDirection)
 	local caster = keys.caster
 	local ability = keys.ability
 	local position = shoot:GetAbsOrigin()
@@ -736,11 +726,11 @@ function checkSecondHit(keys,shoot,beatBackSpeed,remainDistance,directionFlag)
 	for k,unit in pairs(aroundUnits) do
 		--local name = unit:GetContext("name")
 		local label = unit:GetUnitLabel()
-		local casterTeam = caster:GetTeam()
-		local unitTeam = unit:GetTeam()
-		if(GameRules.magicStoneLabel ~= label and GameRules.shopLabel ~= label and GameRules.skillLabel ~= label and shoot ~= unit and casterTeam~=unitTeam and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
+		--local casterTeam = caster:GetTeam()
+		--local unitTeam = unit:GetTeam()
+		if(GameRules.magicStoneLabel ~= label and GameRules.shopLabel ~= label and GameRules.skillLabel ~= label and shoot_sp1 ~= unit  and shoot ~= unit and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
 			--unit.beatBackFlag = 1 --碰撞中，变成不可再碰撞状态
-			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,false,directionFlag)
+			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,beatBackDirection)
 			hitFlag = true
 			return hitFlag
 		end
