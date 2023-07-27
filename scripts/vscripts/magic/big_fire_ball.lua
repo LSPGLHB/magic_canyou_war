@@ -51,7 +51,7 @@ function AOEOperationCallback(shoot,unit)
     local debuffName = keys.modifierDebuffName
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-	beatBackDistance = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
+	beatBackDistance = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--装备数值加强
 	beatBackDistance = getApplyControlValue(shoot, debuffDuration)--相生加强
 
 	local shootPos = shoot:GetAbsOrigin()

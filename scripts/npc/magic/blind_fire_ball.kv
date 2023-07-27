@@ -2,7 +2,7 @@
 {
     "blind_fire_ball_datadriven"
 	{
-    // General
+    // General萤火球
 	//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
@@ -134,6 +134,7 @@
                 "soundDefense"      "magic_defence"
 
                 "modifierCountName" "modifier_blind_fire_ball_counter"
+				
                 "hitTargetDebuff"   "modifier_blind_fire_ball_debuff"
 			}
 		}
@@ -147,7 +148,8 @@
 				"EffectAttachType"	"follow_chest"
 				"States"
 				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
+                    "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
 				} 
 			}
             

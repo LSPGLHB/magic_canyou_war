@@ -27,6 +27,12 @@ function createShoot(keys)
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
         shoot.aoe_radius = aoe_radius
         shoot.aoe_duration = aoe_duration
+        if i == 1 then
+            shoot.aoeTargetDebuff = keys.aoeTargetDebuffSp1
+        end
+        if i == 2 then
+            shoot.aoeTargetDebuff = keys.aoeTargetDebuffSp2
+        end
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID

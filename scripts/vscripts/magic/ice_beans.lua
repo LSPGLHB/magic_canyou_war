@@ -5,10 +5,7 @@ function stageOne (keys)
 	local ability	= keys.ability
     local modifierStageName	= keys.modifier_stage_a_name
 	local chargeCount	= ability:GetSpecialValueFor("charge_count")
-    --[[
-    pfx = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
-	caster.fire_spirits_pfx			= pfx
-    ]]
+
     caster.fire_spirits_numSpirits	= chargeCount
 	caster:SetModifierStackCount( modifierStageName, ability, chargeCount )
     local ability_b_name	= keys.ability_b_name
@@ -38,9 +35,7 @@ end
 function initStage(keys)
     local caster	= keys.caster
 	local ability	= keys.ability
---[[local pfx = caster.fire_spirits_pfx
-	ParticleManager:DestroyParticle( pfx, false )
-]]-- Swap main ability
+
 	local ability_a_name = ability:GetAbilityName()
 	local ability_b_name = keys.ability_b_name
 	caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
@@ -78,22 +73,9 @@ function LaunchFire(keys)
 		if tempCount == shootCount then
 			return nil
 		end
-		return 0.3
+		return 0.2
 	end)
-	-- Update the particle 
-    --[[
-	local pfx = caster.fire_spirits_pfx
-	ParticleManager:SetParticleControl( pfx, 1, Vector( currentStack, 0, 0 ) )
-	for i=1, caster.fire_spirits_numSpirits do
-		local radius = 0
-		if i <= currentStack then
-			radius = 1
-		end
 
-		ParticleManager:SetParticleControl( pfx, 8+i, Vector( radius, 0, 0 ) )
-	end
-  ]]
-	-- Remove the stack modifier if all the spirits has been launched.
 	if currentStack == 0 then
 		caster:RemoveModifierByName( modifierName )
 	end

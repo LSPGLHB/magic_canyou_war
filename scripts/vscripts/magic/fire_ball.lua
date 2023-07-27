@@ -1,10 +1,12 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
 	local casterPoint = caster:GetAbsOrigin()
+	
     --local speed = ability:GetSpecialValueFor("speed")
 	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     
@@ -15,7 +17,12 @@ function createShoot(keys)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
+
+	local AbilityLevel = shoot.abilityLevel
+	local playerID = caster:GetPlayerID()
+	aoe_radius = getFinalValueOperation(playerID,aoe_radius,'radius',AbilityLevel,nil)--数值加强
 	shoot.aoe_radius = aoe_radius
+
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
@@ -45,8 +52,12 @@ function fireBallAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
+	local playerID = caster:GetPlayerID()
+	local AbilityLevel = shoot.abilityLevel
 	local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
+	beatBackDistance = getFinalValueOperation(playerID,beatBackDistance,'control',AbilityLevel,nil)--装备数值加强
+	beatBackDistance = getApplyControlValue(shoot,beatBackDistance)--相生相克计算
 	local shootPos = shoot:GetAbsOrigin()
 	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)
 	local targetPos= unit:GetAbsOrigin()

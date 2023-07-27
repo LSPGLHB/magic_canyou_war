@@ -21,7 +21,6 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
    
     if ( modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0 ) then --增幅且没被禁止，或减幅
-        print("111============================================111")
         if (modifierStackCount > 0) then   
             modifierNameAdd = modifierNameBuff
             modifierNameRemove = modifierNameDebuff
@@ -30,7 +29,7 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
             modifierNameRemove = modifierNameBuff
             modifierStackCount = modifierStackCount * -1
         end
-        print("modifierNameAdd",modifierNameAdd)
+        --print("modifierNameAdd",modifierNameAdd)
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
@@ -351,6 +350,45 @@ function initPlayerPower()
         PlayerPower[playerID]['duration_range_a_precent_final'] = 0
         PlayerPower[playerID]['player_range_duration'] = 0
         PlayerPower[playerID]['player_range_flag'] = 1
+
+        PlayerPower[playerID]['player_radius_d'] = 0
+        PlayerPower[playerID]['player_radius_d_precent_base'] = 0
+        PlayerPower[playerID]['player_radius_d_precent_final'] = 0
+        PlayerPower[playerID]['player_radius_c'] = 0
+        PlayerPower[playerID]['player_radius_c_precent_base'] = 0
+        PlayerPower[playerID]['player_radius_c_precent_final'] = 0
+        PlayerPower[playerID]['player_radius_b'] = 0
+        PlayerPower[playerID]['player_radius_b_precent_base'] = 0
+        PlayerPower[playerID]['player_radius_b_precent_final'] = 0
+        PlayerPower[playerID]['player_radius_a'] = 0
+        PlayerPower[playerID]['player_radius_a_precent_base'] = 0
+        PlayerPower[playerID]['player_radius_a_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_d'] = 0
+        PlayerPower[playerID]['temp_radius_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_c'] = 0
+        PlayerPower[playerID]['temp_radius_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_b'] = 0
+        PlayerPower[playerID]['temp_radius_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_a'] = 0
+        PlayerPower[playerID]['temp_radius_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_a_precent_final'] = 0
+        PlayerPower[playerID]['duration_radius_d'] = 0
+        PlayerPower[playerID]['duration_radius_d_precent_base'] = 0
+        PlayerPower[playerID]['duration_radius_d_precent_final'] = 0
+        PlayerPower[playerID]['duration_radius_c'] = 0
+        PlayerPower[playerID]['duration_radius_c_precent_base'] = 0
+        PlayerPower[playerID]['duration_radius_c_precent_final'] = 0
+        PlayerPower[playerID]['duration_radius_b'] = 0
+        PlayerPower[playerID]['duration_radius_b_precent_base'] = 0
+        PlayerPower[playerID]['duration_radius_b_precent_final'] = 0
+        PlayerPower[playerID]['duration_radius_a'] = 0
+        PlayerPower[playerID]['duration_radius_a_precent_base'] = 0
+        PlayerPower[playerID]['duration_radius_a_precent_final'] = 0
+        PlayerPower[playerID]['player_radius_duration'] = 0
+        PlayerPower[playerID]['player_radius_flag'] = 1
 
         PlayerPower[playerID]['player_mana_cost_d'] = 0
         PlayerPower[playerID]['player_mana_cost_d_precent_base'] = 0
@@ -798,6 +836,19 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_range_a'] = 0
         PlayerPower[playerID]['temp_range_a_precent_base'] = 0
         PlayerPower[playerID]['temp_range_a_precent_final'] = 0
+
+        PlayerPower[playerID]['temp_radius_d'] = 0
+        PlayerPower[playerID]['temp_radius_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_d_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_c'] = 0
+        PlayerPower[playerID]['temp_radius_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_c_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_b'] = 0
+        PlayerPower[playerID]['temp_radius_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_b_precent_final'] = 0
+        PlayerPower[playerID]['temp_radius_a'] = 0
+        PlayerPower[playerID]['temp_radius_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_radius_a_precent_final'] = 0
 
         PlayerPower[playerID]['temp_mana_cost_d'] = 0
         PlayerPower[playerID]['temp_mana_cost_d_precent'] = 0

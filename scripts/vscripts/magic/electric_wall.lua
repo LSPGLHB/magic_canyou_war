@@ -36,6 +36,14 @@ function electricWallBoomCallBack(shoot)
         end
         return nil
     end)
+    local keys = shoot.keysTable
+    Timers:CreateTimer(function()
+        powerShootParticleOperation(keys,shoot)
+        if shoot.energy_point == 0 then
+            return nil
+        end
+        return 0.02
+    end)
 end
 
 function electricWallDelayRenderParticles(shoot)

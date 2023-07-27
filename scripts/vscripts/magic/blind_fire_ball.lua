@@ -1,7 +1,8 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function shootStartCharge(keys)
-	--每次升级调用
+	--每次升级调用--萤火球
 	local caster = keys.caster
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
@@ -103,8 +104,7 @@ function createBlindFireBall(keys)
     --无弹后启动技能冷却
     if caster.blind_fire_ball_charges == 0 then
         ability:StartCooldown(caster.blind_fire_ball_cooldown)
-    else
-        ability:EndCooldown()
+
     end
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)

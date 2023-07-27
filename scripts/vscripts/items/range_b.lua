@@ -16,10 +16,11 @@ function refreshItemBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     local item_range_b = ability:GetSpecialValueFor("item_range_b")
     local item_range_b_precent_base = ability:GetSpecialValueFor("item_range_b_precent_base")
+    local item_radius_b_precent_base = ability:GetSpecialValueFor("item_radius_b_precent_base")
 
     setPlayerPower(playerID, "player_range_b", flag, item_range_b)
     setPlayerPower(playerID, "player_range_b_precent_base", flag, item_range_b_precent_base)
-
+    setPlayerPower(playerID, "player_radius_b_precent_base", flag, item_radius_b_precent_base)
 
 
 end

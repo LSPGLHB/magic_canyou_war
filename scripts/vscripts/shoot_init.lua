@@ -101,17 +101,15 @@ function shootHit(shoot)
 		local unitEnergy = unit.energy_point
 		local shootEnergy = shoot.energy_point
 		--遇到敌人实现伤害并返回撞击反馈
-		if(checkIsEnemy(shoot,unit) and checkIsHitUnit(shoot,unit,nil)) then --触碰到的是不是敌对队伍，且自身法魂不为0，是否实现撞击
+		if(checkIsEnemy(shoot,unit) and checkIsHitUnit(shoot,unit)) then --触碰到的是不是敌对队伍，且自身法魂不为0，是否实现撞击
 			if( checkIsSkill(shoot,unit) ) then --如果碰到的是子弹，且法魂不为0：此处需要比拼法魂大小
 				--获取触碰双方的属性--print("shoot-nuit-Type:",shoot.unit_type,unit.unit_type)
 				--法魂计算过程(还需加入克制计算)
 				reinforceEach(unit,shoot,nil)
 				reinforceEach(shoot,unit,nil)
 				local shootEnergy = shoot.energy_point
-				shootEnergy = getApplyEnergyValue(shoot, shootEnergy)
 				local unitEnergy = unit.energy_point
-				unitEnergy = getApplyEnergyValue(unit, unitEnergy)
-				
+
 				local tempHealth = shootEnergy - unitEnergy
 				print("shootEnergy:",shootEnergy,"-",unitEnergy)
 				if(tempHealth > 0) then
@@ -157,7 +155,7 @@ function shootHit(shoot)
 end
 
 --让不可多次碰撞的子弹跟目标只碰撞一次--单位能否被击中 
-function checkIsHitUnit(shoot,unit,magicType)
+function checkIsHitUnit(shoot,unit)
 	local label = unit:GetUnitLabel() --该单位为技能子弹
 	local keys = shoot.keysTable
 	local caster = keys.caster
@@ -167,7 +165,7 @@ function checkIsHitUnit(shoot,unit,magicType)
 	local isHitUnit = true --初始化设单位为可击中状态
 	--敌方非技能
 	if checkIsEnemyNoSkill(shoot,unit) then
-		isHitUnit = checkHitUnitToMark(shoot, unit , magicType)
+		isHitUnit = checkHitUnitToMark(shoot, unit)
 		--如果子弹有aoedebuff则需要做好准备做检测掉出aoe的单位
 		if shoot.shootAoeDebuff ~= nil then
 			table.insert(shoot.tempHitUnits, unit)
@@ -315,29 +313,19 @@ function checkHitAbilityToMark(shoot, unit)
 end
 
 --记录击中单位目标到数组，返回标记（true：未击中过，false：已经击中过）
-function checkHitUnitToMark(shoot, unit, magicType)
+function checkHitUnitToMark(shoot, unit)
 	local isHitFlag = true
-	if magicType == nil then
-		magicType = 0
-	end
-	if unit.hitMagicType == nil then
-		unit.hitMagicType = {}
-	end
+
 	for i = 1, #shoot.hitUnits do
 		--print("checkHitUnitToMark:",shoot.hitUnits[i],"=",unit)
-		if shoot.hitUnits[i] == unit then	
-			for j = 1, #unit.hitMagicType do
-				if unit.hitMagicType[j] == magicType then
-					isHitFlag = false  --如果已经击中过就不再击中
-					break
-				end
-			end
+		if shoot.hitUnits[i] == unit then		
+			isHitFlag = false  --如果已经击中过就不再击中
+			break
 		end
 	end
 	if isHitFlag then
 		--print("checkHitUnitToMarkININININI")
 		table.insert(shoot.hitUnits, unit)
-		table.insert(unit.hitMagicType , magicType)
 	end
 	return isHitFlag
 end
@@ -467,6 +455,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.soundBoom = keys.soundBoom
 	shoot.soundDuration = keys.soundDuration
 
+	shoot.particles_nm = keys.particles_nm
 	shoot.particles_hit = keys.particles_hit
 	shoot.particles_boom = keys.particles_boom
 	shoot.particles_power = keys.particles_power
@@ -527,7 +516,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	caster:SpendMana(shoot.mana_cost_bonus, caster)
 
 	--法魂
-	local abilityEnergy = shoot:GetHealth()
+	local abilityEnergy = shoot:GetMaxHealth()
 	local energyBuffName = 'energy'
 	shoot.energy_point = getFinalValueOperation(playerID,abilityEnergy,energyBuffName,AbilityLevel,owner) 
 	--shoot:AddAbility('ability_health_control'):SetLevel(1)
@@ -636,7 +625,7 @@ function beatBackPenetrateParticleOperation(keys,shoot)
 	--中弹粒子效果
 	ParticleManager:CreateParticle(keys.particles_beat, PATTACH_ABSORIGIN_FOLLOW, shoot) 
 	--中弹声音
-	EmitSoundOn(keys.sound_beat, shoot)
+	EmitSoundOn(keys.soundBeat, shoot)
 end
 
 --击退单位
@@ -817,7 +806,10 @@ function blackHole(shoot)
 				--local G_Distance = (vectorDistance):Length2D()
 				local newPosition = unitPos +  G_Direction * G_Speed
 				local groundPos = GetGroundPosition(newPosition, unit)
-				unit:SetAbsOrigin(groundPos)
+				if label == GameRules.skillLabel then
+					groundPos = newPosition
+				end
+				FindClearSpaceForUnit( unit, groundPos, false )
 			end
 		end
 		return interval
@@ -869,7 +861,7 @@ function modifierHole(shoot)
 			--只作用于敌方,非技能单位
 			local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
 			if isEnemyNoSkill then
-				local newFlag = checkHitUnitToMark(shoot, unit, nil)--用于技能结束时清理debuff	
+				local newFlag = checkHitUnitToMark(shoot, unit)--用于技能结束时清理debuff	
 				if newFlag then  --新加入的加上buff
 					ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
 				end
@@ -1052,7 +1044,7 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
             --只作用于敌方,非技能单位
             local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
 			if isEnemyNoSkill then
-                checkHitUnitToMark(shoot, unit , nil) --用于事后消除debuff
+                checkHitUnitToMark(shoot, unit) --用于事后消除debuff
                 local angelFlag = true 
                 if faceAngle ~= nil then
                     angelFlag = isFaceByFaceAngle(shoot, unit, faceAngle)

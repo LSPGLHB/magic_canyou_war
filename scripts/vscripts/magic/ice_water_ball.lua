@@ -37,6 +37,7 @@ function createShoot(keys)
     EmitSoundOn(keys.soundCast, shoot_sp1)
     shoot_sp1.angle = angle
     shoot_sp1.xPoint_distance = xPoint_distance
+    shoot_sp1.particles_nm = keys.particles_nm_sp1
     shoot_sp1.particles_power = keys.particles_power_sp1
     shoot_sp1.particles_weak = keys.particles_weak_sp1
     shoot_sp1.particles_miss = keys.particles_miss_sp1
@@ -55,6 +56,7 @@ function createShoot(keys)
     EmitSoundOn(keys.soundCast, shoot_sp2)
     shoot_sp2.angle = angle
     shoot_sp2.xPoint_distance = xPoint_distance
+    shoot_sp2.particles_nm = keys.particles_nm_sp2
     shoot_sp2.particles_power = keys.particles_power_sp2
     shoot_sp2.particles_weak = keys.particles_weak_sp2
     shoot_sp2.particles_miss = keys.particles_miss_sp2

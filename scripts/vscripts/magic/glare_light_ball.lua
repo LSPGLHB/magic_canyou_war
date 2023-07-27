@@ -1,11 +1,13 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
+--刺眼光波
 function createGlareLightBall(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
-	local aoe_radius = ability:GetSpecialValueFor("damage_aoe_radius") 
+	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance") 
     local direction = (skillPoint - casterPoint):Normalized()
@@ -26,35 +28,38 @@ function glareLightBallBoomCallBack(shoot)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
-
-    local damage_aoe_radius = ability:GetSpecialValueFor("damage_aoe_radius") 
-    local debuff_aoe_radius = ability:GetSpecialValueFor("debuff_aoe_radius") 
+	local playerID = caster:GetPlayerID()
+	local AbilityLevel = shoot.abilityLevel
+    local aoe_radius = shoot.aoe_radius
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local defenceParticles = keys.particles_defense
-    local isHit = 0
 
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
-										debuff_aoe_radius,
+										aoe_radius,
 										DOTA_UNIT_TARGET_TEAM_BOTH,
 										DOTA_UNIT_TARGET_ALL,
 										0,
 										0,
 										false)
 	for k,unit in pairs(aroundUnits) do
-		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energy_point
-		local lable = unit:GetUnitLabel()
+		--local unitTeam = unit:GetTeam()
+		--local unitHealth = unit.energy_point
+		--local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
-		if checkIsEnemyNoSkill(shoot,unit) and checkIsHitUnit(shoot,unit,0) then
+		if checkIsEnemyNoSkill(shoot,unit) and checkIsHitUnit(shoot,unit) then
             local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
             if isface then
+				local damage = getApplyDamageValue(shoot)
+	        	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})  
                 local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+				debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--装备数值加强
+				debuffDuration = getApplyControlValue(shoot,debuffDuration)--相生相克计算
                 ability:ApplyDataDrivenModifier(caster, unit, keys.hitTargetDebuff, {Duration = debuffDuration}) 
-                isHit = 1
+				shootSoundAndParticle(shoot, "boom")
             else
                 local defenceParticlesID =ParticleManager:CreateParticle(defenceParticles, PATTACH_OVERHEAD_FOLLOW , unit)
                 ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -73,32 +78,6 @@ function glareLightBallBoomCallBack(shoot)
 		end
 	end 
 
-    local aroundUnits = FindUnitsInRadius(casterTeam, 
-										position,
-										nil,
-										damage_aoe_radius,
-										DOTA_UNIT_TARGET_TEAM_BOTH,
-										DOTA_UNIT_TARGET_ALL,
-										0,
-										0,
-										false)
-	for k,unit in pairs(aroundUnits) do
-		local unitTeam = unit:GetTeam()
-		local unitHealth = unit.energy_point
-		local lable = unit:GetUnitLabel()
-		--只作用于敌方,非技能单位
-		if checkIsEnemyNoSkill(shoot,unit) and checkIsHitUnit(shoot,unit,1) then
-			local damage = getApplyDamageValue(shoot)
-	        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})  
-            isHit = 1
-		end
-		--如果是技能则进行加强或减弱操作
-		if checkIsSkill(shoot,unit) then
-            checkHitAbilityToMark(shoot, unit)
-		end
-	end 
-    if isHit == 1 then
-        shootSoundAndParticle(shoot, "boom")
-    end
+   
 end
 

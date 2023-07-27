@@ -82,7 +82,7 @@
 			"09"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"angle_rate"		"0.07"
+				"angle_rate"		"0.04"
 			}
         }
 
@@ -113,14 +113,26 @@
                 "particles_duration" 	"particles/14vzibingqiu_baozha.vpcf"
 				"soundDuration"			"magic_v_ice_ball_boom"
 
-				"aoeTargetDebuff"  "modifier_v_ice_ball_debuff_datadriven"
+				"aoeTargetDebuffSp1"  "modifier_v_ice_ball_debuff_sp1_datadriven"
+				"aoeTargetDebuffSp2"  "modifier_v_ice_ball_debuff_sp2_datadriven"
 			}
 		}
 
 
         "Modifiers"
         {
-            "modifier_v_ice_ball_debuff_datadriven"
+            "modifier_v_ice_ball_debuff_sp1_datadriven"
+            {
+                "IsDebuff"			"1"
+                "EffectName"		"particles/jiansu_debuff.vpcf"
+                "EffectAttachType"	"follow_origin"
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE" "%turn_rate_percent"
+                    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_percent"
+                }                
+            }
+			"modifier_v_ice_ball_debuff_sp2_datadriven"
             {
                 "IsDebuff"			"1"
                 "EffectName"		"particles/jiansu_debuff.vpcf"

@@ -139,6 +139,10 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
+	local bouns_damage_percentage = ability:GetSpecialValueFor("bouns_damage_percentage") / 100
+	local damage = getApplyDamageValue(shoot) + (unit:GetMaxMana() - unit:GetMana()) * bouns_damage_percentage
+	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
     if isface then
@@ -150,10 +154,6 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
                 return nil
         end)
     else
-        local bouns_damage_percentage = ability:GetSpecialValueFor("bouns_damage_percentage") / 100
-        local damage = getApplyDamageValue(shoot) + (unit:GetMaxMana() - unit:GetMana()) * bouns_damage_percentage
-        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-
 		local hitTargetDebuff = keys.hitTargetDebuff
 		local playerID = caster:GetPlayerID()	
 		local AbilityLevel = shoot.abilityLevel

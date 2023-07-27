@@ -1,5 +1,6 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function createLightBall(keys)
     local caster = keys.caster
     local ability = keys.ability
@@ -38,7 +39,7 @@ function lightBallBoomCallBack(shoot)
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     lightBallRenderParticles(shoot) --爆炸粒子效果生成		  
     --dealSkilllightBallBoom(keys,shoot) --实现aoe爆炸效果
-    boomAOEOperation(shoot, AOEOperationCallback)
+    boomAOEOperation(shoot, lightBallAOEOperationCallback)
 end
 
 function lightBallRenderParticles(shoot)
@@ -52,7 +53,7 @@ function lightBallRenderParticles(shoot)
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(radius, 1, 1))
 end
 
-function AOEOperationCallback(shoot,unit)
+function lightBallAOEOperationCallback(shoot,unit)
     local keys = shoot.keysTable
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
@@ -60,15 +61,25 @@ function AOEOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.modifierDebuffName
     local damage = getApplyDamageValue(shoot) / 2
-    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
-    debuffDuration = getApplyControlValue(shoot, debuffDuration)
+    
     local faceAngle = ability:GetSpecialValueFor("face_angle")
-    local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
+    local flag = isFaceByFaceAngle(shoot, unit, faceAngle)
     if flag then
         ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+        debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
+        debuffDuration = getApplyControlValue(shoot, debuffDuration)
         ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    else
+        local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
+        ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+        EmitSoundOn(keys.soundDefense, unit)
+        Timers:CreateTimer(0.5, function()
+                ParticleManager:DestroyParticle(defenceParticlesID, true)
+                return nil
+        end)
     end
+
 end
 
 

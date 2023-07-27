@@ -101,8 +101,7 @@ function createShoot(keys)
     --无弹后启动技能冷却
     if caster.fire_arrow_bomb_charges == 0 then
         ability:StartCooldown(caster.fire_arrow_bomb_cooldown)
-    else
-        ability:EndCooldown()
+
     end
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)

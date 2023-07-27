@@ -34,10 +34,24 @@ function thunderAreaBoomCallBack(shoot)
 end
 
 function thunderAreaDuration(shoot)
+    local keys = shoot.keysTable
+    local caster = keys.caster
     local interval = 2
     thunderAreaRenderParticles(shoot)
     durationAOEDamage(shoot, interval, thunderAreaDamageCallback)
     modifierHole(shoot)
+    Timers:CreateTimer(function() 
+        if shoot.isKillAOE == 1 then
+            return nil
+        end
+        local particleStun = ParticleManager:CreateParticle(keys.particles_stun, PATTACH_WORLDORIGIN, caster)
+        local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
+        ParticleManager:SetParticleControl(particleStun, 3, groundPos)
+        ParticleManager:SetParticleControl(particleStun, 10, Vector(shoot.aoe_radius, 0, 0))
+        ParticleManager:SetParticleControl(particleStun, 11, Vector(2, 0, 0))
+        EmitSoundOn(keys.soundStun, shoot)
+        return interval
+    end)
 end
 
 function thunderAreaRenderParticles(shoot)
@@ -47,7 +61,7 @@ function thunderAreaRenderParticles(shoot)
     local groundPos = GetGroundPosition(shoot:GetAbsOrigin(), shoot)
 	ParticleManager:SetParticleControl(particleBoom, 3, groundPos)
     ParticleManager:SetParticleControl(particleBoom, 10, Vector(shoot.aoe_radius, 0, 0))
-    ParticleManager:SetParticleControl(particleBoom, 11, Vector(shoot.aoe_duration, 0, 0))
+    ParticleManager:SetParticleControl(particleBoom, 11, Vector(shoot.aoe_duration+0.5, 0, 0))
 end
 
 function thunderAreaDamageCallback(shoot, unit, interval)
@@ -59,5 +73,7 @@ function thunderAreaDamageCallback(shoot, unit, interval)
     local damage = damageTotal / (duration / interval)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
     ability:ApplyDataDrivenModifier(caster, unit, keys.aoeTargetStun, {Duration = 1})
+
+    
 end
 
