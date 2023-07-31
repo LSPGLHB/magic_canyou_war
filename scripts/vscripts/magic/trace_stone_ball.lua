@@ -103,8 +103,7 @@ function createTraceStoneBall(keys)
     --无弹后启动技能冷却
     if caster.trace_stone_ball_charges == 0 then
         ability:StartCooldown(caster.trace_stone_ball_cooldown)
-    else
-        ability:EndCooldown()
+
     end
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
@@ -123,16 +122,22 @@ end
 
 
 --技能爆炸,单次伤害
-function traceStoneBallBoomCallback(shoot)
-	traceStoneBallRenderParticles(shoot) --爆炸粒子效果生成		  
+function traceStoneBallBoomCallback(shoot)  
 	boomAOEOperation(shoot, traceStoneBallAOEOperationCallback)
 end
-
+--爆炸粒子效果生成	
 function traceStoneBallRenderParticles(shoot)
 	local particlesName = shoot.particles_boom
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
 	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 end
+function traceStoneBallStrikeRenderParticles(shoot) 	
+	local keys = shoot.keysTable
+	local particlesName = keys.particles_strike
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+end
+
 
 function traceStoneBallAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
@@ -149,6 +154,10 @@ function traceStoneBallAOEOperationCallback(shoot,unit)
 	damage = damage * damagePower
 	if randomNum < double_damage_percentage then
 		damage = damage * 2
+		EmitSoundOn(keys.soundStrike, shoot)
+		traceStoneBallStrikeRenderParticles(shoot) 	
+	else
+		traceStoneBallRenderParticles(shoot) 	
 	end
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
@@ -175,17 +184,23 @@ function traceStoneBallIntervalCallBack(shoot)
 		for k,unit in pairs(aroundUnits) do
 			--local unitEnergy = unit.energy_point
 			--local shootEnergy = shoot.energy_point
-
 			if checkIsEnemyNoSkill(shoot,unit) then
 				shoot.trackUnit = unit
-				shoot.speed = shoot.speed * 2
+				local shootSpeed = shoot.speed
+				shoot.speed = 0
 				shoot.position = shoot:GetAbsOrigin()
-				shoot.traveled_distance = 0
+				shoot.traveled_distance =  0.5 * shoot.max_distance
+				ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 1, 0))
+				EmitSoundOn(keys.soundTrace, shoot)
+				Timers:CreateTimer(0.5 ,function()
+					shoot.speed = shootSpeed * 1.5
+				end)
 			end
 		end
 	end
 
+	--print("ooo:",shoot.traveled_distance)
 	if shoot.trackUnit ~= nil then
-		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - Vector(position.x, position.y, 0)):Normalized()
+		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
 	end
 end

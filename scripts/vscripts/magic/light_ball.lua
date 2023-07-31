@@ -8,7 +8,7 @@ function createLightBall(keys)
     --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate")
-    --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
     local directionTable ={}
@@ -25,7 +25,7 @@ function createLightBall(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
-        --shoot.aoe_radius = aoe_radius
+
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID

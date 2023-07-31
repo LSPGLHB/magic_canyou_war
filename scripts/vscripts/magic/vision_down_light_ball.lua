@@ -31,18 +31,21 @@ function createVisionDownLightBall(keys)
 end
 
 function visionDownLightBallBoomCallBack(shoot)
-    visionDownLightBallDuration(shoot) --实现持续光环效果以及粒子效果
+    visionDownLightBallDuration(shoot) 
 end
 
 function visionDownLightBallDuration(shoot)
     local keys = shoot.keysTable
     local interval = 0.5--伤害间隔
     visionDownLightBallRenderParticles(shoot)
+    EmitSoundOn(keys.soundBoom, shoot)
+    shoot.soundDurationDelay = keys.soundDurationDelay
     durationAOEDamage(shoot, interval, visionDownLightBallDamageCallback)
     local ability = keys.ability
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local judgeTime = ability:GetSpecialValueFor("vision_time")
-    durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime,visionDebuffCallback)
+    durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime,visionDebuffCallback)     
+
 end
 
 function visionDownLightBallDamageCallback(shoot, unit, interval)
@@ -54,8 +57,19 @@ function visionDownLightBallDamageCallback(shoot, unit, interval)
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)   
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
-    if isface then
+    local modifierDefenseName = keys.modifierDefenseName
+    if isface then   
         ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        if unit:HasModifier(modifierDefenseName) then
+            unit:RemoveModifierByName(modifierDefenseName)
+        end
+    else
+        ability:ApplyDataDrivenModifier(caster, unit, modifierDefenseName, {Duration = -1})
+    end
+    if shoot.isKillAOE == 1 then
+        if unit:HasModifier(modifierDefenseName) then
+            unit:RemoveModifierByName(modifierDefenseName)
+        end 
     end
 end
 
@@ -82,5 +96,6 @@ function visionDebuffCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
     debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强
     ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    EmitSoundOn(keys.soundDebuff, shoot)
 end
 

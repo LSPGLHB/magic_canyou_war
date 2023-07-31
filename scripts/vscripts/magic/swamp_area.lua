@@ -62,7 +62,7 @@ function swampAreaDamageCallback(shoot, unit, interval)
     local keys = shoot.keysTable
     local caster = keys.caster
     local ability = keys.ability
-    local duration = shoot.aoe_duration
+    local duration = ability:GetSpecialValueFor("aoe_duration")
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})

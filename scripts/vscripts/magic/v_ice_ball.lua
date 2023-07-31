@@ -9,6 +9,8 @@ function createShoot(keys)
     local angleRate = ability:GetSpecialValueFor("angle_rate")
     local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
+    aoe_duration = getFinalValueOperation(caster:GetPlayerID(),aoe_duration,'control',keys.AbilityLevel,nil)
+    aoe_duration = getApplyControlValue(shoot, aoe_duration)
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
     local directionTable ={}

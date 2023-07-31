@@ -155,6 +155,10 @@ function electricWallAOEHitRange(shoot)
     local newArray = {}
     newArray = shoot.tempHitRangeUnits
     --print("hitRangeUnits:",#oldArray,"-",#newArray)
+    local hitTargetStun = keys.hitTargetStun
+    local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
+    debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
+    debuffDuration = getApplyControlValue(shoot, debuffDuration)
     for i = 1, #oldArray do
         local flagSp1 = true
         for j = 1, #newArray do
@@ -163,17 +167,9 @@ function electricWallAOEHitRange(shoot)
             end
         end
         if flagSp1 then
-            local hitTargetStun = keys.hitTargetStun
-            local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-            debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
-            debuffDuration = getApplyControlValue(shoot, debuffDuration)
             ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetStun, {Duration = debuffDuration})  
-            --local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-            --local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-            --beatBackUnit(keys,shoot,oldArray[i],beatBackSpeed,beatBackDistance,true,false)
         end
     end
-
     for x = 1,#newArray do
         local flagSp2 = true
         for y = 1, #oldArray do
@@ -182,14 +178,7 @@ function electricWallAOEHitRange(shoot)
             end
         end
         if flagSp2 then
-            local hitTargetStun = keys.hitTargetStun
-            local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-            debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
-            debuffDuration = getApplyControlValue(shoot, debuffDuration)
             ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetStun, {Duration = debuffDuration})  
-            --local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
-            --local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
-            --beatBackUnit(keys,shoot,newArray[x],beatBackSpeed,beatBackDistance,true,true)
         end
     end
 end

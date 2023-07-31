@@ -36,6 +36,8 @@ function passOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
 
     local beatBackDistance = ability:GetSpecialValueFor("beat_back_distance")
+    beatBackDistance = getFinalValueOperation(playerID,beatBackDistance,'control',AbilityLevel,nil)--装备数值加强
+	beatBackDistance = getApplyControlValue(shoot, beatBackDistance)--相生加强
 	local beatBackSpeed = ability:GetSpecialValueFor("beat_back_speed") 
     local shootPos = shoot:GetAbsOrigin()
 	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)

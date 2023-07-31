@@ -158,8 +158,8 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
 		local playerID = caster:GetPlayerID()	
 		local AbilityLevel = shoot.abilityLevel
 		local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-		debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
-		debuffDuration = getApplyControlValue(shoot, debuffDuration)
+		--debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
+		--debuffDuration = getApplyControlValue(shoot, debuffDuration)
 		ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
 
 		local unitPos = unit:GetAbsOrigin()
@@ -210,17 +210,15 @@ function iceSkeletonIntervalCallBack(shoot)
 		for k,unit in pairs(aroundUnits) do
 			--local unitEnergy = unit.energy_point
 			--local shootEnergy = shoot.energy_point
-
 			if checkIsEnemyNoSkill(shoot,unit) then
 				shoot.trackUnit = unit
-				shoot.speed = shoot.speed * 1.35
-				--shoot.position = shoot:GetAbsOrigin()
-				shoot.traveled_distance = 0
+				--shoot.speed = shoot.speed * 1.35
+				shoot.traveled_distance = 0.5 * shoot.max_distance
 			end
 		end
 	end
 
 	if shoot.trackUnit ~= nil then
-		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - Vector(position.x, position.y, 0)):Normalized()
+		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
 	end
 end

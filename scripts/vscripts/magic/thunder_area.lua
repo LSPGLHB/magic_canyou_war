@@ -4,7 +4,6 @@ function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
     local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -68,7 +67,7 @@ function thunderAreaDamageCallback(shoot, unit, interval)
     local keys = shoot.keysTable
     local caster = keys.caster
     local ability = keys.ability
-    local duration = shoot.aoe_duration
+    local duration = ability:GetSpecialValueFor("aoe_duration")
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})

@@ -122,8 +122,8 @@ function createShoot(keys)
     --无弹后启动技能冷却
     if caster.electric_gather_charges == 0 then
         ability:StartCooldown(caster.electric_gather_cooldown)
-    else
-        ability:EndCooldown()
+    --else
+    --    ability:EndCooldown()
     end
 
     initDurationBuff(keys)

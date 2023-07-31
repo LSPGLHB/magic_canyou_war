@@ -121,9 +121,13 @@
 				
                 "particles_boom" 	"particles/12zhuizongtudan_mingzhong.vpcf"
 				"soundBoom"			"magic_trace_stone_ball_hit"
+				"particles_strike"	"particles/12zhuizongtudan_mingzhong_baoji.vpcf"
+				"soundStrike"		"magic_trace_stone_ball_strike"
+
+				"soundTrace"		"magic_trace_stone_ball_trace"
 
                 "modifierCountName" "modifier_trace_stone_ball_counter_datadriven"
-                "hitTargetDebuff"   "modifier_trace_stone_ball_debuff_datadriven"
+              
 				
 			}
 		}
@@ -133,33 +137,9 @@
             "modifier_trace_stone_ball_counter_datadriven"
 			{
 				"Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
 			}
 
-			"modifier_trace_stone_ball_debuff_datadriven"
-			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"
-				"EffectAttachType"	"follow_origin"
-                //"OverrideAnimation"     "ACT_DOTA_DISABLED"
-
-				"Properties"
-				{
-					//"MODIFIER_PROPERTY_DISABLE_TURNING" "1"
-				}
-
-				"States"
-				{
-					//"MODIFIER_STATE_SILENCED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"   "MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_MUTED"	  "MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_NIGHTMARED" "MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				
-			}
+			
 		}
     }
 }

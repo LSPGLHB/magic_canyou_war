@@ -104,18 +104,30 @@
 				"unitModel"			"shootUnit-S"
 				"AbilityLevel"		"b"
 				"unitType"          "huo"
-				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+				"hitType" 			"3"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isAOE"             "1"
+				"cp"				"3"
+				"particles_hit_dur" "0.7"
+
+
 				"particles_nm"      "particles/16jinshiguangqiu_shengcheng.vpcf"
 				"soundCast"			"magic_vision_down_light_ball_cast"
-				"particles_hit_dur" "0.7"
+				
 				"particles_power" 	"particles/16jinshiguangqiu_jiaqiang.vpcf"
 				"soundPower"		"magic_light_power_up"
 				"particles_weak" 	"particles/16jinshiguangqiu_xueruo.vpcf"
 				"soundWeak"			"magic_light_power_down"
-				"cp"				"3"
+				
                 "particles_duration" 	"particles/jinshiguangqiubaozha.vpcf"
+				"soundBoom"				"magic_light_aoe_boom"
 				"soundDuration"			"magic_light_aoe_duration"
+				"soundDurationDelay"	"0.5"
+
+				"soundWorking"	"magic_vision_down_light_ball_working"
+				"soundDebuff"	"magic_vision_down_light_ball_debuff"
+
+				"modifierDefenseName"	"modifier_vision_down_light_ball_defense_datadriven"
+
                 "modifierDebuffName"  "modifier_vision_down_light_ball_debuff_datadriven"
 			}
 		}
@@ -132,6 +144,14 @@
 					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
                     "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
 				}
+			}
+
+			"modifier_vision_down_light_ball_defense_datadriven"
+			{
+				"IsDebuff"			"0"
+				"EffectName"		"particles/duobizhimangbuff_1.vpcf"
+				"EffectAttachType"	"follow_chest"
+			
 			}
         }
     }

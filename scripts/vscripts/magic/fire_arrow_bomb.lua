@@ -134,8 +134,6 @@ function fireArrowBombAOEOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.hitTargetDebuff   
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
-    --debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
-    --debuffDuration = getApplyControlValue(shoot, debuffDuration)
     ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
 
     Timers:CreateTimer(debuffDuration, function()

@@ -9,9 +9,7 @@ function moveShoot(keys, shoot, skillBoomCallback, hitUnitCallBack)--skillBoomCa
 	local shootEnergySend = shootEnergyMax * 0.8
 	local shootEnergyStep = shootEnergyMax * 0.2 * shoot.speed / 10
 	shoot:SetHealth(shootEnergySend)]]
-
-	shoot.max_distance = shoot.max_distance_operation
-	
+	shoot.max_distance = shoot.max_distance_operation	
 	--local direction = shoot.direction
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),function ()
 		if shoot.traveled_distance < shoot.max_distance then
@@ -383,27 +381,18 @@ function checkHitTeamerRemoveDebuff(unit)
 end
 
 function moveShootTimerRun(keys,shoot)
-	
 	--子弹周期性操作
 	if shoot.intervalCallBack ~= nil then
 		local intervalCallBack = shoot.intervalCallBack
 		intervalCallBack(shoot)
 	end
-	
 	local shootTempPos = shoot:GetAbsOrigin()
 	local speed = shoot.speed
 	--print('moveShootTimerRun-speed:'..speed)
 	local direction = shoot.direction
-	--此处追踪状态，只知道追踪，其他不管
-	--if keys.isTrack == 1 then
-	--	direction = (keys.trackUnit:GetAbsOrigin() - Vector(shootTempPos.x, shootTempPos.y, 0)):Normalized()
-	--end
 	local newPos = shootTempPos + direction * speed
 	local groundPos = GetGroundPosition(newPos, shoot)
 	local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + shoot.shootHight)
-
-	
-	
 	--FindClearSpaceForUnit( shoot, groundPos, false )--飞行单位可以穿地形不用这个
 	shoot:SetAbsOrigin(shootPos)
 end
@@ -419,10 +408,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 		keys.isHitCallBack = 0
 	end 
 	shoot.isHitCallBack = keys.isHitCallBack
-	if keys.isTrack == nil then
-		keys.isTrack = 0
-	end
-	shoot.isTrack = keys.isTrack
+
 	if keys.isMisfire == nil then
 		keys.isMisfire = 0
 	end
@@ -443,6 +429,10 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 		keys.isDelay = 0
 	end 
 	shoot.isDelay = keys.isDelay
+	if keys.shootHight ==nil then
+		keys.shootHight = 100
+	end
+	shoot.shootHight = keys.shootHight --子弹高度
 	
 
 	shoot.keysTable = keys
@@ -473,8 +463,9 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.direction = direction
 	shoot:SetForwardVector(direction)
 	shoot.traveled_distance = 0 --初始化已经飞行的距离0
-	shoot.shootHight = 100 --子弹高度
-	shoot.isBreak = 0 --初始化不跳出
+	
+
+
 	shoot.owner = owner
 	shoot:SetOwner(owner)
 	shoot.unit_type = keys.unitType --用于计算克制和加强
@@ -492,10 +483,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--print("shoot:"..shoot.abilityLevel)
 
 
-	shoot.aoe_radius = ability:GetSpecialValueFor("aoe_radius")
-	if shoot.aoe_radius == 0 then
-		shoot.aoe_radius = ability:GetSpecialValueFor("hit_range")
-	end
+
 
 	if keys.hitTargetDebuff ~= nil then
 		shoot.hitTargetDebuff = keys.hitTargetDebuff
@@ -544,6 +532,15 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	local rangeBuffName = 'range'
 	shoot.max_distance_operation = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
 
+	--范围
+	shoot.aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+	if shoot.aoe_radius == nil or shoot.aoe_radius == 0 then
+		shoot.aoe_radius = ability:GetSpecialValueFor("hit_range")
+	else
+		local rangeBase = shoot.aoe_radius
+		local rangeBuffName = 'range'
+		shoot.aoe_radius = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
+	end
 	--控制时间(在其他地方执行)
 end
 
@@ -593,6 +590,7 @@ function shootSoundAndParticle(shoot, type)--type为nil只发声
 		ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	end
 	--声音
+	
 	if soundName ~= nil then
 		Timers:CreateTimer(soundDelay,function ()
 			EmitSoundOn(soundName, shoot)
@@ -629,7 +627,7 @@ function beatBackPenetrateParticleOperation(keys,shoot)
 end
 
 --击退单位
-function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBackDirection,isFirstBeat)
+function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBackDirection,transferBeatFlag)
 	local caster = keys.caster
 	local ability = keys.ability
 	--local powerLv = shoot.power_lv
@@ -649,9 +647,8 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 	local bufferTempDis = 100 --hitTarget:GetPaddedCollisionRadius() * 2
 	local traveled_distance = 0
 	local hitFlag = false
-	if isFirstBeat then
-		hitTarget.isFirstBeat = 1
-	end
+	hitTarget.isBeatFlag = 1
+
 	--记录击退时间
 	local beatTime = GameRules:GetGameTime()
 	hitTarget.lastBeatBackTime = beatTime
@@ -676,15 +673,15 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 					end
 					traveled_distance = traveled_distance + speedmod
 					--print("traveled_distance:"..speedmod.."="..traveled_distance)
-					local remainDistance = beatBackDistance - traveled_distance
-
-					hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection)
-
-					if hitFlag then --速度传给撞击的单位，该单位停止
-						traveled_distance = beatBackDistance
+					if transferBeatFlag then
+						local remainDistance = beatBackDistance - traveled_distance
+						hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection)
+						if hitFlag then --速度传给撞击的单位，该单位停止
+							traveled_distance = beatBackDistance
+						end
 					end
 				else
-					hitTarget.isFirstBeat = 0
+					hitTarget.isBeatFlag = 0
 					hitTarget.FloatingAirLevel = nil
 					hitTarget:RemoveModifierByName(hitTargetDebuff)		
 					--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
@@ -717,9 +714,9 @@ function checkSecondHit(keys,shoot_sp1,shoot,beatBackSpeed,remainDistance,beatBa
 		local label = unit:GetUnitLabel()
 		--local casterTeam = caster:GetTeam()
 		--local unitTeam = unit:GetTeam()
-		if(GameRules.magicStoneLabel ~= label and GameRules.shopLabel ~= label and GameRules.skillLabel ~= label and shoot_sp1 ~= unit  and shoot ~= unit and unit.isFirstBeat ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过	and unit.beatBackFlag ~= 1	
-			--unit.beatBackFlag = 1 --碰撞中，变成不可再碰撞状态
-			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,beatBackDirection)
+		if(GameRules.magicStoneLabel ~= label and GameRules.shopLabel ~= label and GameRules.skillLabel ~= label and shoot_sp1 ~= unit  and shoot ~= unit and unit.isBeatFlag ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过
+			--unit.isBeatFlag = 1 --碰撞中，变成不可再碰撞状态
+			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,beatBackDirection,true)
 			hitFlag = true
 			return hitFlag
 		end

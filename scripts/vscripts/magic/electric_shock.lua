@@ -18,10 +18,13 @@ function stepOne(keys)
     local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + 100)
     shoot:SetAbsOrigin(shootPos)
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
+
+    shoot.aoe_radius = getApplyControlValue(shoot, shoot.aoe_radius)
     shoot.speed = 0
     --过滤掉增加施法距离的操作
 	--shoot.max_distance_operation = max_distance
     --initDurationBuff(keys)
+
 
     local casterBuff = keys.modifier_caster_syn_name
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
@@ -60,8 +63,6 @@ function stepOne(keys)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
 
-
-	
     PlayerPower[playerID]["electric_shock_a"] = shoot
     shoot.playerID = playerID
     --moveShoot(keys, shoot, electricBallBoomCallBack, nil)
@@ -85,6 +86,8 @@ function stepTwo(keys)
     local shootPos = Vector(groundPos.x, groundPos.y, groundPos.z + 100)
     shoot:SetAbsOrigin(shootPos)
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
+
+    shoot.aoe_radius = getApplyControlValue(shoot, shoot.aoe_radius)
     shoot.speed = 0
     --过滤掉增加施法距离的操作
 	--shoot.max_distance_operation = max_distance
