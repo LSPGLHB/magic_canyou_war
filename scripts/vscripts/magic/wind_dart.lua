@@ -165,7 +165,7 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 	local interval = 0.1
 	local shootSpeed = shoot.speed
 	local lockUnit
-	local lessDistance = radius
+	local lessDistance = radius + 200
 
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
 										casterPos,
@@ -197,6 +197,14 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 		Timers:CreateTimer(function()
 			local isfaceSp2 = isFaceByFaceAngle(shoot, lockUnit, faceAngle)
 
+			if isfaceSp2 and shoot.speed ~= shootSpeed then
+				EmitSoundOn(keys.soundSpeedDown, shoot)
+			end
+
+			if not isfaceSp2 and shoot.speed ~= shootSpeed + windSpeed then
+				EmitSoundOn(keys.soundSpeedUp, shoot)
+			end
+
 			if isfaceSp2 then
 				shoot.speed = shootSpeed
 				ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 0, 0))
@@ -204,6 +212,7 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 				shoot.speed = shootSpeed + windSpeed
 				ParticleManager:SetParticleControl(shoot.particleID, 13, Vector(0, 1, 0))
 			end
+
 			if shoot.energy_point == 0 then
 				if lockUnit:HasModifier(modifierLockDebuff) then
 					lockUnit:RemoveModifierByName(modifierLockDebuff)

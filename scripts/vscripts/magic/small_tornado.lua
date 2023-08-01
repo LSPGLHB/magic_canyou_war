@@ -29,6 +29,7 @@ function createShoot(keys)
 end
 
 function snallTornadoBoomCallBack(shoot)
+	
     snallTornadoRenderParticles(shoot)
     snallTornadoDuration(shoot) 
 end
@@ -46,6 +47,7 @@ function snallTornadoRenderParticles(shoot)
 	local keys = shoot.keysTable
     local caster = keys.caster
 	--local ability = keys.ability
+	EmitSoundOn(keys.soundBoom, shoot)
 	local aoe_radius = shoot.aoe_radius
     local aoe_duration = shoot.aoe_duration
 	local particleBoom = ParticleManager:CreateParticle(keys.particles_duration, PATTACH_WORLDORIGIN, caster)

@@ -137,8 +137,13 @@
                 "particles_strike" "particles/25fengbiao_mingzhong_beibu.vpcf"
                 "soundStrike"      "magic_wind_dart_boom_strike"
 
+				"soundSpeedUp"		"magic_wind_dart_speed_up"
+				"soundSpeedDown"	"magic_wind_dart_speed_down"
+
+
                 "modifierCountName" "modifier_wind_dart_counter_datadriven"
 				"modifierLockDebuff"	"modifier_wind_dart_lock"
+				
 				
 			}
 		}
@@ -153,8 +158,16 @@
 			"modifier_wind_dart_lock"
 			{
 				"IsDebuff"			"1"
-				"EffectName"		"particles/zhimang_debuff.vpcf"
-				"EffectAttachType"	"follow_chest"
+				"EffectName"		"particles/fengbiaosuoxing_debuff.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"			"magic_wind_dart_lock_target"
+						"Target"				"TARGET"      //Target是光环载体（证实）
+					}
+				}
 			}
 
 

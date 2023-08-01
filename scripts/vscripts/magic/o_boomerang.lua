@@ -79,25 +79,18 @@ function oBoomerangCatchRenderParticles(shoot, unit, debuffDuration)
 	local catch_radius = shoot.catch_radius
     local unitPos = unit:GetAbsOrigin()
 
-    --local particleBoom = ParticleManager:CreateParticle(particlesName, PATTACH_WORLDORIGIN, unit)
-	--ParticleManager:SetParticleControl(particleBoom, 0, Vector(unitPos.x,unitPos.y,unitPos.z))
-	--ParticleManager:SetParticleControl(particleBoom, 10, Vector(catch_radius, 0, 0))
+	local particleBoom = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , unit)
+	ParticleManager:SetParticleControlEnt(particleBoom, 0 , unit, PATTACH_POINT_FOLLOW, nil, unit:GetAbsOrigin(), true)
+    ParticleManager:SetParticleControl(particleBoom, 14, Vector(catch_radius, 0, 0))
+    ParticleManager:SetParticleControl(particleBoom, 15, Vector(debuffDuration, 0, 0))
 
-    local particleBoom = ParticleManager:CreateParticle(particlesName, PATTACH_WORLDORIGIN , unit)
-	--ParticleManager:SetParticleControlEnt(particleBoom, 0 , unit, PATTACH_POINT_FOLLOW, nil, unitPos, true)
-    ParticleManager:SetParticleControl(particleBoom, 0, Vector(unitPos.x,unitPos.y,unitPos.z))
-
-    ParticleManager:SetParticleControl(particleBoom, 10, Vector(catch_radius, 0, 0))
-
+    --用于更高优先级救出控制范围消除特效
     if unit.tieParticleId == nil then
 		unit.tieParticleId = {}
 	end
-	table.insert(unit.tieParticleId, newParticlesID)
+	table.insert(unit.tieParticleId, particleBoom)
 
-    Timers:CreateTimer(debuffDuration, function()
-        ParticleManager:DestroyParticle(particleBoom, true)
-        return nil
-    end)
+
 end
 
 function oBoomerangIntervalCallBack(shoot)

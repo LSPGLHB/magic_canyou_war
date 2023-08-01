@@ -122,11 +122,6 @@
 
 				"OnTakeDamage"
 				{
-                    "FireSound"
-					{
-						"EffectName"			"magic_wake_up"
-						"Target"				"UNIT"
-					}
                     
 					"RemoveModifier"
 					{
@@ -134,6 +129,30 @@
 						"ModifierName"                "modifier_sleep_debuff_datadriven"
                     }
 				}
+
+
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"			"magic_wake_up"
+						"Target"				"TARGET"      //Target是光环载体（证实）
+					}
+
+					"ApplyModifier"
+					{
+							"ModifierName"        "modifier_wake_up_datadriven"
+							"Target"              "TARGET"  //Target是光环载体（证实）
+					}
+				}
+			}
+			
+			"modifier_wake_up_datadriven"
+			{
+				"IsHidden"	    "1"
+				"Duration"      "1"
+				"EffectName"	"particles/hunshui_debuff_daxing.vpcf"
+				"EffectAttachType"	"follow_overhead"
 			}
 		}
     }

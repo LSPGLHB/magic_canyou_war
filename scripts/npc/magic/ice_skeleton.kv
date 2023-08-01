@@ -122,6 +122,7 @@
 
 				"particles_misfire" "particles/29bingkulou_jiluo.vpcf"
 				"soundMisfire"		"magic_ice_mis_fire"
+
                 "particles_miss"    "particles/29bingkulou_xiaoshi.vpcf"
 				"soundMiss"			"magic_ice_miss"
 				
@@ -133,11 +134,16 @@
                 "particles_boom" 	"particles/29bingkulou_mingzhong.vpcf"
 				"soundBoom"			"magic_ice_skeleton_boom"
 
+				"particles_boom_sp2"	"particles/29bingkulou_mingzhong_beibu.vpcf"
+
+
                 "modifierCountName" "modifier_ice_skeleton_counter_datadriven"
                 "hitTargetDebuff"   "modifier_ice_skeleton_debuff_datadriven"
 				
-				"particles_defense" "particles/duobizhimangbuff_1.vpcf"
-                "soundDefense"      "magic_defence"
+				"particles_defense" "particles/guihunmingzhongzhengmian.vpcf"
+                "soundDefense"      "magic_ice_skeleton_target_defense"
+
+
 			}
 		}
 
@@ -151,12 +157,21 @@
 			"modifier_ice_skeleton_debuff_datadriven"
 			{
 				"IsHidden"			"1"
-                "EffectName"		"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_stunned_symbol.vpcf"
-				"EffectAttachType"	"follow_overhead"
+                "EffectName"		"particles/hunluan_debuff_lanse_1.vpcf"
+				"EffectAttachType"	"follow_chest"
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"			"magic_ice_skeleton_target_hit"
+						"Target"				"TARGET"      //Target是光环载体（证实）
+					}
+				}
+					
 			}
 		}
     }

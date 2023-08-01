@@ -124,12 +124,19 @@ end
 
 --技能爆炸,单次伤害
 function iceSkeletonBoomCallback(shoot)
-	iceSkeletonRenderParticles(shoot) --爆炸粒子效果生成		  
+		  
 	boomAOEOperation(shoot, iceSkeletonAOEOperationCallback)
 end
 
-function iceSkeletonRenderParticles(shoot)
+function iceSkeletonDefenseRenderParticles(shoot)
 	local particlesName = shoot.particles_boom
+	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
+	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+end
+
+function iceSkeletonHitRenderParticles(shoot)
+	local keys = shoot.keysTable
+	local particlesName = keys.particles_boom_sp2
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , shoot)
 	ParticleManager:SetParticleControlEnt(newParticlesID, shoot.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 end
@@ -146,14 +153,17 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
     if isface then
-        local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
-        ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+		iceSkeletonDefenseRenderParticles(shoot) --爆炸粒子效果生成	
+        local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_CUSTOMORIGIN_FOLLOW , unit)
+        ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_CUSTOMORIGIN_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         EmitSoundOn(keys.soundDefense, unit)
         Timers:CreateTimer(0.5, function()
                 ParticleManager:DestroyParticle(defenceParticlesID, true)
                 return nil
         end)
+		
     else
+		iceSkeletonHitRenderParticles(shoot) --爆炸粒子效果生成	
 		local hitTargetDebuff = keys.hitTargetDebuff
 		local playerID = caster:GetPlayerID()	
 		local AbilityLevel = shoot.abilityLevel

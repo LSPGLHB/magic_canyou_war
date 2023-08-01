@@ -133,7 +133,7 @@ function windNetAOEOperationCallback(shoot,unit)
     local damage = getApplyDamageValue(shoot) 
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
-
+	local catch_radius = shoot.catch_radius
 	local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
 	local playerID = caster:GetPlayerID()
@@ -149,12 +149,11 @@ function windNetAOERenderParticles(shoot, unit, debuffDuration)
 	local particlesName = shoot.particles_boom
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , unit)
 	ParticleManager:SetParticleControlEnt(newParticlesID, 0 , unit, PATTACH_POINT_FOLLOW, nil, unit:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(newParticlesID, 14, Vector(catch_radius, 0, 0))
+    ParticleManager:SetParticleControl(newParticlesID, 15, Vector(debuffDuration, 0, 0))
 	if unit.tieParticleId == nil then
 		unit.tieParticleId = {}
 	end
 	table.insert(unit.tieParticleId, newParticlesID)
-    Timers:CreateTimer(debuffDuration, function()
-        ParticleManager:DestroyParticle(newParticlesID, true)
-        return nil
-    end)
+
 end

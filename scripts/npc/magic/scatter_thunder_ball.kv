@@ -97,8 +97,8 @@
 				"soundPower"		"magic_thunder_power_up"
 				"particles_weak" 	"particles/03dianqiu_xueruo.vpcf"
 				"soundWeak"			"magic_thunder_power_down"	
-                "particles_hit" 	"particles/03dianqiu_mingzhong.vpcf"
-				"soundHit"			"magic_scatter_thunder_ball_hit"
+                "particles_boom" 	"particles/03dianqiu_mingzhong.vpcf"
+				"soundBoom"			"magic_scatter_thunder_ball_hit"
 				"hitTargetDebuff"   "modifier_sleep_debuff_datadriven"
 				
 			}
@@ -128,17 +128,35 @@
 
 				"OnTakeDamage"
 				{
-					"FireSound"
-					{
-						"EffectName"			"magic_wake_up"
-						"Target"				"UNIT"
-					}
 					"RemoveModifier"
 					{
 						"Target"                      "UNIT"     //Target是光环作用的目标（未证实），unit是光环载体（证实）
 						"ModifierName"                "modifier_sleep_debuff_datadriven"
                     }
 				}
+
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"EffectName"			"magic_wake_up"
+						"Target"				"TARGET"      //Target是光环载体（证实）
+					}
+
+					"ApplyModifier"
+					{
+							"ModifierName"        "modifier_wake_up_datadriven"
+							"Target"              "TARGET"  //Target是光环载体（证实）
+					}
+				}
+			}
+
+			"modifier_wake_up_datadriven"
+			{
+				"IsHidden"	    "1"
+				"Duration"      "1"
+				"EffectName"	"particles/hunshui_debuff_daxing.vpcf"
+				"EffectAttachType"	"follow_overhead"
 			}
 		}
     }

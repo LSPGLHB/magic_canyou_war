@@ -374,9 +374,9 @@ end
 --命中友方移除debuff
 function checkHitTeamerRemoveDebuff(unit)
 	local sleepDebuffName = "modifier_sleep_debuff_datadriven"
+	--local wakeupBuffName = "modifier_wake_up_datadriven"
 	if unit:HasModifier(sleepDebuffName) then
 		unit:RemoveModifierByName(sleepDebuffName)
-		EmitSoundOn("magic_wake_up", unit)
 	end
 end
 
@@ -444,6 +444,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	shoot.soundHit = keys.soundHit
 	shoot.soundBoom = keys.soundBoom
 	shoot.soundDuration = keys.soundDuration
+	shoot.soundDurationDelay = keys.soundDurationDelay
 
 	shoot.particles_nm = keys.particles_nm
 	shoot.particles_hit = keys.particles_hit
@@ -618,26 +619,21 @@ function shootKill(shoot)
 end
 
 
---击退单位处理
-function beatBackPenetrateParticleOperation(keys,shoot)
-	--中弹粒子效果
-	ParticleManager:CreateParticle(keys.particles_beat, PATTACH_ABSORIGIN_FOLLOW, shoot) 
-	--中弹声音
-	EmitSoundOn(keys.soundBeat, shoot)
-end
+
 
 --击退单位
 function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBackDirection,transferBeatFlag)
 	local caster = keys.caster
 	local ability = keys.ability
+	local hitTargetDebuff = keys.hitTargetDebuff
 	--local powerLv = shoot.power_lv
 	--hitTarget.power_lv = powerLv
 	--击退距离受加强削弱影响(此处如果是带走的就有问题了)
 	--beatBackDistance = powerLevelOperation(powerLv, beatBackDistance) 
-	local hitTargetDebuff = keys.hitTargetDebuff
-	--hitTarget:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = control_time} )--需要调用lua的modefier
 	
-	beatBackPenetrateParticleOperation(keys,shoot)--中弹效果
+
+	--击退声效
+	EmitSoundOn("magic_beat_back", hitTarget)
 
 	local interval = 0.02
 	local acceleration = -1000 --加速度
@@ -683,7 +679,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 				else
 					hitTarget.isBeatFlag = 0
 					hitTarget.FloatingAirLevel = nil
-					hitTarget:RemoveModifierByName(hitTargetDebuff)		
+					hitTarget:RemoveModifierByName(hitTargetDebuff)	
 					--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
 					return nil
 				end
@@ -859,7 +855,8 @@ function modifierHole(shoot)
 			local isEnemyNoSkill =  checkIsEnemyNoSkill(shoot,unit)
 			if isEnemyNoSkill then
 				local newFlag = checkHitUnitToMark(shoot, unit)--用于技能结束时清理debuff	
-				if newFlag then  --新加入的加上buff
+				if newFlag then  --新加入的加上buff	
+					EmitSoundOn(keys.soundDebuff, shoot)
 					ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
 				end
 				table.insert(shoot.tempHitUnits, unit)
@@ -1018,6 +1015,11 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
         for i = 1, #shoot.hitUnits  do
             local unit = shoot.hitUnits[i]
             unit.visionDownLightBallTime = 0
+			unit.visionDownLightBallTimeWorking = 0
+			if shoot.defenceParticlesID ~= nil then 
+				ParticleManager:DestroyParticle(shoot.defenceParticlesID , true)
+			end
+			EmitSoundOn("magic_voice_stop", unit)
         end
 		return nil
 	end)
@@ -1049,15 +1051,41 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
                 if judgeTime == nil then
                     judgeTime = 0
                 end
+				if unit.visionDownLightBallTime == nil then
+					unit.visionDownLightBallTime = 0
+				end
+				if unit.visionDownLightBallTimeWorking == nil then
+					unit.visionDownLightBallTimeWorking = 0
+				end
+				if unit.visionDownLightBallTimeDefense == nil then
+					unit.visionDownLightBallTimeDefense = 0
+				end
+
                 if angelFlag then
-                    if unit.visionDownLightBallTime == nil then
-                        unit.visionDownLightBallTime = 0
-                    end
+                    unit.visionDownLightBallTimeDefense = 0
+					if unit.visionDownLightBallTimeWorking == 0 and unit.visionDownLightBallTime < judgeTime then
+						EmitSoundOn(keys.soundWorking, unit)
+						if shoot.defenceParticlesID ~= nil then
+							ParticleManager:DestroyParticle(shoot.defenceParticlesID , true)
+						end
+						unit.visionDownLightBallTimeWorking = 1
+					end
                     unit.visionDownLightBallTime = unit.visionDownLightBallTime + interval    
-                    --print("vision_time:"..unit.visionDownLightBallTime)
+
                     if unit.visionDownLightBallTime >= judgeTime then
+						EmitSoundOn("magic_voice_stop", unit)
 						callback(shoot,unit)
                     end
+				else
+					unit.visionDownLightBallTimeWorking = 0
+					if unit.visionDownLightBallTimeDefense == 0 and unit.visionDownLightBallTime < judgeTime then
+						local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
+						ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+						shoot.defenceParticlesID = defenceParticlesID
+						EmitSoundOn(keys.soundDefense, unit)	
+						unit.visionDownLightBallTimeDefense = 1
+					end
+
                 end
             end
         end 
