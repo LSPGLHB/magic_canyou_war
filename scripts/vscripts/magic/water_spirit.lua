@@ -25,6 +25,9 @@ end
 
 --技能爆炸,单次伤害
 function waterSpiritBoomCallBack(shoot)
+    local keys = shoot.keysTable
+    local ability = keys.ability
+    shoot.hit_move_step = ability:GetSpecialValueFor("hit_move_step")
     waterSpiritDelayRenderParticles(shoot)
     Timers:CreateTimer(shoot.boomDelay, function()
         if shoot.energy_point ~= 0 then

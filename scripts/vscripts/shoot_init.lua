@@ -152,6 +152,44 @@ function shootHit(shoot)
 	return returnVal
 end
 
+function hitMoveStep(shoot,unit,energyPoint)
+	local moveStepDistance = shoot.hit_move_step * energyPoint
+	local flag = 1
+	if moveStepDistance < 0 then
+		moveStepDistance = moveStepDistance * -1
+		flag = -1
+	end
+	local time = 0.2
+	local interval = 0.02
+	local speed = moveStepDistance / time * interval * GameRules.speedConstant
+	
+	local traveledDistance = 0
+	local shootPos = GetGroundPosition(shoot:GetAbsOrigin(),shoot)
+	local unitPos = GetGroundPosition(unit:GetAbsOrigin(),unit)
+	local direction = (shootPos - unitPos):Normalized()
+	local shootHeight = shoot.shootHight
+	local heightStep = 10
+	Timers:CreateTimer(function()
+		if traveledDistance < moveStepDistance then
+			local shootTempPos = shoot:GetAbsOrigin()
+			local newPosition = shootTempPos + direction * speed * flag
+			if traveledDistance < 0.5 * moveStepDistance then
+				shootHeight = shootHeight + heightStep
+			else
+				shootHeight = shootHeight - heightStep
+			end
+			local groundPos = GetGroundPosition(newPosition, shoot)
+			newPosition  = Vector(groundPos.x, groundPos.y, groundPos.z + shootHeight)
+			shoot:SetAbsOrigin(newPosition)
+			traveledDistance = traveledDistance + speed
+			return interval
+		else
+			return nil
+		end
+	end)
+
+end
+
 --让不可多次碰撞的子弹跟目标只碰撞一次--单位能否被击中 
 function checkIsHitUnit(shoot,unit)
 	local label = unit:GetUnitLabel() --该单位为技能子弹
@@ -268,6 +306,10 @@ function energyBattleOperation(winBall, loseBall, tempHealth)
 			tempHealth = tempHealth * -1
 		end
 		winBall.energy_point = tempHealth
+
+		if winBall.hit_move_step ~= nil then
+			hitMoveStep(winBall,loseBall,loseBall.energy_point)
+		end
 	end
 	loseBall.energy_point = 0
 	if loseBall.isMisfire == 1 then

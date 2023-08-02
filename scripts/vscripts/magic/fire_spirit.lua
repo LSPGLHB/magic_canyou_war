@@ -25,7 +25,11 @@ end
 
 --技能爆炸,单次伤害
 function fireSpiritBoomCallBack(shoot)
+    local keys = shoot.keysTable
+    local ability = keys.ability
+    shoot.hit_move_step = ability:GetSpecialValueFor("hit_move_step")
     fireSpiritDelayRenderParticles(shoot)
+    
     Timers:CreateTimer(shoot.boomDelay, function()
         if shoot.energy_point ~= 0 then
             fireSpiritRenderParticles(shoot) --爆炸粒子效果生成		  
@@ -33,7 +37,6 @@ function fireSpiritBoomCallBack(shoot)
         end
         return nil
     end)
-    local keys = shoot.keysTable
     Timers:CreateTimer(function()
         powerShootParticleOperation(keys,shoot)
         if shoot.energy_point == 0 then
