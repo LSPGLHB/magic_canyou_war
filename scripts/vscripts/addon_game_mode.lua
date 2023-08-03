@@ -170,15 +170,14 @@ function magicCanyouWar:InitGameMode()
 	GameRules.customAbilities = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")--导入技能表
 
 	GameRules.itemList = LoadKeyValues("scripts/npc/npc_items_custom.txt")--导入装备表
-
 	GameRules.contractList = LoadKeyValues("scripts/npc/contract/contract_all.kv")--导入契约表
 
 
 	--设置4*4队伍组合
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 5 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 5 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 5 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 5 )
+	--GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 5 )
+	--GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 5 )
 
 
 	--GameRules:SetPostGameTime( 0.0 )
@@ -360,9 +359,6 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		--print("DOTA_GAMERULES_STATE_PRE_GAME"..getNowTime())
 		--运行检查商店进程
 		initShopStats()
-
-		
-
 		
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then

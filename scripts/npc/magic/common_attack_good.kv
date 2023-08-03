@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-     "common_attack_sp2_datadriven"
+     "common_attack_good_datadriven"
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11,11 +11,11 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
 
-		"AbilityTextureName"			"shadow_demon_disruption"
+		"AbilityTextureName"			"spectre_dispersion"
 		"MaxLevel"                      "1"
 		"UnitType"         				"base"
 		"AbilityLevel"					"d"
-		"IconSrc" "file://{images}/custom_game/ability_button/shadow_demon_disruption.png"  //选择框图标
+		"IconSrc" "file://{images}/custom_game/ability_button/spectre_dispersion.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -77,9 +77,9 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"magic/common_attack_sp2.lua"
+				"ScriptFile"			"magic/common_attack_good.lua"
 				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_common_attack_sp2_counter_datadriven"
+				"modifierCountName"		"modifier_common_attack_good_counter_datadriven"
 			}
 		}
 
@@ -87,7 +87,7 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/common_attack_sp2.lua"
+				"ScriptFile"		"magic/common_attack_good.lua"
 				"Function"			"createShoot"
 				"unitModel"			"shootUnit-S"
 				"AbilityLevel"		"d"
@@ -98,27 +98,27 @@
 				"particles_hit_dur" "0.7"
                 "cp"				 "3"
 
-				"particles_nm"      "particles/yingongji.vpcf"
-				"soundCast" 		"magic_common_attack_sp2_cast"
+				"particles_nm"      "particles/yanggongji.vpcf"
+				"soundCast" 		"magic_common_attack_good_cast"
 
-				"particles_misfire" "particles/yingongji_jiluo.vpcf"
-				"soundMisfire"		"magic_common_attack_sp2_mis_fire"
-                "particles_miss"    "particles/yingongji_xiaoshi.vpcf"
-				"soundMiss"			"magic_common_attack_sp2_miss"
+				"particles_misfire" "particles/yanggongji_jiluo.vpcf"
+				"soundMisfire"		"magic_common_attack_good_mis_fire"
+                "particles_miss"    "particles/yanggongji_xiaoshi.vpcf"
+				"soundMiss"			"magic_common_attack_good_miss"
 				
 
 				
-                "particles_boom" 	"particles/yingongji_mingzhong.vpcf"
-				"soundBoom"			"magic_common_attack_sp2_boom"
+                "particles_boom" 	"particles/yanggongji_mingzhong.vpcf"
+				"soundBoom"			"magic_common_attack_good_boom"
 
-                "modifierCountName" "modifier_common_attack_sp2_counter_datadriven"
+                "modifierCountName" "modifier_common_attack_good_counter_datadriven"
 				
 			}
 		}
 
 		"Modifiers"
 		{
-            "modifier_common_attack_sp2_counter_datadriven"
+            "modifier_common_attack_good_counter_datadriven"
 			{
 				"Passive"				"1"
 			}

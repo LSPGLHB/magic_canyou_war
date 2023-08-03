@@ -14,7 +14,6 @@ function getRandomMagic(keys)
 	end
 	]]
 	local randomNumList= getRandomNumList(1,#abilityNameList,3)
-
     local randomAbilityList = getRandomArrayList(abilityNameList, randomNumList)
 	local randomIconList = getRandomArrayList(iconSrcList, randomNumList)
 	local randomNameList = getRandomArrayList(nameList, randomNumList)

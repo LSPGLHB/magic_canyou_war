@@ -77,7 +77,7 @@ function shoot_start_cooldown(caster, charge_replenish_time)
 end
 
 
-function createBlindFireBall(keys)
+function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()

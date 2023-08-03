@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-     "trace_stone_ball_datadriven"
+     "wind_net_pre_datadriven"
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
@@ -10,13 +10,14 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"tiny_toss"
+		
+		"AbilityTextureName"			"meepo_earthbind"
 		"MaxLevel"                      "1"
-		"UnitType"         				"tu"
-		"AbilityLevel"					"a"
-		"PreAbility"					"swamp_area_pre_datadriven"
-
-		"IconSrc" "file://{images}/custom_game/ability_button/tiny_toss.png"  //选择框图标
+		"UnitType"         				"feng"
+		"AbilityLevel"					"c"
+		"PreAbility"					"null"
+		
+		"IconSrc" "file://{images}/custom_game/ability_button/meepo_earthbind.png"  //选择框图标
 		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
@@ -26,16 +27,16 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1350"   //施法距离
+		"AbilityCastRange"				"1250"   //施法距离
 		"AbilityCastPoint"				"0.1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3"
+		"AbilityCooldown"				"4"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"16"
+		"AbilityManaCost"				"18"
 
 
         "AbilitySpecial"
@@ -43,40 +44,40 @@
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"450"
+				"speed"				"840"
 			}
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1350"
+				"max_distance"		"1250"
 			}
             "03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"hit_range"		    "75"
 			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"search_range"		"300"
-			}
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "23"
+				"damage"		    "9"
 			}
-            "05"
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"catch_radius"		    "200"
+			}
+            "06"
             {
                 "var_type"			"FIELD_FLOAT"
-                "double_damage_percentage"		"30"
+                "debuff_duration"		"2.5"
             }
 
-            "06"
+            "09"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"max_charges"		"2"
 			}
-			"07"
+			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"charge_replenish_time"	"8"
@@ -87,9 +88,9 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"magic/trace_stone_ball.lua"
+				"ScriptFile"			"magic/wind_net.lua"
 				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_trace_stone_ball_counter_datadriven"
+				"modifierCountName"		"modifier_wind_net_counter_datadriven"
 			}
 		}
 
@@ -97,50 +98,54 @@
 		{		
 			"RunScript"
 			{
-				"ScriptFile"		"magic/trace_stone_ball.lua"
-				"Function"			"createTraceStoneBall"
+				"ScriptFile"		"magic/wind_net.lua"
+				"Function"			"createShoot"
 				"unitModel"			"shootUnit-S"
-				"AbilityLevel"		"a"
-				"unitType"          "tu"
+				"AbilityLevel"		"c"
+				"unitType"          "feng"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 //"isAOE"           "1"
 				"isMisfire"			"1"
 				"particles_hit_dur" "0.7"
                 "cp"				 "3"
 
-				"particles_nm"      "particles/12zhuizongtudan_shengcheng.vpcf"
-				"soundCast" 		"magic_trace_stone_ball_cast"
-				"particles_misfire" "particles/12zhuizongtudan_jiluo.vpcf"
-				"soundMisfire"		"magic_stone_mis_fire"
-                "particles_miss"    "particles/12zhuizongtudan_xiaoshi.vpcf"
-				"soundMiss"			"magic_stone_miss"
+				"particles_nm"      "particles/35fengzhiwang_shengcheng.vpcf"
+				"soundCast" 		"magic_wind_net_cast"
+				"particles_misfire" "particles/35fengzhiwang_jiluo.vpcf"
+				"soundMisfire"		"magic_wind_mis_fire"
+                "particles_miss"    "particles/35fengzhiwang_xiaoshi.vpcf"
+				"soundMiss"			"magic_wind_miss"
 				
-				"particles_power" 	"particles/12zhuizongtudan_jiaqiang.vpcf"
-				"soundPower"		"magic_stone_power_up"
-				"particles_weak" 	"particles/12zhuizongtudan_xueruo.vpcf"
-				"soundWeak"			"magic_stone_power_down"	
+				"particles_power" 	"particles/35fengzhiwang_jiaqiang.vpcf"
+				"soundPower"		"magic_wind_power_up"
+				"particles_weak" 	"particles/35fengzhiwang_xueruo.vpcf"
+				"soundWeak"			"magic_wind_power_down"	
 				
-                "particles_boom" 	"particles/12zhuizongtudan_mingzhong.vpcf"
-				"soundBoom"			"magic_trace_stone_ball_hit"
-				"particles_strike"	"particles/12zhuizongtudan_mingzhong_baoji.vpcf"
-				"soundStrike"		"magic_trace_stone_ball_strike"
+                "particles_boom" 	"particles/35fengzhiwang_mingzhong.vpcf"
+				"soundBoom"			"magic_wind_net_boom"
 
-				"soundTrace"		"magic_trace_stone_ball_trace"
-
-                "modifierCountName" "modifier_trace_stone_ball_counter_datadriven"
-              
+                "modifierCountName" "modifier_wind_net_counter_datadriven"
+                "hitTargetDebuff"   "modifier_wind_net_debuff_datadriven"
 				
 			}
 		}
 
 		"Modifiers"
 		{
-            "modifier_trace_stone_ball_counter_datadriven"
+            "modifier_wind_net_counter_datadriven"
 			{
 				"Passive"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsDebuff"				"0"
 			}
 
-			
+			"modifier_wind_net_debuff_datadriven"
+			{
+				"IsDebuff"			"1"
+				//"EffectName"		"particles/jiansu_debuff.vpcf"
+				//"EffectAttachType"	"follow_origin"
+			}
 		}
     }
 }

@@ -26,9 +26,9 @@ function refreshContractBuff(keys,flag)
     end
 
 
-    setPlayerPower(playerID, "player_damage_C_precent_final", flag, contract_damage_precent_final)
-    setPlayerPower(playerID, "player_damage_B_precent_final", flag, contract_damage_precent_final)
-    setPlayerPower(playerID, "player_damage_A_precent_final", flag, contract_damage_precent_final)
+    setPlayerPower(playerID, "player_damage_c_precent_final", flag, contract_damage_precent_final)
+    setPlayerPower(playerID, "player_damage_b_precent_final", flag, contract_damage_precent_final)
+    setPlayerPower(playerID, "player_damage_a_precent_final", flag, contract_damage_precent_final)
 
     setPlayerPowerFlag(playerID, "player_control_flag", contract_control_flag)
 

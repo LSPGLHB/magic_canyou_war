@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-    "blind_fire_ball_datadriven"
+    "blind_fire_ball_pre_datadriven"
 	{
     // General萤火球
 	//-------------------------------------------------------------------------------------------------------------
@@ -10,28 +10,23 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"keeper_of_the_light_illuminate"
-		"MaxLevel"                      "1"
-		
-
 		"MaxLevel"                      "1"
 		"UnitType"         				"huo"
 		"AbilityLevel"					"c"
-		"PreAbility"					"blind_fire_ball_pre_datadriven"
+		"PreAbility"					"null"
 
-		"IconSrc"                       "file://{images}/custom_game/ability_button/keeper_of_the_light_illuminate.png"  //选择框图标
-		"AbilityShowName"               "#UIButton4"
+		"IconSrc" "file://{images}/custom_game/ability_button/keeper_of_the_light_illuminate.png"  //选择框图标
+		"AbilityShowName" "#UIButton4"
 		
 		"precache"						
 		{
 			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
 		}
-	
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2050"   //施法距离
+		"AbilityCastRange"				"1700"   //施法距离
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
@@ -52,7 +47,7 @@
             "02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"2050"
+				"max_distance"		"1700"
 			}
             "03"
 			{
@@ -62,7 +57,7 @@
             "04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "6"
+				"damage"		    "5"
 			}
             "06"
 			{
@@ -72,10 +67,8 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"charge_replenish_time"	"4.5"
+				"charge_replenish_time"	"5"
 			}
-
-
             "08"
             {
                 "var_type"			"FIELD_FLOAT"
@@ -116,27 +109,25 @@
 				"unitType"          "huo"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isMisfire"			"1"
+				"particles_hit_dur" "0.7"
                 "cp"				"3"
+
 				"particles_nm"      "particles/31yinghuoqiu_shengcheng.vpcf"
 				"soundCast"			"magic_blind_fire_ball_cast"
-				"particles_hit_dur" "0.7"
 				"particles_power" 	"particles/31yinghuoqiu_jiaqiang.vpcf"
 				"soundPower"		"magic_fire_power_up"
 				"particles_weak" 	"particles/31yinghuoqiu_xueruo.vpcf"
-				"soundWeak"			"magic_fire_power_down"
-				
+				"soundWeak"			"magic_fire_power_down"		
                 "particles_boom" 	"particles/31yinghuoqiu_baozha.vpcf"
 				"soundBoom"			"magic_blind_fire_ball_boom"
                 "particles_misfire" "particles/31yinghuoqiu_jiluo.vpcf"
 				"soundMisfire"		"magic_fire_mis_fire"
                 "particles_miss"    "particles/31yinghuoqiu_xiaoshi.vpcf"
 				"soundMiss"			"magic_fire_miss"
-
                 "particles_defense" "particles/duobizhimangbuff2.vpcf"
                 "soundDefense"      "magic_defence"
 
                 "modifierCountName" "modifier_blind_fire_ball_counter"
-				
                 "hitTargetDebuff"   "modifier_blind_fire_ball_debuff"
 			}
 		}
@@ -159,9 +150,6 @@
             "modifier_blind_fire_ball_counter"
             {
                 "Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
             }
         }
     }

@@ -18,9 +18,9 @@ function refreshContractBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     
 
-    local contract_energy_C_precent_base = ability:GetSpecialValueFor( "contract_energy_C_precent_base")
-    local contract_energy_B_precent_base = ability:GetSpecialValueFor( "contract_energy_B_precent_base")
-    local contract_energy_A_precent_base = ability:GetSpecialValueFor( "contract_energy_A_precent_base")
+    local contract_energy_C_precent_base = ability:GetSpecialValueFor( "contract_energy_c_precent_base")
+    local contract_energy_B_precent_base = ability:GetSpecialValueFor( "contract_energy_b_precent_base")
+    local contract_energy_A_precent_base = ability:GetSpecialValueFor( "contract_energy_a_precent_base")
     local contract_vision_flag = ability:GetSpecialValueFor( "contract_vision_flag")
     local contract_damage_flag = ability:GetSpecialValueFor( "contract_damage_flag")
     local contract_control_flag = ability:GetSpecialValueFor( "contract_control_flag")
@@ -31,9 +31,9 @@ function refreshContractBuff(keys,flag)
         contract_control_flag = 1
     end
 
-    setPlayerPower(playerID, "player_energy_C_precent_base", flag, contract_energy_C_precent_base)
-    setPlayerPower(playerID, "player_energy_B_precent_base", flag, contract_energy_B_precent_base)
-    setPlayerPower(playerID, "player_energy_A_precent_base", flag, contract_energy_A_precent_base)
+    setPlayerPower(playerID, "player_energy_c_precent_base", flag, contract_energy_C_precent_base)
+    setPlayerPower(playerID, "player_energy_b_precent_base", flag, contract_energy_B_precent_base)
+    setPlayerPower(playerID, "player_energy_a_precent_base", flag, contract_energy_A_precent_base)
     
     setPlayerPowerFlag(playerID, "player_vision_flag", contract_vision_flag) --buff能力
     setPlayerPowerFlag(playerID, "player_damage_flag", contract_damage_flag)

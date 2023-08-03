@@ -1,5 +1,5 @@
 require('player_power')
---发送到前段显示信息
+--发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
     print("======sendMsgOnScreenToAll======")
     
@@ -30,7 +30,7 @@ function prepareStep(gameRound)
     local step1 = "预备阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 15 --准备阶段时长
+    local prepareTime = 30 --准备阶段时长
     --每次轮回初始化地图与数据
     gameRoundInit()
 
@@ -70,8 +70,7 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 5
-    local battleTime = 10 --战斗时间
-    local gameRoundMax = 10 --时间宝石最大次数 
+    local battleTime = 30 --战斗时间
 
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
@@ -88,25 +87,39 @@ function battleStep(gameRound)
 
         
         --此处还需要加入两队人数判断，死光就结束？？？？？？？？？？？
+        checkWinTeam()
 
-
-        if battleTime == 0 then -- 时间等于0结束
+        if battleTime == 0 or roundWinTeam ~= nil then -- 时间等于0结束
             --print("onStepLoop2========over")
 
-            gameRound = gameRound + 1
-            if gameRound < gameRoundMax then  --此处应判断双方胜利次数？？？？？？？？？？？？？
+            if battleTime == 0 then
+                GoodStoneHP = GoodStoneHP - 1
+                BadStoneHP = BadStoneHP - 1
+            end
+            if roundWinTeam == DOTA_TEAM_GOODGUYS then
+                BadStoneHP = BadStoneHP - 1
+            end
+            if roundWinTeam == DOTA_TEAM_BADGUYS then
+                GoodStoneHP = GoodStoneHP - 1
+            end
+
+
+
+           
+            if GoodStoneHP > 0 and BadStoneHP > 0 then  --此处应判断双方胜利次数？？？？？？？？？？？？？
                 --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏？？？？？？？？？？？？？
 
 
-                
                 --输出回合结束信息
                 roundOverMsgSend()
                 --所有玩家不能控制
                 allPlayerStop()
-                --技能也需要停止运作？？？？？？？？？
+                
 
                 --进行下一轮战斗
                 Timers:CreateTimer(loadingTime,function ()
+                    roundWinTeam = nil
+                    gameRound = gameRound + 1
                     prepareStep(gameRound) 
                     return nil
                 end)
@@ -114,7 +127,13 @@ function battleStep(gameRound)
             else
                 --整局游戏结束
                 --print("GAME========OVER")
-               -- GameRules:SetGameWinner(winTeam)
+                if GoodStoneHP == 0 then
+                    winTeam = DOTA_TEAM_BADGUYS
+                end
+                if BadStoneHP == 0 then
+                    winTeam = DOTA_TEAM_GOODGUYS
+                end
+                GameRules:SetGameWinner(winTeam)
             end
             return nil
         end
@@ -122,11 +141,13 @@ function battleStep(gameRound)
     end)
 end
 
+function checkWinTeam()
+
+end
+
 
 --游戏数据初始化
-function gameInit()
-    print("======gameInit======")
-    
+function gameInit()   
     --用于传送的位置标记实体
     --预备地点
     preparePointsTeam1 = {}
@@ -207,8 +228,8 @@ function gameInit()
     end
 
     winTeam = DOTA_TEAM_GOODGUYS
-    GoodWin = 0
-    BadWin = 0
+    GoodStoneHP = 6
+    BadStoneHP = 6
     NumberStr ={"一","二","三","四","五","六","七","八","九","十","十一","十二","十三"} 
 
 end

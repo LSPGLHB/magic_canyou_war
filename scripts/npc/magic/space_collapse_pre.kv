@@ -1,22 +1,23 @@
 "DOTAAbilities"
 {
-	"small_tornado_datadriven"
+	"space_collapse_pre_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"chen_divine_favor"
+		"AbilityTextureName"			"dark_seer_vacuum"
         "MaxLevel"                      "1"
+		"AOERadius"                     "225"
 		"UnitType"         				"feng"
-		"AbilityLevel"					"b"
-		"PreAbility"					"wind_dart_pre_datadriven"
+		"AbilityLevel"					"a"
+		"PreAbility"					"null"
 		
-		"IconSrc" 					"file://{images}/custom_game/ability_button/chen_divine_favor.png"  //选择框图标
+		"IconSrc" 					"file://{images}/custom_game/ability_button/dark_seer_vacuum.png"  //选择框图标
 		"AbilityShowName" 			"#UIButton4"
 	
 		
@@ -46,12 +47,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"speed"						"710"
+				"speed"						"450"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"16"
+				"damage"					"13"
 			}
 			"04"
 			{
@@ -61,18 +62,14 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aoe_radius"		        "250"
+				"aoe_radius"		        "225"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"G_speed"				    "120"
+				"G_speed"				    "1200"
 			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"aoe_duration"				"3.5"
-			}
+
 
 		
 		}
@@ -81,33 +78,30 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"magic/small_tornado.lua"
+				"ScriptFile"		"magic/space_collapse.lua"
 				"Function"			"createShoot"
 				"Target"			"POINT"
-				"unitModel"			"shootUnit-M"
-				"AbilityLevel"		"b"
+				"unitModel"			"shootUnit-L"
+				"AbilityLevel"		"a"
 				"unitType"          "feng"
-				"hitType" 			"3"   //3不触碰，2穿透弹，1触碰结束
+				"hitType" 			"1"   //3不触碰，2穿透弹，1触碰结束
 				"isAOE"				"1"
                 "cp"				"3"
                 "particles_hit_dur" "0.7"
 				"shootHight"		"5"
 
-				"particles_nm"      "particles/10longjuanfeng_shengcheng.vpcf"
-				"soundCast" 		"magic_small_tornado_cast"
+				"particles_nm"      "particles/15kongjiantansuo_shengcheng.vpcf"
+				"soundCast" 		"magic_space_collapse_cast"
 				
-				"particles_power" 	"particles/10longjuanfeng_jiaqiang.vpcf"
+				"particles_power" 	"particles/15kongjiantansuo_jiaqiang.vpcf"
 				"soundWeak"			"magic_wind_power_up"
-				"particles_weak" 	"particles/10longjuanfeng_xueruo.vpcf"	
+				"particles_weak" 	"particles/15kongjiantansuo_xueruo.vpcf"	
 				"soundWeak"			"magic_wind_power_down"
 
-				"particles_duration" 	"particles/10longjuanfeng_baozha.vpcf"
-				"soundBoom"			"magic_wind_boom"
-				"soundDurationDelay" "0.25"
-				"soundDuration"		"magic_small_tornado_duration"
-				
+				"particles_boom" 	"particles/15kongjiantansuo_baozha.vpcf"
+				"soundBoom"		    "magic_space_collapse_boom"
 
-				"aoeTargetDebuff"	"modifier_small_tornado_aoe_debuff"
+				"hitTargetDebuff"	"modifier_space_collapse_aoe_debuff"
 				
 			}
 		}
@@ -115,15 +109,11 @@
 		"Modifiers"
 		{
 
-			"modifier_small_tornado_aoe_debuff"
+			"modifier_space_collapse_aoe_debuff"
 			{
-				"IsDebuff"				"1"
-				"EffectName"		"particles/mohu_debuff.vpcf"
-				"EffectAttachType"	"follow_chest"
-				"States"
-				{
-					//"MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"	
-				}	
+				"IsDebuff"			"1"
+				"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}

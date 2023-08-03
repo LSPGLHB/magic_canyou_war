@@ -31,8 +31,8 @@
 #base contract/ability_buff.kv
 #base magic/pull_all.kv
 #base magic/push_all.kv
-#base magic/common_attack_sp1.kv
-#base magic/common_attack_sp2.kv
+#base magic/common_attack_good.kv
+#base magic/common_attack_bad.kv
 
 //火系
 #base magic/big_fire_ball.kv
@@ -42,6 +42,7 @@
 #base magic/vision_down_light_ball.kv
 #base magic/fire_spirit.kv
 #base magic/blind_fire_ball.kv
+#base magic/blind_fire_ball_pre.kv
 #base magic/glare_light_ball.kv
 #base magic/fire_arrow_bomb.kv
 
@@ -66,7 +67,6 @@
 #base magic/big_tornado.kv
 #base magic/wind_arrow.kv
 #base magic/whirlwind_axe.kv
-
 
 
 //水系

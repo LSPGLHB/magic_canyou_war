@@ -227,7 +227,7 @@
         "HasInventory"              "0"
          
         "WakesNeutrals"             "1"
- 
+
         "IdleSoundLoop"             ""
 	}
 
@@ -278,7 +278,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"10000"		// Base health.
+		"StatusHealth"				"100"		// Base health.
 		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
 		
 		// Vision
