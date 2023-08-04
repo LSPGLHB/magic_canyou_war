@@ -100,17 +100,16 @@
 	{
 		"override_hero"	"npc_dota_hero_lina"
 		"AbilityLayout"         "9"
-		"Ability1"	"ice_beans_datadriven"
-		"Ability2"	"fire_ball_datadriven"
-		"Ability3"	"big_fire_ball_datadriven"
-		"Ability4"	"ice_water_ball_datadriven"
-		"Ability5"  "trace_stone_ball_datadriven"
-		"Ability6"  "ice_skeleton_datadriven"
+		"Ability1"	"nothing_d"
+		"Ability2"	"pull_all_datadriven"
+		"Ability3"	"push_all_datadriven"
+		"Ability4"	"nothing_c"
+		"Ability5"  "nothing_b"
+		"Ability6"  "nothing_a"
 		"Ability7"  ""
 		"Ability8"  ""
-		"Ability9"	"make_friend_datadriven"
+		"Ability9"	""
 
-		"Ability20"  "ice_beans_stage_b_datadriven"
 		
 
 		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"   // 碰撞边界类型，以下为单位尺寸参数:

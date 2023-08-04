@@ -203,6 +203,9 @@ function magicCanyouWar:InitGameMode()
 
 	--监听UI事件,这是按钮事件管理器 --(监听名，回调函数)
 	CustomGameEventManager:RegisterListener( "js_to_lua", OnJsToLua ) 
+
+
+
 	--商店按钮监听
 	CustomGameEventManager:RegisterListener( "openShopJSTOLUA", openShopJSTOLUA )  
 	CustomGameEventManager:RegisterListener( "closeShopJSTOLUA", closeShopJSTOLUA )  
@@ -222,7 +225,7 @@ function magicCanyouWar:InitGameMode()
 	
 	--没用的家伙
 	--CustomGameEventManager:RegisterListener( "lua_to_js", OnLuaToJs )
-	--CustomGameEventManager:RegisterListener( "myui_open", OnMyUIOpen )
+	CustomGameEventManager:RegisterListener( "myui_open", OnMyUIOpen )
 	--CustomGameEventManager:RegisterListener( "uimsg_open", OnUIMsg )
 	--测试快捷键
 	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)
@@ -319,7 +322,7 @@ function magicCanyouWar:OnEntityKilled (keys)
 	--判断小怪被消灭，并刷新小怪
 	if name then
 		if name == "yang" then
-			createUnit("niu",DOTA_TEAM_BADGUYS)
+			createUnit("yang",DOTA_TEAM_BADGUYS)
 		end
 		if name == "niu" then
 			createUnit("niu",DOTA_TEAM_BADGUYS)
@@ -382,6 +385,42 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			end
 		end
 
+		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+				local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+				local heroTeam = hHero:GetTeam()
+				local commonAttack 
+				if heroTeam == DOTA_TEAM_GOODGUYS then
+					commonAttack = "common_attack_good_datadriven"
+				end
+				if heroTeam == DOTA_TEAM_BADDGUYS then
+					commonAttack = "common_attack_bad_datadriven"
+				end
+				hHero:AddAbility(commonAttack)
+
+				local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
+				hHero:SwapAbilities(commonAttack, tempAbility, true , false )
+				hHero:RemoveAbility(tempAbility) 
+
+
+				hHero:GetAbilityByIndex(0):SetLevel(1)
+				hHero:GetAbilityByIndex(1):SetLevel(1)
+				hHero:GetAbilityByIndex(2):SetLevel(1)
+				hHero:GetAbilityByIndex(3):SetLevel(1)
+				hHero:GetAbilityByIndex(4):SetLevel(1)
+				hHero:GetAbilityByIndex(5):SetLevel(1)
+				--local tempAbility = hHero:GetAbilityByIndex(1):GetAbilityName()
+
+				--[[
+				hHero:AddAbility("common_attack_good_datadriven"):SetLevel(1)
+				hHero:AddAbility("pull_all_datadriven"):SetLevel(1)
+				hHero:AddAbility("push_all_datadriven"):SetLevel(1)
+				hHero:AddAbility("nothing_c"):SetLevel(1)
+				hHero:AddAbility("nothing_b"):SetLevel(1)
+				hHero:AddAbility("nothing_a"):SetLevel(1)
+				]]
+			end
+		end
 		--gameProgress()--此处打开游戏流程的进程
 
 		

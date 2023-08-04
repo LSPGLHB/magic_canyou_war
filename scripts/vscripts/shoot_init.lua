@@ -694,6 +694,16 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 		hitTarget.FloatingAirLevel = 0
 	end
 	targetLabel = hitTarget:GetUnitLabel()
+	local endPoint1 = hitTarget:GetAbsOrigin() + beatBackDirection * beatBackDistance
+	local endPoint2 = hitTarget:GetAbsOrigin() + beatBackDirection * beatBackDistance+80
+	local isGreenWay1 = GridNav:CanFindPath(hitTarget:GetAbsOrigin(),endPoint1)
+	local isGreenWay2 = GridNav:CanFindPath(hitTarget:GetAbsOrigin(),endPoint2)
+	local isGreenWay = true
+	--判断是否能通过，假设墙厚度少于80
+	if not isGreenWay1 and not isGreenWay2 then
+		isGreenWay = false
+	end
+
 	if targetLabel ~= GameRules.magicStoneLabel and GameRules.shopLabel ~= targetLabel and GameRules.skillLabel ~= targetLabel then
 		ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
@@ -702,22 +712,34 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 					local newPosition = hitTarget:GetAbsOrigin() +  beatBackDirection * speedmod -- Vector(beatBackDirection.x, beatBackDirection.y, 0) * speedmod
 					speedmod = speedmod + acceleration * interval
 					local groundPos = GetGroundPosition(newPosition, hitTarget)
-					--中途可穿模，最后不能穿
-					local tempLastDis = beatBackDistance - traveled_distance
-					if tempLastDis > bufferTempDis then
-						hitTarget:SetAbsOrigin(groundPos)
-					else
-						FindClearSpaceForUnit( hitTarget, groundPos, false )
+				
+					local canWalk = GridNav:CanFindPath(hitTarget:GetAbsOrigin(),groundPos)
+					--如能通过则可穿墙
+					if isGreenWay then
+						canWalk = true
 					end
-					traveled_distance = traveled_distance + speedmod
-					--print("traveled_distance:"..speedmod.."="..traveled_distance)
-					if transferBeatFlag then
-						local remainDistance = beatBackDistance - traveled_distance
-						hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection)
-						if hitFlag then --速度传给撞击的单位，该单位停止
-							traveled_distance = beatBackDistance
+					if canWalk then
+						--中途可穿模，最后不能穿
+						local tempLastDis = beatBackDistance - traveled_distance
+						if tempLastDis > bufferTempDis then
+							hitTarget:SetAbsOrigin(groundPos)
+						else
+							FindClearSpaceForUnit( hitTarget, groundPos, false )
 						end
+						traveled_distance = traveled_distance + speedmod
+						--print("traveled_distance:"..speedmod.."="..traveled_distance)
+						if transferBeatFlag then
+							local remainDistance = beatBackDistance - traveled_distance
+							hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection)
+							if hitFlag then --速度传给撞击的单位，该单位停止
+								traveled_distance = beatBackDistance
+							end
+						end
+					else
+						traveled_distance = beatBackDistance
+						print("===hit wall===")
 					end
+
 				else
 					hitTarget.isBeatFlag = 0
 					hitTarget.FloatingAirLevel = nil

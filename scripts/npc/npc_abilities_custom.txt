@@ -27,6 +27,7 @@
 //#base abilities/ice_arrow.kv
 
 //下面才是正文
+#base magic/nothing.kv
 #base contract/contract_all.kv
 #base contract/ability_buff.kv
 #base magic/pull_all.kv

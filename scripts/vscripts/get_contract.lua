@@ -73,7 +73,7 @@ function initContractList()
 end
 
 
-
+--启动打开选择页面
 function openContractListKVTOLUA(keys)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()

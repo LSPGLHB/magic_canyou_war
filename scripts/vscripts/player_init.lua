@@ -10,6 +10,7 @@ function initMapStats()
         PlayerStats[i]['changdu'] = 0
     end
 ]]
+   
 
     --魔法石初始化
     createMagicStone()
