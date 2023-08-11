@@ -1,0 +1,76 @@
+"DOTAAbilities"
+{
+    "magic_stone_good"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilityType"               "scene"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "init_val"			    "0"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_magic_stone_good_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/magic_stone.lua"
+                        "Function"			"magicStoneGoodDestroy"
+                    }
+                }
+            }
+        }
+
+    }
+
+    "magic_stone_bad"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilityType"               "scene"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "init_val"			    "0"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_magic_stone_bad_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/magic_stone.lua"
+                        "Function"			"magicStoneBadDestroy"
+                    }
+                }
+            }
+        }
+
+    }
+}

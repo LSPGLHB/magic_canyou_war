@@ -1,8 +1,9 @@
 require('player_power')
+require('get_contract')
+require('get_magic')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
     print("======sendMsgOnScreenToAll======")
-    
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             CustomUI:DynamicHud_Destroy(playerID,"UIBannerMsgBox")
@@ -30,10 +31,11 @@ function prepareStep(gameRound)
     local step1 = "预备阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 30 --准备阶段时长
+    local prepareTime = 10 --准备阶段时长
+    GameRules.checkWinTeam = nil
     --每次轮回初始化地图与数据
     gameRoundInit()
-
+    getUpGradeListByRound(gameRound)
     --信息发送到前端
     Timers:CreateTimer(0 ,function ()
         --local gameTime = getNowTime()
@@ -70,7 +72,7 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 5
-    local battleTime = 30 --战斗时间
+    local battleTime = 50 --战斗时间
 
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
@@ -86,39 +88,37 @@ function battleStep(gameRound)
         sendMsgOnScreenToAll(topTips,bottomTips)
 
         
-        --此处还需要加入两队人数判断，死光就结束？？？？？？？？？？？
+        --此处两队人数判断，死光就结束
         checkWinTeam()
-
-        if battleTime == 0 or roundWinTeam ~= nil then -- 时间等于0结束
+        
+        if battleTime == 0 or GameRules.checkWinTeam ~= nil then -- 时间等于0结束
             --print("onStepLoop2========over")
-
+            --时间结束，双方都-1
             if battleTime == 0 then
                 GoodStoneHP = GoodStoneHP - 1
                 BadStoneHP = BadStoneHP - 1
             end
-            if roundWinTeam == DOTA_TEAM_GOODGUYS then
+            if GameRules.checkWinTeam == DOTA_TEAM_GOODGUYS then
                 BadStoneHP = BadStoneHP - 1
             end
-            if roundWinTeam == DOTA_TEAM_BADGUYS then
+            if GameRules.checkWinTeam == DOTA_TEAM_BADGUYS then
                 GoodStoneHP = GoodStoneHP - 1
             end
 
-
-
-           
-            if GoodStoneHP > 0 and BadStoneHP > 0 then  --此处应判断双方胜利次数？？？？？？？？？？？？？
+            if GoodStoneHP > 0 and BadStoneHP > 0 then  
                 --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏？？？？？？？？？？？？？
-
+                --结算数据
 
                 --输出回合结束信息
                 roundOverMsgSend()
                 --所有玩家不能控制
                 allPlayerStop()
                 
+                
 
                 --进行下一轮战斗
                 Timers:CreateTimer(loadingTime,function ()
-                    roundWinTeam = nil
+                    GameRules.checkWinTeam = nil
                     gameRound = gameRound + 1
                     prepareStep(gameRound) 
                     return nil
@@ -128,12 +128,12 @@ function battleStep(gameRound)
                 --整局游戏结束
                 --print("GAME========OVER")
                 if GoodStoneHP == 0 then
-                    winTeam = DOTA_TEAM_BADGUYS
+                    finalWinTeam = DOTA_TEAM_BADGUYS
                 end
                 if BadStoneHP == 0 then
-                    winTeam = DOTA_TEAM_GOODGUYS
+                    finalWinTeam = DOTA_TEAM_GOODGUYS
                 end
-                GameRules:SetGameWinner(winTeam)
+                GameRules:SetGameWinner(finalWinTeam)
             end
             return nil
         end
@@ -141,98 +141,65 @@ function battleStep(gameRound)
     end)
 end
 
-function checkWinTeam()
-
-end
-
-
---游戏数据初始化
-function gameInit()   
-    --用于传送的位置标记实体
-    --预备地点
-    preparePointsTeam1 = {}
-    --战斗地点
-    battlePointsTeam1 = {}
-
-    local preparePointTeam1_1 = Entities:FindByName(nil,"goodP1") --找到实体
-    local preparePointTeam1_2 = Entities:FindByName(nil,"goodP2")--找到实体
-    local preparePointTeam1_3 = Entities:FindByName(nil,"goodP3") 
-    local preparePointTeam1_4 = Entities:FindByName(nil,"goodP4") 
-    local preparePointTeam1_5 = Entities:FindByName(nil,"goodP5")   
-    table.insert(preparePointsTeam1,preparePointTeam1_1)
-    table.insert(preparePointsTeam1,preparePointTeam1_2)
-    table.insert(preparePointsTeam1,preparePointTeam1_3)
-    table.insert(preparePointsTeam1,preparePointTeam1_4)
-    table.insert(preparePointsTeam1,preparePointTeam1_5)
-
-    
-    local battlePointTeam1_1 = Entities:FindByName(nil,"goodB1") --找到实体
-    local battlePointTeam1_2 = Entities:FindByName(nil,"goodB2")--找到实体
-    local battlePointTeam1_3 = Entities:FindByName(nil,"goodB3") 
-    local battlePointTeam1_4 = Entities:FindByName(nil,"goodB4") 
-    local battlePointTeam1_5 = Entities:FindByName(nil,"goodB5")   
-    table.insert(battlePointsTeam1,battlePointTeam1_1)
-    table.insert(battlePointsTeam1,battlePointTeam1_2)
-    table.insert(battlePointsTeam1,battlePointTeam1_3)
-    table.insert(battlePointsTeam1,battlePointTeam1_4)
-    table.insert(battlePointsTeam1,battlePointTeam1_5)
-
-    
-    preparePointsTeam2 = {}
-    battlePointsTeam2 = {}
-    local preparePointTeam2_1 = Entities:FindByName(nil,"badP1") --找到实体
-    local preparePointTeam2_2 = Entities:FindByName(nil,"badP2")--找到实体
-    local preparePointTeam2_3 = Entities:FindByName(nil,"badP3") 
-    local preparePointTeam2_4 = Entities:FindByName(nil,"badP4") 
-    local preparePointTeam2_5 = Entities:FindByName(nil,"badP5")   
-    table.insert(preparePointsTeam2,preparePointTeam2_1)
-    table.insert(preparePointsTeam2,preparePointTeam2_2)
-    table.insert(preparePointsTeam2,preparePointTeam2_3)
-    table.insert(preparePointsTeam2,preparePointTeam2_4)
-    table.insert(preparePointsTeam2,preparePointTeam2_5)
-
-    
-    local battlePointTeam2_1 = Entities:FindByName(nil,"badB1") --找到实体
-    local battlePointTeam2_2 = Entities:FindByName(nil,"badB2")--找到实体
-    local battlePointTeam2_3 = Entities:FindByName(nil,"badB3") 
-    local battlePointTeam2_4 = Entities:FindByName(nil,"badB4") 
-    local battlePointTeam2_5 = Entities:FindByName(nil,"badB5")   
-    table.insert(battlePointsTeam2,battlePointTeam2_1)
-    table.insert(battlePointsTeam2,battlePointTeam2_2)
-    table.insert(battlePointsTeam2,battlePointTeam2_3)
-    table.insert(battlePointsTeam2,battlePointTeam2_4)
-    table.insert(battlePointsTeam2,battlePointTeam2_5)
-
-    
-    
-    playersTeam1 ={}
-    playersTeam2 ={}
-    playersAll = {}
+--预备阶段执行学习项目
+function getUpGradeListByRound(gameRound)
+  
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        --local initPoint = initPoints[1] --数组从1开始
-        -- local initPos = initPoint:GetAbsOrigin()
-        -- local player = PlayerResource:GetPlayer(playerID)
-        -- local hero = player:GetAssignedHero() --PlayerResource:GetSelectedHeroEntity(playerID)
-        --local heros = HeroList:GetAllHeroes() --获取所有英雄--暂时没用
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            if gameRound == 1 then
+                openMagicListPreC(playerID)
+            end
+            if gameRound == 2 then
+                openMagicListPreB(playerID)
+            end
+            if gameRound == 3 then
+                openMagicListPreA(playerID)
+            end
 
-        local heroTeam = PlayerResource:GetTeam(playerID)--hero:GetTeam() --print("heroTeam:".. heroTeam ) -- GOOD=2, BAD=3-- print("goodguys:" .. DOTA_GC_TEAM_GOOD_GUYS)-- =0 -- print("badguys:" .. DOTA_GC_TEAM_BAD_GUYS)-- =1
+            if gameRound == 4 then
+                openMagicListC(playerID)
+            end
+            if gameRound == 5 then
+                openMagicListB(playerID)
+            end
+            if gameRound == 6then
+                openMagicListA(playerID)
+            end
 
-        if heroTeam == 2 then --GOOD天辉
-            table.insert(playersTeam1,playerID)
+
         end
-
-        if heroTeam == 3 then --BAD夜魇
-            table.insert(playersTeam2,playerID)
-        end
-        table.insert(playersAll,playerID)
     end
-
-    winTeam = DOTA_TEAM_GOODGUYS
-    GoodStoneHP = 6
-    BadStoneHP = 6
-    NumberStr ={"一","二","三","四","五","六","七","八","九","十","十一","十二","十三"} 
-
+   
+       
 end
+
+--判断回合胜利方
+function checkWinTeam()
+    local goodAlive = 0
+    local badAlive = 0
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            if hHero:IsAlive() then
+                local heroTeam = hHero:GetTeam()
+                if heroTeam == DOTA_TEAM_GOODGUYS then
+                    goodAlive = goodAlive + 1
+                end
+                if heroTeam == DOTA_TEAM_BADDGUYS then
+                    badAlive = badAlive + 1
+                end
+            end
+        end
+    end
+    if goodAlive == 0 and GameRules.checkWinTeam == nil then
+        GameRules.checkWinTeam = DOTA_TEAM_BADDGUYS
+    end
+    if badAlive == 0 and GameRules.checkWinTeam == nil then--调试关闭
+        --GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
+    end
+end
+
+
 
 
 --每次轮回地图与玩家数据初始化
@@ -314,8 +281,17 @@ function prepareOverMsgSend()
 end
 
 function roundOverMsgSend()
-    local topTips = "此轮战斗结束"
-    local bottomTips = "时间宝石启动，新的战斗将重新开始"
+    --print(GameRules.checkWinTeam)
+    local winTeamStr
+    if GameRules.checkWinTeam == DOTA_TEAM_GOODGUYS then
+        winTeamStr =  "天辉胜利！"
+    end
+    if GameRules.checkWinTeam == DOTA_TEAM_BADGUYS then
+        winTeamStr =  "夜魇胜利！"
+    end
+    print("比分："..GoodStoneHP..":"..BadStoneHP)
+    local topTips = winTeamStr
+    local bottomTips = "此轮战斗结束，时间宝石启动，新的战斗即将开始"
     sendMsgOnScreenToAll(topTips,bottomTips)
 end
 
@@ -333,4 +309,93 @@ function getNowTime()
     end
     local timeStr = min .. ":" .. sec
     return timeStr
+end
+
+
+--游戏数据初始化
+function gameInit()   
+    --用于传送的位置标记实体
+    --预备地点
+    preparePointsTeam1 = {}
+    --战斗地点
+    battlePointsTeam1 = {}
+
+    local preparePointTeam1_1 = Entities:FindByName(nil,"goodP1") --找到实体
+    local preparePointTeam1_2 = Entities:FindByName(nil,"goodP2")--找到实体
+    local preparePointTeam1_3 = Entities:FindByName(nil,"goodP3") 
+    local preparePointTeam1_4 = Entities:FindByName(nil,"goodP4") 
+    local preparePointTeam1_5 = Entities:FindByName(nil,"goodP5")   
+    table.insert(preparePointsTeam1,preparePointTeam1_1)
+    table.insert(preparePointsTeam1,preparePointTeam1_2)
+    table.insert(preparePointsTeam1,preparePointTeam1_3)
+    table.insert(preparePointsTeam1,preparePointTeam1_4)
+    table.insert(preparePointsTeam1,preparePointTeam1_5)
+
+    
+    local battlePointTeam1_1 = Entities:FindByName(nil,"goodB1") --找到实体
+    local battlePointTeam1_2 = Entities:FindByName(nil,"goodB2")--找到实体
+    local battlePointTeam1_3 = Entities:FindByName(nil,"goodB3") 
+    local battlePointTeam1_4 = Entities:FindByName(nil,"goodB4") 
+    local battlePointTeam1_5 = Entities:FindByName(nil,"goodB5")   
+    table.insert(battlePointsTeam1,battlePointTeam1_1)
+    table.insert(battlePointsTeam1,battlePointTeam1_2)
+    table.insert(battlePointsTeam1,battlePointTeam1_3)
+    table.insert(battlePointsTeam1,battlePointTeam1_4)
+    table.insert(battlePointsTeam1,battlePointTeam1_5)
+
+    
+    preparePointsTeam2 = {}
+    battlePointsTeam2 = {}
+    local preparePointTeam2_1 = Entities:FindByName(nil,"badP1") --找到实体
+    local preparePointTeam2_2 = Entities:FindByName(nil,"badP2")--找到实体
+    local preparePointTeam2_3 = Entities:FindByName(nil,"badP3") 
+    local preparePointTeam2_4 = Entities:FindByName(nil,"badP4") 
+    local preparePointTeam2_5 = Entities:FindByName(nil,"badP5")   
+    table.insert(preparePointsTeam2,preparePointTeam2_1)
+    table.insert(preparePointsTeam2,preparePointTeam2_2)
+    table.insert(preparePointsTeam2,preparePointTeam2_3)
+    table.insert(preparePointsTeam2,preparePointTeam2_4)
+    table.insert(preparePointsTeam2,preparePointTeam2_5)
+
+    
+    local battlePointTeam2_1 = Entities:FindByName(nil,"badB1") --找到实体
+    local battlePointTeam2_2 = Entities:FindByName(nil,"badB2")--找到实体
+    local battlePointTeam2_3 = Entities:FindByName(nil,"badB3") 
+    local battlePointTeam2_4 = Entities:FindByName(nil,"badB4") 
+    local battlePointTeam2_5 = Entities:FindByName(nil,"badB5")   
+    table.insert(battlePointsTeam2,battlePointTeam2_1)
+    table.insert(battlePointsTeam2,battlePointTeam2_2)
+    table.insert(battlePointsTeam2,battlePointTeam2_3)
+    table.insert(battlePointsTeam2,battlePointTeam2_4)
+    table.insert(battlePointsTeam2,battlePointTeam2_5)
+
+    
+    
+    playersTeam1 ={}
+    playersTeam2 ={}
+    playersAll = {}
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        --local initPoint = initPoints[1] --数组从1开始
+        -- local initPos = initPoint:GetAbsOrigin()
+        -- local player = PlayerResource:GetPlayer(playerID)
+        -- local hero = player:GetAssignedHero() --PlayerResource:GetSelectedHeroEntity(playerID)
+        --local heros = HeroList:GetAllHeroes() --获取所有英雄--暂时没用
+
+        local heroTeam = PlayerResource:GetTeam(playerID)--hero:GetTeam() --print("heroTeam:".. heroTeam ) -- GOOD=2, BAD=3-- print("goodguys:" .. DOTA_GC_TEAM_GOOD_GUYS)-- =0 -- print("badguys:" .. DOTA_GC_TEAM_BAD_GUYS)-- =1
+
+        if heroTeam == DOTA_TEAM_GOODGUYS then --GOOD天辉
+            table.insert(playersTeam1,playerID)
+        end
+
+        if heroTeam == DOTA_TEAM_BADGUYS then --BAD夜魇
+            table.insert(playersTeam2,playerID)
+        end
+        table.insert(playersAll,playerID)
+    end
+
+    finalWinTeam = DOTA_TEAM_GOODGUYS
+    GoodStoneHP = 6
+    BadStoneHP = 6
+    NumberStr ={"一","二","三","四","五","六","七","八","九","十","十一","十二","十三"} 
+    GameRules.checkWinTeam = nil
 end

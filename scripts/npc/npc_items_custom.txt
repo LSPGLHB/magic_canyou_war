@@ -72,8 +72,8 @@
 
 			"RunScript"
 			{
-				"ScriptFile"	"get_contract.lua"
-				"Function"		"openContractListKVTOLUA"
+				"ScriptFile"	"get_magic.lua"                 //"get_contract.lua"
+				"Function"		"openMagicListCKVTOLUA"         //"openContractListKVTOLUA"
 			}
 		}
 	}
@@ -104,7 +104,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"get_magic.lua"
-				"Function"		"getRandomMagic"
+				"Function"		"openMagicListPreCKVTOLUA"
 			}
 		}
 	}

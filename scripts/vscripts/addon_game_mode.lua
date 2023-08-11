@@ -1,6 +1,6 @@
 -- Generated from template
 
-require('player_init')
+require('game_init')
 require('player_power')
 require('game_progress')
 require('get_magic')
@@ -222,6 +222,11 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "closeContractListJSTOLUA", closeContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "refreshContractListJSTOLUA", refreshContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "learnContractByNameJSTOLUA", learnContractByNameJSTOLUA ) 
+
+	--学习技能
+	CustomGameEventManager:RegisterListener( "closeMagicListJSTOLUA", closeMagicListJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "refreshMagicListJSTOLUA", refreshMagicListJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "learnMagicByNameJSTOLUA", learnMagicByNameJSTOLUA ) 
 	
 	--没用的家伙
 	--CustomGameEventManager:RegisterListener( "lua_to_js", OnLuaToJs )
@@ -239,7 +244,8 @@ function magicCanyouWar:InitGameMode()
 		initPlayerPower() --初始化契约容器
 		initContractList() --初始化契约信息
 		
-		GetAbilityList()--初始化技能信息
+		initMagicList()--初始化技能信息
+
 
 		init_flag = 1
 	end
@@ -317,7 +323,7 @@ function magicCanyouWar:OnEntityKilled (keys)
     local name = unit:GetContext("name")
 	local lable = unit:GetUnitLabel()
 
-	
+	--物品掉落测试
 	RollDrops(unit)
 	--判断小怪被消灭，并刷新小怪
 	if name then
@@ -329,16 +335,6 @@ function magicCanyouWar:OnEntityKilled (keys)
 		end
 	end
 	
-	--if lable == "mu" then
-		--unit:ForceKill(true)
-		--unit:AddNoDraw()
-		--local position=unit:GetAbsOrigin()
-		--local shoot = CreateUnitByName("niu", position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--end
-	--if lable == "hookUnit" then
-		--local position=unit:GetAbsOrigin()
-		--local hookUnit = CreateUnitByName("hookUnit", position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--end
 	
 end
 
@@ -379,49 +375,12 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 					--showPlayerStatusPanel( playerID ) 
 					--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)
 				
-					local hero = PlayerResource:GetSelectedHeroEntity(playerID)
-					hero:SetTimeUntilRespawn(999) --重新设置复活时间
 					
+					initHeroByPlayerID(playerID)
 			end
 		end
 
-		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-				local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-				local heroTeam = hHero:GetTeam()
-				local commonAttack 
-				if heroTeam == DOTA_TEAM_GOODGUYS then
-					commonAttack = "common_attack_good_datadriven"
-				end
-				if heroTeam == DOTA_TEAM_BADDGUYS then
-					commonAttack = "common_attack_bad_datadriven"
-				end
-				hHero:AddAbility(commonAttack)
-
-				local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
-				hHero:SwapAbilities(commonAttack, tempAbility, true , false )
-				hHero:RemoveAbility(tempAbility) 
-
-
-				hHero:GetAbilityByIndex(0):SetLevel(1)
-				hHero:GetAbilityByIndex(1):SetLevel(1)
-				hHero:GetAbilityByIndex(2):SetLevel(1)
-				hHero:GetAbilityByIndex(3):SetLevel(1)
-				hHero:GetAbilityByIndex(4):SetLevel(1)
-				hHero:GetAbilityByIndex(5):SetLevel(1)
-				--local tempAbility = hHero:GetAbilityByIndex(1):GetAbilityName()
-
-				--[[
-				hHero:AddAbility("common_attack_good_datadriven"):SetLevel(1)
-				hHero:AddAbility("pull_all_datadriven"):SetLevel(1)
-				hHero:AddAbility("push_all_datadriven"):SetLevel(1)
-				hHero:AddAbility("nothing_c"):SetLevel(1)
-				hHero:AddAbility("nothing_b"):SetLevel(1)
-				hHero:AddAbility("nothing_a"):SetLevel(1)
-				]]
-			end
-		end
-		--gameProgress()--此处打开游戏流程的进程
+		gameProgress()--此处打开游戏流程的进程
 
 		
 --[[

@@ -33,15 +33,20 @@ function createMagicStone()
     local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
     local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
     local goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    goodMagicStone:AddAbility("magic_stone_good")
+    goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStone:SetSkin(0)
     goodMagicStone:SetContext("name", "magicStone", 0)
     local goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     goodMagicStonePan:SetSkin(0)
+    
 
 
     local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone") 
     local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
     local badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    badMagicStone:AddAbility("magic_stone_bad")
+    badMagicStone:GetAbilityByIndex(0):SetLevel(1)
     badMagicStone:SetSkin(1)
     badMagicStone:SetContext("name", "magicStone", 0)
     local badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
@@ -102,6 +107,34 @@ function createBaby(playerid)
     PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']]=new_unit
 
   end	
+
+    --玩家英雄初始化
+function initHeroByPlayerID(playerID)
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local heroTeam = hHero:GetTeam()
+    local commonAttack 
+    if heroTeam == DOTA_TEAM_GOODGUYS then
+        commonAttack = "common_attack_good_datadriven"
+    end
+    if heroTeam == DOTA_TEAM_BADDGUYS then
+        commonAttack = "common_attack_bad_datadriven"
+    end
+    hHero:AddAbility(commonAttack)
+
+    local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
+    hHero:SwapAbilities(commonAttack, tempAbility, true , false )
+    hHero:RemoveAbility(tempAbility) 
+
+
+    hHero:GetAbilityByIndex(0):SetLevel(1)
+    hHero:GetAbilityByIndex(1):SetLevel(1)
+    hHero:GetAbilityByIndex(2):SetLevel(1)
+    hHero:GetAbilityByIndex(3):SetLevel(1)
+    hHero:GetAbilityByIndex(4):SetLevel(1)
+    hHero:GetAbilityByIndex(5):SetLevel(1)
+
+	hero:SetTimeUntilRespawn(999) --重新设置复活时间
+end
 --[[
 function createShoot(keys)
     for k,v in pairs(keys) do

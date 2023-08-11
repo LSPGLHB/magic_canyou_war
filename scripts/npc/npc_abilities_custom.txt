@@ -28,6 +28,7 @@
 
 //下面才是正文
 #base magic/nothing.kv
+#base scene/scene_buff.kv
 #base contract/contract_all.kv
 #base contract/ability_buff.kv
 #base magic/pull_all.kv
@@ -37,6 +38,7 @@
 
 //火系
 #base magic/big_fire_ball.kv
+#base magic/big_fire_ball_pre.kv
 #base magic/fire_bottle.kv
 #base magic/light_ball.kv
 #base magic/fire_ball.kv
@@ -49,22 +51,28 @@
 
 //土系
 #base magic/twine_soil_ball.kv
+#base magic/twine_soil_ball_pre.kv
 #base magic/control_rock.kv
+#base magic/control_rock_pre.kv
 #base magic/stone_ball.kv
 #base magic/trace_stone_ball.kv
 #base magic/twice_stone_ball.kv
 #base magic/x_soil_ball.kv
 #base magic/swamp_area.kv
+#base magic/swamp_area_pre.kv
 #base magic/clay_ball.kv
 #base magic/scatter_soil_ball.kv
 
 //风系
 #base magic/small_hurricane.kv
 #base magic/wind_net.kv
+#base magic/wind_net_pre.kv
 #base magic/small_tornado.kv
 #base magic/space_collapse.kv
+#base magic/space_collapse_pre.kv
 #base magic/o_boomerang.kv
 #base magic/wind_dart.kv
+#base magic/wind_dart_pre.kv
 #base magic/big_tornado.kv
 #base magic/wind_arrow.kv
 #base magic/whirlwind_axe.kv
@@ -75,19 +83,23 @@
 #base magic/ice_beans.kv
 #base magic/ice_ball.kv
 #base magic/water_spirit.kv
+#base magic/water_spirit_pre.kv
 #base magic/v_ice_ball.kv
 #base magic/water_ball.kv
+#base magic/water_ball_pre.kv
 #base magic/ice_water_ball.kv
 #base magic/ice_skeleton.kv
 #base magic/twice_ice_ball.kv
 
 //雷系
 #base magic/scatter_thunder_ball.kv
+#base magic/scatter_thunder_ball_pre.kv
 #base magic/penetrate_thunder_ball.kv
 #base magic/electric_ball.kv
 #base magic/electric_shock.kv
 #base magic/electric_wall.kv
 #base magic/electric_gather.kv
+#base magic/electric_gather_pre.kv
 #base magic/thunder_spirit.kv
 #base magic/electric_arrow.kv
 #base magic/thunder_area.kv

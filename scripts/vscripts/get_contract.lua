@@ -103,7 +103,7 @@ function learnContractByNameJSTOLUA( index,keys )
 	local player = PlayerResource:GetPlayer(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local randomContractNumList = GameRules.randomContractNumList
-    print("learnContractByNameJSTOLUA"..playerID)
+    --print("learnContractByNameJSTOLUA"..playerID)
     local contractNameList = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
     local contractShowNameList = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
     local contractIconList = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
@@ -167,26 +167,3 @@ function contractOperation(playerID)
 end
 
 
-
-
---[[
-    local vision_bonus --增加英雄基础视野
-    local health_bonus --增加基础生命
-    local speed_bouns --增加基础移速
-    local speed_sp_precent --增加移速百分比
-    local speed_sp_duration --增加移速持续时间
-    local mana_bonus --增加蓝量
-    local mana_regen_bouns --增加蓝量恢复速度
-    local C_speed_bonus --增加C技能射速
-    local C_speed_bouns_precent --增加C技能射速百分比
-    local C_range_bonus --增加C技能射程
-    local C_range_bonus_precent --增加C技能射程百分比
-    local C_damage_bonus --增加C技能的攻击力
-    local C_damage_bonus_precent --增加C技能的攻击力百分比
-    local C_control_bonus_precent --增加C技能控制时间百分比
-    local C_energy_bonus_precent --增加C技能法魂量百分比
-    local C_mana_expend_precent --增加C技能蓝量消耗
-    local C_match_damage_bonus_precent --增加C技能相生时增加伤害百分比
-    local C_match_control_bonus_precent --增加C技能相生时控制时间百分比
-    local C_match_energy_bonus --增加C技能相生时法魂量
-]]
