@@ -11,6 +11,9 @@ function initMapStats()
     end
 ]]
    
+    --用于记录玩家是否学习，用于启动随机学习
+    playerRoundLearn = {}
+
 
     --魔法石初始化
     createMagicStone()
@@ -133,7 +136,7 @@ function initHeroByPlayerID(playerID)
     hHero:GetAbilityByIndex(4):SetLevel(1)
     hHero:GetAbilityByIndex(5):SetLevel(1)
 
-	hero:SetTimeUntilRespawn(999) --重新设置复活时间
+	hHero:SetTimeUntilRespawn(999) --重新设置复活时间
 end
 --[[
 function createShoot(keys)

@@ -52,6 +52,8 @@ function prepareStep(gameRound)
             --预备阶段结束后启动战斗阶段
             Timers:CreateTimer(loadingTime,function ()
                 print("onStepLoop1========over")
+                --为未学习技能的玩家启动随机学习
+                randomLearnMagic(gameRound)
                 --进入战斗阶段倒计时
                 battleStep(gameRound)
                 return nil
@@ -156,13 +158,13 @@ function getUpGradeListByRound(gameRound)
                 openMagicListPreA(playerID)
             end
 
-            if gameRound == 4 then
+            if gameRound == 5 then
                 openMagicListC(playerID)
             end
-            if gameRound == 5 then
+            if gameRound == 6 then
                 openMagicListB(playerID)
             end
-            if gameRound == 6then
+            if gameRound == 7 then
                 openMagicListA(playerID)
             end
 
@@ -205,19 +207,33 @@ end
 --每次轮回地图与玩家数据初始化
 function gameRoundInit()
     print("gameRoundInit")
-    --复活所有玩家
+    --初始化所有玩家
+    initPlayerHero()
+    --初始化场景
 
     --初始化所有临时BUFF（未做）
     initTempPlayerPower()
 
-   
     --英雄位置初始化到预备阶段
     playerPositionTransfer(preparePointsTeam1,playersTeam1)
     playerPositionTransfer(preparePointsTeam2,playersTeam2)
      
 end    
 
+function initPlayerHero()
+    
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            --初始化是否学习技能
+            playerRoundLearn[playerID] = 0
+            --初始化回合临时加强buff
 
+            --复活
+
+        end
+    end
+
+end
 
 
 --指定玩家传送到指定地点

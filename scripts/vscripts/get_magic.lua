@@ -238,18 +238,35 @@ function learnMagicByNameJSTOLUA( index,keys )
 	learnMagicByNum(playerID, num)
 end
 
-function randomLearnMagic()
+function randomLearnMagic(gameRound)
+	--1-3回合
+	local roundCount
+	if gameRound < 4 then
+		roundCount = 3
+	end
 
+	if gameRound == 4 then
+		roundCount = 6
+	end
+
+	if gameRound > 4 and gameRound < 8 then
+		roundCount = 2
+	end
+
+	local learnNum = math.random(1,roundCount)
+
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+			if playerRoundLearn[playerID] == 0 then
+				learnMagicByNum(playerID, learnNum)
+			end
+		end
+	end
 end
 
 function learnMagicByNum(playerID, num)
 	local player = PlayerResource:GetPlayer(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-    --local randomMagicNumList = GameRules.randomMagicNumList
-    --print("learnMagicByNameJSTOLUA", randomMagicNumList)
-    --local randomMagicShowNameList = getRandomArrayList(GameRules.randomMagicShowNameList, randomMagicNumList)
-    --local randomMagicIconSrcList = getRandomArrayList(GameRules.randomMagicIconSrcList, randomMagicNumList)
-    --local randomMagicDescribeList = getRandomArrayList(GameRules.randomMagicDescribeList, randomMagicNumList)
 
     local magicName = RandomMagicNameList[playerID][num]
 	local magicNameAllList = GameRules.magicNameList
@@ -273,17 +290,12 @@ function learnMagicByNum(playerID, num)
 		abilityIndex = 5
 	end
 
-    --local magicShowName = randomMagicShowNameList[num]
-    --local magicIcon = randomMagicIconSrcList[num]
-    --local magicDescribe = randomMagicDescribeList[num]
-	--print("learnMagicByNameJSTOLUA:",num,"name:",magicName,"magicIcon:",magicIcon)
 	local tempMagic = hHero:GetAbilityByIndex(abilityIndex):GetAbilityName()
 	hHero:RemoveAbility(tempMagic) 
 	hHero:AddAbility(magicName)
 	hHero:FindAbilityByName(magicName):SetLevel(1)
-	--print("========================",hHero:GetAbilityByIndex(3):GetAbilityName())
-	--hHero:SwapAbilities(magicName, tempMagic, true , false )
-	
 
+	--标记已经学习技能
+	playerRoundLearn[playerID] = 1
     closeUIMagicList(playerID)
 end
