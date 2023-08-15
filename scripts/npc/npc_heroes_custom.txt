@@ -106,9 +106,14 @@
 		"Ability4"	"nothing_c"
 		"Ability5"  "nothing_b"
 		"Ability6"  "nothing_a"
-		"Ability7"  ""
-		"Ability8"  ""
-		"Ability9"	""
+		"Ability7"  "nothing_c_stage"
+		"Ability8"  "nothing_b_stage"
+		"Ability9"	"nothing_a_stage"
+
+
+
+
+		
 
 		
 

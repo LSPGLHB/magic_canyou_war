@@ -9,22 +9,22 @@ end
 
 function getRandomContractList(playerID)
     local count = GameRules.contractNameList 
-    local randomContractNumList = getRandomNumList(1,#count,6)
-    GameRules.randomContractNumList = randomContractNumList
-    local contractNameList = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
-    local contractShowNameList = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
-    local contractIconList = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
-    local contractDescribeList = getRandomArrayList(GameRules.contractDescribeList, randomContractNumList)
-
+    local randomContractNumList = getRandomNumList(1,#count,3)
+    --GameRules.randomContractNumList = randomContractNumList
+    print("getRandomContractList:"..#count)
+    RandomContractNameList[playerID] = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
+    RandomContractShowNameList[playerID] = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
+    RandomContractIconList[playerID] = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
+    RandomContractDescribeList[playerID] = getRandomArrayList(GameRules.contractDescribeList, randomContractNumList)
+    print(RandomContractNameList[playerID])
     --OnUIContractListOpen( playerID )
     local listLength = #randomContractNumList
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getRandomContractListLUATOJS", {
         listLength = listLength,
-        contractNameList = contractNameList,
-        contractShowNameList = contractShowNameList,
-        contractIconList = contractIconList,
-        contractDescribeList = contractDescribeList
-        
+        contractNameList = RandomContractNameList[playerID],
+        contractShowNameList = RandomContractShowNameList[playerID],
+        contractIconList = RandomContractIconList[playerID],
+        contractDescribeList = RandomContractDescribeList[playerID]
     })
 end
 
@@ -37,8 +37,20 @@ function initContractList()
     local contractIconList = {}
     local contractDescribeList = {}
 
-    for key, value in pairs(contractList) do
+    --初始化用于传递技能学习的列表
+	RandomContractNameList = {}
+    RandomContractShowNameList = {}
+    RandomContractIconList = {}
+    RandomContractDescribeList = {}
 
+	for i = 1 , 10 do
+		RandomContractNameList[i]	= {}
+        RandomContractShowNameList[i]	= {}
+        RandomContractIconList[i]	= {}
+        RandomContractDescribeList[i]	= {}
+	end
+
+    for key, value in pairs(contractList) do
         local contractName = key
 		local contractShowName = nil
 		local contractIcon = nil
@@ -47,17 +59,19 @@ function initContractList()
         for k,v in pairs(value) do
             if k == "ShowName"  then
                 contractShowName = v
-                c = c+1
+                c = c + 1
+                
             end
             if k == "IconSrc" then
                 contractIcon = v
-                c = c+1
+                c = c + 1
             end
             if k == "Describe" then
                 contractDescribe = v
-                c = c+1
+                c = c + 1
             end
             if c == 3 then
+                --print("contractShowName",contractShowName)
                 table.insert(contractNameList,contractName)
 				table.insert(contractShowNameList,contractShowName)
 				table.insert(contractIconList,contractIcon)
@@ -78,6 +92,7 @@ function openContractListKVTOLUA(keys)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
    -- closeUIContractList(playerID)
+   print("openContractListKVTOLUA",playerID)
     openUIContractList( playerID )
     getRandomContractList(playerID)
 end
@@ -94,26 +109,39 @@ function refreshContractListJSTOLUA(index,keys)
     getRandomContractList(playerID)
 end
 
+function randomLearnContract()
+    local learnNum = math.random(1,3)
 
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+			if playerRoundLearn[playerID] == 0 then
+				learnContractByNum(playerID, learnNum)
+			end
+		end
+	end
+end
 
 --获得天赋
 function learnContractByNameJSTOLUA( index,keys )
     local playerID = keys.PlayerID
 	local num  = keys.num
+    learnContractByNum(playerID, num)
+end
+
+function learnContractByNum(playerID, num)
 	local player = PlayerResource:GetPlayer(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+    --[[
     local randomContractNumList = GameRules.randomContractNumList
-    --print("learnContractByNameJSTOLUA"..playerID)
     local contractNameList = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
     local contractShowNameList = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
     local contractIconList = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
     local contractDescribeList = getRandomArrayList(GameRules.contractDescribeList, randomContractNumList)
-
-    local contractName = contractNameList[num]
-    local contractShowName = contractShowNameList[num]
-    local contractIcon = contractIconList[num]
-    local contractDescribe = contractDescribeList[num]
-
+    ]]
+    local contractName = RandomContractNameList[playerID][num]
+    local contractShowName = RandomContractShowNameList[playerID][num]
+    local contractIcon = RandomContractIconList[playerID][num]
+    local contractDescribe = RandomContractDescribeList[playerID][num]
 
     if player.contract ~= nil then
         local modifierName = "modifier_contract_"..player.contract.."_datadriven"
@@ -123,9 +151,6 @@ function learnContractByNameJSTOLUA( index,keys )
     player.contract = contractName
     print("contractName"..contractName)
     hHero:AddAbility(player.contract):SetLevel(1)
-
-
-
    
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "setContractUILUATOJS", {
         contractShowName = contractShowName,
@@ -133,7 +158,8 @@ function learnContractByNameJSTOLUA( index,keys )
         contractDescribe = contractDescribe
         
     } )
-
+    --标记已经学习技能
+	playerRoundLearn[playerID] = 1
     closeUIContractList(playerID)
 end
 
@@ -141,7 +167,6 @@ end
 function contractOperation(playerID)
     local player = PlayerResource:GetPlayer(playerID)
     local contractName = player.contract
-
     local contractList = GameRules.contractList
 
     for key, value in pairs(contractList) do
@@ -156,14 +181,10 @@ function contractOperation(playerID)
                 if k == "speed_bouns" then
                     player.contract_hp_reduce_precent_final = v
                 end
-                
-        
             end
             --break;
         end
     end
-
-
 end
 
 

@@ -1,6 +1,7 @@
 require('player_power')
 require('get_contract')
 require('get_magic')
+require('game_init')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
     print("======sendMsgOnScreenToAll======")
@@ -33,14 +34,12 @@ function prepareStep(gameRound)
     local loadingTime = 1.5 --延迟时间 
     local prepareTime = 10 --准备阶段时长
     GameRules.checkWinTeam = nil
-    --每次轮回初始化地图与数据
-    gameRoundInit()
+    
     getUpGradeListByRound(gameRound)
     --信息发送到前端
     Timers:CreateTimer(0 ,function ()
         --local gameTime = getNowTime()
         prepareTime = prepareTime - 1
-    
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step1 .. prepareTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
@@ -53,7 +52,12 @@ function prepareStep(gameRound)
             Timers:CreateTimer(loadingTime,function ()
                 print("onStepLoop1========over")
                 --为未学习技能的玩家启动随机学习
-                randomLearnMagic(gameRound)
+                if gameRound ~= 4 and gameRound < 8 then
+                    randomLearnMagic(gameRound)
+                end
+                if gameRound == 4 then 
+                    randomLearnContract()
+                end
                 --进入战斗阶段倒计时
                 battleStep(gameRound)
                 return nil
@@ -74,7 +78,7 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 5
-    local battleTime = 50 --战斗时间
+    local battleTime = 5000 --战斗时间
 
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
@@ -122,6 +126,9 @@ function battleStep(gameRound)
                 Timers:CreateTimer(loadingTime,function ()
                     GameRules.checkWinTeam = nil
                     gameRound = gameRound + 1
+                    --每次轮回初始化地图与数据
+                    gameRoundInit()
+
                     prepareStep(gameRound) 
                     return nil
                 end)
@@ -157,7 +164,9 @@ function getUpGradeListByRound(gameRound)
             if gameRound == 3 then
                 openMagicListPreA(playerID)
             end
-
+            if gameRound == 4 then
+                getRandomContractList(playerID)
+            end
             if gameRound == 5 then
                 openMagicListC(playerID)
             end
@@ -196,7 +205,7 @@ function checkWinTeam()
     if goodAlive == 0 and GameRules.checkWinTeam == nil then
         GameRules.checkWinTeam = DOTA_TEAM_BADDGUYS
     end
-    if badAlive == 0 and GameRules.checkWinTeam == nil then--调试关闭
+    if badAlive == 0 and GameRules.checkWinTeam == nil then--调试关闭,最终需要打开
         --GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
 end
@@ -210,9 +219,8 @@ function gameRoundInit()
     --初始化所有玩家
     initPlayerHero()
     --初始化场景
+    initScene()
 
-    --初始化所有临时BUFF（未做）
-    initTempPlayerPower()
 
     --英雄位置初始化到预备阶段
     playerPositionTransfer(preparePointsTeam1,playersTeam1)
@@ -226,13 +234,19 @@ function initPlayerHero()
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             --初始化是否学习技能
             playerRoundLearn[playerID] = 0
-            --初始化回合临时加强buff
+
+            --初始化所有临时BUFF（未做）
+            initTempPlayerPower()
 
             --复活
 
         end
     end
 
+end
+
+function initScene()
+    createMagicStone()
 end
 
 

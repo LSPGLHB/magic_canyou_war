@@ -29,7 +29,6 @@ function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
 		if tempMagicLvList[i] ==  MagicLevel and tempPreMagicList[i] == preMagic then
 			--print("tempPreMagicList:",tempPreMagicList[i],"=======================","tempMagicLvList:",tempMagicLvList[i])
 			--print("tempMagicNameList:",tempMagicNameList[i],"=======================","tempIconSrcList:",tempIconSrcList[i])
-
 			table.insert(magicNameList,tempMagicNameList[i])
 			table.insert(iconSrcList,tempIconSrcList[i])
 			table.insert(showNameList,tempShowNameList[i])
@@ -155,6 +154,7 @@ end
 function initMagicList()
 	--初始化用于传递技能学习的列表
 	RandomMagicNameList = {}
+	
 	for i = 1 , 10 do
 		RandomMagicNameList[i]	= {}
 	end
@@ -167,6 +167,7 @@ function initMagicList()
     local describeList = {}
 	local preMagicList = {}
 	local magicLvList = {}
+	local stageAbilityList = {}
 	
 	--local flag = false
 	for key, value in pairs(magicList) do
@@ -179,12 +180,13 @@ function initMagicList()
 		local tempShowName 
         local tempDescribe 
 		local tempPreMagic 
+		local tempStageAbility
 		local c = 0
 		for k,v in pairs(value) do
 			if k == "AbilityLevel" then			
 				tempMagicLv = v
 				tempMagicName = key
-				print("idName:"..key)
+				--print("idName:"..key)
 				c= c+1
 			end
 			if k == "IconSrc"  then
@@ -206,8 +208,12 @@ function initMagicList()
 				tempPreMagic = v
 				c= c+1
 			end
+			if k == "StageAbility" then
+				tempStageAbility = v
+				c= c+1
+			end
 
-			if c == 5 then
+			if c == 6 then
                 --print("idName:"..tempMagicName)
 				table.insert(magicNameList,tempMagicName)
 				table.insert(iconSrcList,tempIconSrc)
@@ -215,7 +221,7 @@ function initMagicList()
 				table.insert(describeList,tempDescribe)
 				table.insert(preMagicList,tempPreMagic)
 				table.insert(magicLvList,tempMagicLv)
-
+				table.insert(stageAbilityList,tempStageAbility)
 				break
 			end
 		end
@@ -227,7 +233,7 @@ function initMagicList()
     GameRules.magicDescribeList = describeList
 	GameRules.preMagicList = preMagicList
 	GameRules.magicLvList = magicLvList
-
+	GameRules.stageAbilityList = stageAbilityList
 end
 
 
@@ -245,9 +251,7 @@ function randomLearnMagic(gameRound)
 		roundCount = 3
 	end
 
-	if gameRound == 4 then
-		roundCount = 6
-	end
+
 
 	if gameRound > 4 and gameRound < 8 then
 		roundCount = 2
@@ -272,28 +276,39 @@ function learnMagicByNum(playerID, num)
 	local magicNameAllList = GameRules.magicNameList
 	--local preMagicList = GameRules.preMagicList
 	local magicLvList = GameRules.magicLvList
+	local stageAbilityList = GameRules.stageAbilityList
 	local magicLv
 	local abilityIndex
 	for i = 1 , #magicNameAllList do
 		if magicName == magicNameAllList[i] then
 			magicLv = magicLvList[i]
+			stageAbility = stageAbilityList[i]
 		end
 	end
 
 	if magicLv == 'c' then
 		abilityIndex = 3
+		stageAbilityIndex = 6
 	end
 	if magicLv== 'b' then
 		abilityIndex = 4
+		stageAbilityIndex = 7
 	end
 	if magicLv == 'a' then
-		abilityIndex = 5
+		stageAbilityIndex = 8
 	end
 
 	local tempMagic = hHero:GetAbilityByIndex(abilityIndex):GetAbilityName()
 	hHero:RemoveAbility(tempMagic) 
 	hHero:AddAbility(magicName)
 	hHero:FindAbilityByName(magicName):SetLevel(1)
+
+	if stageAbility ~= 'null' then
+		local tempStageMagic = hHero:GetAbilityByIndex(stageAbilityIndex):GetAbilityName()
+		hHero:RemoveAbility(tempStageMagic) 
+		hHero:AddAbility(stageAbility)
+		hHero:FindAbilityByName(stageAbility):SetLevel(1)
+	end
 
 	--标记已经学习技能
 	playerRoundLearn[playerID] = 1

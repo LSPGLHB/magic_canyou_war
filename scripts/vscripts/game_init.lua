@@ -33,29 +33,43 @@ end
 
 --魔法石初始化
 function createMagicStone()
+    if goodMagicStone ~= nil then
+        goodMagicStone:ForceKill(true)
+    end
+
+    if goodMagicStonePan ~= nil then
+        goodMagicStonePan:ForceKill(true)
+    end
+
+    if badMagicStone ~= nil then
+        badMagicStone:ForceKill(true)
+    end
+
+    if badMagicStonePan ~= nil then
+        badMagicStonePan:ForceKill(true)
+    end
+
     local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
     local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
-    local goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
     goodMagicStone:AddAbility("magic_stone_good")
     goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStone:SetSkin(0)
     goodMagicStone:SetContext("name", "magicStone", 0)
-    local goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     goodMagicStonePan:SetSkin(0)
     
 
 
     local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone") 
     local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
-    local badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     badMagicStone:AddAbility("magic_stone_bad")
     badMagicStone:GetAbilityByIndex(0):SetLevel(1)
     badMagicStone:SetSkin(1)
     badMagicStone:SetContext("name", "magicStone", 0)
-    local badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
     badMagicStonePan:SetSkin(1)
-
-
 end
 
 -- 模拟商人
@@ -122,11 +136,11 @@ function initHeroByPlayerID(playerID)
     if heroTeam == DOTA_TEAM_BADDGUYS then
         commonAttack = "common_attack_bad_datadriven"
     end
+    local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
+    hHero:RemoveAbility(tempAbility) 
     hHero:AddAbility(commonAttack)
 
-    local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
-    hHero:SwapAbilities(commonAttack, tempAbility, true , false )
-    hHero:RemoveAbility(tempAbility) 
+
 
 
     hHero:GetAbilityByIndex(0):SetLevel(1)
