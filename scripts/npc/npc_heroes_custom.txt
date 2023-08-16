@@ -112,11 +112,6 @@
 
 
 
-
-		
-
-		
-
 		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"   // 碰撞边界类型，以下为单位尺寸参数:
                                                             // 值                             Hammer中的单位半径
                                                             // DOTA_HULL_SIZE_SMALL            8

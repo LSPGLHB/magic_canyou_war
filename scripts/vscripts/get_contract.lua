@@ -12,19 +12,28 @@ function getRandomContractList(playerID)
     local randomContractNumList = getRandomNumList(1,#count,3)
     --GameRules.randomContractNumList = randomContractNumList
     print("getRandomContractList:"..#count)
-    RandomContractNameList[playerID] = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
-    RandomContractShowNameList[playerID] = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
-    RandomContractIconList[playerID] = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
-    RandomContractDescribeList[playerID] = getRandomArrayList(GameRules.contractDescribeList, randomContractNumList)
-    print(RandomContractNameList[playerID])
+
+    local randomContractNameList  = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
+    local randomandomContractShowNameList = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
+    local randomContractIconList = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
+    local randomContractDescribeList = getRandomArrayList(GameRules.contractDescribeList, randomContractNumList)
+
+    RandomContractNameList[playerID] = randomContractNameList
+    RandomContractShowNameList[playerID] = randomandomContractShowNameList
+    RandomContractIconList[playerID] = randomContractIconList
+    RandomContractDescribeList[playerID] = randomContractDescribeList
+
+
+
     --OnUIContractListOpen( playerID )
     local listLength = #randomContractNumList
+
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getRandomContractListLUATOJS", {
         listLength = listLength,
-        contractNameList = RandomContractNameList[playerID],
-        contractShowNameList = RandomContractShowNameList[playerID],
-        contractIconList = RandomContractIconList[playerID],
-        contractDescribeList = RandomContractDescribeList[playerID]
+        contractNameList = randomContractNameList,
+        contractShowNameList = randomandomContractShowNameList,
+        contractIconList = randomContractIconList,
+        contractDescribeList = randomContractDescribeList
     })
 end
 
@@ -87,7 +96,7 @@ function initContractList()
 end
 
 
---启动打开选择页面
+--测试用
 function openContractListKVTOLUA(keys)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
@@ -108,6 +117,14 @@ function refreshContractListJSTOLUA(index,keys)
     openUIContractList(playerID)
     getRandomContractList(playerID)
 end
+
+
+--启动打开选择页面
+function openRandomContractList(playerID)
+    openUIContractList( playerID )
+    getRandomContractList(playerID)
+end
+
 
 function randomLearnContract()
     local learnNum = math.random(1,3)

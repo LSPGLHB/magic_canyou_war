@@ -93,8 +93,8 @@
 				"soundWeak"			"magic_stone_power_down"
 				"cp"				"3"
 				"modifier_caster_syn_name"	   "modifier_control_rock_under_control"
-				"ability_a_name"		   "control_rock_datadriven"
-				"ability_b_name"		   "control_rock_stage_b_datadriven"
+				"ability_a_name"		   "control_rock_pre_datadriven"
+				"ability_b_name"		   "control_rock_pre_stage_b_datadriven"
 			}
 		}
 
@@ -104,7 +104,7 @@
 			{
 				"ScriptFile"	"magic/control_rock.lua"
 				"Function"		"LevelUpAbility"
-				"ability_b_name"	"control_rock_stage_b_datadriven"
+				"ability_b_name"	"control_rock_pre_stage_b_datadriven"
 			}
 		}
 
@@ -128,8 +128,8 @@
 					{
 						"ScriptFile"		"magic/control_rock.lua"
 						"Function"			"CheckToInterrupt"
-						"ability_a_name"	"control_rock_datadriven"
-						"ability_b_name"	"control_rock_stage_b_datadriven"
+						"ability_a_name"	"control_rock_pre_datadriven"
+						"ability_b_name"	"control_rock_pre_stage_b_datadriven"
 						"modifier_caster_syn_name"	"modifier_control_rock_under_control"
 					}
 				}
@@ -140,8 +140,8 @@
 					{
 						"ScriptFile"		"magic/control_rock.lua"
 						"Function"			"initMagicStage"
-						"ability_a_name"	"control_rock_datadriven"
-						"ability_b_name"	"control_rock_stage_b_datadriven"
+						"ability_a_name"	"control_rock_pre_datadriven"
+						"ability_b_name"	"control_rock_pre_stage_b_datadriven"
 					}
 
 				}
@@ -163,7 +163,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"marci_companion_run"
 
         "MaxLevel"                      "1"
@@ -194,8 +194,8 @@
 			{
 				"ScriptFile"		"magic/control_rock.lua"
 				"Function"			"EndControl"
-				"ability_a_name"		   "control_rock_datadriven"
-				"ability_b_name"		   "control_rock_stage_b_datadriven"
+				"ability_a_name"		   "control_rock_pre_datadriven"
+				"ability_b_name"		   "control_rock_pre_stage_b_datadriven"
 				"modifier_caster_syn_name" 		"modifier_control_rock_under_control"
 			}
 		}	

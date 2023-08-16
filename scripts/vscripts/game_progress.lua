@@ -4,7 +4,7 @@ require('get_magic')
 require('game_init')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
-    print("======sendMsgOnScreenToAll======")
+    --print("======sendMsgOnScreenToAll======")
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             CustomUI:DynamicHud_Destroy(playerID,"UIBannerMsgBox")
@@ -34,6 +34,8 @@ function prepareStep(gameRound)
     local loadingTime = 1.5 --延迟时间 
     local prepareTime = 10 --准备阶段时长
     GameRules.checkWinTeam = nil
+
+    
     
     getUpGradeListByRound(gameRound)
     --信息发送到前端
@@ -50,7 +52,7 @@ function prepareStep(gameRound)
             prepareOverMsgSend()
             --预备阶段结束后启动战斗阶段
             Timers:CreateTimer(loadingTime,function ()
-                print("onStepLoop1========over")
+                print("onStepLoop1========over",gameRound)
                 --为未学习技能的玩家启动随机学习
                 if gameRound ~= 4 and gameRound < 8 then
                     randomLearnMagic(gameRound)
@@ -77,8 +79,8 @@ function battleStep(gameRound)
     local step2 = "战斗时间还有："
     --扫描进程
     local interval = 1
-    local loadingTime = 5
-    local battleTime = 5000 --战斗时间
+    local loadingTime = 2
+    local battleTime = 5 --战斗时间
 
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
@@ -129,6 +131,7 @@ function battleStep(gameRound)
                     --每次轮回初始化地图与数据
                     gameRoundInit()
 
+
                     prepareStep(gameRound) 
                     return nil
                 end)
@@ -165,7 +168,7 @@ function getUpGradeListByRound(gameRound)
                 openMagicListPreA(playerID)
             end
             if gameRound == 4 then
-                getRandomContractList(playerID)
+                openRandomContractList(playerID)
             end
             if gameRound == 5 then
                 openMagicListC(playerID)
@@ -215,12 +218,11 @@ end
 
 --每次轮回地图与玩家数据初始化
 function gameRoundInit()
-    print("gameRoundInit")
+    print("================================================================================================================gameRoundInit===========================xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     --初始化所有玩家
     initPlayerHero()
     --初始化场景
     initScene()
-
 
     --英雄位置初始化到预备阶段
     playerPositionTransfer(preparePointsTeam1,playersTeam1)
@@ -234,7 +236,6 @@ function initPlayerHero()
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             --初始化是否学习技能
             playerRoundLearn[playerID] = 0
-
             --初始化所有临时BUFF（未做）
             initTempPlayerPower()
 
@@ -242,7 +243,6 @@ function initPlayerHero()
 
         end
     end
-
 end
 
 function initScene()

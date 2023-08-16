@@ -26,6 +26,7 @@ function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
 	--print("MagicLevel:",MagicLevel,"preMagic:",preMagic,"==")
 	for i = 1 , #tempMagicNameList do
 		--print("tempPreMagicList:",tempPreMagicList[i],"===","tempMagicLvList:",tempMagicLvList[i])
+		--导入1-3回合技能表
 		if tempMagicLvList[i] ==  MagicLevel and tempPreMagicList[i] == preMagic then
 			--print("tempPreMagicList:",tempPreMagicList[i],"=======================","tempMagicLvList:",tempMagicLvList[i])
 			--print("tempMagicNameList:",tempMagicNameList[i],"=======================","tempIconSrcList:",tempIconSrcList[i])
@@ -55,6 +56,7 @@ function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
     local randomDescribeList = getRandomArrayList(describeList, randomNumList)
 	local randompreMagicList = getRandomArrayList(preMagicList, randomNumList)
     local randomMagicLvList = getRandomArrayList(magicLvList, randomNumList)
+
 	RandomMagicNameList[playerID] = randomNameList
 
 	local listLength = #randomNameList
@@ -261,7 +263,8 @@ function randomLearnMagic(gameRound)
 
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-			if playerRoundLearn[playerID] == 0 then
+			--print(playerRoundLearn[playerID])
+			if playerRoundLearn[playerID] == 0 or playerRoundLearn[playerID] == nil then
 				learnMagicByNum(playerID, learnNum)
 			end
 		end
@@ -295,20 +298,26 @@ function learnMagicByNum(playerID, num)
 		stageAbilityIndex = 7
 	end
 	if magicLv == 'a' then
+		abilityIndex = 5
 		stageAbilityIndex = 8
 	end
 
+	if stageAbility ~= 'null' then
+		
+		local tempStageMagic = hHero:GetAbilityByIndex(stageAbilityIndex):GetAbilityName()
+		--print("tempStageMagic",tempStageMagic)
+		--print("stageAbility",stageAbility)
+		hHero:RemoveAbility(tempStageMagic) 
+		hHero:AddAbility(stageAbility)	
+		--hHero:FindAbilityByName(stageAbility):SetLevel(1)
+	end
 	local tempMagic = hHero:GetAbilityByIndex(abilityIndex):GetAbilityName()
 	hHero:RemoveAbility(tempMagic) 
 	hHero:AddAbility(magicName)
 	hHero:FindAbilityByName(magicName):SetLevel(1)
 
-	if stageAbility ~= 'null' then
-		local tempStageMagic = hHero:GetAbilityByIndex(stageAbilityIndex):GetAbilityName()
-		hHero:RemoveAbility(tempStageMagic) 
-		hHero:AddAbility(stageAbility)
-		hHero:FindAbilityByName(stageAbility):SetLevel(1)
-	end
+	
+
 
 	--标记已经学习技能
 	playerRoundLearn[playerID] = 1
