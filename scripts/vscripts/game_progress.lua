@@ -58,7 +58,7 @@ function prepareStep(gameRound)
                     randomLearnMagic(gameRound)
                 end
                 if gameRound == 4 then 
-                    randomLearnContract()
+                    --randomLearnContract()
                 end
                 --进入战斗阶段倒计时
                 battleStep(gameRound)
@@ -168,7 +168,7 @@ function getUpGradeListByRound(gameRound)
                 openMagicListPreA(playerID)
             end
             if gameRound == 4 then
-                openRandomContractList(playerID)
+               openRandomContractList(playerID)
             end
             if gameRound == 5 then
                 openMagicListC(playerID)
@@ -179,8 +179,12 @@ function getUpGradeListByRound(gameRound)
             if gameRound == 7 then
                 openMagicListA(playerID)
             end
+            if gameRound == 8 then
+                openRebuildMagicList(playerID)
+            end
 
 
+            
         end
     end
    
@@ -424,8 +428,8 @@ function gameInit()
     end
 
     finalWinTeam = DOTA_TEAM_GOODGUYS
-    GoodStoneHP = 6
-    BadStoneHP = 6
+    GoodStoneHP = 11
+    BadStoneHP = 11
     NumberStr ={"一","二","三","四","五","六","七","八","九","十","十一","十二","十三"} 
     GameRules.checkWinTeam = nil
 end

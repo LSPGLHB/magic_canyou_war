@@ -7,33 +7,27 @@ function closeUIMagicList(playerID)
     CustomUI:DynamicHud_Destroy(playerID,"UIMagicListPanelBox")
 end
 
---获取随机技能列表
-function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
-    local tempMagicNameList = GameRules.magicNameList
+function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUATOJS)
+	local tempMagicNameList = GameRules.magicNameList
 	local tempIconSrcList = GameRules.magicIconSrcList
-	local tempShowNameList = GameRules.magicShowNameList
-    local tempDescribeList = GameRules.magicDescribeList
 	local tempPreMagicList = GameRules.preMagicList
 	local tempMagicLvList = GameRules.magicLvList 
-
+	local tempUnitTypeList = GameRules.unitTypeList 
 	local magicNameList ={}
 	local iconSrcList = {}
-	local showNameList = {}
-    local describeList = {}
+	--local showNameList = {}
+   -- local describeList = {}
 	local preMagicList = {}
 	local magicLvList = {}
-	
 	--print("MagicLevel:",MagicLevel,"preMagic:",preMagic,"==")
 	for i = 1 , #tempMagicNameList do
 		--print("tempPreMagicList:",tempPreMagicList[i],"===","tempMagicLvList:",tempMagicLvList[i])
 		--导入1-3回合技能表
-		if tempMagicLvList[i] ==  MagicLevel and tempPreMagicList[i] == preMagic then
+		if tempMagicLvList[i] == MagicLevel and tempPreMagicList[i] == preMagic then
 			--print("tempPreMagicList:",tempPreMagicList[i],"=======================","tempMagicLvList:",tempMagicLvList[i])
 			--print("tempMagicNameList:",tempMagicNameList[i],"=======================","tempIconSrcList:",tempIconSrcList[i])
 			table.insert(magicNameList,tempMagicNameList[i])
 			table.insert(iconSrcList,tempIconSrcList[i])
-			table.insert(showNameList,tempShowNameList[i])
-			table.insert(describeList,tempDescribeList[i])
 			table.insert(preMagicList,tempPreMagicList[i])
 			table.insert(magicLvList,tempMagicLvList[i])
 		end
@@ -52,8 +46,6 @@ function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
 	--根据随机数字数组得出随机技能详细数组
     local randomNameList = getRandomArrayList(magicNameList, randomNumList)
 	local randomIconList = getRandomArrayList(iconSrcList, randomNumList)
-	local randomShowNameList = getRandomArrayList(showNameList, randomNumList)
-    local randomDescribeList = getRandomArrayList(describeList, randomNumList)
 	local randompreMagicList = getRandomArrayList(preMagicList, randomNumList)
     local randomMagicLvList = getRandomArrayList(magicLvList, randomNumList)
 
@@ -61,15 +53,25 @@ function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
 
 	local listLength = #randomNameList
 
-	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getRandomMagicListLUATOJS", {
+	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), functionForLUATOJS, {
         listLength=listLength, 
         magicNameList = randomNameList,
-        magicIconList = randomIconList,
-        magicShowNameList = randomShowNameList,
-        magicDescribeList = randomDescribeList
+        magicIconList = randomIconList
     })
-    
 end
+
+--获取随机技能列表
+function getRandomMagicList(playerID,MagicLevel,preMagic,listCount)
+    getMagicListFunc(playerID,MagicLevel,preMagic,listCount,"getRandomMagicListLUATOJS")  
+end
+
+
+
+function getRebuildRandomMagicList(playerID,MagicLevel,preMagic,listCount)
+	getMagicListFunc(playerID,MagicLevel,preMagic,listCount,"getRebuildRandomMagicListLUATOJS")    
+end
+
+
 --测试用，流程不存在
 function openMagicListPreCKVTOLUA(keys)
     local caster = keys.caster
@@ -145,6 +147,28 @@ function openMagicListA(playerID)
 	getRandomMagicList(playerID,MagicLevel,preMagic,2)
 end
 
+function openRebuildMagicList(playerID)
+	openUIMagicList( playerID )
+	getRebuildMagicList(playerID)
+end
+
+--打开重修列表
+function openMagicListRebuild(playerID,num)
+	openUIMagicList( playerID )
+	local MagicLevel
+	if num == 1 then
+		MagicLevel = 'c'
+	end
+	if num == 2 then
+		MagicLevel = 'b'
+	end
+	if num == 3 then
+		MagicLevel = 'a'
+	end
+	getRebuildRandomMagicList(playerID,MagicLevel,"null",3)
+
+end
+
 
 --关闭按钮
 function closeMagicListJSTOLUA(index,keys)
@@ -165,24 +189,33 @@ function initMagicList()
 	local magicList = GameRules.customAbilities
 	local magicNameList = {}
 	local iconSrcList = {}
-	local showNameList = {}
-    local describeList = {}
 	local preMagicList = {}
 	local magicLvList = {}
 	local stageAbilityList = {}
+	local unitTypeList = {}
+
+	local speedList = {}
+	local maxDistanceList = {}
+	local damageList ={}
+	local aoeRadiusList = {}
+	local debuffDuration = {}
+	local debuffEffectValSp1 ={}
+	local debuffEffectValSp2 ={}
+
 	
 	--local flag = false
 	for key, value in pairs(magicList) do
 		--print("GetAbilityKV-----: ", key, value)
-		--table.insert(magicNameList,key)	
-		--flag = false
+
 		local tempMagicLv
 		local tempMagicName 
 		local tempIconSrc 
-		local tempShowName 
-        local tempDescribe 
 		local tempPreMagic 
 		local tempStageAbility
+		local tempUnitType
+
+		local tempSpeed
+
 		local c = 0
 		for k,v in pairs(value) do
 			if k == "AbilityLevel" then			
@@ -214,16 +247,39 @@ function initMagicList()
 				tempStageAbility = v
 				c= c+1
 			end
+			if k == "UnitType" then
+				tempUnitType = v
+				c= c+1
+			end
+			if k == "AbilitySpecial" then
+				local tempAbilitySpecialList = v
+				for x, y_table in pairs(tempAbilitySpecialList) do
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed = j_val
+							end
+						end
+					end
 
-			if c == 6 then
-                --print("idName:"..tempMagicName)
+
+				end
+				c=c+1
+			end
+
+			if c == 8 then
+                --print("===============idName:"..tempMagicName.."speed:"..tempSpeed)
 				table.insert(magicNameList,tempMagicName)
 				table.insert(iconSrcList,tempIconSrc)
-				table.insert(showNameList,tempShowName)
-				table.insert(describeList,tempDescribe)
 				table.insert(preMagicList,tempPreMagic)
 				table.insert(magicLvList,tempMagicLv)
 				table.insert(stageAbilityList,tempStageAbility)
+				table.insert(unitTypeList,tempUnitType)
+
+				table.insert(speedList,tempSpeed)
+
+
+				
 				break
 			end
 		end
@@ -236,6 +292,13 @@ function initMagicList()
 	GameRules.preMagicList = preMagicList
 	GameRules.magicLvList = magicLvList
 	GameRules.stageAbilityList = stageAbilityList
+	GameRules.unitTypeList = unitTypeList
+
+	GameRules.speedList = speedList
+
+
+
+
 end
 
 
@@ -253,8 +316,6 @@ function randomLearnMagic(gameRound)
 		roundCount = 3
 	end
 
-
-
 	if gameRound > 4 and gameRound < 8 then
 		roundCount = 2
 	end
@@ -263,7 +324,6 @@ function randomLearnMagic(gameRound)
 
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-			--print(playerRoundLearn[playerID])
 			if playerRoundLearn[playerID] == 0 or playerRoundLearn[playerID] == nil then
 				learnMagicByNum(playerID, learnNum)
 			end
@@ -316,10 +376,85 @@ function learnMagicByNum(playerID, num)
 	hHero:AddAbility(magicName)
 	hHero:FindAbilityByName(magicName):SetLevel(1)
 
-	
-
-
 	--标记已经学习技能
 	playerRoundLearn[playerID] = 1
     closeUIMagicList(playerID)
+end
+
+
+--获取可遗忘法术列表
+function getRebuildMagicList(playerID)
+	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+	local magic_c = hHero:GetAbilityByIndex(3):GetAbilityName()
+	local magic_b = hHero:GetAbilityByIndex(4):GetAbilityName()
+	local magic_a = hHero:GetAbilityByIndex(5):GetAbilityName()
+
+	local tempMagicNameList = GameRules.magicNameList
+	local tempIconSrcList = GameRules.magicIconSrcList
+	local tempShowNameList = GameRules.magicShowNameList
+    local tempDescribeList = GameRules.magicDescribeList
+
+	local rebuildNameList = {}
+	local rebuildIconList = {}
+	local rebuildShowNameList = {}
+	local rebuildDescribeList = {}
+
+
+	for i = 1 , #tempMagicNameList do
+		local listNum = 0
+		if tempMagicNameList[i] == magic_c then
+			listNum = 1
+		end
+		if tempMagicNameList[i] == magic_b then
+			listNum = 2
+		end
+		if tempMagicNameList[i] == magic_a then
+			listNum = 3
+		end
+
+		if listNum ~= 0 then
+			rebuildNameList[listNum] = tempMagicNameList[i]
+			rebuildIconList[listNum] = tempIconSrcList[i]
+		end
+	end
+	local listLength = #rebuildNameList
+
+	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getRebuildMagicListToForgetLUATOJS", {
+		listLength=listLength, 
+        magicNameList = rebuildNameList,
+        magicIconList = rebuildIconList
+    })
+	
+end
+
+
+--打开重修魔法可选列表
+function rebuildMagicByNameJSTOLUA( index,keys )
+    local playerID = keys.PlayerID
+	local num  = keys.num
+	closeUIMagicList(playerID)
+	openMagicListRebuild(playerID,num)
+end
+
+--根据重修的前置魔法，打开随机进阶魔法列表
+function getRebuildMagicListByNameJSTOLUA( index,keys )
+	local playerID = keys.PlayerID
+	local num  = keys.num
+	local magicName = RandomMagicNameList[playerID][num]
+	local preMagic = magicName
+	local magicNameAllList = GameRules.magicNameList
+	--local preMagicList = GameRules.preMagicList 
+	local magicLvList = GameRules.magicLvList 
+	local MagicLevel
+	for i = 1, #magicNameAllList do
+		if magicNameAllList[i] == magicName then
+			MagicLevel = magicLvList[i]
+		end
+	end
+
+	closeUIMagicList(playerID)
+	openUIMagicList( playerID )
+	getRandomMagicList(playerID,MagicLevel,preMagic,2)
+
 end
