@@ -149,6 +149,9 @@ function initHeroByPlayerID(playerID)
     hHero:GetAbilityByIndex(3):SetLevel(1)
     hHero:GetAbilityByIndex(4):SetLevel(1)
     hHero:GetAbilityByIndex(5):SetLevel(1)
+    hHero:GetAbilityByIndex(6):SetLevel(1)
+    hHero:GetAbilityByIndex(7):SetLevel(1)
+    hHero:GetAbilityByIndex(8):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(999) --重新设置复活时间
 end

@@ -8,11 +8,11 @@ function closeUIMagicList(playerID)
 end
 
 function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUATOJS)
-	local tempMagicNameList = GameRules.magicNameList
-	local tempIconSrcList = GameRules.magicIconSrcList
-	local tempPreMagicList = GameRules.preMagicList
-	local tempMagicLvList = GameRules.magicLvList 
-	local tempUnitTypeList = GameRules.unitTypeList 
+	local tempMagicNameList = magicList['magicNameList']
+	local tempIconSrcList = magicList['magicIconSrcList']
+	local tempPreMagicList = magicList['preMagicList']
+	local tempMagicLvList = magicList['magicLvList']
+	local tempUnitTypeList = magicList['unitTypeList']
 	local magicNameList ={}
 	local iconSrcList = {}
 	--local showNameList = {}
@@ -186,7 +186,26 @@ function initMagicList()
 	end
 
 	--重新组装数组
-	local magicList = GameRules.customAbilities
+	local magicTempList = GameRules.customAbilities
+	magicList = {}
+
+	magicList['magicNameList'] = {}
+	magicList['iconSrcList'] = {}
+	magicList['preMagicList'] = {}
+	magicList['magicLvList'] = {}
+	magicList['stageAbilityList'] = {}
+	magicList['unitTypeList'] = {}
+	--[[
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}
+	magicList[''] = {}]]
+
 	local magicNameList = {}
 	local iconSrcList = {}
 	local preMagicList = {}
@@ -194,17 +213,30 @@ function initMagicList()
 	local stageAbilityList = {}
 	local unitTypeList = {}
 
-	local speedList = {}
-	local maxDistanceList = {}
-	local damageList ={}
-	local aoeRadiusList = {}
-	local debuffDuration = {}
-	local debuffEffectValSp1 ={}
-	local debuffEffectValSp2 ={}
+	local speedList_01 = {}
+	local speedList_02 = {}
+	local speedList_14 = {}
+
+	local maxDistanceList_03 = {}
+	local maxDistanceList_06 = {}
+	local maxDistanceList_15 = {}
+
+	local aoeRadiusList_04 = {}
+	local aoeRadiusList_05 = {}
+
+	local damageList_07 ={}
+	local damageList_08 ={}
+	
+	local debuffDuration_21_36 = {}
+
+	local aoeDuration_24_38 = {}
+
+	local stunDebuffDuration_27 = {}
+
 
 	
 	--local flag = false
-	for key, value in pairs(magicList) do
+	for key, value in pairs(magicTempList) do
 		--print("GetAbilityKV-----: ", key, value)
 
 		local tempMagicLv
@@ -214,7 +246,7 @@ function initMagicList()
 		local tempStageAbility
 		local tempUnitType
 
-		local tempSpeed
+		local tempSpeed = 'null'
 
 		local c = 0
 		for k,v in pairs(value) do
@@ -256,6 +288,7 @@ function initMagicList()
 				for x, y_table in pairs(tempAbilitySpecialList) do
 					if x == "01" then
 						for i,j_val in pairs(y_table) do
+
 							if i == 'speed' then
 								tempSpeed = j_val
 							end
@@ -276,7 +309,7 @@ function initMagicList()
 				table.insert(stageAbilityList,tempStageAbility)
 				table.insert(unitTypeList,tempUnitType)
 
-				table.insert(speedList,tempSpeed)
+				table.insert(speedList_01,tempSpeed)
 
 
 				
@@ -285,16 +318,17 @@ function initMagicList()
 		end
 	end
     --print("listOVER",#magicNameList)
-	GameRules.magicNameList = magicNameList
-	GameRules.magicIconSrcList = iconSrcList
-	GameRules.magicShowNameList = showNameList
-    GameRules.magicDescribeList = describeList
-	GameRules.preMagicList = preMagicList
-	GameRules.magicLvList = magicLvList
-	GameRules.stageAbilityList = stageAbilityList
-	GameRules.unitTypeList = unitTypeList
+	magicList['magicNameList'] = magicNameList
+	magicList['magicIconSrcList'] = iconSrcList
+	magicList['magicShowNameList'] = showNameList
+    magicList['magicDescribeList'] = describeList
+	magicList['preMagicList'] = preMagicList
+	magicList['magicLvList'] = magicLvList
+	
+	magicList['stageAbilityList'] = stageAbilityList
+	magicList['unitTypeList'] = unitTypeList
 
-	GameRules.speedList = speedList
+	--GameRules.speedList = speedList
 
 
 
@@ -336,10 +370,10 @@ function learnMagicByNum(playerID, num)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
 
     local magicName = RandomMagicNameList[playerID][num]
-	local magicNameAllList = GameRules.magicNameList
+	local magicNameAllList = magicList['magicNameList']
 	--local preMagicList = GameRules.preMagicList
-	local magicLvList = GameRules.magicLvList
-	local stageAbilityList = GameRules.stageAbilityList
+	local magicLvList = magicList['magicLvList']
+	local stageAbilityList = magicList['stageAbilityList']
 	local magicLv
 	local abilityIndex
 	for i = 1 , #magicNameAllList do
@@ -390,15 +424,13 @@ function getRebuildMagicList(playerID)
 	local magic_b = hHero:GetAbilityByIndex(4):GetAbilityName()
 	local magic_a = hHero:GetAbilityByIndex(5):GetAbilityName()
 
-	local tempMagicNameList = GameRules.magicNameList
-	local tempIconSrcList = GameRules.magicIconSrcList
-	local tempShowNameList = GameRules.magicShowNameList
-    local tempDescribeList = GameRules.magicDescribeList
+	local tempMagicNameList = magicList['magicNameList']
+	local tempIconSrcList = magicList['magicIconSrcList']
+
 
 	local rebuildNameList = {}
 	local rebuildIconList = {}
-	local rebuildShowNameList = {}
-	local rebuildDescribeList = {}
+
 
 
 	for i = 1 , #tempMagicNameList do
@@ -443,9 +475,9 @@ function getRebuildMagicListByNameJSTOLUA( index,keys )
 	local num  = keys.num
 	local magicName = RandomMagicNameList[playerID][num]
 	local preMagic = magicName
-	local magicNameAllList = GameRules.magicNameList
+	local magicNameAllList = magicList['magicNameList']
 	--local preMagicList = GameRules.preMagicList 
-	local magicLvList = GameRules.magicLvList 
+	local magicLvList = magicList['magicLvList']
 	local MagicLevel
 	for i = 1, #magicNameAllList do
 		if magicNameAllList[i] == magicName then

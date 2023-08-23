@@ -1,0 +1,243 @@
+
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	"npc_dota_hero_rubick" 
+	{
+		"override_hero"	"npc_dota_hero_rubick"
+		//"AbilityLayout"         "6"
+		"Ability1"	"blind_fire_ball_pre_datadriven"
+		"Ability2"	"fire_spirit_datadriven"
+		"Ability3"	"blind_fire_ball_datadriven"
+		"Ability4"  "fire_ball_datadriven"
+		"Ability5"  "fire_bottle_datadriven"
+		"Ability6"  "fire_arrow_bomb_datadriven"
+		"Ability7"  "big_fire_ball_datadriven"
+		"Ability8"	"light_ball_datadriven"
+		"Ability9" 	"glare_light_ball_datadriven"
+		"Ability10" "vision_down_light_ball_datadriven"
+		"Ability11" "make_friend_datadriven"
+
+
+		"Ability20"  "ice_beans_stage_b_datadriven"
+		"Ability21"  "control_rock_stage_b_datadriven"
+		"Ability22"	 "electric_shock_stage_b_datadriven"
+		"Ability23"  "twice_stone_ball_stage_b_datadriven"
+		"Ability24"  "twice_ice_ball_stage_b_datadriven"
+
+
+
+
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"   // 碰撞边界类型，以下为单位尺寸参数:
+                                                            // 值                             Hammer中的单位半径
+                                                            // DOTA_HULL_SIZE_SMALL            8
+                                                            // DOTA_HULL_SIZE_REGULAR          16
+                                                            // DOTA_HULL_SIZE_SIEGE            16
+                                                            // DOTA_HULL_SIZE_HERO             24
+                                                            // DOTA_HULL_SIZE_HUGE             80
+                                                            // DOTA_HULL_SIZE_BUILDING         81
+                                                            // DOTA_HULL_SIZE_FILLER           96
+                                                            // DOTA_HULL_SIZE_BARRACKS         144
+                                                            // DOTA_HULL_SIZE_TOWER            144
+        "RingRadius"                "100"                    // 选择圈半径
+	
+		//模型大小
+		"ModelScale"	"0.5"
+		// 碰撞边界类型，以下为单位尺寸参数:
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "500"
+
+		 "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+	
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"2200"
+		// 夜晚视野
+		"VisionNighttimeRange"	"2200"
+
+		// 主属性类型
+		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"10"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 攻击间隔
+		//"AttackRate"	"0.2"
+		// 攻击前摇
+		"AttackAnimationPoint"	"0.3"
+
+		
+	}
+	"npc_dota_hero_lina"
+	{
+		"override_hero"	"npc_dota_hero_lina"
+		"AbilityLayout"         "9"
+		"Ability1"	"nothing_d"
+		"Ability2"	"pull_all_datadriven"
+		"Ability3"	"push_all_datadriven"
+		"Ability4"	"nothing_c"
+		"Ability5"  "nothing_b"
+		"Ability6"  "nothing_a"
+		"Ability7"  "nothing_c_stage"
+		"Ability8"  "nothing_b_stage"
+		"Ability9"	"nothing_a_stage"
+		"Ability10" ""
+		"Ability11" ""
+
+
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"   // 碰撞边界类型，以下为单位尺寸参数:
+                                                            // 值                             Hammer中的单位半径
+                                                            // DOTA_HULL_SIZE_SMALL            8
+                                                            // DOTA_HULL_SIZE_REGULAR          16
+                                                            // DOTA_HULL_SIZE_SIEGE            16
+                                                            // DOTA_HULL_SIZE_HERO             24
+                                                            // DOTA_HULL_SIZE_HUGE             80
+                                                            // DOTA_HULL_SIZE_BUILDING         81
+                                                            // DOTA_HULL_SIZE_FILLER           96
+                                                            // DOTA_HULL_SIZE_BARRACKS         144
+                                                            // DOTA_HULL_SIZE_TOWER            144
+        "RingRadius"                "100"                    // 选择圈半径
+	
+		//模型大小
+		"ModelScale"	"0.7"
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "220"
+
+	
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1200"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1200"
+
+		// 主属性类型
+		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+
+		// 基础生命值
+		"StatusHealth"	"100"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"10"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+	}
+	
+
+	"little_srtong"
+	{
+		// Hero to override
+		"override_hero"	"npc_dota_hero_nyx_assassin"
+		"Model"	"models/heroes/nerubian_assassin/nerubian_assassin.vmdl"
+		"Level"	"1"
+		"ModelScale"	"1"
+		// Status
+		// ----------------------------------------------------------------
+		// Base health.
+		"StatusHealth"	"1"
+		// Health regeneration rate.
+		"StatusHealthRegen"	"0"
+		// Base mana.
+		"StatusMana"	"0"
+		// Mana regeneration rate.
+		"StatusManaRegen"	"0.0"
+		// 转身速度
+		"MovementTurnRate"	"1"
+		// Range of vision at night time.
+		"VisionNighttimeRange"	"1800"
+		"Ability1"	""
+		"Ability2"	""
+		"Ability3"	""
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+		"Ability9"	""
+		"Ability10"	""
+		"Ability11"	""
+		"Ability12"	""
+		"Ability13"	""
+		"Ability14"	""
+		"Ability15"	""
+		"Ability16"	""
+	}
+
+	"npc_dota_hero_juggernaut"
+	{
+		"override_hero"	"npc_dota_hero_juggernaut"
+		// 攻击速度
+		"AttackRate"	"0.5"
+		// 技能1
+		"Ability1"	"shoot_datadriven"
+		"Ability2"	"pudge_meat_hook_lua"
+		"Ability3"	"pudge_meat_hook"
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+		"Ability9"	""
+		"Ability10"	""
+		"Ability11"	""
+		"Ability12"	""
+		"Ability13"	""
+		"Ability14"	""
+		"Ability15"	""
+		"Ability16"	""
+
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+	}
+
+	
+
+}

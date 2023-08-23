@@ -58,7 +58,7 @@ function prepareStep(gameRound)
                     randomLearnMagic(gameRound)
                 end
                 if gameRound == 4 then 
-                    --randomLearnContract()
+                    randomLearnContract()
                 end
                 --进入战斗阶段倒计时
                 battleStep(gameRound)
