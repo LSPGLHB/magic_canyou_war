@@ -36,11 +36,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"12.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"33"
+		"AbilityManaCost"				"29"
 
         "AbilitySpecial"
 		{
@@ -49,22 +49,7 @@
 				"var_type"			"FIELD_FLOAT"
 				"speed"				"400"
 			}
-            "02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1800"
-			}
-            "03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "85"
-			}
             "04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"damage"		    "10"
-			}
-            "05"
             {
                 "var_type"			"FIELD_FLOAT"
                 "aoe_radius"		"150"
@@ -72,9 +57,29 @@
             "06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"debuff_duration"		"3.5"
+				"max_distance"		"1800"
+			}
+            "20"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "85"
+			}
+            "07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "10"
 			}
 
+            "23"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"debuff_duration"		"3.5"
+			}
+            "12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"energy"		"40"
+			}
         }
 
         "OnSpellStart"

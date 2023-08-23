@@ -31,59 +31,65 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1250"   //施法距离
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastPoint"				"0.15"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"5.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"26"
+		"AbilityManaCost"				"17"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"620"
-			}
-            "02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1250"
-			}
-            "03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "85"
+				"speed"				"800"
 			}
             "04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"damage"		    "13"
-			}
-            "05"
             {
                 "var_type"			"FIELD_FLOAT"
                 "aoe_radius"		"175"
             }
-            "06" 
+            "06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1500"
+			}
+            "20"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "85"
+			}
+            "07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "13"
+			}
+
+            "33" 
             {
                 "var_type"			"FIELD_FLOAT"
-                "debuff_duration"		"3.5"
+                "debuff_duration"		"4"
             }
-            "07"
+            "63"
             {
                 "var_type"			"FIELD_FLOAT"
                 "turn_rate_percent"	"-70"
             }
-			"08"
+			"64"
             {
                 "var_type"			"FIELD_FLOAT"
                 "speed_percent"		"-30"
             }
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"energy"			"20"
+			}
         }
 
         "OnSpellStart"

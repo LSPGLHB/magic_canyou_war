@@ -29,15 +29,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1250"   //施法距离
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastPoint"				"0.15"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"26"
+		"AbilityManaCost"				"16"
 
         "AbilitySpecial"
 		{
@@ -46,28 +46,32 @@
 				"var_type"			"FIELD_FLOAT"
 				"speed"				"600"
 			}
-            "02"
+            "03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"max_distance"		"1250"
 			}
-            "03"
+            "20"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"hit_range"		    "75"
 			}
-            "04"
+            "08"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"damage"		    "9"
 			}
 
-            "05"
+            "26"
             {
                 "var_type"			"FIELD_FLOAT"
                 "debuff_duration"		"5"
             }
-
+            "12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"energy"		    "20"
+			}
         }
 
         "OnSpellStart"

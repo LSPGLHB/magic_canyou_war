@@ -35,11 +35,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"21.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"43"
+		"AbilityManaCost"				"40"
 
         "AbilitySpecial"
 		{
@@ -48,31 +48,38 @@
 				"var_type"			"FIELD_FLOAT"
 				"speed"				"410"
 			}
-            "02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1450"
-			}
-            "03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "100"
-			}
             "04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"damage"		    "15"
-			}
-            "05"
             {
                 "var_type"			"FIELD_FLOAT"
                 "aoe_radius"		"275"
             }
+
             "06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"		"1450"
+			}
+
+            "07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "15"
+			}
+            "20"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "100"
+			}
+            "24"
             {
                 "var_type"			"FIELD_FLOAT"
                 "aoe_duration"		"3"
             }
+            "12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"energy"		"80"
+			}
         }
 
         "OnSpellStart"

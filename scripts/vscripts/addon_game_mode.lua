@@ -380,7 +380,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			end
 		end
 
-		gameProgress()--此处打开游戏流程的进程
+		--gameProgress()--此处打开游戏流程的进程
 
 		
 --[[

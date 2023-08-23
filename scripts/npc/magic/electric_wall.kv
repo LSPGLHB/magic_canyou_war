@@ -34,15 +34,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1250"   //施法距离
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"20"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"23"
+		"AbilityManaCost"				"38"
 
         "AbilitySpecial"
 		{
@@ -51,42 +51,48 @@
 				"var_type"			"FIELD_FLOAT"
 				"speed"				"560"
 			}
-            "02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1250"
-			}
-            "03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "100"
-			}
+
             "04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"damage"		    "15"
-			}
-            "05"
             {
                 "var_type"			"FIELD_FLOAT"
                 "aoe_radius"		"400"
             }
             "06"
-            {
-                "var_type"			"FIELD_FLOAT"
-                "aoe_duration"		"5"
-            }
-            "07"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"boom_delay"		"1.5"
+				"max_distance"		"1250"
+			}
+            "20"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "100"
 			}
             "08"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"debuff_duration"		"2"
+				"damage"		    "15"
 			}
 
+            "29"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "aoe_duration"		"5"
+            }
+            "50"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"boom_delay"		"1.5"
+			}
+            "30"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"debuff_duration"		"2"
+			}
+            "12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"energy"		    "80"
+			}
         }
 
         "OnSpellStart"

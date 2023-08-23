@@ -36,11 +36,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"12"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"23"
+		"AbilityManaCost"				"25"
 
         "AbilitySpecial"
 		{
@@ -49,22 +49,7 @@
 				"var_type"			"FIELD_FLOAT"
 				"speed"				"520"
 			}
-            "02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1400"
-			}
-            "03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"hit_range"		    "85"
-			}
             "04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"damage"		    "40"
-			}
-            "05"
             {
                 "var_type"			"FIELD_FLOAT"
                 "aoe_radius"		"300"
@@ -72,12 +57,34 @@
             "06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"boom_delay"		"2"
+				"max_distance"		"1400"
 			}
-			"07"
+            "20"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hit_range"		    "85"
+			}
+            "07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"		    "40"
+			}
+
+			"17"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"hit_move_step"			"5"
+			}
+
+            "50"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"boom_delay"		"1.8"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"energy"			"40"
 			}
         }
 
