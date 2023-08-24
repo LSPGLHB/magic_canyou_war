@@ -274,7 +274,57 @@ function initMagicList()
 		local tempStageAbility = 'null'
 		local tempUnitType = 'null'
 
-		local tempSpeed_01 = 'null'
+		local speed_01 = 'null'
+		local speed_02 = 'null'
+		local speed_14 = 'null'
+		local maxDistance_03 = 'null'
+		local aoeRadius_04
+		local aoeRadius_05
+		local maxDistance_06
+		local maxDistance_15
+		local damage_07
+		local damage_08
+		local damage_09
+		local maxCharges_10
+		local chargeReplenishTime_11
+		local energy_12
+		local energy_13
+		local debuffDuration_21
+		local beatBackDistance_22
+		local debuffDuration_23
+		local aoeDuration_24
+		local debuffDuration_25
+		local debuffDuration_26
+		local stunDebuffDuration_27
+		local sleepDebuffDuration_28
+		local aoeDuration_29
+		local debuffDuration_30
+		local aoeDuration_31
+		local debuffDuration_32
+		local debuffDuration_33
+		local debuffDuration_34
+		local aoeDuration_35
+		local debuffDuration_36
+		local GSpeed_37
+		local aoeDuration_38
+		local boomDelay_50
+		local visionRadius_51
+		local aoeDuration_52
+		local debuffDuration_53
+		local aoeDuration_54
+		local visionTime_55
+		local debuffDelay_56
+		local debuffDuration_57
+		local searchRange_58
+		local doubleDamagePercentage_59
+		local bounsDamagePercentage_60
+		local sendDelay_61
+		local chargeTime_62
+		local turnRatePercent_63
+		local speedPercent_64
+		local channelTime_65
+
+		
 
 		local c = 0
 		for k,v in pairs(value) do

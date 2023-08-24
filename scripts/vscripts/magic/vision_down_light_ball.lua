@@ -9,7 +9,7 @@ function createVisionDownLightBall(keys)
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
     local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
-    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+    --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
     local aoe_duration = ability:GetSpecialValueFor("aoe_duration")    
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -22,7 +22,7 @@ function createVisionDownLightBall(keys)
     aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',AbilityLevel,nil)--数值加强
     aoe_duration = getApplyControlValue(shoot, aoe_duration)--克制加强
     shoot.aoe_duration = aoe_duration	
-    shoot.aoe_radius = aoe_radius
+    --shoot.aoe_radius = aoe_radius
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     shoot.particleID = particleID
