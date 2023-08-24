@@ -102,7 +102,6 @@ function oBoomerangIntervalCallBack(shoot)
 
     local angleRate =  -1.05 * angle / (xPoint_distance  / speed / 0.02)
     local direction = shoot.direction
-    local direction = shoot.direction
     local angle_new = angleRate * math.pi 
 
     local newX = math.cos(math.atan2(direction.y, direction.x) - angle_new)

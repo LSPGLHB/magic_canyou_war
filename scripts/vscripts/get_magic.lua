@@ -190,63 +190,91 @@ function initMagicList()
 	magicList = {}
 
 	magicList['magicNameList'] = {}
-	magicList['iconSrcList'] = {}
+	magicList['magicIconSrcList'] = {}
 	magicList['preMagicList'] = {}
 	magicList['magicLvList'] = {}
 	magicList['stageAbilityList'] = {}
 	magicList['unitTypeList'] = {}
-	--[[
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}
-	magicList[''] = {}]]
 
-	local magicNameList = {}
-	local iconSrcList = {}
-	local preMagicList = {}
-	local magicLvList = {}
-	local stageAbilityList = {}
-	local unitTypeList = {}
-
-	local speedList_01 = {}
-	local speedList_02 = {}
-	local speedList_14 = {}
-
-	local maxDistanceList_03 = {}
-	local maxDistanceList_06 = {}
-	local maxDistanceList_15 = {}
-
-	local aoeRadiusList_04 = {}
-	local aoeRadiusList_05 = {}
-
-	local damageList_07 ={}
-	local damageList_08 ={}
-	
-	local debuffDuration_21_36 = {}
-
-	local aoeDuration_24_38 = {}
-
-	local stunDebuffDuration_27 = {}
-
+	magicList['speedList_01'] = {}
+	magicList['speedList_02'] = {}
+	magicList['speedList_14'] = {}
+	magicList['maxDistanceList_03'] = {}
+	magicList['aoeRadiusList_04'] = {}
+	magicList['aoeRadiusList_05'] = {}
+	magicList['maxDistanceList_06'] = {}
+	magicList['maxDistanceList_15'] = {}
+	magicList['damageList_07'] = {}
+	magicList['damageList_08'] = {}
+	magicList['damageList_09'] = {}
+	magicList['maxChargesList_10'] = {}
+	magicList['chargeReplenishTimeList_11'] = {}
+	magicList['energyList_12'] = {}
+	magicList['energyList_13'] = {}
+	magicList['debuffDurationList_21'] = {}
+	magicList['beatBackDistanceList_22'] = {}
+	magicList['debuffDurationList_23'] = {}
+	magicList['aoeDurationList_24'] = {}
+	magicList['debuffDurationList_25'] = {}
+	magicList['debuffDurationList_26'] = {}
+	magicList['stunDebuffDurationList_27'] = {}
+	magicList['sleepDebuffDurationList_28'] = {}
+	magicList['aoeDurationList_29'] = {}
+	magicList['debuffDurationList_30'] = {}
+	magicList['aoeDurationList_31'] = {}
+	magicList['debuffDurationList_32'] = {}
+	magicList['debuffDurationList_33'] = {}
+	magicList['debuffDurationList_34'] = {}
+	magicList['aoeDurationList_35'] = {}
+	magicList['debuffDurationList_36'] = {}
+	magicList['GSpeedList_37'] = {}
+	magicList['aoeDurationList_38'] = {}
+	magicList['boomDelayList_50'] = {}
+	magicList['visionRadiusList_51'] = {}
+	magicList['aoeDurationList_52'] = {}
+	magicList['debuffDurationList_53'] = {}
+	magicList['aoeDurationList_54'] = {}
+	magicList['visionTimeList_55'] = {}
+	magicList['debuffDelayList_56'] = {}
+	magicList['debuffDurationList_57'] = {}
+	magicList['searchRangeList_58'] = {}
+	magicList['doubleDamagePercentageList_59'] = {}
+	magicList['bounsDamagePercentageList_60'] = {}
+	magicList['sendDelayList_61'] = {}
+	magicList['chargeTimeList_62'] = {}
+	magicList['turnRatePercentList_63'] = {}
+	magicList['speedPercentList_64'] = {}
+	magicList['channelTimeList_65'] = {}
+	magicList['stageDurationList_66'] = {}
+	magicList['debuffSpeedPercentList_67'] = {}
+	magicList['bounsDamagePercentageList_68'] = {}
+	magicList['debuffDurationList_69'] = {}
+	magicList['aoeRadiusList_70'] = {}
+	magicList['damageByDistanceList_71'] = {}
+	magicList['diffuseSpeedList_72'] = {}
+	magicList['catchRadiusList_75'] = {}
+	magicList['windSpeedList_76'] = {}
+	magicList['windDamagePercentList_77'] = {}
+	magicList['boundsDamagePercentList_78'] = {}
+	magicList['windSpeedList_79'] = {}
+	magicList['boundsDamageList_80'] = {}
+	magicList['boundsDamageCountList_81'] = {}
+	magicList['shootCountList_82'] = {}
+	magicList['GSpeedList_83'] = {}
 
 	
 	--local flag = false
 	for key, value in pairs(magicTempList) do
 		--print("GetAbilityKV-----: ", key, value)
 
-		local tempMagicLv
-		local tempMagicName 
-		local tempIconSrc 
-		local tempPreMagic 
-		local tempStageAbility
-		local tempUnitType
+		local tempMagicLv = 'null'
+		local tempMagicName = 'null'
+		local tempIconSrc = 'null'
+		local tempPreMagic = 'null'
+		local tempStageAbility = 'null'
+		local tempUnitType = 'null'
 
-		local tempSpeed = 'null'
+		local tempSpeed_01 = 'null'
 
 		local c = 0
 		for k,v in pairs(value) do
@@ -288,9 +316,141 @@ function initMagicList()
 				for x, y_table in pairs(tempAbilitySpecialList) do
 					if x == "01" then
 						for i,j_val in pairs(y_table) do
-
 							if i == 'speed' then
-								tempSpeed = j_val
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
+							end
+						end
+					end
+					if x == "01" then
+						for i,j_val in pairs(y_table) do
+							if i == 'speed' then
+								tempSpeed_01 = j_val
 							end
 						end
 					end
@@ -302,14 +462,14 @@ function initMagicList()
 
 			if c == 8 then
                 --print("===============idName:"..tempMagicName.."speed:"..tempSpeed)
-				table.insert(magicNameList,tempMagicName)
-				table.insert(iconSrcList,tempIconSrc)
-				table.insert(preMagicList,tempPreMagic)
-				table.insert(magicLvList,tempMagicLv)
-				table.insert(stageAbilityList,tempStageAbility)
-				table.insert(unitTypeList,tempUnitType)
+				table.insert(magicList['magicNameList'],tempMagicName)
+				table.insert(magicList['magicIconSrcList'],tempIconSrc)
+				table.insert(magicList['preMagicList'],tempPreMagic)
+				table.insert(magicList['magicLvList'],tempMagicLv)
+				table.insert(magicList['stageAbilityList'],tempStageAbility)
+				table.insert(magicList['unitTypeList'],tempUnitType)
 
-				table.insert(speedList_01,tempSpeed)
+				table.insert(magicList['speedList_01'],tempSpeed_01)
 
 
 				
@@ -318,19 +478,6 @@ function initMagicList()
 		end
 	end
     --print("listOVER",#magicNameList)
-	magicList['magicNameList'] = magicNameList
-	magicList['magicIconSrcList'] = iconSrcList
-	magicList['magicShowNameList'] = showNameList
-    magicList['magicDescribeList'] = describeList
-	magicList['preMagicList'] = preMagicList
-	magicList['magicLvList'] = magicLvList
-	
-	magicList['stageAbilityList'] = stageAbilityList
-	magicList['unitTypeList'] = unitTypeList
-
-	--GameRules.speedList = speedList
-
-
 
 
 end

@@ -9,7 +9,7 @@ function createShoot(keys)
 	    local casterPoint = caster:GetAbsOrigin()
 		local max_distance =  (skillPoint - casterPoint ):Length2D()--ability:GetSpecialValueFor("max_distance")
         local aoe_radius = ability:GetSpecialValueFor("aoe_radius")--半径
-		--local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
+		local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
         local G_Speed = ability:GetSpecialValueFor("G_speed") * GameRules.speedConstant * 0.02
 		local position = caster:GetAbsOrigin()
 		local direction = (skillPoint - position):Normalized()
@@ -21,8 +21,7 @@ function createShoot(keys)
         --过滤掉增加施法距离的操作
 	    shoot.max_distance_operation = max_distance
         shoot.G_Speed = G_Speed
-		--shoot.aoe_duration = aoe_duration	
-
+		shoot.aoe_duration = aoe_duration
         shoot.aoe_radius = getApplyControlValue(shoot, shoot.aoe_radius)--克制计算
 
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
@@ -33,11 +32,18 @@ function createShoot(keys)
 end
 
 function spaceCollapseBoomCallBack(shoot)
+	
     spaceCollapseRenderParticles(shoot)
-    boomAOEOperation(shoot, spaceCollapseAOEOperationCallback)
+    spaceCollapseDuration(shoot) 
 end
 
-
+function spaceCollapseDuration(shoot)
+	local interval = 0.1
+    shootSoundAndParticle(shoot, "boom")
+    durationAOEDamage(shoot, interval, damageCallback)
+	modifierHole(shoot)
+	blackHole(shoot)
+end
 
 --特效显示效果
 function spaceCollapseRenderParticles(shoot)
@@ -50,21 +56,5 @@ function spaceCollapseRenderParticles(shoot)
     local shootPos = shoot:GetAbsOrigin()
 	ParticleManager:SetParticleControl(particleBoom, 3, Vector(shootPos.x,shootPos.y,shootPos.z))
 	ParticleManager:SetParticleControl(particleBoom, 10, Vector(aoe_radius, 0, 0))
-end
-
-function spaceCollapseAOEOperationCallback(shoot,unit)
-	local keys = shoot.keysTable
-	local caster = keys.caster
-	local ability = keys.ability
-	local beatBackDistance = (shoot:GetAbsOrigin()-unit:GetAbsOrigin()):Length2D()
-	local beatBackSpeed = ability:GetSpecialValueFor("G_speed") 
-	local shootPos = shoot:GetAbsOrigin()
-	local tempShootPos  = Vector(shootPos.x,shootPos.y,0)
-	local targetPos= unit:GetAbsOrigin()
-	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)
-	local beatBackDirection =  (tempShootPos - tempTargetPos):Normalized()
-	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,beatBackDirection,false)
-	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

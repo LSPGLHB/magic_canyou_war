@@ -36,7 +36,7 @@ end
 
 function snallTornadoDuration(shoot)
 	local interval = 0.5
-    
+    shootSoundAndParticle(shoot, "boom")
     durationAOEDamage(shoot, interval, damageCallback)
 	modifierHole(shoot)
 	blackHole(shoot)

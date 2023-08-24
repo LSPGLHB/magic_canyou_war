@@ -103,8 +103,7 @@ function createTwineSoilBall(keys)
     --无弹后启动技能冷却
     if caster.twine_soil_ball_charges == 0 then
         ability:StartCooldown(caster.twine_soil_ball_cooldown)
-    else
-        ability:EndCooldown()
+        --ability:EndCooldown()
     end
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)

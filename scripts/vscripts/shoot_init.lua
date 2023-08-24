@@ -859,20 +859,23 @@ function blackHole(shoot)
 				local shootPos = shoot:GetAbsOrigin()
 				local unitPos = unit:GetAbsOrigin()
 				local vectorDistance = Vector(shootPos.x,shootPos.y,0) - Vector(unitPos.x,unitPos.y,0)
+
 				local G_Direction = (vectorDistance):Normalized()
-				--local G_Distance = (vectorDistance):Length2D()
-				local newPosition = unitPos +  G_Direction * G_Speed
-				local groundPos = GetGroundPosition(newPosition, unit)
-				if label == GameRules.skillLabel then
-					groundPos = newPosition
+				local G_Distance = (vectorDistance):Length2D()
+				if G_Distance > 20 then   --奇点直径，每次移动距离小于40有效
+					local newPosition = unitPos +  G_Direction * G_Speed
+					local groundPos = GetGroundPosition(newPosition, unit)
+					if label == GameRules.skillLabel then --如果作用在子弹上，Z坐标不重置
+						groundPos = newPosition
+					end
+					FindClearSpaceForUnit( unit, groundPos, false )
 				end
-				FindClearSpaceForUnit( unit, groundPos, false )
 			end
 		end
 		return interval
 	end)
-
 end
+
 --aoe的buff效果处理
 function modifierHole(shoot)
 	local keys = shoot.keysTable
@@ -1197,6 +1200,42 @@ function boomAOEOperation(shoot, AOEOperationCallback)
 	end 
 	shootKill(shoot)
 end
+
+--非持续AOE伤害以及触发效果
+function boomAOEForAllEnemyOperation(shoot, AOEOperationCallback)
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local radius = shoot.aoe_radius --AOE爆炸范围
+	shootSoundAndParticle(shoot, "boom")
+	local position=shoot:GetAbsOrigin()
+	local casterTeam = caster:GetTeam()
+	--print("boomAOEOperation:",radius)
+	local aroundUnits = FindUnitsInRadius(casterTeam, 
+										position,
+										nil,
+										radius,
+										DOTA_UNIT_TARGET_TEAM_BOTH,
+										DOTA_UNIT_TARGET_ALL,
+										0,
+										0,
+										false)
+	for k,unit in pairs(aroundUnits) do
+		local unitTeam = unit:GetTeam()
+		local unitEnergy = unit.energy_point
+		local label = unit:GetUnitLabel()
+		--只作用于敌方,非技能单位
+		local isEnemy =  checkIsEnemy(shoot,unit)
+		if isEnemy then
+			AOEOperationCallback(shoot, unit)
+		end
+		--如果是技能则进行加强或减弱操作
+		if label == GameRules.skillLabel and unitEnergy ~= 0 and unit ~= shoot then
+            checkHitAbilityToMark(shoot, unit)
+		end
+	end 
+	shootKill(shoot)
+end
+
 
 --扩散类AOE伤害以及触发效果
 function diffuseBoomAOEOperation(shoot, AOEOperationCallback)
