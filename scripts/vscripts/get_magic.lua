@@ -10,6 +10,8 @@ end
 function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUATOJS)
 
 	local magicNameList ={}
+	local abilityCooldownList = {}
+	local abilityManaCostList = {}
 	local iconSrcList = {}
 	local preMagicList = {}
 	local magicLvList = {}
@@ -90,6 +92,8 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 			--print("tempPreMagicList:",tempPreMagicList[i],"=======================","tempMagicLvList:",tempMagicLvList[i])
 			--print("tempMagicNameList:",tempMagicNameList[i],"=======================","tempIconSrcList:",tempIconSrcList[i])
 			table.insert(magicNameList,magicList['magicNameList'][i])
+			table.insert(abilityCooldownList,magicList['abilityCooldownList'][i])
+			table.insert(abilityManaCostList,magicList['abilityManaCostList'][i])
 			table.insert(iconSrcList,magicList['magicIconSrcList'][i])
 			table.insert(preMagicList,magicList['preMagicList'][i])
 			table.insert(magicLvList,magicList['magicLvList'][i])
@@ -168,6 +172,8 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	local randomNumList= getRandomNumList(1,#magicNameList,listCount)
 	--根据随机数字数组得出随机技能详细数组
     local randomNameList = getRandomArrayList(magicNameList, randomNumList)
+	local randomAbilityCooldownList = getRandomArrayList(abilityCooldownList, randomNumList)
+	local randomAbilityManaCostList = getRandomArrayList(abilityManaCostList, randomNumList)
 	local randomIconList = getRandomArrayList(iconSrcList, randomNumList)
 	local randompreMagicList = getRandomArrayList(preMagicList, randomNumList)
     local randomMagicLvList = getRandomArrayList(magicLvList, randomNumList)
@@ -245,6 +251,8 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), functionForLUATOJS, {
         listLength=listLength, 
         magicNameList = randomNameList,
+		abilityCooldownList = randomAbilityCooldownList,
+		abilityManaCostList = randomAbilityManaCostList,
         magicIconList = randomIconList,
 		preMagicList = randompreMagicList,
 		magicLvList = randomMagicLvList,
@@ -447,6 +455,8 @@ function initMagicList()
 	magicList = {}
 
 	magicList['magicNameList'] = {}
+	magicList['abilityCooldownList'] = {}
+	magicList['abilityManaCostList'] = {}
 	magicList['magicIconSrcList'] = {}
 	magicList['preMagicList'] = {}
 	magicList['magicLvList'] = {}
@@ -526,6 +536,8 @@ function initMagicList()
 
 		local tempMagicLv = 'null'
 		local tempMagicName = 'null'
+		local tempAbilityCooldown = 'null'
+		local tempAbilityManaCost = 'null'
 		local tempIconSrc = 'null'
 		local tempPreMagic = 'null'
 		local tempStageAbility = 'null'
@@ -599,11 +611,20 @@ function initMagicList()
 
 		local c = 0
 		for k,v in pairs(value) do
+
 			if k == "AbilityLevel" then			
 				tempMagicLv = v
 				tempMagicName = key
 				--print("idName:"..key)
 				c= c+1
+			end
+			if k == "AbilityCooldown" then
+				tempAbilityCooldown = v
+				c = c + 1
+			end
+			if k == "AbilityManaCost" then
+				tempAbilityManaCost = v
+				c = c + 1
 			end
 			if k == "IconSrc"  then
 				tempIconSrc = v
@@ -615,7 +636,6 @@ function initMagicList()
 				--print("showName:"..v)
 				c = c+1
 			end	
-
             if k == "AbilityDescribe" then
                 tempDescribe = v
                 c= c+1
@@ -1097,9 +1117,12 @@ function initMagicList()
 				c=c+1
 			end
 
-			if c == 8 then
+			if c == 10 then
                 --print("===============idName:"..tempMagicName.."speed:"..tempSpeed)
 				table.insert(magicList['magicNameList'],tempMagicName)
+				table.insert(magicList['abilityCooldownList'],tempAbilityCooldown)
+				table.insert(magicList['abilityManaCostList'],tempAbilityManaCost)
+
 				table.insert(magicList['magicIconSrcList'],tempIconSrc)
 				table.insert(magicList['preMagicList'],tempPreMagic)
 				table.insert(magicList['magicLvList'],tempMagicLv)
