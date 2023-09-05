@@ -216,12 +216,17 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "openPlayerStatusJSTOLUA", openPlayerStatusJSTOLUA )
 	CustomGameEventManager:RegisterListener( "closePlayerStatusJSTOLUA", closePlayerStatusJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "refreshPlayerStatusJSTOLUA", refreshPlayerStatusJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "getContractDetailByNumJSTOLUA", getContractDetailByNumJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "getMagicDetailByNumJSTOLUA", getMagicDetailByNumJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "getItemDetailByNumJSTOLUA", getItemDetailByNumJSTOLUA ) 
+	
 
 	--契约列表
 	--CustomGameEventManager:RegisterListener( "openContractListJSTOLUA", openContractListJSTOLUA ) --打开启用KVTPLUA通道
 	CustomGameEventManager:RegisterListener( "closeContractListJSTOLUA", closeContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "refreshContractListJSTOLUA", refreshContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "learnContractByNameJSTOLUA", learnContractByNameJSTOLUA ) 
+	
 
 	--学习技能
 	CustomGameEventManager:RegisterListener( "closeMagicListJSTOLUA", closeMagicListJSTOLUA ) 
@@ -382,7 +387,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			end
 		end
 
-		gameProgress()--此处打开游戏流程的进程
+		--gameProgress()--此处打开游戏流程的进程
 
 		
 --[[

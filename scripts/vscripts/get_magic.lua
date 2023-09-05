@@ -791,7 +791,7 @@ function initMagicList()
 					if x == "25" then
 						for i,j_val in pairs(y_table) do
 							if i == 'debuff_duration' then
-								debuffDuration_25 = j_val
+								debuffDuration_25 = string.format("%.2f", j_val)
 							end
 						end
 					end
@@ -882,7 +882,7 @@ function initMagicList()
 					if x == "38" then
 						for i,j_val in pairs(y_table) do
 							if i == 'aoe_duration' then
-								aoeDuration_38 = j_val
+								aoeDuration_38 = string.format("%.2f", j_val)
 							end
 						end
 					end
@@ -890,7 +890,7 @@ function initMagicList()
 					if x == "50" then
 						for i,j_val in pairs(y_table) do
 							if i == 'boom_delay' then
-								boomDelay_50 = j_val
+								boomDelay_50 = string.format("%.2f", j_val)
 							end
 						end
 					end
@@ -924,8 +924,8 @@ function initMagicList()
 					end
 					if x == "55" then
 						for i,j_val in pairs(y_table) do
-							if i == 'vision_time' then
-								visionTime_55 = j_val
+							if i == 'vision_time' then					
+								visionTime_55 = string.format("%.2f", j_val)
 							end
 						end
 					end
@@ -974,7 +974,7 @@ function initMagicList()
 					if x == "62" then
 						for i,j_val in pairs(y_table) do
 							if i == 'charge_time' then
-								chargeTime_62 = j_val
+								chargeTime_62 = string.format("%.2f", j_val)
 							end
 						end
 					end
@@ -995,7 +995,7 @@ function initMagicList()
 					if x == "65" then
 						for i,j_val in pairs(y_table) do
 							if i == 'channel_time' then
-								channelTime_65 = j_val
+								channelTime_65 = string.format("%.2f", j_val)
 							end
 						end
 					end
@@ -1051,7 +1051,7 @@ function initMagicList()
 					if x == "75" then
 						for i,j_val in pairs(y_table) do
 							if i == 'catch_radius' then
-								catchRadius_75 = j_val
+								catchRadius_75 = string.format("%.2f", j_val)
 							end
 						end
 					end

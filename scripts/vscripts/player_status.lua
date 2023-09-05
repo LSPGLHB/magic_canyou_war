@@ -9,26 +9,33 @@ end
 
 function  showPlayerStatusPanel( myPlayerID )
     --print("showPlayerStatusPanel")
-    local playerStatusHero = {}
-    local playerStatusAbility = {}
-    local playerStatusItem = {}
+    playerStatusHeroList = {}
+    playerContractList = {}
+    playerStatusAbilityList = {}
+    playerStatusItemList = {}
     for i=0,9,1  do
-        playerStatusHero[i] = "nil"
-        playerStatusAbility[i]={}
-        playerStatusItem[i] ={}
+        playerStatusHeroList[i] = "nil"
+        playerContractList[i] = "nil"
+        playerStatusAbilityList[i]={}
+        playerStatusItemList[i] ={}
         for j=0,3,1 do
-            playerStatusAbility[i][j] = "nil"
+            playerStatusAbilityList[i][j] = "nil"
         end
         for k=0,8,1 do
-            playerStatusItem[i][k] = "nil"
+            playerStatusItemList[i][k] = "nil"
         end
     end
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-            playerStatusAbility[playerID] = {}
+            --playerStatusAbilityList[playerID] = {}
             local abilityNameList = {}
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-            local heroName = PlayerResource:GetSelectedHeroName(playerID)       
+            local heroName = PlayerResource:GetSelectedHeroName(playerID)     
+            local player = PlayerResource:GetPlayer(playerID)
+            local contractName = player.contract
+            if contractName == nil then
+                contractName = 'nil'
+            end
             local hAbilityC = hHero:GetAbilityByIndex(3)
             local abilityNameC = hAbilityC:GetAbilityName()
             local hAbilityB = hHero:GetAbilityByIndex(4)
@@ -40,18 +47,25 @@ function  showPlayerStatusPanel( myPlayerID )
             table.insert(abilityNameList,abilityNameA)
             local abilityIconList = getAbilityIconListByNameList(abilityNameList)
             local itemIconList =  getItemIconListByHero(hHero)
-            playerStatusHero[playerID] = heroName
-            playerStatusAbility[playerID] = abilityIconList
-            playerStatusItem[playerID] = itemIconList
+            playerStatusHeroList[playerID] = heroName
+            print("contractName:==========================================================================="..contractName)
+            playerContractList[playerID] = contractName
+            for i=0, #abilityIconList, 1 do
+                playerStatusAbilityList[playerID][i] = abilityIconList[i+1]
+            end
+            for j=0, #itemIconList, 1 do
+                playerStatusItemList[playerID][j] = itemIconList[j]
+            end
         end
     end
     local myPlayer = PlayerResource:GetPlayer(myPlayerID)
 
-    --print("playerStatusHero",playerStatusHero[0])
+    --print("playerStatusHeroList",playerStatusHeroList[0])
     CustomGameEventManager:Send_ServerToPlayer( myPlayer , "openPlayerStatusLUATOJS", {  
-        playerStatusHero = playerStatusHero,
-        playerStatusAbility = playerStatusAbility,
-        playerStatusItem = playerStatusItem
+        playerStatusHeroList = playerStatusHeroList,
+        playerContractList = playerContractList,
+        playerStatusAbilityList = playerStatusAbilityList,
+        playerStatusItemList = playerStatusItemList
     })
 
 end
@@ -60,11 +74,11 @@ function getAbilityIconListByNameList(nameList)
     local abilityList = GameRules.customAbilities
     local abilityIconList = {}
 
-    for i = 1 , #nameList , 1 do
+    for i = 0 , #nameList , 1 do
         for key, value in pairs(abilityList) do         
             if( key == nameList[i] ) then
                 for k,v in pairs(value) do
-                    if(k == "iconSrc") then
+                    if(k == "AbilityTextureName") then
                         abilityIconList[i] = v
                     end
                 end
@@ -110,4 +124,21 @@ function refreshPlayerStatus(playerID)
         end
         return nil
     end)   
+end
+
+
+function getContractDetailByNumJSTOLUA(index,keys)
+    local num  = keys.num
+   
+    local playerContractName =  playerContractList[num]
+    print("getContractDetailByNumJSTOLUA:"..playerContractName)
+end
+
+function getMagicDetailByNumJSTOLUA(index,keys)
+    local num  = keys.num
+    local grid = keys.grid
+    print("num:"..num.."---grid:"..grid)
+    local playerStatusAbilityName=  playerStatusAbilityList[num][grid]
+    
+    print("getMagicDetailByNumJSTOLUA:"..playerStatusAbilityName)
 end

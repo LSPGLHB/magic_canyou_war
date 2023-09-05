@@ -10,7 +10,7 @@ function getPull(keys)
     local lable = target:GetUnitLabel()
     local max_distance =  (casterPosition - targetPosition):Length2D() - 60
     local direction = (casterPosition - targetPosition):Normalized()
-    if ((target.FloatingAirLevel == nil or target.FloatingAirLevel < 9) and lable ~= GameRules.skillLabel) then
+    if ((target.FloatingAirLevel == nil or target.FloatingAirLevel < 9) and lable ~= GameRules.skillLabel and target ~= caster) then
         EmitSoundOn(keys.soundPull, caster)
         EmitSoundOn(keys.soundPullStaff, target)
         target.FloatingAirLevel = 9

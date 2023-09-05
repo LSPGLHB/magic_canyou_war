@@ -16,7 +16,7 @@ function refreshContractBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     
  
-    local contraccontract_health_precent_finalt_mana = ability:GetSpecialValueFor( "contract_health_precent_final")
+    local contract_health_precent_final = ability:GetSpecialValueFor( "contract_health_precent_final")
     local contract_vision = ability:GetSpecialValueFor( "contract_vision")
     local contract_range_flag = ability:GetSpecialValueFor( "contract_range_flag")
     local contract_ability_speed_flag = ability:GetSpecialValueFor( "contract_ability_speed_flag")
@@ -26,7 +26,7 @@ function refreshContractBuff(keys,flag)
 
 
 
-    setPlayerPower(playerID, "player_mana", flag, contract_health_precent_final)
+    setPlayerPower(playerID, "player_health_precent_final", flag, contract_health_precent_final)
     setPlayerPower(playerID, "player_vision", flag, contract_vision)
 
     setPlayerPowerFlag(playerID, "player_range_flag", contract_range_flag)
@@ -35,7 +35,7 @@ function refreshContractBuff(keys,flag)
     setPlayerPowerFlag(playerID, "player_control_flag", contract_control_flag)
     setPlayerPowerFlag(playerID, "player_energy_flag", contract_energy_flag)
 
-    setPlayerBuffByNameAndBValue(keys,"mana",GameRules.playerBaseMana)
+    setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
     setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
 
 

@@ -35,7 +35,7 @@ function prepareStep(gameRound)
     local prepareTime = 10 --准备阶段时长
     GameRules.checkWinTeam = nil
 
-    
+    initHeroStatus()
     
     getUpGradeListByRound(gameRound)
     --信息发送到前端
@@ -80,12 +80,12 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 2
-    local battleTime = 5 --战斗时间
+    local battleTime = 10 --战斗时间
 
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
     playerPositionTransfer(battlePointsTeam2,playersTeam2)
-
+    initHeroStatus()
     Timers:CreateTimer(0,function ()
         --print("onStepLoop2========check")
         --local gameTime = getNowTime()
@@ -151,6 +151,28 @@ function battleStep(gameRound)
         end
         return interval
     end)
+end
+
+--初始化英雄状态
+
+function initHeroStatus()
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            if not hHero:IsAlive() then
+                hHero:RespawnUnit()
+            end
+            hHero:GetAbilityByIndex(0):EndCooldown()
+            hHero:GetAbilityByIndex(1):EndCooldown()
+            hHero:GetAbilityByIndex(2):EndCooldown()
+            hHero:GetAbilityByIndex(3):EndCooldown()
+            hHero:GetAbilityByIndex(4):EndCooldown()
+            hHero:GetAbilityByIndex(5):EndCooldown()
+            hHero:GetAbilityByIndex(6):EndCooldown()
+            hHero:GetAbilityByIndex(7):EndCooldown()
+            hHero:GetAbilityByIndex(8):EndCooldown()
+        end
+    end
 end
 
 --预备阶段执行学习项目

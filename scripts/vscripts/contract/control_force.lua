@@ -18,7 +18,6 @@ function refreshContractBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     
     local contract_control_precent_final = ability:GetSpecialValueFor( "contract_control_precent_final")
-=
     local contract_damage_flag = ability:GetSpecialValueFor( "contract_damage_flag")
 
     --FLAG类，移除需要特别处理
@@ -27,10 +26,7 @@ function refreshContractBuff(keys,flag)
     end
 
     setPlayerPower(playerID, "player_control_precent_final", flag, contract_control_precent_final)
-=
     setPlayerPowerFlag(playerID, "player_damage_flag", contract_damage_flag)
-
-=
 end
 
 

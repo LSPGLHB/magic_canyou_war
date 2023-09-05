@@ -9,18 +9,16 @@ end
 
 function getRandomContractList(playerID)
     local count = GameRules.contractNameList 
-    local randomContractNumList = getRandomNumList(1,#count,3)
+    local randomContractNumList = getRandomNumList(1,#count,6)
     --GameRules.randomContractNumList = randomContractNumList
-    print("getRandomContractList:"..#count)
+    --print("getRandomContractList:"..#count)
 
     local randomContractNameList  = getRandomArrayList(GameRules.contractNameList, randomContractNumList)
     local randomandomContractShowNameList = getRandomArrayList(GameRules.contractShowNameList, randomContractNumList)
-    local randomContractIconList = getRandomArrayList(GameRules.contractIconList, randomContractNumList)
     local randomContractDescribeList = getRandomArrayList(GameRules.contractDescribeList, randomContractNumList)
 
     RandomContractNameList[playerID] = randomContractNameList
     RandomContractShowNameList[playerID] = randomandomContractShowNameList
-    RandomContractIconList[playerID] = randomContractIconList
     RandomContractDescribeList[playerID] = randomContractDescribeList
 
 
@@ -32,7 +30,6 @@ function getRandomContractList(playerID)
         listLength = listLength,
         contractNameList = randomContractNameList,
         contractShowNameList = randomandomContractShowNameList,
-        contractIconList = randomContractIconList,
         contractDescribeList = randomContractDescribeList
     })
 end
@@ -43,47 +40,41 @@ function initContractList()
     local contractList = GameRules.contractList
     local contractNameList = {}
     local contractShowNameList = {}
-    local contractIconList = {}
+
     local contractDescribeList = {}
 
     --初始化用于传递技能学习的列表
 	RandomContractNameList = {}
     RandomContractShowNameList = {}
-    RandomContractIconList = {}
+
     RandomContractDescribeList = {}
 
 	for i = 1 , 10 do
 		RandomContractNameList[i]	= {}
         RandomContractShowNameList[i]	= {}
-        RandomContractIconList[i]	= {}
+
         RandomContractDescribeList[i]	= {}
 	end
 
     for key, value in pairs(contractList) do
         local contractName = key
 		local contractShowName = nil
-		local contractIcon = nil
+
         local contractDescribe = nil
 		local c = 0
         for k,v in pairs(value) do
             if k == "ShowName"  then
                 contractShowName = v
                 c = c + 1
-                
-            end
-            if k == "IconSrc" then
-                contractIcon = v
-                c = c + 1
             end
             if k == "Describe" then
                 contractDescribe = v
                 c = c + 1
             end
-            if c == 3 then
+            if c == 2 then
                 --print("contractShowName",contractShowName)
                 table.insert(contractNameList,contractName)
 				table.insert(contractShowNameList,contractShowName)
-				table.insert(contractIconList,contractIcon)
                 table.insert(contractDescribeList,contractDescribe)
                 break
             end
@@ -91,7 +82,6 @@ function initContractList()
     end
     GameRules.contractNameList = contractNameList
     GameRules.contractShowNameList = contractShowNameList
-    GameRules.contractIconList = contractIconList
     GameRules.contractDescribeList = contractDescribeList
 end
 
@@ -157,7 +147,6 @@ function learnContractByNum(playerID, num)
     ]]
     local contractName = RandomContractNameList[playerID][num]
     local contractShowName = RandomContractShowNameList[playerID][num]
-    local contractIcon = RandomContractIconList[playerID][num]
     local contractDescribe = RandomContractDescribeList[playerID][num]
 
     if player.contract ~= nil then
@@ -170,8 +159,8 @@ function learnContractByNum(playerID, num)
     hHero:AddAbility(player.contract):SetLevel(1)
    
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "setContractUILUATOJS", {
+        contractName = contractName,
         contractShowName = contractShowName,
-        contractIcon = contractIcon,
         contractDescribe = contractDescribe
         
     } )
