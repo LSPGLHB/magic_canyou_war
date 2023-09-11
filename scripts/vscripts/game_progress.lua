@@ -205,8 +205,6 @@ function getUpGradeListByRound(gameRound)
                 openRebuildMagicList(playerID)
             end
 
-
-            
         end
     end
    
@@ -244,7 +242,7 @@ end
 
 --每次轮回地图与玩家数据初始化
 function gameRoundInit()
-    print("================================================================================================================gameRoundInit===========================xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    print("===================================gameRoundInit===================================")
     --初始化所有玩家
     initPlayerHero()
     --初始化场景

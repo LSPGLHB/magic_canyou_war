@@ -86,8 +86,7 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
 	PrecacheUnitByNameSync("npc_dota_hero_enigma", context)
 
-	--此处开始比较有用
-	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_magic.vsndevts", context)
+	
 	
 --[[
 	print("Precache...")
@@ -112,6 +111,8 @@ function Precache( context )
 		end
     end
 ]]
+	--此处开始比较有用
+	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_magic.vsndevts", context)
 
 end
 
@@ -171,6 +172,10 @@ function magicCanyouWar:InitGameMode()
 
 	GameRules.itemList = LoadKeyValues("scripts/npc/npc_items_custom.txt")--导入装备表
 	GameRules.contractList = LoadKeyValues("scripts/npc/contract/contract_all.kv")--导入契约表
+
+	GameRules.publicPowerUpCList = LoadKeyValues("scripts/npc/contract/public_power_up_c.kv")--导入提升天赋
+	GameRules.publicPowerUpBList = LoadKeyValues("scripts/npc/contract/public_power_up_b.kv")
+	GameRules.publicPowerUpAList = LoadKeyValues("scripts/npc/contract/public_power_up_a.kv")
 
 
 	--设置4*4队伍组合

@@ -1,0 +1,237 @@
+"DOTAAbilities"
+{
+    "public_range_b"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "AbilityType"               "publicPowerUp"
+        
+        "Describe"                  "初级技能作用范围提升25%"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "public_range_b_precent_final"			"25"
+            }
+
+        }
+
+        "Modifiers"
+        {
+            "modifier_public_range_b_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_range_b_on_created"
+                    }
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_range_b_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "public_damage_b"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "AbilityType"               "publicPowerUp"
+        
+        "Describe"                  "总伤害提升25%"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "public_damage_b_precent_final"			"25"
+            }
+
+        }
+
+        "Modifiers"
+        {
+            "modifier_public_damage_b_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_damage_b_on_created"
+                    }
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_damage_b_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "public_ability_speed_b"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "AbilityType"               "publicPowerUp"
+        
+        "Describe"                  "技能飞行速度提升25%"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "public_ability_speed_b_precent_final"			"25"
+            }
+
+        }
+
+        "Modifiers"
+        {
+            "modifier_public_ability_speed_b_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_ability_speed_b_on_created"
+                    }
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_ability_speed_b_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "public_control_b"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "AbilityType"               "publicPowerUp"
+        
+        "Describe"                  "控制效果提升25%"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "public_control_b_precent_final"			"25"
+            }
+
+        }
+
+        "Modifiers"
+        {
+            "modifier_public_control_b_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_control_b_on_created"
+                    }
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_control_b_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "public_damage_match_b"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "AbilityType"               "publicPowerUp"
+        
+        "Describe"                  "被加强伤害提升35%"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "public_damage_match_b_precent_final"			"35"
+            }
+
+        }
+
+        "Modifiers"
+        {
+            "modifier_public_damage_match_b_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_damage_match_b_on_created"
+                    }
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
+                        "Function"			"modifier_public_damage_match_b_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+}

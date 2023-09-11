@@ -342,7 +342,7 @@ function openMagicListPreCKVTOLUA(keys)
     local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local preMagic = 'null'
-	local MagicLevel = 'c'
+	local MagicLevel = 'b'
     openUIMagicList( playerID )
     getRandomMagicList(playerID,MagicLevel,preMagic,3)
 end

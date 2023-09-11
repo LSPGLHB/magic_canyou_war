@@ -33,6 +33,8 @@ function createCharges(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
+	local playerID = caster:GetPlayerID()
+	local charge_replenish_time = getFinalValueOperation(playerID,caster.wind_dart_charge_replenish_time,'cooldown',nil,nil)
 
 	Timers:CreateTimer(function()
 		-- Restore charge
@@ -40,8 +42,8 @@ function createCharges(keys)
 			local next_charge = caster.wind_dart_charges + 1
 			caster:RemoveModifierByName( counterModifierName )
 			if next_charge ~= caster.wind_dart_max_charges then
-				ability:ApplyDataDrivenModifier( caster, caster, counterModifierName, { Duration = caster.wind_dart_charge_replenish_time } )
-				shoot_start_cooldown( caster, caster.wind_dart_charge_replenish_time )
+				ability:ApplyDataDrivenModifier( caster, caster, counterModifierName, { Duration = charge_replenish_time } )
+				shoot_start_cooldown( caster, charge_replenish_time )
 			else
 				ability:ApplyDataDrivenModifier( caster, caster, counterModifierName, {} )
 				caster.wind_dart_start_charge = false
@@ -53,7 +55,7 @@ function createCharges(keys)
 		-- Check if max is reached then check every seconds if the charge is used
 		if caster.wind_dart_charges < caster.wind_dart_max_charges then
 			caster.wind_dart_start_charge = true
-			return caster.wind_dart_charge_replenish_time
+			return charge_replenish_time
 		else
 			caster.wind_dart_start_charge = false
 			return nil
@@ -93,7 +95,8 @@ function createShoot(keys)
 
     local counterModifierName = keys.modifierCountName
     local max_charges = caster.wind_dart_max_charges
-    local charge_replenish_time = caster.wind_dart_charge_replenish_time
+    local playerID = caster:GetPlayerID()
+	local charge_replenish_time = getFinalValueOperation(playerID,caster.wind_dart_charge_replenish_time,'cooldown',nil,nil)
     local next_charge = caster.wind_dart_charges - 1
 
     --满弹情况下开枪启动充能

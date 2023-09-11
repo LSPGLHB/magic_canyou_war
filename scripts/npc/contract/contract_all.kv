@@ -497,10 +497,12 @@
                 "var_type"				"FIELD_INTEGER"
                 "contract_speed"              "-50"
             }
-            
+            "09"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "cooldown_precent_final"              "50"
+            }
 
-
-           
         }
 
         "Modifiers"
@@ -526,6 +528,12 @@
                         "ScriptFile"		"contract/dark_mage.lua"
                         "Function"			"modifier_contract_dark_mage_on_destroy"
                     }
+                }
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE" "%cooldown_precent_final"
+                    //"MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT"   "50"
                 }
             }
         }

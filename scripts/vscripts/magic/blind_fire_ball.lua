@@ -18,7 +18,7 @@ function shootStartCharge(keys)
 		caster.blind_fire_ball_charges = max_charges
 	end
 
-	ability:EndCooldown()
+	--ability:EndCooldown()
 	caster:SetModifierStackCount( counterModifierName, caster, caster.blind_fire_ball_charges )
 
 	--上弹初始化
@@ -34,6 +34,8 @@ function createCharges(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
+	local playerID = caster:GetPlayerID()
+	local charge_replenish_time = getFinalValueOperation(playerID,caster.blind_fire_ball_charge_replenish_time,'cooldown',nil,nil)
 
 	Timers:CreateTimer(function()
 		-- Restore charge
@@ -41,8 +43,8 @@ function createCharges(keys)
 			local next_charge = caster.blind_fire_ball_charges + 1
 			caster:RemoveModifierByName( counterModifierName )
 			if next_charge ~= caster.blind_fire_ball_max_charges then
-				ability:ApplyDataDrivenModifier( caster, caster, counterModifierName, { Duration = caster.blind_fire_ball_charge_replenish_time } )
-				shoot_start_cooldown( caster, caster.blind_fire_ball_charge_replenish_time )
+				ability:ApplyDataDrivenModifier( caster, caster, counterModifierName, { Duration = charge_replenish_time } )
+				shoot_start_cooldown( caster, charge_replenish_time )
 			else
 				ability:ApplyDataDrivenModifier( caster, caster, counterModifierName, {} )
 				caster.blind_fire_ball_start_charge = false
@@ -54,7 +56,7 @@ function createCharges(keys)
 		-- Check if max is reached then check every seconds if the charge is used
 		if caster.blind_fire_ball_charges < caster.blind_fire_ball_max_charges then
 			caster.blind_fire_ball_start_charge = true
-			return caster.blind_fire_ball_charge_replenish_time
+			return charge_replenish_time
 		else
 			caster.blind_fire_ball_start_charge = false
 			return nil
@@ -86,10 +88,10 @@ function createShoot(keys)
 
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
-
+	local playerID = caster:GetPlayerID()
     local counterModifierName = keys.modifierCountName
     local max_charges = caster.blind_fire_ball_max_charges
-    local charge_replenish_time = caster.blind_fire_ball_charge_replenish_time
+    local charge_replenish_time = getFinalValueOperation(playerID,caster.blind_fire_ball_charge_replenish_time,'cooldown',nil,nil)
     local next_charge = caster.blind_fire_ball_charges - 1
 
     --满弹情况下开枪启动充能

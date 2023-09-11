@@ -10,12 +10,10 @@ end
 function  showPlayerStatusPanel( myPlayerID )
     --print("showPlayerStatusPanel")
     playerStatusHeroList = {}
-    playerContractList = {}
     playerStatusAbilityList = {}
     playerStatusItemList = {}
     for i=0,9,1  do
         playerStatusHeroList[i] = "nil"
-        playerContractList[i] = "nil"
         playerStatusAbilityList[i]={}
         playerStatusItemList[i] ={}
         for j=0,3,1 do
@@ -31,11 +29,7 @@ function  showPlayerStatusPanel( myPlayerID )
             local abilityNameList = {}
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local heroName = PlayerResource:GetSelectedHeroName(playerID)     
-            local player = PlayerResource:GetPlayer(playerID)
-            local contractName = player.contract
-            if contractName == nil then
-                contractName = 'nil'
-            end
+            --local player = PlayerResource:GetPlayer(playerID)
             local hAbilityC = hHero:GetAbilityByIndex(3)
             local abilityNameC = hAbilityC:GetAbilityName()
             local hAbilityB = hHero:GetAbilityByIndex(4)
@@ -48,8 +42,7 @@ function  showPlayerStatusPanel( myPlayerID )
             local abilityIconList = getAbilityIconListByNameList(abilityNameList)
             local itemIconList =  getItemIconListByHero(hHero)
             playerStatusHeroList[playerID] = heroName
-            print("contractName:==========================================================================="..contractName)
-            playerContractList[playerID] = contractName
+
             for i=0, #abilityIconList, 1 do
                 playerStatusAbilityList[playerID][i] = abilityIconList[i+1]
             end
@@ -63,7 +56,7 @@ function  showPlayerStatusPanel( myPlayerID )
     --print("playerStatusHeroList",playerStatusHeroList[0])
     CustomGameEventManager:Send_ServerToPlayer( myPlayer , "openPlayerStatusLUATOJS", {  
         playerStatusHeroList = playerStatusHeroList,
-        playerContractList = playerContractList,
+        playerContractLearn = playerContractLearn, --公共参数
         playerStatusAbilityList = playerStatusAbilityList,
         playerStatusItemList = playerStatusItemList
     })
@@ -100,7 +93,7 @@ function getItemIconListByHero(hHero)
                 if(key == itemName) then
                     --print("key",key)
                     for k, v in pairs(value) do
-                        if(k == "IconSrc") then
+                        if(k == "AbilityTextureName") then
                             --print("IconSrc",v)
                             itemIconList[i] = v
                         end
@@ -130,7 +123,7 @@ end
 function getContractDetailByNumJSTOLUA(index,keys)
     local num  = keys.num
    
-    local playerContractName =  playerContractList[num]
+    local playerContractName =  playerContractNameList[num]
     print("getContractDetailByNumJSTOLUA:"..playerContractName)
 end
 
@@ -140,5 +133,17 @@ function getMagicDetailByNumJSTOLUA(index,keys)
     print("num:"..num.."---grid:"..grid)
     local playerStatusAbilityName=  playerStatusAbilityList[num][grid]
     
+    
     print("getMagicDetailByNumJSTOLUA:"..playerStatusAbilityName)
+end
+
+
+function getItemDetailByNumJSTOLUA(index,keys)
+    local num  = keys.num
+    local grid = keys.grid
+    print("num:"..num.."---grid:"..grid)
+    local playerStatusItemName=  playerStatusItemList[num][grid]
+    
+    print("getMagicDetailByNumJSTOLUA:"..playerStatusItemName)
+
 end

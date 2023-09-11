@@ -18,6 +18,12 @@ function initMapStats()
     --魔法石初始化
     createMagicStone()
 
+    --初始化所有玩家的天赋
+    playerContractLearn = {}
+    for i = 0, 9 do
+        playerContractLearn[i]={}
+        playerContractLearn[i]['contractName'] = 'nil'
+    end
    
 
     --刷怪

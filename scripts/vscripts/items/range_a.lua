@@ -20,7 +20,7 @@ function refreshItemBuff(keys,flag)
 
     setPlayerPower(playerID, "player_range_a", flag, item_range_a)
     setPlayerPower(playerID, "player_range_a_precent_base", flag, item_range_a_precent_base)
-    setPlayerPower(playerID, "player_radius_a_precent_base", flag, item_radius_c_precent_base)
+    setPlayerPower(playerID, "player_radius_a_precent_base", flag, item_radius_a_precent_base)
 
 
 end

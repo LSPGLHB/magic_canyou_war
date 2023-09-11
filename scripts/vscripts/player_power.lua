@@ -156,8 +156,11 @@ end
 
 --能力数值运算，获取装备与辅助buff的计算值
 function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
-	local abilityBuffName = buffName.."_"..abilityLevel
-	--print("getFinalValueOperation"..playerID..abilityBuffName)
+    local abilityBuffName = buffName
+    if abilityLevel ~= nil then
+        abilityBuffName = buffName.."_"..abilityLevel
+    end
+	print("getFinalValueOperation"..playerID..abilityBuffName)
 	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
 	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
 	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
@@ -270,6 +273,18 @@ function initPlayerPower()
         PlayerPower[playerID]['duration_defense_precent_final'] = 0
         PlayerPower[playerID]['player_defense_duration'] = 0
         PlayerPower[playerID]['player_defense_flag'] = 1
+
+        PlayerPower[playerID]['player_cooldown'] = 0
+        PlayerPower[playerID]['player_cooldown_precent_base'] = 0
+        PlayerPower[playerID]['player_cooldown_precent_final'] = 0
+        PlayerPower[playerID]['temp_cooldown'] = 0
+        PlayerPower[playerID]['temp_cooldown_precent_base'] = 0
+        PlayerPower[playerID]['temp_cooldown_precent_final'] = 0
+        PlayerPower[playerID]['duration_cooldown'] = 0
+        PlayerPower[playerID]['duration_cooldown_precent_base'] = 0
+        PlayerPower[playerID]['duration_cooldown_precent_final'] = 0
+        PlayerPower[playerID]['player_cooldown_duration'] = 0
+        PlayerPower[playerID]['player_cooldown_flag'] = 1
 
 
         --技能能力
@@ -784,7 +799,7 @@ function initPlayerPower()
 end
 
 
-
+--用于重置临时能力
 function initTempPlayerPower()
     for playerID = 0, 9 do --10个玩家的数据包 
         PlayerPower[playerID]["electric_shock_a"] = nil
@@ -809,6 +824,8 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_mana_regen'] = 0     
         PlayerPower[playerID]['temp_mana_regen_precent_base'] = 0
         PlayerPower[playerID]['temp_mana_regen_precent_final'] = 0
+
+        PlayerPower[playerID]['temp_cooldown_precent'] = 0
 
         --技能能力
         PlayerPower[playerID]['temp_ability_speed_d'] = 0

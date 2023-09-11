@@ -21,8 +21,6 @@ function getRandomContractList(playerID)
     RandomContractShowNameList[playerID] = randomandomContractShowNameList
     RandomContractDescribeList[playerID] = randomContractDescribeList
 
-
-
     --OnUIContractListOpen( playerID )
     local listLength = #randomContractNumList
 
@@ -34,32 +32,37 @@ function getRandomContractList(playerID)
     })
 end
 
---初始化天赋列表
+function getRandomPublicPowerUpCList(playerID)
+
+end
+
+
+
+--初始化契约列表
 function initContractList()
     print("==================initContractList================================")
-    local contractList = GameRules.contractList
-    local contractNameList = {}
-    local contractShowNameList = {}
-
-    local contractDescribeList = {}
 
     --初始化用于传递技能学习的列表
 	RandomContractNameList = {}
     RandomContractShowNameList = {}
-
     RandomContractDescribeList = {}
 
 	for i = 1 , 10 do
 		RandomContractNameList[i]	= {}
         RandomContractShowNameList[i]	= {}
-
         RandomContractDescribeList[i]	= {}
 	end
+
+
+    local contractList = GameRules.contractList
+    local contractNameList = {}
+    local contractShowNameList = {}
+    local contractDescribeList = {}
+    local playerContractLearn = {}
 
     for key, value in pairs(contractList) do
         local contractName = key
 		local contractShowName = nil
-
         local contractDescribe = nil
 		local c = 0
         for k,v in pairs(value) do
@@ -83,6 +86,88 @@ function initContractList()
     GameRules.contractNameList = contractNameList
     GameRules.contractShowNameList = contractShowNameList
     GameRules.contractDescribeList = contractDescribeList
+end
+
+--初始化天赋列表
+function initPublicPowerUpList()
+    --公用数组随机列表
+    RandomPubilcPowerUpCNameList = {}
+    RandomPublicPowerUpCDescribeList = {}
+    RandomPubilcPowerUpBNameList = {}
+    RandomPublicPowerUpBDescribeList = {}
+    RandomPubilcPowerUpANameList = {}
+    RandomPublicPowerUpADescribeList = {}
+    for i = 1, 10 do
+        RandomPubilcPowerUpCNameList[i] = {}
+        RandomPublicPowerUpCDescribeList[i] = {}
+        RandomPubilcPowerUpBNameList[i] = {}
+        RandomPublicPowerUpBDescribeList[i] = {}
+        RandomPubilcPowerUpANameList[i] = {}
+        RandomPublicPowerUpADescribeList[i] = {}
+    end
+    --公用数组初始化
+    publicPowerUpCNameList = {}
+    publicPowerUpCDescribeList = {}
+    publicPowerUpBNameList = {}
+    publicPowerUpBDescribeList = {}
+    publicPowerUpANameList = {}
+    publicPowerUpADescribeList = {}
+
+    for key, value in pairs(GameRules.publicPowerUpCList) do
+        local publicPowerUpCName = key
+        local publicPowerUpCDescribe
+        local c = 0
+        for k,v in pairs(value) do
+            if k == "Describe" then
+                publicPowerUpCDescribe = v
+                c = c + 1
+            end
+            if c == 1 then
+                --print("contractShowName",contractShowName)
+                table.insert(publicPowerUpCNameList,publicPowerUpCName)
+                table.insert(publicPowerUpCDescribeList,publicPowerUpCDescribe)
+                break
+            end
+        end
+    end
+
+    for key, value in pairs(GameRules.publicPowerUpBList) do
+        local publicPowerUpBName = key
+        local publicPowerUpBDescribe
+        local c = 0
+        for k,v in pairs(value) do
+            if k == "Describe" then
+                publicPowerUpBDescribe = v
+                c = c + 1
+            end
+            if c == 1 then
+                --print("contractShowName",contractShowName)
+                table.insert(publicPowerUpBNameList,publicPowerUpBName)
+                table.insert(publicPowerUpBDescribeList,publicPowerUpBDescribe)
+                break
+            end
+        end
+    end
+
+    for key, value in pairs(GameRules.publicPowerUpAList) do
+        local publicPowerUpAName = key
+        local publicPowerUpADescribe
+        local c = 0
+        for k,v in pairs(value) do
+            if k == "Describe" then
+                publicPowerUpADescribe = v
+                c = c + 1
+            end
+            if c == 1 then
+                --print("contractShowName",contractShowName)
+                table.insert(publicPowerUpANameList,publicPowerUpAName)
+                table.insert(publicPowerUpADescribeList,publicPowerUpADescribe)
+                break
+            end
+        end
+    end
+
+
 end
 
 
@@ -136,7 +221,7 @@ function learnContractByNameJSTOLUA( index,keys )
 end
 
 function learnContractByNum(playerID, num)
-	local player = PlayerResource:GetPlayer(playerID)
+	--local player = PlayerResource:GetPlayer(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     --[[
     local randomContractNumList = GameRules.randomContractNumList
@@ -149,14 +234,14 @@ function learnContractByNum(playerID, num)
     local contractShowName = RandomContractShowNameList[playerID][num]
     local contractDescribe = RandomContractDescribeList[playerID][num]
 
-    if player.contract ~= nil then
-        local modifierName = "modifier_contract_"..player.contract.."_datadriven"
+    if playerContractLearn[playerID]['contractName'] ~= 'nil' then
+        local modifierName = "modifier_contract_"..playerContractLearn[playerID]['contractName'].."_datadriven"
         hHero:RemoveModifierByName(modifierName)
-        hHero:RemoveAbility(player.contract)
+        hHero:RemoveAbility(playerContractLearn[playerID]['contractName'])
     end
-    player.contract = contractName
-    print("contractName"..contractName)
-    hHero:AddAbility(player.contract):SetLevel(1)
+    playerContractLearn[playerID]['contractName'] = contractName
+    --print("contractName"..contractName)
+    hHero:AddAbility(playerContractLearn[playerID]['contractName']):SetLevel(1)
    
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "setContractUILUATOJS", {
         contractName = contractName,
@@ -170,9 +255,11 @@ function learnContractByNum(playerID, num)
 end
 
 
+
+--[[
 function contractOperation(playerID)
-    local player = PlayerResource:GetPlayer(playerID)
-    local contractName = player.contract
+    --local player = PlayerResource:GetPlayer(playerID)
+    local contractName = playerContractLearn[playerID]['contractName']
     local contractList = GameRules.contractList
 
     for key, value in pairs(contractList) do
@@ -193,4 +280,4 @@ function contractOperation(playerID)
     end
 end
 
-
+]]
