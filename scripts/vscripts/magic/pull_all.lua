@@ -48,7 +48,7 @@ function getPull(keys)
         end)
 
     else
-        ability:ReduceMana()
+        --ability:ReduceMana()
         ability:EndCooldown()
     end
     

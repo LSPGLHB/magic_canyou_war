@@ -20,9 +20,14 @@ function initMapStats()
 
     --初始化所有玩家的天赋
     playerContractLearn = {}
+    playerTalentLearn = {}
     for i = 0, 9 do
         playerContractLearn[i]={}
         playerContractLearn[i]['contractName'] = 'nil'
+        playerTalentLearn[i]={}
+        playerTalentLearn[i]['talentNameC'] = 'nil'
+        playerTalentLearn[i]['talentNameB'] = 'nil'
+        playerTalentLearn[i]['talentNameA'] = 'nil'
     end
    
 

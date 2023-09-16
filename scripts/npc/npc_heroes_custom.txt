@@ -251,6 +251,79 @@
 		"VisionNighttimeRange"	"1800"
 	}
 
+	"npc_dota_hero_crystal_maiden"
+	{
+		"override_hero"	"npc_dota_hero_crystal_maiden"
+		//"AbilityLayout"         "20"
+		"Ability1"	"nothing_d"
+		"Ability2"	"pull_all_datadriven"
+		"Ability3"	"push_all_datadriven"
+		"Ability4"	"nothing_c"
+		"Ability5"  "nothing_b"
+		"Ability6"  "nothing_a"
+		"Ability7"  "nothing_c_stage"
+		"Ability8"  "nothing_b_stage"
+		"Ability9"	"nothing_a_stage"
+
+
+
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"   // 碰撞边界类型，以下为单位尺寸参数:
+                                                            // 值                             Hammer中的单位半径
+                                                            // DOTA_HULL_SIZE_SMALL            8
+                                                            // DOTA_HULL_SIZE_REGULAR          16
+                                                            // DOTA_HULL_SIZE_SIEGE            16
+                                                            // DOTA_HULL_SIZE_HERO             24
+                                                            // DOTA_HULL_SIZE_HUGE             80
+                                                            // DOTA_HULL_SIZE_BUILDING         81
+                                                            // DOTA_HULL_SIZE_FILLER           96
+                                                            // DOTA_HULL_SIZE_BARRACKS         144
+                                                            // DOTA_HULL_SIZE_TOWER            144
+        "RingRadius"                "100"                    // 选择圈半径
+	
+		//模型大小
+		"ModelScale"	"0.7"
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "320"
+
+	
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1200"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1200"
+
+		// 主属性类型
+		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+
+		// 基础生命值
+		"StatusHealth"	"100"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"10"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+	}
 	
 
 }

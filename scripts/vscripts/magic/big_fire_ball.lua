@@ -67,7 +67,7 @@ function AOEOperationCallback(shoot,unit)
 	debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
 	debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强
 	local faceAngle = ability:GetSpecialValueFor("face_angle")
-	local flag = setDebuffByFaceAngle(shoot, unit, faceAngle)
+	local flag = isFaceByFaceAngle(shoot, unit, faceAngle)
 	if flag then
 		ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
 	else

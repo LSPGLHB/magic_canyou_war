@@ -7,6 +7,7 @@ function closeUIContractList(playerID)
     CustomUI:DynamicHud_Destroy(playerID,"UIContractListPanelBox")
 end
 
+--契约随机列表
 function getRandomContractList(playerID)
     local count = GameRules.contractNameList 
     local randomContractNumList = getRandomNumList(1,#count,6)
@@ -32,9 +33,7 @@ function getRandomContractList(playerID)
     })
 end
 
-function getRandomPublicPowerUpCList(playerID)
 
-end
 
 
 
@@ -47,7 +46,7 @@ function initContractList()
     RandomContractShowNameList = {}
     RandomContractDescribeList = {}
 
-	for i = 1 , 10 do
+	for i = 0 , 9 do
 		RandomContractNameList[i]	= {}
         RandomContractShowNameList[i]	= {}
         RandomContractDescribeList[i]	= {}
@@ -88,87 +87,6 @@ function initContractList()
     GameRules.contractDescribeList = contractDescribeList
 end
 
---初始化天赋列表
-function initPublicPowerUpList()
-    --公用数组随机列表
-    RandomPubilcPowerUpCNameList = {}
-    RandomPublicPowerUpCDescribeList = {}
-    RandomPubilcPowerUpBNameList = {}
-    RandomPublicPowerUpBDescribeList = {}
-    RandomPubilcPowerUpANameList = {}
-    RandomPublicPowerUpADescribeList = {}
-    for i = 1, 10 do
-        RandomPubilcPowerUpCNameList[i] = {}
-        RandomPublicPowerUpCDescribeList[i] = {}
-        RandomPubilcPowerUpBNameList[i] = {}
-        RandomPublicPowerUpBDescribeList[i] = {}
-        RandomPubilcPowerUpANameList[i] = {}
-        RandomPublicPowerUpADescribeList[i] = {}
-    end
-    --公用数组初始化
-    publicPowerUpCNameList = {}
-    publicPowerUpCDescribeList = {}
-    publicPowerUpBNameList = {}
-    publicPowerUpBDescribeList = {}
-    publicPowerUpANameList = {}
-    publicPowerUpADescribeList = {}
-
-    for key, value in pairs(GameRules.publicPowerUpCList) do
-        local publicPowerUpCName = key
-        local publicPowerUpCDescribe
-        local c = 0
-        for k,v in pairs(value) do
-            if k == "Describe" then
-                publicPowerUpCDescribe = v
-                c = c + 1
-            end
-            if c == 1 then
-                --print("contractShowName",contractShowName)
-                table.insert(publicPowerUpCNameList,publicPowerUpCName)
-                table.insert(publicPowerUpCDescribeList,publicPowerUpCDescribe)
-                break
-            end
-        end
-    end
-
-    for key, value in pairs(GameRules.publicPowerUpBList) do
-        local publicPowerUpBName = key
-        local publicPowerUpBDescribe
-        local c = 0
-        for k,v in pairs(value) do
-            if k == "Describe" then
-                publicPowerUpBDescribe = v
-                c = c + 1
-            end
-            if c == 1 then
-                --print("contractShowName",contractShowName)
-                table.insert(publicPowerUpBNameList,publicPowerUpBName)
-                table.insert(publicPowerUpBDescribeList,publicPowerUpBDescribe)
-                break
-            end
-        end
-    end
-
-    for key, value in pairs(GameRules.publicPowerUpAList) do
-        local publicPowerUpAName = key
-        local publicPowerUpADescribe
-        local c = 0
-        for k,v in pairs(value) do
-            if k == "Describe" then
-                publicPowerUpADescribe = v
-                c = c + 1
-            end
-            if c == 1 then
-                --print("contractShowName",contractShowName)
-                table.insert(publicPowerUpANameList,publicPowerUpAName)
-                table.insert(publicPowerUpADescribeList,publicPowerUpADescribe)
-                break
-            end
-        end
-    end
-
-
-end
 
 
 --测试用
@@ -256,28 +174,3 @@ end
 
 
 
---[[
-function contractOperation(playerID)
-    --local player = PlayerResource:GetPlayer(playerID)
-    local contractName = playerContractLearn[playerID]['contractName']
-    local contractList = GameRules.contractList
-
-    for key, value in pairs(contractList) do
-        if (contractName == key) then
-            for k,v in pairs(value) do
-                if k == "vision_bonus"  then
-                    player.contract_vision_bonus = v
-                end
-                if k == "health_bonus" then
-                    player.contract_speed_bouns = v
-                end
-                if k == "speed_bouns" then
-                    player.contract_hp_reduce_precent_final = v
-                end
-            end
-            --break;
-        end
-    end
-end
-
-]]

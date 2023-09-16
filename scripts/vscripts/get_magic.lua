@@ -1217,7 +1217,7 @@ function randomLearnMagic(gameRound)
 	if gameRound < 4 then
 		roundCount = 3
 	end
-
+	--5-7回合
 	if gameRound > 4 and gameRound < 8 then
 		roundCount = 2
 	end
@@ -1265,7 +1265,6 @@ function learnMagicByNum(playerID, num)
 	end
 
 	if stageAbility ~= 'null' then
-		
 		local tempStageMagic = hHero:GetAbilityByIndex(stageAbilityIndex):GetAbilityName()
 		--print("tempStageMagic",tempStageMagic)
 		--print("stageAbility",stageAbility)

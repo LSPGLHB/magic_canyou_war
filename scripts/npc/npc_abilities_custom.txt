@@ -30,6 +30,9 @@
 #base magic/nothing.kv
 #base scene/scene_buff.kv
 #base contract/contract_all.kv
+#base talent/talent_c.kv
+#base talent/talent_b.kv
+#base talent/talent_a.kv
 #base contract/ability_buff.kv
 #base magic/pull_all.kv
 #base magic/push_all.kv

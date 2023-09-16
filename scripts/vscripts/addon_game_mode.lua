@@ -5,6 +5,7 @@ require('player_power')
 require('game_progress')
 require('get_magic')
 require('get_contract')
+require('get_talent')
 require('shop')
 require('button')
 require('player_status')
@@ -173,9 +174,9 @@ function magicCanyouWar:InitGameMode()
 	GameRules.itemList = LoadKeyValues("scripts/npc/npc_items_custom.txt")--导入装备表
 	GameRules.contractList = LoadKeyValues("scripts/npc/contract/contract_all.kv")--导入契约表
 
-	GameRules.publicPowerUpCList = LoadKeyValues("scripts/npc/contract/public_power_up_c.kv")--导入提升天赋
-	GameRules.publicPowerUpBList = LoadKeyValues("scripts/npc/contract/public_power_up_b.kv")
-	GameRules.publicPowerUpAList = LoadKeyValues("scripts/npc/contract/public_power_up_a.kv")
+	GameRules.talentCList = LoadKeyValues("scripts/npc/talent/talent_c.kv")--导入提升天赋
+	GameRules.talentBList = LoadKeyValues("scripts/npc/talent/talent_b.kv")
+	GameRules.talentAList = LoadKeyValues("scripts/npc/talent/talent_a.kv")
 
 
 	--设置4*4队伍组合
@@ -231,7 +232,11 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "closeContractListJSTOLUA", closeContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "refreshContractListJSTOLUA", refreshContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "learnContractByNameJSTOLUA", learnContractByNameJSTOLUA ) 
-	
+
+	--天赋列表
+	CustomGameEventManager:RegisterListener( "closeTalentListJSTOLUA", closeTalentListJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "refreshTalentListJSTOLUA", refreshTalentListJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "learnTalentByNameJSTOLUA", learnTalentByNameJSTOLUA ) 
 
 	--学习技能
 	CustomGameEventManager:RegisterListener( "closeMagicListJSTOLUA", closeMagicListJSTOLUA ) 
@@ -254,8 +259,9 @@ function magicCanyouWar:InitGameMode()
 		initMapStats() -- 初始化地图数据
 		initItemList() -- 初始化物品信息
 		initPlayerPower() --初始化契约容器
+		initTempPlayerPower()--初始化回合临时能力提升容器
 		initContractList() --初始化契约信息
-		
+		initTalentList() --初始化天赋信息
 		initMagicList()--初始化技能信息
 
 
@@ -382,6 +388,8 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 					CustomUI:DynamicHud_Create(playerID,"UIButtonBox","file://{resources}/layout/custom_game/UI_button.xml",nil)
 					--契约板面
 					CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
+					--天赋面板
+					CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 					
 					--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 					--showPlayerStatusPanel( playerID ) 
@@ -392,7 +400,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			end
 		end
 
-		--gameProgress()--此处打开游戏流程的进程
+		gameProgress()--此处打开游戏流程的进程
 
 		
 --[[

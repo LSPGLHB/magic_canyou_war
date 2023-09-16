@@ -1,12 +1,12 @@
 "DOTAAbilities"
 {
-    "public_range_a"
+    "talent_range_c"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityTextureName"        "faceless_void_time_lock" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-        "AbilityType"               "publicPowerUp"
+        "AbilityType"               "talent"
         
         "Describe"                  "初级技能作用范围提升25%"
 
@@ -15,14 +15,14 @@
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "public_range_a_precent_final"			"25"
+                "talent_range_c_precent_final"			"25"
             }
 
         }
 
         "Modifiers"
         {
-            "modifier_public_range_a_datadriven"
+            "modifier_talent_range_c_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -31,45 +31,45 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_range_a_on_created"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_range_c_on_created"
                     }
                 }
                 "OnDestroy"
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_range_a_on_destroy"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_range_c_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "public_damage_a"
+    "talent_damage_c"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityTextureName"        "ogre_magi_multicast" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-        "AbilityType"               "publicPowerUp"
+        "AbilityType"               "talent"
         
-        "Describe"                  "总伤害提升25%"
+        "Describe"                  "初级技能总伤害提升25%"
 
         "AbilitySpecial"
         {
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "public_damage_a_precent_final"			"25"
+                "talent_damage_c_precent_final"			"25"
             }
 
         }
 
         "Modifiers"
         {
-            "modifier_public_damage_a_datadriven"
+            "modifier_talent_damage_c_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -78,45 +78,45 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_damage_a_on_created"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_damage_c_on_created"
                     }
                 }
                 "OnDestroy"
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_damage_a_on_destroy"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_damage_c_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "public_ability_speed_a"
+    "talent_ability_speed_c"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityTextureName"        "ogre_magi_bloodlust" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-        "AbilityType"               "publicPowerUp"
+        "AbilityType"               "talent"
         
-        "Describe"                  "技能飞行速度提升25%"
+        "Describe"                  "初级技能飞行速度提升25%"
 
         "AbilitySpecial"
         {
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "public_ability_speed_a_precent_final"			"25"
+                "talent_ability_speed_c_precent_final"			"25"
             }
 
         }
 
         "Modifiers"
         {
-            "modifier_public_ability_speed_a_datadriven"
+            "modifier_talent_ability_speed_c_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -125,45 +125,45 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_ability_speed_a_on_created"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_ability_speed_c_on_created"
                     }
                 }
                 "OnDestroy"
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_ability_speed_a_on_destroy"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_ability_speed_c_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "public_control_a"
+    "talent_control_c"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityTextureName"        "sven_storm_bolt" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-        "AbilityType"               "publicPowerUp"
+        "AbilityType"               "talent"
         
-        "Describe"                  "控制效果提升25%"
+        "Describe"                  "初级技能控制效果提升25%"
 
         "AbilitySpecial"
         {
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "public_control_a_precent_final"			"25"
+                "talent_control_c_precent_final"			"25"
             }
 
         }
 
         "Modifiers"
         {
-            "modifier_public_control_a_datadriven"
+            "modifier_talent_control_c_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -172,45 +172,45 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_control_a_on_created"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_control_c_on_created"
                     }
                 }
                 "OnDestroy"
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_control_a_on_destroy"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_control_c_on_destroy"
                     }
                 }
             }
         }
     }
 
-    "public_damage_match_a"
+    "talent_damage_match_helper_c"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "furion_sprout" //图标
+        "AbilityTextureName"        "omniknight_purification" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-        "AbilityType"               "publicPowerUp"
+        "AbilityType"               "talent"
         
-        "Describe"                  "被加强伤害提升35%"
+        "Describe"                  "初级技能被加强伤害提升35%"
 
         "AbilitySpecial"
         {
             "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "public_damage_match_a_precent_final"			"35"
+                "talent_damage_match_helper_c_precent_final"			"35"
             }
 
         }
 
         "Modifiers"
         {
-            "modifier_public_damage_match_a_datadriven"
+            "modifier_talent_damage_match_helper_c_datadriven"
             {
                 "Passive"			"1"
                 "IsHidden"			"1"
@@ -219,16 +219,16 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_damage_match_a_on_created"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_damage_match_helper_c_on_created"
                     }
                 }
                 "OnDestroy"
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"publicPowerUp/public_power_up.lua"
-                        "Function"			"modifier_public_damage_match_a_on_destroy"
+                        "ScriptFile"		"talent/talent_power_up.lua"
+                        "Function"			"modifier_talent_damage_match_helper_c_on_destroy"
                     }
                 }
             }

@@ -160,7 +160,15 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
     if abilityLevel ~= nil then
         abilityBuffName = buffName.."_"..abilityLevel
     end
-	print("getFinalValueOperation"..playerID..abilityBuffName)
+	--print("getFinalValueOperation"..playerID..abilityBuffName)
+    --天赋使用
+    local talentPrecentBase = PlayerPower[playerID]['talent_'..abilityBuffName..'_precent_base'] / 100
+	local talentBonusValue = PlayerPower[playerID]['talent_'..abilityBuffName]
+	local talentPrecentFinal = PlayerPower[playerID]['talent_'..abilityBuffName..'_precent_final'] / 100
+	local talentTempPrecentBase = PlayerPower[playerID]['talent_temp_'..abilityBuffName..'_precent_base'] / 100
+	local talentTempBonusValue = PlayerPower[playerID]['talent_temp_'..abilityBuffName]
+	local talentTempPrecentFinal = PlayerPower[playerID]['talent_temp_'..abilityBuffName..'_precent_final'] / 100
+    --装备-契约使用
 	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
 	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
 	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
@@ -176,18 +184,30 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
 	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
 	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
 	local returnValue = 0
-	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + durationPrecentBase) + bonusValue + tempBonusValue + durationBonusValue) * (1 + precentFinal + tempPrecentFinal + durationPrecentFinal)
-	if (flag == 1) then
-		returnValue = operationValue
-	end
-	if( flag == 0 and returnValue <= baseValue)then
-		returnValue = operationValue
-	end
-	if (flag == 0 and returnValue > baseValue) then
-		returnValue = baseValue
-	end
+    if (precentBase > 0) then
+        precentBase = precentBase * flag
+    end
+    if (bonusValue > 0) then
+        bonusValue = bonusValue * flag
+    end
+    if (precentFinal > 0) then
+        precentFinal = precentFinal * flag
+    end
+    if (tempPrecentBase > 0) then
+        tempPrecentBase = tempPrecentBase * flag
+    end
+    if (tempBonusValue > 0) then
+        tempBonusValue = tempBonusValue * flag
+    end
+    if (tempPrecentFinal > 0) then
+        tempPrecentFinal = tempPrecentFinal * flag
+    end
+
+	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + talentPrecentBase + talentTempPrecentBase) + bonusValue + tempBonusValue + talentBonusValue + talentTempBonusValue) * (1 + precentFinal + tempPrecentFinal + talentPrecentFinal + talentTempPrecentFinal)
+
+
 	--print("flag:"..flag..",baseValue:"..baseValue..",returnValue"..returnValue)
-	return returnValue
+	return operationValue
 end
 
 --基础属性数据包
@@ -197,89 +217,86 @@ function initPlayerPower()
     for playerID = 0, 9 do --10个玩家的数据包
         PlayerPower[playerID] = {} 
 
-        --用于记录正负电击的两个电极子弹
-        PlayerPower[playerID]["electric_shock_a"] = nil
-        PlayerPower[playerID]["electric_shock_b"] = nil
         --Modifiers能力
+        --talent不受flag控制
+        PlayerPower[playerID]['talent_vision'] = 0
+        PlayerPower[playerID]['talent_vision_precent_base'] = 0
+        PlayerPower[playerID]['talent_vision_precent_final'] = 0
         PlayerPower[playerID]['player_vision'] = 0
         PlayerPower[playerID]['player_vision_precent_base'] = 0
         PlayerPower[playerID]['player_vision_precent_final'] = 0
-        PlayerPower[playerID]['temp_vision'] = 0
-        PlayerPower[playerID]['temp_vision_precent_base'] = 0
-        PlayerPower[playerID]['temp_vision_precent_final'] = 0
         PlayerPower[playerID]['duration_vision'] = 0
         PlayerPower[playerID]['duration_vision_precent_base'] = 0
         PlayerPower[playerID]['duration_vision_precent_final'] = 0
         PlayerPower[playerID]['player_vision_duration'] = 0        
         PlayerPower[playerID]['player_vision_flag'] = 1
 
+        PlayerPower[playerID]['talent_speed'] = 0
+        PlayerPower[playerID]['talent_speed_precent_base'] = 0
+        PlayerPower[playerID]['talent_speed_precent_final'] = 0
         PlayerPower[playerID]['player_speed'] = 0
         PlayerPower[playerID]['player_speed_precent_base'] = 0
         PlayerPower[playerID]['player_speed_precent_final'] = 0
-        PlayerPower[playerID]['temp_speed'] = 0
-        PlayerPower[playerID]['temp_speed_precent_base'] = 0
-        PlayerPower[playerID]['temp_speed_precent_final'] = 0
         PlayerPower[playerID]['duration_speed'] = 0
         PlayerPower[playerID]['duration_speed_precent_base'] = 0
         PlayerPower[playerID]['duration_speed_precent_final'] = 0
         PlayerPower[playerID]['player_speed_duration'] = 0   
         PlayerPower[playerID]['player_speed_flag'] = 1
         
-
+        PlayerPower[playerID]['talent_health'] = 0     
+        PlayerPower[playerID]['talent_health_precent_base'] = 0
+        PlayerPower[playerID]['talent_health_precent_final'] = 0
         PlayerPower[playerID]['player_health'] = 0     
         PlayerPower[playerID]['player_health_precent_base'] = 0
         PlayerPower[playerID]['player_health_precent_final'] = 0
-        PlayerPower[playerID]['temp_health'] = 0     
-        PlayerPower[playerID]['temp_health_precent_base'] = 0
-        PlayerPower[playerID]['temp_health_precent_final'] = 0
         PlayerPower[playerID]['duration_health'] = 0     
         PlayerPower[playerID]['duration_health_precent_base'] = 0
         PlayerPower[playerID]['duration_health_precent_final'] = 0
         PlayerPower[playerID]['player_health_duration'] = 0      
         PlayerPower[playerID]['player_health_flag'] = 1
 
+        PlayerPower[playerID]['talent_mana'] = 0     
+        PlayerPower[playerID]['talent_mana_precent_base'] = 0
+        PlayerPower[playerID]['talent_mana_precent_final'] = 0
         PlayerPower[playerID]['player_mana'] = 0     
         PlayerPower[playerID]['player_mana_precent_base'] = 0
         PlayerPower[playerID]['player_mana_precent_final'] = 0
-        PlayerPower[playerID]['temp_mana'] = 0     
-        PlayerPower[playerID]['temp_mana_precent_base'] = 0
-        PlayerPower[playerID]['temp_mana_precent_final'] = 0
         PlayerPower[playerID]['duration_mana'] = 0     
         PlayerPower[playerID]['duration_mana_precent_base'] = 0
         PlayerPower[playerID]['duration_mana_precent_final'] = 0
         PlayerPower[playerID]['player_mana_duration'] = 0
         PlayerPower[playerID]['player_mana_flag'] = 1
 
+        PlayerPower[playerID]['talent_mana_regen'] = 0     
+        PlayerPower[playerID]['talent_mana_regen_precent_base'] = 0
+        PlayerPower[playerID]['talent_mana_regen_precent_final'] = 0
         PlayerPower[playerID]['player_mana_regen'] = 0     
         PlayerPower[playerID]['player_mana_regen_precent_base'] = 0
         PlayerPower[playerID]['player_mana_regen_precent_final'] = 0
-        PlayerPower[playerID]['temp_mana_regen'] = 0     
-        PlayerPower[playerID]['temp_mana_regen_precent_base'] = 0
-        PlayerPower[playerID]['temp_mana_regen_precent_final'] = 0
         PlayerPower[playerID]['duration_mana_regen'] = 0     
         PlayerPower[playerID]['duration_mana_regen_precent_base'] = 0
         PlayerPower[playerID]['duration_mana_regen_precent_final'] = 0
         PlayerPower[playerID]['player_mana_regen_duration'] = 0
         PlayerPower[playerID]['player_mana_regen_flag'] = 1
 
+        PlayerPower[playerID]['talent_defense'] = 0     
+        PlayerPower[playerID]['talent_defense_precent_base'] = 0
+        PlayerPower[playerID]['talent_defense_precent_final'] = 0
         PlayerPower[playerID]['player_defense'] = 0     
         PlayerPower[playerID]['player_defense_precent_base'] = 0
         PlayerPower[playerID]['player_defense_precent_final'] = 0
-        PlayerPower[playerID]['temp_defense'] = 0     
-        PlayerPower[playerID]['temp_defense_precent_base'] = 0
-        PlayerPower[playerID]['temp_defense_precent_final'] = 0
         PlayerPower[playerID]['duration_defense'] = 0     
         PlayerPower[playerID]['duration_defense_precent_base'] = 0
         PlayerPower[playerID]['duration_defense_precent_final'] = 0
         PlayerPower[playerID]['player_defense_duration'] = 0
         PlayerPower[playerID]['player_defense_flag'] = 1
 
+        PlayerPower[playerID]['talent_cooldown'] = 0
+        PlayerPower[playerID]['talent_cooldown_precent_base'] = 0
+        PlayerPower[playerID]['talent_cooldown_precent_final'] = 0
         PlayerPower[playerID]['player_cooldown'] = 0
         PlayerPower[playerID]['player_cooldown_precent_base'] = 0
         PlayerPower[playerID]['player_cooldown_precent_final'] = 0
-        PlayerPower[playerID]['temp_cooldown'] = 0
-        PlayerPower[playerID]['temp_cooldown_precent_base'] = 0
-        PlayerPower[playerID]['temp_cooldown_precent_final'] = 0
         PlayerPower[playerID]['duration_cooldown'] = 0
         PlayerPower[playerID]['duration_cooldown_precent_base'] = 0
         PlayerPower[playerID]['duration_cooldown_precent_final'] = 0
@@ -288,6 +305,18 @@ function initPlayerPower()
 
 
         --技能能力
+        PlayerPower[playerID]['talent_ability_speed_d'] = 0
+        PlayerPower[playerID]['talent_ability_speed_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_ability_speed_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_ability_speed_c'] = 0
+        PlayerPower[playerID]['talent_ability_speed_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_ability_speed_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_ability_speed_b'] = 0
+        PlayerPower[playerID]['talent_ability_speed_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_ability_speed_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_ability_speed_a'] = 0
+        PlayerPower[playerID]['talent_ability_speed_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_ability_speed_a_precent_final'] = 0
         PlayerPower[playerID]['player_ability_speed_d'] = 0
         PlayerPower[playerID]['player_ability_speed_d_precent_base'] = 0
         PlayerPower[playerID]['player_ability_speed_d_precent_final'] = 0
@@ -300,18 +329,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_ability_speed_a'] = 0
         PlayerPower[playerID]['player_ability_speed_a_precent_base'] = 0
         PlayerPower[playerID]['player_ability_speed_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_ability_speed_d'] = 0
-        PlayerPower[playerID]['temp_ability_speed_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_ability_speed_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_ability_speed_c'] = 0
-        PlayerPower[playerID]['temp_ability_speed_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_ability_speed_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_ability_speed_b'] = 0
-        PlayerPower[playerID]['temp_ability_speed_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_ability_speed_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_ability_speed_a'] = 0
-        PlayerPower[playerID]['temp_ability_speed_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_ability_speed_a_precent_final'] = 0
         PlayerPower[playerID]['duration_ability_speed_d'] = 0
         PlayerPower[playerID]['duration_ability_speed_d_precent_base'] = 0
         PlayerPower[playerID]['duration_ability_speed_d_precent_final'] = 0
@@ -327,6 +344,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_ability_speed_duration'] = 0
         PlayerPower[playerID]['player_ability_speed_flag'] = 1
 
+        PlayerPower[playerID]['talent_range_d'] = 0
+        PlayerPower[playerID]['talent_range_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_range_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_range_c'] = 0
+        PlayerPower[playerID]['talent_range_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_range_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_range_b'] = 0
+        PlayerPower[playerID]['talent_range_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_range_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_range_a'] = 0
+        PlayerPower[playerID]['talent_range_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_range_a_precent_final'] = 0
         PlayerPower[playerID]['player_range_d'] = 0
         PlayerPower[playerID]['player_range_d_precent_base'] = 0
         PlayerPower[playerID]['player_range_d_precent_final'] = 0
@@ -339,18 +368,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_range_a'] = 0
         PlayerPower[playerID]['player_range_a_precent_base'] = 0
         PlayerPower[playerID]['player_range_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_range_d'] = 0
-        PlayerPower[playerID]['temp_range_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_range_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_range_c'] = 0
-        PlayerPower[playerID]['temp_range_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_range_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_range_b'] = 0
-        PlayerPower[playerID]['temp_range_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_range_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_range_a'] = 0
-        PlayerPower[playerID]['temp_range_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_range_a_precent_final'] = 0
         PlayerPower[playerID]['duration_range_d'] = 0
         PlayerPower[playerID]['duration_range_d_precent_base'] = 0
         PlayerPower[playerID]['duration_range_d_precent_final'] = 0
@@ -366,6 +383,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_range_duration'] = 0
         PlayerPower[playerID]['player_range_flag'] = 1
 
+        PlayerPower[playerID]['talent_radius_d'] = 0
+        PlayerPower[playerID]['talent_radius_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_radius_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_radius_c'] = 0
+        PlayerPower[playerID]['talent_radius_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_radius_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_radius_b'] = 0
+        PlayerPower[playerID]['talent_radius_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_radius_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_radius_a'] = 0
+        PlayerPower[playerID]['talent_radius_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_radius_a_precent_final'] = 0
         PlayerPower[playerID]['player_radius_d'] = 0
         PlayerPower[playerID]['player_radius_d_precent_base'] = 0
         PlayerPower[playerID]['player_radius_d_precent_final'] = 0
@@ -378,18 +407,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_radius_a'] = 0
         PlayerPower[playerID]['player_radius_a_precent_base'] = 0
         PlayerPower[playerID]['player_radius_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_radius_d'] = 0
-        PlayerPower[playerID]['temp_radius_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_radius_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_radius_c'] = 0
-        PlayerPower[playerID]['temp_radius_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_radius_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_radius_b'] = 0
-        PlayerPower[playerID]['temp_radius_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_radius_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_radius_a'] = 0
-        PlayerPower[playerID]['temp_radius_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_radius_a_precent_final'] = 0
         PlayerPower[playerID]['duration_radius_d'] = 0
         PlayerPower[playerID]['duration_radius_d_precent_base'] = 0
         PlayerPower[playerID]['duration_radius_d_precent_final'] = 0
@@ -405,6 +422,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_radius_duration'] = 0
         PlayerPower[playerID]['player_radius_flag'] = 1
 
+        PlayerPower[playerID]['talent_mana_cost_d'] = 0
+        PlayerPower[playerID]['talent_mana_cost_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_mana_cost_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_mana_cost_c'] = 0
+        PlayerPower[playerID]['talent_mana_cost_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_mana_cost_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_mana_cost_b'] = 0
+        PlayerPower[playerID]['talent_mana_cost_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_mana_cost_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_mana_cost_a'] = 0
+        PlayerPower[playerID]['talent_mana_cost_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_mana_cost_a_precent_final'] = 0
         PlayerPower[playerID]['player_mana_cost_d'] = 0
         PlayerPower[playerID]['player_mana_cost_d_precent_base'] = 0
         PlayerPower[playerID]['player_mana_cost_d_precent_final'] = 0
@@ -417,18 +446,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_mana_cost_a'] = 0
         PlayerPower[playerID]['player_mana_cost_a_precent_base'] = 0
         PlayerPower[playerID]['player_mana_cost_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_mana_cost_d'] = 0
-        PlayerPower[playerID]['temp_mana_cost_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_mana_cost_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_mana_cost_c'] = 0
-        PlayerPower[playerID]['temp_mana_cost_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_mana_cost_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_mana_cost_b'] = 0
-        PlayerPower[playerID]['temp_mana_cost_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_mana_cost_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_mana_cost_a'] = 0
-        PlayerPower[playerID]['temp_mana_cost_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_mana_cost_a_precent_final'] = 0
         PlayerPower[playerID]['duration_mana_cost_d'] = 0
         PlayerPower[playerID]['duration_mana_cost_d_precent_base'] = 0
         PlayerPower[playerID]['duration_mana_cost_d_precent_final'] = 0
@@ -444,6 +461,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_mana_cost_duration'] = 0
         PlayerPower[playerID]['player_mana_cost_flag'] = 1
 
+        PlayerPower[playerID]['talent_damage_d'] = 0
+        PlayerPower[playerID]['talent_damage_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_c'] = 0
+        PlayerPower[playerID]['talent_damage_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_b'] = 0
+        PlayerPower[playerID]['talent_damage_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_a'] = 0
+        PlayerPower[playerID]['talent_damage_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_a_precent_final'] = 0
         PlayerPower[playerID]['player_damage_d'] = 0
         PlayerPower[playerID]['player_damage_d_precent_base'] = 0
         PlayerPower[playerID]['player_damage_d_precent_final'] = 0
@@ -456,18 +485,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_a'] = 0
         PlayerPower[playerID]['player_damage_a_precent_base'] = 0
         PlayerPower[playerID]['player_damage_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_d'] = 0
-        PlayerPower[playerID]['temp_damage_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_c'] = 0
-        PlayerPower[playerID]['temp_damage_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_b'] = 0
-        PlayerPower[playerID]['temp_damage_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_a'] = 0
-        PlayerPower[playerID]['temp_damage_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_a_precent_final'] = 0
         PlayerPower[playerID]['duration_damage_d'] = 0
         PlayerPower[playerID]['duration_damage_d_precent_base'] = 0
         PlayerPower[playerID]['duration_damage_d_precent_final'] = 0
@@ -483,6 +500,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_duration'] = 0
         PlayerPower[playerID]['player_damage_flag'] = 1
 
+        PlayerPower[playerID]['talent_damage_match_d'] = 0
+        PlayerPower[playerID]['talent_damage_match_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_match_c'] = 0
+        PlayerPower[playerID]['talent_damage_match_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_match_b'] = 0
+        PlayerPower[playerID]['talent_damage_match_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_match_a'] = 0
+        PlayerPower[playerID]['talent_damage_match_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_a_precent_final'] = 0
         PlayerPower[playerID]['player_damage_match_d'] = 0
         PlayerPower[playerID]['player_damage_match_d_precent_base'] = 0
         PlayerPower[playerID]['player_damage_match_d_precent_final'] = 0
@@ -495,18 +524,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_match_a'] = 0
         PlayerPower[playerID]['player_damage_match_a_precent_base'] = 0
         PlayerPower[playerID]['player_damage_match_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_d'] = 0
-        PlayerPower[playerID]['temp_damage_match_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_c'] = 0
-        PlayerPower[playerID]['temp_damage_match_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_b'] = 0
-        PlayerPower[playerID]['temp_damage_match_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_a'] = 0
-        PlayerPower[playerID]['temp_damage_match_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_a_precent_final'] = 0
         PlayerPower[playerID]['duration_damage_match_d'] = 0
         PlayerPower[playerID]['duration_damage_match_d_precent_base'] = 0
         PlayerPower[playerID]['duration_damage_match_d_precent_final'] = 0
@@ -522,6 +539,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_match_duration'] = 0
         PlayerPower[playerID]['player_damage_match_flag'] = 1
 
+        PlayerPower[playerID]['talent_damage_match_helper_d'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_c'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_b'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_a'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_damage_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['player_damage_match_helper_d'] = 0
         PlayerPower[playerID]['player_damage_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['player_damage_match_helper_d_precent_final'] = 0
@@ -534,18 +563,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_match_helper_a'] = 0
         PlayerPower[playerID]['player_damage_match_helper_a_precent_base'] = 0
         PlayerPower[playerID]['player_damage_match_helper_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_d'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_c'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_b'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_a'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_damage_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['duration_damage_match_helper_d'] = 0
         PlayerPower[playerID]['duration_damage_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['duration_damage_match_helper_d_precent_final'] = 0
@@ -561,6 +578,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_damage_match_helper_duration'] = 0
         PlayerPower[playerID]['player_damage_match_helper_flag'] = 1
 
+        PlayerPower[playerID]['talent_control_d'] = 0
+        PlayerPower[playerID]['talent_control_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_c'] = 0
+        PlayerPower[playerID]['talent_control_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_b'] = 0
+        PlayerPower[playerID]['talent_control_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_a'] = 0
+        PlayerPower[playerID]['talent_control_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_a_precent_final'] = 0
         PlayerPower[playerID]['player_control_d'] = 0
         PlayerPower[playerID]['player_control_d_precent_base'] = 0
         PlayerPower[playerID]['player_control_d_precent_final'] = 0
@@ -573,18 +602,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_control_a'] = 0
         PlayerPower[playerID]['player_control_a_precent_base'] = 0
         PlayerPower[playerID]['player_control_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_d'] = 0
-        PlayerPower[playerID]['temp_control_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_c'] = 0
-        PlayerPower[playerID]['temp_control_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_b'] = 0
-        PlayerPower[playerID]['temp_control_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_a'] = 0
-        PlayerPower[playerID]['temp_control_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_a_precent_final'] = 0
         PlayerPower[playerID]['duration_control_d'] = 0
         PlayerPower[playerID]['duration_control_d_precent_base'] = 0
         PlayerPower[playerID]['duration_control_d_precent_final'] = 0
@@ -600,6 +617,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_control_duration'] = 0
         PlayerPower[playerID]['player_control_flag'] = 1
 
+        PlayerPower[playerID]['talent_control_match_d'] = 0
+        PlayerPower[playerID]['talent_control_match_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_match_c'] = 0
+        PlayerPower[playerID]['talent_control_match_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_match_b'] = 0
+        PlayerPower[playerID]['talent_control_match_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_match_a'] = 0
+        PlayerPower[playerID]['talent_control_match_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_a_precent_final'] = 0
         PlayerPower[playerID]['player_control_match_d'] = 0
         PlayerPower[playerID]['player_control_match_d_precent_base'] = 0
         PlayerPower[playerID]['player_control_match_d_precent_final'] = 0
@@ -612,18 +641,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_control_match_a'] = 0
         PlayerPower[playerID]['player_control_match_a_precent_base'] = 0
         PlayerPower[playerID]['player_control_match_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_d'] = 0
-        PlayerPower[playerID]['temp_control_match_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_c'] = 0
-        PlayerPower[playerID]['temp_control_match_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_b'] = 0
-        PlayerPower[playerID]['temp_control_match_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_a'] = 0
-        PlayerPower[playerID]['temp_control_match_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_a_precent_final'] = 0
         PlayerPower[playerID]['duration_control_match_d'] = 0
         PlayerPower[playerID]['duration_control_match_d_precent_base'] = 0
         PlayerPower[playerID]['duration_control_match_d_precent_final'] = 0
@@ -638,7 +655,19 @@ function initPlayerPower()
         PlayerPower[playerID]['duration_control_match_a_precent_final'] = 0
         PlayerPower[playerID]['player_control_match_duration'] = 0
         PlayerPower[playerID]['player_control_match_flag'] = 1
-        
+    
+        PlayerPower[playerID]['talent_control_match_helper_d'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_c'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_b'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_a'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_control_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['player_control_match_helper_d'] = 0
         PlayerPower[playerID]['player_control_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['player_control_match_helper_d_precent_final'] = 0
@@ -651,18 +680,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_control_match_helper_a'] = 0
         PlayerPower[playerID]['player_control_match_helper_a_precent_base'] = 0
         PlayerPower[playerID]['player_control_match_helper_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_d'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_c'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_b'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_a'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_control_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['duration_control_match_helper_d'] = 0
         PlayerPower[playerID]['duration_control_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['duration_control_match_helper_d_precent_final'] = 0
@@ -678,6 +695,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_control_match_helper_duration'] = 0
         PlayerPower[playerID]['player_control_match_helper_flag'] = 1
 
+        PlayerPower[playerID]['talent_energy_d'] = 0
+        PlayerPower[playerID]['talent_energy_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_c'] = 0
+        PlayerPower[playerID]['talent_energy_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_b'] = 0
+        PlayerPower[playerID]['talent_energy_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_a'] = 0
+        PlayerPower[playerID]['talent_energy_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_a_precent_final'] = 0
         PlayerPower[playerID]['player_energy_d'] = 0
         PlayerPower[playerID]['player_energy_d_precent_base'] = 0
         PlayerPower[playerID]['player_energy_d_precent_final'] = 0
@@ -690,18 +719,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_energy_a'] = 0
         PlayerPower[playerID]['player_energy_a_precent_base'] = 0
         PlayerPower[playerID]['player_energy_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_d'] = 0
-        PlayerPower[playerID]['temp_energy_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_c'] = 0
-        PlayerPower[playerID]['temp_energy_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_b'] = 0
-        PlayerPower[playerID]['temp_energy_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_a'] = 0
-        PlayerPower[playerID]['temp_energy_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_a_precent_final'] = 0
         PlayerPower[playerID]['duration_energy_d'] = 0
         PlayerPower[playerID]['duration_energy_d_precent_base'] = 0
         PlayerPower[playerID]['duration_energy_d_precent_final'] = 0
@@ -717,6 +734,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_energy_duration'] = 0
         PlayerPower[playerID]['player_energy_flag'] = 1
 
+        PlayerPower[playerID]['talent_energy_match_d'] = 0
+        PlayerPower[playerID]['talent_energy_match_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_match_c'] = 0
+        PlayerPower[playerID]['talent_energy_match_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_match_b'] = 0
+        PlayerPower[playerID]['talent_energy_match_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_match_a'] = 0
+        PlayerPower[playerID]['talent_energy_match_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_a_precent_final'] = 0
         PlayerPower[playerID]['player_energy_match_d'] = 0
         PlayerPower[playerID]['player_energy_match_d_precent_base'] = 0
         PlayerPower[playerID]['player_energy_match_d_precent_final'] = 0
@@ -729,18 +758,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_energy_match_a'] = 0
         PlayerPower[playerID]['player_energy_match_a_precent_base'] = 0
         PlayerPower[playerID]['player_energy_match_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_d'] = 0
-        PlayerPower[playerID]['temp_energy_match_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_c'] = 0
-        PlayerPower[playerID]['temp_energy_match_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_b'] = 0
-        PlayerPower[playerID]['temp_energy_match_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_a'] = 0
-        PlayerPower[playerID]['temp_energy_match_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_a_precent_final'] = 0
         PlayerPower[playerID]['duration_energy_match_d'] = 0
         PlayerPower[playerID]['duration_energy_match_d_precent_base'] = 0
         PlayerPower[playerID]['duration_energy_match_d_precent_final'] = 0
@@ -756,6 +773,18 @@ function initPlayerPower()
         PlayerPower[playerID]['player_energy_match_duration'] = 0
         PlayerPower[playerID]['player_energy_match_flag'] = 1
 
+        PlayerPower[playerID]['talent_energy_match_helper_d'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_c'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_b'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_a'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_energy_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['player_energy_match_helper_d'] = 0
         PlayerPower[playerID]['player_energy_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['player_energy_match_helper_d_precent_final'] = 0
@@ -768,18 +797,6 @@ function initPlayerPower()
         PlayerPower[playerID]['player_energy_match_helper_a'] = 0
         PlayerPower[playerID]['player_energy_match_helper_a_precent_base'] = 0
         PlayerPower[playerID]['player_energy_match_helper_a_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_d'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_d_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_d_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_c'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_c_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_c_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_b'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_b_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_b_precent_final'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_a'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_a_precent_base'] = 0
-        PlayerPower[playerID]['temp_energy_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['duration_energy_match_helper_d'] = 0
         PlayerPower[playerID]['duration_energy_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['duration_energy_match_helper_d_precent_final'] = 0
@@ -799,35 +816,77 @@ function initPlayerPower()
 end
 
 
---用于重置临时能力
+--用于回合重置能力
 function initTempPlayerPower()
     for playerID = 0, 9 do --10个玩家的数据包 
+        --用于记录正负电击的两个电极子弹
         PlayerPower[playerID]["electric_shock_a"] = nil
         PlayerPower[playerID]["electric_shock_b"] = nil
 
+        --英雄能力容器
+        --talent不受flag控制
+        PlayerPower[playerID]['talent_temp_vision'] = 0
+        PlayerPower[playerID]['talent_temp_vision_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_vision_precent_final'] = 0 
         PlayerPower[playerID]['temp_vision'] = 0
         PlayerPower[playerID]['temp_vision_precent_base'] = 0
-        PlayerPower[playerID]['temp_vision_precent_final'] = 0     
+        PlayerPower[playerID]['temp_vision_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_speed'] = 0
+        PlayerPower[playerID]['talent_temp_speed_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_speed_precent_final'] = 0   
         PlayerPower[playerID]['temp_speed'] = 0
         PlayerPower[playerID]['temp_speed_precent_base'] = 0
-        PlayerPower[playerID]['temp_speed_precent_final'] = 0    
-
+        PlayerPower[playerID]['temp_speed_precent_final'] = 0 
+        
+        PlayerPower[playerID]['talent_temp_health'] = 0     
+        PlayerPower[playerID]['talent_temp_health_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_health_precent_final'] = 0 
         PlayerPower[playerID]['temp_health'] = 0     
         PlayerPower[playerID]['temp_health_precent_base'] = 0
-        PlayerPower[playerID]['temp_health_precent_final'] = 0  
-
+        PlayerPower[playerID]['temp_health_precent_final'] = 0 
+        
+        PlayerPower[playerID]['talent_temp_mana'] = 0     
+        PlayerPower[playerID]['talent_temp_mana_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_mana_precent_final'] = 0
         PlayerPower[playerID]['temp_mana'] = 0     
         PlayerPower[playerID]['temp_mana_precent_base'] = 0
         PlayerPower[playerID]['temp_mana_precent_final'] = 0
-
-        PlayerPower[playerID]['temp_mana_regen'] = 0     
+        
+        PlayerPower[playerID]['talent_temp_mana_regen'] = 0
+        PlayerPower[playerID]['talent_temp_mana_regen_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_mana_regen_precent_final'] = 0
+        PlayerPower[playerID]['temp_mana_regen'] = 0
         PlayerPower[playerID]['temp_mana_regen_precent_base'] = 0
         PlayerPower[playerID]['temp_mana_regen_precent_final'] = 0
 
-        PlayerPower[playerID]['temp_cooldown_precent'] = 0
+        PlayerPower[playerID]['talent_temp_defense'] = 0     
+        PlayerPower[playerID]['talent_temp_defense_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_defense_precent_final'] = 0
+        PlayerPower[playerID]['temp_defense'] = 0     
+        PlayerPower[playerID]['temp_defense_precent_base'] = 0
+        PlayerPower[playerID]['temp_defense_precent_final'] = 0
+
+        PlayerPower[playerID]['talent_temp_cooldown'] = 0
+        PlayerPower[playerID]['talent_temp_cooldown_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_cooldown_precent_final'] = 0
+        PlayerPower[playerID]['temp_cooldown'] = 0
+        PlayerPower[playerID]['temp_cooldown_precent_base'] = 0
+        PlayerPower[playerID]['temp_cooldown_precent_final'] = 0
 
         --技能能力
+        PlayerPower[playerID]['talent_temp_ability_speed_d'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_c'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_b'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_a'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_ability_speed_a_precent_final'] = 0
         PlayerPower[playerID]['temp_ability_speed_d'] = 0
         PlayerPower[playerID]['temp_ability_speed_d_precent_base'] = 0
         PlayerPower[playerID]['temp_ability_speed_d_precent_final'] = 0
@@ -841,6 +900,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_ability_speed_a_precent_base'] = 0
         PlayerPower[playerID]['temp_ability_speed_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_range_d'] = 0
+        PlayerPower[playerID]['talent_temp_range_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_range_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_range_c'] = 0
+        PlayerPower[playerID]['talent_temp_range_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_range_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_range_b'] = 0
+        PlayerPower[playerID]['talent_temp_range_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_range_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_range_a'] = 0
+        PlayerPower[playerID]['talent_temp_range_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_range_a_precent_final'] = 0
         PlayerPower[playerID]['temp_range_d'] = 0
         PlayerPower[playerID]['temp_range_d_precent_base'] = 0
         PlayerPower[playerID]['temp_range_d_precent_final'] = 0
@@ -854,6 +925,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_range_a_precent_base'] = 0
         PlayerPower[playerID]['temp_range_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_radius_d'] = 0
+        PlayerPower[playerID]['talent_temp_radius_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_radius_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_radius_c'] = 0
+        PlayerPower[playerID]['talent_temp_radius_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_radius_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_radius_b'] = 0
+        PlayerPower[playerID]['talent_temp_radius_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_radius_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_radius_a'] = 0
+        PlayerPower[playerID]['talent_temp_radius_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_radius_a_precent_final'] = 0
         PlayerPower[playerID]['temp_radius_d'] = 0
         PlayerPower[playerID]['temp_radius_d_precent_base'] = 0
         PlayerPower[playerID]['temp_radius_d_precent_final'] = 0
@@ -867,15 +950,43 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_radius_a_precent_base'] = 0
         PlayerPower[playerID]['temp_radius_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_mana_cost_d'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_c'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_b'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_a'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_mana_cost_a_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_d'] = 0
-        PlayerPower[playerID]['temp_mana_cost_d_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_d_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_d_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_c'] = 0
-        PlayerPower[playerID]['temp_mana_cost_c_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_c_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_c_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_b'] = 0
-        PlayerPower[playerID]['temp_mana_cost_b_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_b_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_b_precent_final'] = 0
         PlayerPower[playerID]['temp_mana_cost_a'] = 0
-        PlayerPower[playerID]['temp_mana_cost_a_precent'] = 0
+        PlayerPower[playerID]['temp_mana_cost_a_precent_base'] = 0
+        PlayerPower[playerID]['temp_mana_cost_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_damage_d'] = 0
+        PlayerPower[playerID]['talent_temp_damage_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_c'] = 0
+        PlayerPower[playerID]['talent_temp_damage_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_b'] = 0
+        PlayerPower[playerID]['talent_temp_damage_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_a'] = 0
+        PlayerPower[playerID]['talent_temp_damage_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_a_precent_final'] = 0
         PlayerPower[playerID]['temp_damage_d'] = 0
         PlayerPower[playerID]['temp_damage_d_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_d_precent_final'] = 0
@@ -889,6 +1000,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_damage_a_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_damage_match_d'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_c'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_b'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_a'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_a_precent_final'] = 0
         PlayerPower[playerID]['temp_damage_match_d'] = 0
         PlayerPower[playerID]['temp_damage_match_d_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_match_d_precent_final'] = 0
@@ -902,6 +1025,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_damage_match_a_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_match_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_damage_match_helper_d'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_c'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_b'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_a'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_damage_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['temp_damage_match_helper_d'] = 0
         PlayerPower[playerID]['temp_damage_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_match_helper_d_precent_final'] = 0
@@ -915,6 +1050,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_damage_match_helper_a_precent_base'] = 0
         PlayerPower[playerID]['temp_damage_match_helper_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_control_d'] = 0
+        PlayerPower[playerID]['talent_temp_control_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_c'] = 0
+        PlayerPower[playerID]['talent_temp_control_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_b'] = 0
+        PlayerPower[playerID]['talent_temp_control_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_a'] = 0
+        PlayerPower[playerID]['talent_temp_control_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_a_precent_final'] = 0
         PlayerPower[playerID]['temp_control_d'] = 0
         PlayerPower[playerID]['temp_control_d_precent_base'] = 0
         PlayerPower[playerID]['temp_control_d_precent_final'] = 0
@@ -928,6 +1075,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_control_a_precent_base'] = 0
         PlayerPower[playerID]['temp_control_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_control_match_d'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_c'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_b'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_a'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_a_precent_final'] = 0
         PlayerPower[playerID]['temp_control_match_d'] = 0
         PlayerPower[playerID]['temp_control_match_d_precent_base'] = 0
         PlayerPower[playerID]['temp_control_match_d_precent_final'] = 0
@@ -941,6 +1100,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_control_match_a_precent_base'] = 0
         PlayerPower[playerID]['temp_control_match_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_control_match_helper_d'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_c'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_b'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_a'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_control_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['temp_control_match_helper_d'] = 0
         PlayerPower[playerID]['temp_control_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['temp_control_match_helper_d_precent_final'] = 0
@@ -954,6 +1125,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_control_match_helper_a_precent_base'] = 0
         PlayerPower[playerID]['temp_control_match_helper_a_precent_final'] = 0
       
+        PlayerPower[playerID]['talent_temp_energy_d'] = 0
+        PlayerPower[playerID]['talent_temp_energy_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_c'] = 0
+        PlayerPower[playerID]['talent_temp_energy_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_b'] = 0
+        PlayerPower[playerID]['talent_temp_energy_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_a'] = 0
+        PlayerPower[playerID]['talent_temp_energy_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_a_precent_final'] = 0
         PlayerPower[playerID]['temp_energy_d'] = 0
         PlayerPower[playerID]['temp_energy_d_precent_base'] = 0
         PlayerPower[playerID]['temp_energy_d_precent_final'] = 0
@@ -967,6 +1150,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_energy_a_precent_base'] = 0
         PlayerPower[playerID]['temp_energy_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_energy_match_d'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_c'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_b'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_a'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_a_precent_final'] = 0
         PlayerPower[playerID]['temp_energy_match_d'] = 0
         PlayerPower[playerID]['temp_energy_match_d_precent_base'] = 0
         PlayerPower[playerID]['temp_energy_match_d_precent_final'] = 0
@@ -980,6 +1175,18 @@ function initTempPlayerPower()
         PlayerPower[playerID]['temp_energy_match_a_precent_base'] = 0
         PlayerPower[playerID]['temp_energy_match_a_precent_final'] = 0
 
+        PlayerPower[playerID]['talent_temp_energy_match_helper_d'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_d_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_d_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_c'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_c_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_c_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_b'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_b_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_b_precent_final'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_a'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_a_precent_base'] = 0
+        PlayerPower[playerID]['talent_temp_energy_match_helper_a_precent_final'] = 0
         PlayerPower[playerID]['temp_energy_match_helper_d'] = 0
         PlayerPower[playerID]['temp_energy_match_helper_d_precent_base'] = 0
         PlayerPower[playerID]['temp_energy_match_helper_d_precent_final'] = 0
@@ -996,11 +1203,19 @@ function initTempPlayerPower()
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
             print("removeremove",playerID)
             local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+            --此处还缺少天赋临时能力
+            removePlayerBuffByAbilityAndModifier(hero, "ability_health_control_talent_temp", "modifier_health_buff_talent_temp","modifier_health_debuff_talent_temp")
+            removePlayerBuffByAbilityAndModifier(hero, "ability_vision_control_talent_temp", "modifier_vision_buff_talent_temp","modifier_vision_debuff_talent_temp")
+            removePlayerBuffByAbilityAndModifier(hero, "ability_speed_control_talent_temp", "modifier_speed_buff_talent_temp","modifier_speed_debuff_talent_temp")
+            removePlayerBuffByAbilityAndModifier(hero, "ability_mana_control_talent_temp", "modifier_mana_buff_talent_temp","modifier_mana_debuff_talent_temp")
+            removePlayerBuffByAbilityAndModifier(hero, "ability_mana_regen_control_talent_temp", "modifier_mana_regen_buff_talent_temp","modifier_mana_regen_debuff_talent_temp")
+
             removePlayerBuffByAbilityAndModifier(hero, "ability_health_control_temp", "modifier_health_buff_temp","modifier_health_debuff_temp")
             removePlayerBuffByAbilityAndModifier(hero, "ability_vision_control_temp", "modifier_vision_buff_temp","modifier_vision_debuff_temp")
             removePlayerBuffByAbilityAndModifier(hero, "ability_speed_control_temp", "modifier_speed_buff_temp","modifier_speed_debuff_temp")
             removePlayerBuffByAbilityAndModifier(hero, "ability_mana_control_temp", "modifier_mana_buff_temp","modifier_mana_debuff_temp")
             removePlayerBuffByAbilityAndModifier(hero, "ability_mana_regen_control_temp", "modifier_mana_regen_buff_temp","modifier_mana_regen_debuff_temp")
+            
             removePlayerBuffByAbilityAndModifier(hero, "ability_health_control_duration", "modifier_health_buff_duration","modifier_health_debuff_duration")
             removePlayerBuffByAbilityAndModifier(hero, "ability_vision_control_duration", "modifier_vision_buff_duration","modifier_vision_debuff_duration")
             removePlayerBuffByAbilityAndModifier(hero, "ability_speed_control_duration", "modifier_speed_buff_duration","modifier_speed_debuff_duration")

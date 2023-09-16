@@ -1,6 +1,7 @@
 require('player_power')
 require('get_contract')
 require('get_magic')
+require('get_talent')
 require('game_init')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
@@ -59,6 +60,9 @@ function prepareStep(gameRound)
                 end
                 if gameRound == 4 then 
                     randomLearnContract()
+                end
+                if gameRound > 8 then
+                    randomLearnTalent(gameRound)
                 end
                 --进入战斗阶段倒计时
                 battleStep(gameRound)
@@ -203,6 +207,15 @@ function getUpGradeListByRound(gameRound)
             end
             if gameRound == 8 then
                 openRebuildMagicList(playerID)
+            end
+            if gameRound == 9 then
+                openRandomTalentCList(playerID)
+            end
+            if gameRound == 10 then
+                openRandomTalentBList(playerID)
+            end
+            if gameRound == 11 then
+                openRandomTalentAList(playerID)
             end
 
         end
