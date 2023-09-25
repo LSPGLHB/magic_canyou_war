@@ -71,6 +71,45 @@
                 }
             }
         }
-
     }
+
+    "treasure_box_gold"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilityType"               "scene"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "init_val"			    "0"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_treasure_box_gold_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/treasure_box.lua"
+                        "Function"			"treasureBoxInit"
+                    }
+
+                }
+            }
+        }
+    }
+
+    
+
 }

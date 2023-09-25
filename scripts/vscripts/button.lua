@@ -47,9 +47,9 @@ end
 
 function openShopJSTOLUA(index,keys)
     local playerID = keys.PlayerID
-    local player = PlayerResource:GetPlayer(playerID)
+    --local player = PlayerResource:GetPlayer(playerID)
     OnMyUIShopOpen(playerID)
-    getPlayerShopListByRandomList(playerID, player.randomItemNumList)
+    getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
 end
 
 function closeShopJSTOLUA(index,keys)
@@ -59,11 +59,11 @@ end
 
 function refreshShopJSTOLUA(index,keys)
     local playerID = keys.PlayerID
-    local player = PlayerResource:GetPlayer(playerID)
+    --local player = PlayerResource:GetPlayer(playerID)
     refreshShopList(playerID)
     OnMyUIShopClose(playerID)
     OnMyUIShopOpen(playerID)
-    getPlayerShopListByRandomList(playerID, player.randomItemNumList)
+    getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
 end
 
 
@@ -71,10 +71,11 @@ function refreshShopList(playerID)
     local itemNameList = GameRules.itemNameList
     local count = #itemNameList
     --print("itemNameList=====================",count)
-    local randomItemNumList= getRandomNumList(1,count,6)
+    playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
+    --local randomItemNumList = getRandomNumList(1,count,6)
     --print("randomItemNumList",#randomItemNumList)
-    local player = PlayerResource:GetPlayer(playerID)
-    player.randomItemNumList = randomItemNumList
+    --local player = PlayerResource:GetPlayer(playerID)
+    --player.randomItemNumList = randomItemNumList
 end
 
 

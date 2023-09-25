@@ -9,7 +9,7 @@
 		//"AbilityLayout"         "6"
 		"Ability1"	"blind_fire_ball_pre_datadriven"
 		"Ability2"	"fire_spirit_datadriven"
-		"Ability3"	"blind_fire_ball_datadriven"
+		"Ability3"	"big_fire_ball_datadriven"
 		"Ability4"  "fire_ball_datadriven"
 		"Ability5"  "fire_bottle_datadriven"
 		"Ability6"  "fire_arrow_bomb_datadriven"
@@ -264,10 +264,13 @@
 		"Ability7"  "nothing_c_stage"
 		"Ability8"  "nothing_b_stage"
 		"Ability9"	"nothing_a_stage"
+		"Ability10" "hero_order_datadriven"
 
 
 
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"   // 碰撞边界类型，以下为单位尺寸参数:
+
+
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
                                                             // 值                             Hammer中的单位半径
                                                             // DOTA_HULL_SIZE_SMALL            8
                                                             // DOTA_HULL_SIZE_REGULAR          16
@@ -278,7 +281,7 @@
                                                             // DOTA_HULL_SIZE_FILLER           96
                                                             // DOTA_HULL_SIZE_BARRACKS         144
                                                             // DOTA_HULL_SIZE_TOWER            144
-        "RingRadius"                "100"                    // 选择圈半径
+        "RingRadius"                "100"                   // 选择圈半径
 	
 		//模型大小
 		"ModelScale"	"0.7"
@@ -287,7 +290,8 @@
 		//移动速度
 		 "MovementSpeed"             "320"
 
-	
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
 		// 基础护甲
 		"ArmorPhysical"	"0"
 		// 基础魔抗

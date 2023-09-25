@@ -71,7 +71,7 @@ function AOEOperationCallback(shoot,unit)
 	if flag then
 		ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
 	else
-        local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
+        local defenceParticlesID = ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
         ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         EmitSoundOn(keys.soundDefense, unit)
         Timers:CreateTimer(0.5, function()

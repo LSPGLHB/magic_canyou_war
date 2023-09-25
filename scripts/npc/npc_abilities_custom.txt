@@ -110,14 +110,14 @@
 
 "DOTAAbilities"
 {
-	"no_hp_bar_datadriven"
+	"magic_stone_pan_status_datadriven"
     {
         "BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
-         "Modifiers"
+        "Modifiers"
         {
-            "modifier_no_hp_bar_datadriven"
+            "modifier_magic_stone_pan_status_datadriven"
             {
                "Passive"				"1"
                "States"
@@ -130,4 +130,117 @@
 
         }
     }
+
+    "treasure_box_status_datadriven"
+     {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "Modifiers"
+        {
+            "modifier_treasure_box_status_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+
+        }
+    }
+
+  
+
+
+    "hero_order_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NO_TARGET| DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+        "AbilityCooldown"               "0"
+        "AbilityChannelTime"			"1.5"
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"magic_ice_beans_channel"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_channel_act_datadriven"
+			}
+		}
+
+        "OnChannelSucceeded"
+        {			
+            "FireSound"
+            {
+                "EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+                "Target"			"CASTER"
+            }           
+
+            "RunScript"
+            {
+                "ScriptFile"		    "scene/treasure_box.lua"
+                "Function"			    "initHeroChannelSucceeded"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_hero_order_datadriven"
+            {
+               "Passive"				"1"
+
+               "OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"scene/treasure_box.lua"
+						"Function"			"initHeroOrder"
+                        
+					}
+				}
+            }
+
+            "modifier_channel_act_datadriven"
+            {
+                "Duration"				"1.5"
+				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
+            }
+
+        }
+    }
+
+
+    "hero_search_target_timer_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "Modifiers"
+        {
+            "modifiers_hero_search_target_timer_datadriven"
+            {
+                "Passive"				"1"
+                "OnCreated"
+                {			
+        
+                    "RunScript"
+                    {
+                        "ScriptFile"		    "scene/treasure_box.lua"
+                        "Function"			    "initHeroSearchTarget"
+                    }
+                }
+            }
+            
+        }
+
+    }
+
 }

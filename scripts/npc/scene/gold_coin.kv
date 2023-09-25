@@ -1,0 +1,99 @@
+"DOTAAbilities"
+{
+    "item_gold_coin_10"
+	{
+		"ID"                                "1100"
+		"BaseClass"                         "item_datadriven"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"  							"models/props_gameplay/gold_bag.vmdl"
+		"ItemType"               			"goldCoin" 
+        "Worth"                             "10"
+        "Holder"                            "player"
+
+		"ItemDroppable"                        "1"
+		"ItemSellable"                        "1"
+		"AbilityCooldown"				"1"
+
+		"ItemStackable"					"1"		//可堆叠
+		"ItemPermanent"                 "0"		//永久的
+		"ItemInitialCharges"            "1"     //一次一个
+
+		"ItemCastOnPickup"   			"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scene/treasure_box.lua"
+                "Function"			"getGoldCoin"
+				"worth"             "10"
+        		"holder"            "player"
+			}
+		}
+	}
+
+    "item_gold_coin_5"
+	{
+		"ID"                                "1100"
+		"BaseClass"                         "item_datadriven"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"  							"models/props_gameplay/gold_bag.vmdl"
+		"ItemType"               			"goldCoin"
+        
+
+		"ItemDroppable"                        "1"
+		"ItemSellable"                        "1"
+		"AbilityCooldown"				"1"
+
+		"ItemStackable"					"1"		//可堆叠
+		"ItemPermanent"                 "0"		//永久的
+		"ItemInitialCharges"            "1"     //一次一个
+
+		"ItemCastOnPickup"   			"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scene/treasure_box.lua"
+                "Function"			"getGoldCoin"
+				"worth"             "5"
+        		"holder"            "player"
+			}
+		}
+
+	}
+
+    "item_gold_coin_2"
+	{
+		"ID"                                "1100"
+		"BaseClass"                         "item_datadriven"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"  							"models/props_gameplay/gold_bag.vmdl"
+		"ItemType"               			"goldCoin"
+        
+
+		"ItemDroppable"                        "1"
+		"ItemSellable"                        "1"
+		"AbilityCooldown"				"1"
+
+		"ItemStackable"					"1"		//可堆叠
+		"ItemPermanent"                 "0"		//永久的
+		"ItemInitialCharges"            "1"     //一次一个
+
+		"ItemCastOnPickup"   			"1"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scene/treasure_box.lua"
+                "Function"			"getGoldCoin"
+				"worth"             "2"
+        		"holder"            "player"
+			}
+		}
+
+	}
+
+}

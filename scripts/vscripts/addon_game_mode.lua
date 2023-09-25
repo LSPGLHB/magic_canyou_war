@@ -20,8 +20,12 @@ end
 
 function PrecacheEveryThingFromKV( context )
 	local kv_files = {
-		"scripts/npc/npc_units_custom.txt","scripts/npc/npc_abilities_custom.txt","scripts/npc/npc_abilities_override.txt",
-		"scripts/npc/npc_heroes_custom.txt","scripts/npc/npc_items_custom.txt"
+		"scripts/npc/npc_units_custom.txt",
+		"scripts/npc/npc_abilities_custom.txt",
+		"scripts/npc/npc_abilities_override.txt",
+		"scripts/npc/npc_heroes_custom.txt",
+		"scripts/npc/npc_items_custom.txt",
+		"scripts/npc/scene/gold_coin.kv"
 	}
 	for _, kv in pairs(kv_files) do
 		local kvs = LoadKeyValues(kv)
@@ -144,6 +148,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.nothingLabel ="nothingLabel" --抛物线用
 	GameRules.stoneLabel = "stoneLabel"
 	GameRules.shopLabel ="shopLabel"
+	GameRules.boxLabel = "boxLabel"
 	GameRules.playerBaseHealth = 50
 	GameRules.playerBaseMana = 100
 	GameRules.playerBaseSpeed = 300
@@ -151,6 +156,8 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseManaRegen = 10
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
+
+	GameRules:SetStartingGold(10)
 	
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
@@ -178,6 +185,9 @@ function magicCanyouWar:InitGameMode()
 	GameRules.talentBList = LoadKeyValues("scripts/npc/talent/talent_b.kv")
 	GameRules.talentAList = LoadKeyValues("scripts/npc/talent/talent_a.kv")
 
+	GameRules.goldCoin = LoadKeyValues("scripts/npc/scene/gold_coin.kv")--导入金币
+
+	
 
 	--设置4*4队伍组合
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 5 )
@@ -263,7 +273,7 @@ function magicCanyouWar:InitGameMode()
 		initContractList() --初始化契约信息
 		initTalentList() --初始化天赋信息
 		initMagicList()--初始化技能信息
-
+		--initGoldCoin() --初始化金币
 
 		init_flag = 1
 	end
@@ -276,48 +286,47 @@ function magicCanyouWar:On_ed_open_my_shop(keys)
 end
 
 
---死亡物品掉落
-function RollDrops(unit)
-	-- 读取上面读取的掉落KV文件，然后读取到对应的单位的定义文件
-    local DropInfo = GameRules.DropTable[unit:GetUnitName()]
-    if DropInfo then
--- 循环所有需要掉落的物品
-        for item_name,chance in pairs(DropInfo) do
-            if RollPercentage(chance) then
-                -- 创建对应的物品
-				--print("Creating "..item_name)
-                local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
-                local pos = unit:GetAbsOrigin()
-				-- 用LaunchLoot函数可以有一个掉落动画，当然，也可以用CreateItemOnPositionSync来直接掉落。
-              	-- item:LaunchLoot(false, 50, 50, pos)
-				CreateItemOnPositionSync(pos,item)
-				GameRules.BaoshiPos = pos
-            end
-        end
-    end
-end
+
 
 
 --捡起物品监听
 function magicCanyouWar:OnItemPickup (keys)
 	--local unit = EntIndexToHScript(keys.dota_item_picked_up)
-	local itemname = keys.itemname
-	local PlayerID = keys.PlayerID
+	local itemName = keys.itemname
+	local playerID = keys.PlayerID
 	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
 	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	--print("itemname",itemname)
-	--print("PlayerID",PlayerID)
-	
 	local team = HeroEntity:GetTeam()
-	local pos = GameRules.BaoshiPos  --全局变量保存好掉落的宝石位置
+	--local itemName2 = ItemEntity:GetName()
+	--print("playerID",playerID)
+	--print("team",team)
+	--print("itemName:"..itemName)
+--[[
+	local player = PlayerResource:GetPlayer(playerID) 
+	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+	for i=0, #goldCoin do
+		if goldCoin[i]['name'] == itemName then
+			if goldCoin[i]['holder'] == 'player' then
+				print(goldCoin[i]['worth'])
+				--hHero:ModifyGold(goldCoin[i]['worth'],true,1)
+				PlayerResource:SetGold(playerID,goldCoin[i]['worth'],true)
+				hHero:RemoveItem(ItemEntity)
+			end
+		end
+	end
+]]
+	
+	
 
-	--不能拾取会掉落
+	--不能拾取会掉落（可行的）
+	--[[
+	local pos = GameRules.BaoshiPos  --全局变量保存好掉落的宝石位置
 	if team == 2 and itemname == 'item_lvxie2' then
 		--print('pos:',pos) --宝石位置
 		--print('drop:',itemname)
 
 		HeroEntity:DropItemAtPositionImmediate(ItemEntity, pos)		
-	end	
+	end	]]
 end
 
 
@@ -343,6 +352,8 @@ function magicCanyouWar:OnEntityKilled (keys)
 
 	--物品掉落测试
 	RollDrops(unit)
+
+
 	--判断小怪被消灭，并刷新小怪
 	if name then
 		if name == "yang" then
@@ -400,7 +411,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			end
 		end
 
-		gameProgress()--此处打开游戏流程的进程
+		--gameProgress()--此处打开游戏流程的进程
 
 		
 --[[

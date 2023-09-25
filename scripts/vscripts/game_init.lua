@@ -14,13 +14,20 @@ function initMapStats()
     --用于记录玩家是否学习，用于启动随机学习
     playerRoundLearn = {}
 
+    TreasureBoxGold = "treasureBoxGold"
+
 
     --魔法石初始化
     createMagicStone()
 
+    --宝箱初始化
+    createTreasureBox()
+
     --初始化所有玩家的天赋
     playerContractLearn = {}
     playerTalentLearn = {}
+    playerOrderTarget = {}
+    playerRandomItemNumList = {}
     for i = 0, 9 do
         playerContractLearn[i]={}
         playerContractLearn[i]['contractName'] = 'nil'
@@ -28,6 +35,9 @@ function initMapStats()
         playerTalentLearn[i]['talentNameC'] = 'nil'
         playerTalentLearn[i]['talentNameB'] = 'nil'
         playerTalentLearn[i]['talentNameA'] = 'nil'
+
+        playerOrderTarget[i] = 'nil'
+        playerRandomItemNumList[i] = {}
     end
    
 
@@ -36,9 +46,22 @@ function initMapStats()
         createUnit('yang',DOTA_TEAM_BADGUYS)
     end
 
+    --建立商店
     creatShop()
     --createHuohai()
     --CreateHeroForPlayer("niu",-1)
+
+end
+
+function createTreasureBox()
+    local treasureBox2Entities = Entities:FindByName(nil,"treasureBox2") 
+    local treasureBox2Location = treasureBox2Entities:GetAbsOrigin()
+    --local item_name = 'item_gold_coin_10'
+    --local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
+    --CreateItemOnPositionSync(treasureBox2Location,item)
+    local treasureBox = CreateUnitByName("treasureBoxGold", treasureBox2Location, true, nil, nil, DOTA_TEAM_NOTEAM)
+    treasureBox:GetAbilityByIndex(0):SetLevel(1)
+    treasureBox:GetAbilityByIndex(1):SetLevel(1)
 
 end
 
@@ -65,6 +88,7 @@ function createMagicStone()
     goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
     goodMagicStone:AddAbility("magic_stone_good")
     goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
+    --goodMagicStone:GetAbilityByIndex(1):SetLevel(1)
     goodMagicStone:SetSkin(0)
     goodMagicStone:SetContext("name", "magicStone", 0)
     goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
@@ -77,6 +101,7 @@ function createMagicStone()
     badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     badMagicStone:AddAbility("magic_stone_bad")
     badMagicStone:GetAbilityByIndex(0):SetLevel(1)
+    --badMagicStone:GetAbilityByIndex(1):SetLevel(1)
     badMagicStone:SetSkin(1)
     badMagicStone:SetContext("name", "magicStone", 0)
     badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
@@ -151,9 +176,6 @@ function initHeroByPlayerID(playerID)
     hHero:RemoveAbility(tempAbility) 
     hHero:AddAbility(commonAttack)
 
-
-
-
     hHero:GetAbilityByIndex(0):SetLevel(1)
     hHero:GetAbilityByIndex(1):SetLevel(1)
     hHero:GetAbilityByIndex(2):SetLevel(1)
@@ -163,24 +185,120 @@ function initHeroByPlayerID(playerID)
     hHero:GetAbilityByIndex(6):SetLevel(1)
     hHero:GetAbilityByIndex(7):SetLevel(1)
     hHero:GetAbilityByIndex(8):SetLevel(1)
+    hHero:GetAbilityByIndex(9):SetLevel(1)
+    --hHero:GetAbilityByIndex(10):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(999) --重新设置复活时间
 end
---[[
-function createShoot(keys)
-    for k,v in pairs(keys) do
-        print("keys:",k,v)
+
+
+--死亡物品掉落
+function RollDrops(unit)
+	initDropInfo(unit)
+
+    for k = 0 , #DropInfoSort do
+        local item_name = DropInfoSort[k]['name']
+        local chance = DropInfoSort[k]['chance']
+        print("Creating "..item_name.."="..chance)
+        if RollPercentage(chance) then
+            -- 创建对应的物品
+            print("item_name:==========================="..item_name)
+            local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
+
+            local pos = unit:GetAbsOrigin()
+            -- 用LaunchLoot函数可以有一个掉落动画，当然，也可以用CreateItemOnPositionSync来直接掉落。
+              -- item:LaunchLoot(false, 50, 50, pos)
+            CreateItemOnPositionSync(pos,item)
+
+            break;
+        end
     end
-    local unit = keys.unit --EntIndexToHScript(keys.unit)
-    local chaoxiang=unit:GetForwardVector()
-    local position=unit:GetAbsOrigin()
-    --local tempposition=position+chaoxiang*50
-    local new_unit = CreateUnitByName("huoren", position, true, nil, nil, unit:GetTeam())
-    new_unit:SetForwardVector(chaoxiang)
-    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
-     function ()
-      new_unit:MoveToPosition(position+chaoxiang*500)
-      return 0.2
-     end,0) 
+-- 循环所有需要掉落的物品
+--[[
+        for item_name,chance in pairs(DropInfoSort) do
+            print("Creating "..item_name.."="..chance)
+            if RollPercentage(chance) then
+                -- 创建对应的物品
+				
+                local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
+                local pos = unit:GetAbsOrigin()
+				-- 用LaunchLoot函数可以有一个掉落动画，当然，也可以用CreateItemOnPositionSync来直接掉落。
+              	-- item:LaunchLoot(false, 50, 50, pos)
+				CreateItemOnPositionSync(pos,item)
+				GameRules.BaoshiPos = pos
+                
+            end
+        end]]
+
 end
-]]
+
+function RollPercentageFlag(randomNum)
+    local flag = false
+    local randomNum = math.random()
+    local chanceNum = randomNum / 100
+    if randomNum < chanceNum then
+        flag = true
+    end        
+    return flag
+end
+
+function initDropInfo(unit)
+    -- 读取上面读取的掉落KV文件，然后读取到对应的单位的定义文件
+    local DropInfo = GameRules.DropTable[unit:GetUnitName()]
+    DropInfoSort = {}
+    
+    if DropInfo then
+        local i = 0
+        for item_name,chance in pairs(DropInfo) do
+            local tempName = item_name
+            local tempChance = chance
+            --print("start:"..tempName.."="..tempChance)
+            for j = 0 , i do  
+                if j == i then
+                    DropInfoSort[i] = {}
+                    DropInfoSort[i]['name'] = tempName
+                    DropInfoSort[i]['chance'] = tempChance
+                    --print("i="..i..",name="..tempName.."="..tempChance)
+                    break;
+                end
+                    --print("check:"..tempChance..'<'..DropInfoSort[j]['chance'])
+                if tempChance < DropInfoSort[j]['chance'] then
+                    local inputName = tempName
+                    local inputChance = tempChance
+                    tempName = DropInfoSort[j]['name']
+                    tempChance = DropInfoSort[j]['chance']
+                    --print("tempname="..tempName.."="..tempChance)
+                    DropInfoSort[j] = {}
+                    DropInfoSort[j]['name'] = inputName
+                    DropInfoSort[j]['chance'] = inputChance
+                    --print("j="..j..",name="..item_name.."="..chance)
+                end
+
+            end  
+            i = i + 1
+        end
+    end
+
+end
+
+
+--[[
+function initGoldCoin()
+
+	goldCoin = {}
+    local i = 0
+	for key, value in pairs(GameRules.goldCoin) do
+        goldCoin[i]={}
+        goldCoin[i]['name'] = key
+		for k,v in pairs(value) do
+            if k == 'Holder' then
+                goldCoin[i]['holder'] = v
+            end
+            if k == 'Worth' then
+                goldCoin[i]['worth'] = v
+            end
+		end
+        i = i + 1
+	end
+end]]
+

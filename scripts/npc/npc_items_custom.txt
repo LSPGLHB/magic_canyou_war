@@ -43,6 +43,9 @@
 #base items/sky_eye.kv
 #base items/dragon_eye.kv
 
+#base scene/box.kv
+#base scene/gold_coin.kv
+
 
 "DOTAAbilities"
 {
@@ -53,6 +56,7 @@
 		"BaseClass"                                "item_datadriven"
 		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"        	"item_lvping"
+		"Model"  							"models/props_gameplay/treasure_chest_gold.vmdl"
 
 
 
@@ -84,7 +88,7 @@
 		"BaseClass"                                "item_datadriven"
 		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"        	"item_lanping"
-
+		"Model"  							"models/props_gameplay/treasure_chest_gold.vmdl"
 
 
 		"ItemDroppable"                        "1"
@@ -111,11 +115,11 @@
 
 	"item_hongping"
 	{
-		"ID"                                        "1001"
+		"ID"                                        "1002"
 		"BaseClass"                                "item_datadriven"
 		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"        	"item_hongping"
-
+		"Model"  							"models/props_gameplay/treasure_chest_gold.vmdl"
 
 
 		"ItemDroppable"                        "1"
