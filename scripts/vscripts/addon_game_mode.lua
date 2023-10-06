@@ -149,6 +149,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.stoneLabel = "stoneLabel"
 	GameRules.shopLabel ="shopLabel"
 	GameRules.boxLabel = "boxLabel"
+	GameRules.battlefieldLabel = "battlefieldLabel"
 	GameRules.playerBaseHealth = 50
 	GameRules.playerBaseMana = 100
 	GameRules.playerBaseSpeed = 300
@@ -370,16 +371,54 @@ end
 --导入页面文件
 function magicCanyouWar:OnGameRulesStateChange( keys )
 	local state = GameRules:State_Get()
+	if state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		print("DOTA_GAMERULES_STATE_HERO_SELECTION")
+		Timers:CreateTimer(60,function()
+			for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+				if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+					--print(PlayerResource:GetSelectedHeroID(playerID))
+					if PlayerResource:GetSelectedHeroID(playerID) == -1 then
+							PlayerResource:GetPlayer(playerID):MakeRandomHeroSelection()
+					end
+				end
+			end
+		end)
+	end
+--[[
+	if state == DOTA_GAMERULES_STATE_INIT then
+		print("DOTA_GAMERULES_STATE_INIT")
+	end
+
+	if state == DOTA_GAMERULES_STATE_LAST then
+		print("DOTA_GAMERULES_STATE_LAST")
+	end
+
+	if state == DOTA_GAMERULES_STATE_POST_GAME then
+		print("DOTA_GAMERULES_STATE_POST_GAME")
+	end
+
+	if state == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
+		print("DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD")
+	end
+	
+	if state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		print("DOTA_GAMERULES_STATE_GAME_IN_PROGRESS")
+	end
+
+]]
+
+
+
 	--时间结束没有选的话，随机英雄
 	if state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
         for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-                --if PlayerResource:GetPlayer(playerID) ~= nil and PlayerResource:IsValidPlayer(playerID) then
-                if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-                        --print(PlayerResource:GetSelectedHeroID(playerID))
-                        if PlayerResource:GetSelectedHeroID(playerID) == -1 then
-                                PlayerResource:GetPlayer(playerID):MakeRandomHeroSelection()
-                        end
-                end
+			--if PlayerResource:GetPlayer(playerID) ~= nil and PlayerResource:IsValidPlayer(playerID) then
+			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+					--print(PlayerResource:GetSelectedHeroID(playerID))
+					if PlayerResource:GetSelectedHeroID(playerID) == -1 then
+							PlayerResource:GetPlayer(playerID):MakeRandomHeroSelection()
+					end
+			end
         end
 	end
 
@@ -391,27 +430,27 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
 					--PlayerResource:SetGold(playerID,50,true)	--所有玩家金钱增量
-					
 					--getRandomItem(playerID) 商店打开测试
 					--print("============initbutton============")
 					--CustomUI:DynamicHud_Destroy(-1,"UIButtonBox")
 					--右下按钮显示
 					CustomUI:DynamicHud_Create(playerID,"UIButtonBox","file://{resources}/layout/custom_game/UI_button.xml",nil)
+					Timers:CreateTimer(2,function ()
+						CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "initJS", {})
+					end)
 					--契约板面
 					CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
+					
 					--天赋面板
 					CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
-					
 					--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 					--showPlayerStatusPanel( playerID ) 
 					--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)
-				
-					
 					initHeroByPlayerID(playerID)
 			end
 		end
 
-		--gameProgress()--此处打开游戏流程的进程
+		gameProgress()--此处打开游戏流程的进程
 
 		
 --[[
@@ -434,20 +473,6 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			return sec
 		end)
 ]]
-	end
-
-	if state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		--print("DOTA_GAMERULES_STATE_HERO_SELECTION"..getNowTime())
-	end
-	if state == DOTA_GAMERULES_STATE_INIT then
-		--print("DOTA_GAMERULES_STATE_INIT"..getNowTime())
-	end
-	if state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		
-		--print("DOTA_GAMERULES_STATE_GAME_IN_PROGRESS"..getNowTime())
-		
-		
-		
 	end
 
 

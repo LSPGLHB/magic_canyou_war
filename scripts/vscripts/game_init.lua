@@ -1,3 +1,5 @@
+require('scene/battlefield')
+
 function initMapStats()
 
     --真随机设定
@@ -23,11 +25,15 @@ function initMapStats()
     --宝箱初始化
     createTreasureBox()
 
+    --法阵初始化
+    createBattlefield()
+
     --初始化所有玩家的天赋
     playerContractLearn = {}
     playerTalentLearn = {}
     playerOrderTarget = {}
     playerRandomItemNumList = {}
+    playerOrderTimer = {}
     for i = 0, 9 do
         playerContractLearn[i]={}
         playerContractLearn[i]['contractName'] = 'nil'
@@ -37,6 +43,7 @@ function initMapStats()
         playerTalentLearn[i]['talentNameA'] = 'nil'
 
         playerOrderTarget[i] = 'nil'
+        playerOrderTimer[i] = 1
         playerRandomItemNumList[i] = {}
     end
    
@@ -54,16 +61,19 @@ function initMapStats()
 end
 
 function createTreasureBox()
-    local treasureBox2Entities = Entities:FindByName(nil,"treasureBox2") 
-    local treasureBox2Location = treasureBox2Entities:GetAbsOrigin()
+    local treasureBox1Entities = Entities:FindByName(nil,"treasureBox1") 
+    local treasureBox1Location = treasureBox1Entities:GetAbsOrigin()
     --local item_name = 'item_gold_coin_10'
     --local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
-    --CreateItemOnPositionSync(treasureBox2Location,item)
-    local treasureBox = CreateUnitByName("treasureBoxGold", treasureBox2Location, true, nil, nil, DOTA_TEAM_NOTEAM)
+    --CreateItemOnPositionSync(treasureBox1Location,item)
+    local treasureBox = CreateUnitByName("treasureBoxGold", treasureBox1Location, true, nil, nil, DOTA_TEAM_NOTEAM)
     treasureBox:GetAbilityByIndex(0):SetLevel(1)
     treasureBox:GetAbilityByIndex(1):SetLevel(1)
 
 end
+
+
+
 
 --魔法石初始化
 function createMagicStone()
@@ -92,11 +102,12 @@ function createMagicStone()
     goodMagicStone:SetSkin(0)
     goodMagicStone:SetContext("name", "magicStone", 0)
     goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    goodMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStonePan:SetSkin(0)
     
 
 
-    local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone") 
+    local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone")
     local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
     badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     badMagicStone:AddAbility("magic_stone_bad")
@@ -105,14 +116,21 @@ function createMagicStone()
     badMagicStone:SetSkin(1)
     badMagicStone:SetContext("name", "magicStone", 0)
     badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    badMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
     badMagicStonePan:SetSkin(1)
 end
 
--- 模拟商人
+-- 商人
 function creatShop()
     local shop1=Entities:FindByName(nil,"shop1") 
     local shop1Pos = shop1:GetAbsOrigin()
     local unit = CreateUnitByName("shopUnit", shop1Pos, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    unit:SetContext("name", "shop", 0)
+
+
+    local shop2=Entities:FindByName(nil,"shop2") 
+    local shop2Pos = shop2:GetAbsOrigin()
+    local unit = CreateUnitByName("shopUnit", shop2Pos, true, nil, nil, DOTA_TEAM_BADGUYS)
     unit:SetContext("name", "shop", 0)
 end
 
@@ -165,6 +183,12 @@ function createBaby(playerid)
 function initHeroByPlayerID(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local heroTeam = hHero:GetTeam()
+    for i = 0 , hHero:GetAbilityCount() do
+        local tempAbility = hHero:GetAbilityByIndex(i)
+        if tempAbility ~= nil then
+            hHero:RemoveAbility(tempAbility:GetAbilityName())
+        end
+    end
     local commonAttack 
     if heroTeam == DOTA_TEAM_GOODGUYS then
         commonAttack = "common_attack_good_datadriven"
@@ -172,20 +196,24 @@ function initHeroByPlayerID(playerID)
     if heroTeam == DOTA_TEAM_BADDGUYS then
         commonAttack = "common_attack_bad_datadriven"
     end
-    local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
-    hHero:RemoveAbility(tempAbility) 
-    hHero:AddAbility(commonAttack)
+    --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
+    --hHero:RemoveAbility(tempAbility) 
+    hHero:AddAbility(commonAttack):SetLevel(1)
+    hHero:AddAbility("pull_all_datadriven"):SetLevel(1)
+    hHero:AddAbility("push_all_datadriven"):SetLevel(1)
+    hHero:AddAbility("nothing_c"):SetLevel(1)
+    hHero:AddAbility("nothing_b"):SetLevel(1)
+    hHero:AddAbility("nothing_a"):SetLevel(1)
+    hHero:AddAbility("nothing_c_stage"):SetLevel(1)
+    hHero:AddAbility("nothing_b_stage"):SetLevel(1)
+    hHero:AddAbility("nothing_a_stage"):SetLevel(1)
+    hHero:AddAbility("hero_order_datadriven"):SetLevel(1)
+    hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1)
+    hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1)
+    
 
-    hHero:GetAbilityByIndex(0):SetLevel(1)
-    hHero:GetAbilityByIndex(1):SetLevel(1)
-    hHero:GetAbilityByIndex(2):SetLevel(1)
-    hHero:GetAbilityByIndex(3):SetLevel(1)
-    hHero:GetAbilityByIndex(4):SetLevel(1)
-    hHero:GetAbilityByIndex(5):SetLevel(1)
-    hHero:GetAbilityByIndex(6):SetLevel(1)
-    hHero:GetAbilityByIndex(7):SetLevel(1)
-    hHero:GetAbilityByIndex(8):SetLevel(1)
-    hHero:GetAbilityByIndex(9):SetLevel(1)
+
+    --hHero:GetAbilityByIndex(9):SetHidden(true)--也不行
     --hHero:GetAbilityByIndex(10):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(999) --重新设置复活时间

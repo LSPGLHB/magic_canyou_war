@@ -254,17 +254,8 @@
 	"npc_dota_hero_crystal_maiden"
 	{
 		"override_hero"	"npc_dota_hero_crystal_maiden"
-		//"AbilityLayout"         "20"
-		"Ability1"	"nothing_d"
-		"Ability2"	"pull_all_datadriven"
-		"Ability3"	"push_all_datadriven"
-		"Ability4"	"nothing_c"
-		"Ability5"  "nothing_b"
-		"Ability6"  "nothing_a"
-		"Ability7"  "nothing_c_stage"
-		"Ability8"  "nothing_b_stage"
-		"Ability9"	"nothing_a_stage"
-		"Ability10" "hero_order_datadriven"
+
+
 
 
 
@@ -318,7 +309,7 @@
 		"AttributeAgilityGain"	"0"
 
 		// 基础生命值
-		"StatusHealth"	"100"
+		"StatusHealth"	"50"
 		// 生命恢复速度，负值无效
 		"StatusHealthRegen"	"0"
 		// 基础魔法值，设置为0会导致没有魔法条

@@ -1,5 +1,6 @@
 "DOTAAbilities"
 {
+    //魔法石
     "magic_stone_good"
     {
         "BaseClass"	                "ability_datadriven"
@@ -34,7 +35,6 @@
                 }
             }
         }
-
     }
 
     "magic_stone_bad"
@@ -73,6 +73,47 @@
         }
     }
 
+    "magic_stone_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "Modifiers"
+        {
+            "modifier_magic_stone_pan_status_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    //"MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+    }
+
+	"magic_stone_pan_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "Modifiers"
+        {
+            "modifier_magic_stone_pan_status_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+
+        }
+    }
+
+
+     //宝箱
     "treasure_box_gold"
     {
         "BaseClass"	                "ability_datadriven"
@@ -101,7 +142,7 @@
                 {
                     "RunScript"
                     {
-                        "ScriptFile"		"scene/treasure_box.lua"
+                        "ScriptFile"		"scene/order_click.lua"
                         "Function"			"treasureBoxInit"
                     }
 
@@ -110,6 +151,268 @@
         }
     }
 
-    
+    "treasure_box_status_datadriven"
+     {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "Modifiers"
+        {
+            "modifier_treasure_box_status_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+    }
+
+    //法阵配置
+    "battlefield_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "precache" 
+        {
+            "particle"              "particles/mofazhen_dizuo_1.vpcf"
+        }
+
+        "Modifiers"
+        {
+            "modifier_battlefield_status_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                    
+                }
+                
+            }
+            //法阵沉睡
+            "modifier_battlefield_flatl_datadriven"
+            {
+                "OverrideAnimation"     "ACT_DOTA_FLAIL"
+            }
+            //法阵启动
+            "modifier_battlefield_idle_datadriven"
+            {
+                "IsHidden"              "1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/battlefield.lua"
+                        "Function"			"battlefieldIdle"
+                    }
+                }
+            }
+            "modifier_battlefield_idle_ACT_datadriven"
+            {
+                "IsHidden"              "1"
+                "OverrideAnimation"     "ACT_DOTA_IDLE"
+            }
+
+            //法阵激活
+            "modifier_battlefield_ability2_datadriven"
+            {
+                "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_2"
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/battlefield.lua"
+                        "Function"			"battlefieldLaunch"
+                    }
+                }
+            }
+            //法阵被抢夺
+            "modifier_battlefield_ability1_datadriven"
+            {
+                "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"
+            }
+
+
+            "modifier_battlefield_vision_datadriven"
+			{
+				"IsBuff"			"1"
+				"EffectName"		"particles/mofazhen_buff_shiye.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+
+            "modifier_battlefield_speed_datadriven"
+			{
+				"IsBuff"			"1"
+				"EffectName"		"particles/mofazhen_buff_yisu.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+
+            "modifier_battlefield_mana_regan_datadriven"
+			{
+				"IsBuff"			"1"
+				"EffectName"		"particles/mofazhen_buff_huilan.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+        }
+    }
+
+
+    //监测玩家点击动作使用
+    "hero_order_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "MaxLevel"                      "1"
+
+        "Modifiers"
+        {
+            "modifier_hero_order_datadriven"
+            {
+                "Passive"				"1"
+                "IsHidden"              "1"
+                "OnOrder"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/order_click.lua"
+                        "Function"			"initHeroOrder"
+                    }
+                }
+            }
+
+        }
+    }
+
+    //监测玩家点击动作后扫描点击目标
+    "hero_search_target_timer_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "Modifiers"
+        {
+            "modifiers_hero_search_target_timer_datadriven"
+            {
+                "Passive"				"1"
+                "IsHidden"              "1"
+                "OnCreated"
+                {			
+        
+                    "RunScript"
+                    {
+                        "ScriptFile"		    "scene/order_click.lua"
+                        "Function"			    "initHeroSearchTarget"
+                    }
+                }
+            }
+            
+        }
+
+    }
+
+    //玩家开宝箱动作
+    "treasure_box_open_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NO_TARGET| DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+        "MaxLevel"                      "1"
+
+        "AbilityCooldown"               "0"
+        "AbilityChannelTime"			"1.5"
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"magic_ice_beans_channel"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_channel_act_datadriven"
+			}
+		}
+
+        "OnChannelSucceeded"
+        {			
+            "FireSound"
+            {
+                "EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+                "Target"			"CASTER"
+            }           
+
+            "RunScript"
+            {
+                "ScriptFile"		    "scene/order_click.lua"
+                "Function"			    "initHeroOpenBoxChannelSucceeded"
+            }
+        }
+        "Modifiers"
+        {
+            "modifier_channel_act_datadriven"
+            {
+                "Duration"				"1.5"
+				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
+            }
+        }
+    }
+
+    //玩家抢夺法阵
+    "battlefield_capture_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NO_TARGET| DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+        "MaxLevel"                      "1"
+
+        "AbilityCooldown"               "0"
+        "AbilityChannelTime"			"5"
+
+        "OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"magic_ice_beans_channel"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_channel_act_datadriven"
+			}
+		}
+
+        "OnChannelSucceeded"
+        {			
+            "FireSound"
+            {
+                "EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+                "Target"			"CASTER"
+            }           
+
+            "RunScript"
+            {
+                "ScriptFile"		    "scene/order_click.lua"
+                "Function"			    "initHeroCaptureChannelSucceeded"
+            }
+        }
+        "Modifiers"
+        {
+            "modifier_channel_act_datadriven"
+            {
+                "Duration"				"5"
+				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
+            }
+        }
+
+    }
+
+ 
 
 }

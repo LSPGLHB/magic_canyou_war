@@ -84,7 +84,7 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 2
-    local battleTime = 10 --战斗时间
+    local battleTime = 300 --战斗时间
 
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
