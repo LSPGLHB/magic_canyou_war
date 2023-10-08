@@ -20,13 +20,13 @@ function initMapStats()
 
 
     --魔法石初始化
-    createMagicStone()
+    initMagicStone()
 
     --宝箱初始化
-    createTreasureBox()
+    initTreasureBox()
 
     --法阵初始化
-    createBattlefield()
+    initBattlefield()
 
     --初始化所有玩家的天赋
     playerContractLearn = {}
@@ -60,7 +60,7 @@ function initMapStats()
 
 end
 
-function createTreasureBox()
+function initTreasureBox()
     local treasureBox1Entities = Entities:FindByName(nil,"treasureBox1") 
     local treasureBox1Location = treasureBox1Entities:GetAbsOrigin()
     --local item_name = 'item_gold_coin_10'
@@ -76,7 +76,7 @@ end
 
 
 --魔法石初始化
-function createMagicStone()
+function initMagicStone()
     if goodMagicStone ~= nil then
         goodMagicStone:ForceKill(true)
     end
@@ -93,31 +93,34 @@ function createMagicStone()
         badMagicStonePan:ForceKill(true)
     end
 
+    
+
     local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
     local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
+    goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    goodMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
+    goodMagicStonePan:SetSkin(0)
     goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
     goodMagicStone:AddAbility("magic_stone_good")
     goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
     --goodMagicStone:GetAbilityByIndex(1):SetLevel(1)
     goodMagicStone:SetSkin(0)
     goodMagicStone:SetContext("name", "magicStone", 0)
-    goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
-    goodMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
-    goodMagicStonePan:SetSkin(0)
+   
     
-
-
+    
     local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone")
     local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
+    badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    badMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
+    badMagicStonePan:SetSkin(1)
     badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     badMagicStone:AddAbility("magic_stone_bad")
     badMagicStone:GetAbilityByIndex(0):SetLevel(1)
     --badMagicStone:GetAbilityByIndex(1):SetLevel(1)
     badMagicStone:SetSkin(1)
     badMagicStone:SetContext("name", "magicStone", 0)
-    badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
-    badMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
-    badMagicStonePan:SetSkin(1)
+    
 end
 
 -- 商人

@@ -44,7 +44,7 @@ function initHeroOrder(keys)
     if target ~= nil  then
         local targetLabel = target:GetUnitLabel()
         print('targetLabel:'..targetLabel)
-        --如果是宝箱或者商人则开启打开进程
+        --如果是则开启打开进程(宝箱/商人/法阵)
         if targetLabel == GameRules.boxLabel or targetLabel == GameRules.shopLabel or targetLabel == GameRules.battlefieldLabel then
             playerOrderTarget[playerID] = target
             caster:AddAbility('hero_search_target_timer_datadriven'):SetLevel(1)
@@ -73,11 +73,121 @@ function initHeroOpenBoxChannelSucceeded(keys)
     end
 end
 
+
 function initHeroCaptureChannelSucceeded(keys)
     print("==========initHeroCaptureChannelSucceeded========")
+    local caster = keys.caster
+    if caster.battlefieldTarget ~= nil then
+        local casterTeam = caster:GetTeam()
+        local targetTeam = caster.battlefieldTarget:GetTeam()
 
+        print("===================================================")
+        print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
+        print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
+        
+        
+        local lastCasterFrontFieldNum = #Battlefields[casterTeam]
+        local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
+        --local lastCasterFrontFieldLocation = lastCasterFrontField:GetAbsOrigin()
+        --刷新占领方本身前线法阵
+        --destroyBattlefield(lastCasterFrontField)
+        --createBattlefield(lastCasterFrontFieldLocation,casterTeam,lastCasterFrontFieldNum)
+        print("==casterTeam=="..casterTeam..",lastCasterFrontFieldNum="..lastCasterFrontFieldNum)
+        battlefieldInit(lastCasterFrontField)
+
+        
+        --刷新被占领法阵
+        --local targetBattlefieldLoction = caster.battlefieldTarget:GetAbsOrigin()
+        print("==2==")
+        captrueBattlefield(caster.battlefieldTarget, casterTeam)
+        --caster.battlefieldTarget:ForceKill(true)
+        --battlefieldInit(caster.battlefieldTarget)
+        
+        
+        --createBattlefield(targetBattlefieldLoction,casterTeam,#casterBattlefields+1)
+
+
+        --刷新被占领方次前线法阵
+        --local nextBattlefield = targetBattlefields[#targetBattlefields-2]
+        Battlefields[casterTeam][# Battlefields[casterTeam]+1] = Battlefields[targetTeam][#Battlefields[targetTeam]]
+        Battlefields[targetTeam][#Battlefields[targetTeam]] = nil
+
+        local goodFieldCount = #Battlefields[2]
+        if goodFieldCount > 0 then
+            LaunchGoodBattlefield = Battlefields[2][goodFieldCount]
+            updateFrontBattlefield(LaunchGoodBattlefield)
+        end
+        if goodFieldCount == 0 then
+            LaunchGoodBattlefield = nil
+            print("goodFieldOver")
+        end
+
+        local badFieldCount = #Battlefields[3]
+        if badFieldCount > 0 then
+            LaunchBadBattlefield = Battlefields[3][badFieldCount]
+            updateFrontBattlefield(LaunchBadBattlefield)
+        end
+
+        if badFieldCount == 0 then
+            LaunchBadBattlefield = nil
+            print("badFieldOver")
+        end
+        
+        
+        print("----------------------------------------------------------")
+        print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
+        print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
+
+    end
 end
 
+function captrueBattlefield(battlefield,team)
+    battlefield:SetTeam(team)
+    battlefield:SetSkin(team-1)
+    battlefieldInit(battlefield)
+end
+
+--刷新为最前线法阵
+function updateFrontBattlefield(battlefield)
+    if battlefield ~= nil then
+        print("updateFrontBattlefield:"..battlefield.fieldName)
+        local battlefieldAbility = battlefield:GetAbilityByIndex(0)
+        battlefield:RemoveModifierByName("modifier_battlefield_flatl_datadriven")
+        battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_idle_datadriven", {Duration = -1}) 
+        battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1})  
+    end
+end
+
+--法阵初始化
+function battlefieldInit(caster)
+    print("battlefieldInit:"..caster.fieldName)
+    local ability = caster:GetAbilityByIndex(0)
+    if caster:HasModifier("modifier_battlefield_idle_datadriven") then
+        caster:RemoveModifierByName("modifier_battlefield_idle_datadriven")
+    end
+    if caster:HasModifier("modifier_battlefield_idle_ACT_datadriven") then
+        caster:RemoveModifierByName("modifier_battlefield_idle_ACT_datadriven")
+    end
+    if caster:HasModifier("modifier_battlefield_ability2_datadriven") then
+        caster:RemoveModifierByName("modifier_battlefield_ability2_datadriven")
+    end
+    if caster:HasModifier("modifier_battlefield_vision_datadriven") then
+        caster:RemoveModifierByName("modifier_battlefield_vision_datadriven")
+    end
+    if caster:HasModifier("modifier_battlefield_speed_datadriven") then
+        caster:RemoveModifierByName("modifier_battlefield_speed_datadriven")
+    end
+    if caster:HasModifier("modifier_battlefield_mana_regan_datadriven") then
+        caster:RemoveModifierByName("modifier_battlefield_mana_regan_datadriven")
+    end
+    if caster.loadingParticleID ~= nil then
+        ParticleManager:DestroyParticle(caster.loadingParticleID, true)
+    end
+    if caster.idleParticleID ~= nil then
+        ParticleManager:DestroyParticle(caster.idleParticleID, true)
+    end
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_flatl_datadriven", {Duration = -1}) 
+end
 
 function initHeroSearchTarget(keys)
     print("==========initHeroSearchTarget========")
@@ -108,8 +218,7 @@ function initHeroSearchTarget(keys)
                 --打开箱子
                 if targetLabel == GameRules.boxLabel then
                     print(targetLabel)
-                    caster:CastAbilityNoTarget(caster:GetAbilityByIndex(10),playerID) 
-
+                    caster:CastAbilityNoTarget(caster:GetAbilityByIndex(10),playerID)
                 end
                 --打开商店
                 if targetLabel == GameRules.shopLabel then
@@ -121,7 +230,11 @@ function initHeroSearchTarget(keys)
                 --抢夺法阵
                 if targetLabel == GameRules.battlefieldLabel and casterTeam ~= targetTeam then
                     print(targetLabel)
-                    caster:CastAbilityNoTarget(caster:GetAbilityByIndex(11),playerID)
+                    if target:HasModifier("modifier_battlefield_idle_datadriven") then
+                        caster:CastAbilityNoTarget(caster:GetAbilityByIndex(11),playerID)
+                        caster.battlefieldTarget = target
+                        
+                    end
                 end
 
 

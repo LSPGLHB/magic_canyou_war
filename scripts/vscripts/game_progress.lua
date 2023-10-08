@@ -3,6 +3,7 @@ require('get_contract')
 require('get_magic')
 require('get_talent')
 require('game_init')
+require('scene/battlefield')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
     --print("======sendMsgOnScreenToAll======")
@@ -84,8 +85,8 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 2
-    local battleTime = 300 --战斗时间
-
+    local battleTime = 150 --战斗时间
+    local battlefieldTimer = 30
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
     playerPositionTransfer(battlePointsTeam2,playersTeam2)
@@ -94,6 +95,12 @@ function battleStep(gameRound)
         --print("onStepLoop2========check")
         --local gameTime = getNowTime()
         battleTime = battleTime - 1
+
+        if battleTime % 30 == 0 then
+            --法阵激活
+            battlefieldLaunchTimer()
+            
+        end
 
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step2 .. battleTime .. "秒"
@@ -283,7 +290,7 @@ function initPlayerHero()
 end
 
 function initScene()
-    createMagicStone()
+    initMagicStone()
 end
 
 
@@ -377,6 +384,8 @@ function getNowTime()
     local timeStr = min .. ":" .. sec
     return timeStr
 end
+
+
 
 
 --游戏数据初始化

@@ -1717,7 +1717,7 @@
 		"UnitLabel"					"battlefieldLabel"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"
-		"ModelScale"				"0.8"
+		"ModelScale"				"0.6"
 
 		// Abilities
 		//----------------------------------------------------------------

@@ -85,7 +85,7 @@
                "Passive"				"1"
                "States"
                 {
-                    //"MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
                 }
             }
         }
@@ -197,6 +197,14 @@
             "modifier_battlefield_flatl_datadriven"
             {
                 "OverrideAnimation"     "ACT_DOTA_FLAIL"
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/battlefield.lua"
+                        "Function"			"battlefieldFlail"
+                    }
+                }
             }
             //法阵启动
             "modifier_battlefield_idle_datadriven"
@@ -212,13 +220,14 @@
                     }
                 }
             }
+            //法阵启动动作
             "modifier_battlefield_idle_ACT_datadriven"
             {
                 "IsHidden"              "1"
                 "OverrideAnimation"     "ACT_DOTA_IDLE"
             }
 
-            //法阵激活
+            //法阵激活动作与算法
             "modifier_battlefield_ability2_datadriven"
             {
                 "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_2"
@@ -231,32 +240,32 @@
                     }
                 }
             }
-            //法阵被抢夺
+            //法阵被抢夺动作
             "modifier_battlefield_ability1_datadriven"
             {
                 "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"
             }
 
-
+            //法阵激活类型
             "modifier_battlefield_vision_datadriven"
 			{
 				"IsBuff"			"1"
 				"EffectName"		"particles/mofazhen_buff_shiye.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"EffectAttachType"	"follow_overhead"
 			}
 
             "modifier_battlefield_speed_datadriven"
 			{
 				"IsBuff"			"1"
 				"EffectName"		"particles/mofazhen_buff_yisu.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"EffectAttachType"	"follow_overhead"
 			}
 
             "modifier_battlefield_mana_regan_datadriven"
 			{
 				"IsBuff"			"1"
 				"EffectName"		"particles/mofazhen_buff_huilan.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"EffectAttachType"	"follow_overhead"
 			}
         }
     }
@@ -371,7 +380,7 @@
         "MaxLevel"                      "1"
 
         "AbilityCooldown"               "0"
-        "AbilityChannelTime"			"5"
+        "AbilityChannelTime"			"2"
 
         "OnSpellStart"
 		{
@@ -386,7 +395,8 @@
 				"Target"				"CASTER"
 				"ModifierName"			"modifier_channel_act_datadriven"
 			}
-		}
+
+		}   
 
         "OnChannelSucceeded"
         {			
@@ -402,11 +412,13 @@
                 "Function"			    "initHeroCaptureChannelSucceeded"
             }
         }
+
+
         "Modifiers"
         {
             "modifier_channel_act_datadriven"
             {
-                "Duration"				"5"
+                "Duration"				"2"
 				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
             }
         }
