@@ -66,169 +66,1205 @@
 
 
 		"DOTA_Tooltip_ability_item_dragon_eye"   "奥妮克希亚的头环"
-		"DOTA_Tooltip_ability_item_dragon_eye_Description"  "+150视野\n两个可合成奥妮克希亚之眼"
+		"DOTA_Tooltip_ability_item_dragon_eye_Description"  "视野增加：150<br/>两个可合成 奥妮克希亚之眼"
 		"DOTA_Tooltip_ability_item_dragon_eye_2"   "奥妮克希亚之眼"
-		"DOTA_Tooltip_ability_item_dragon_eye_2_Description"  "+300视野"
+		"DOTA_Tooltip_ability_item_dragon_eye_2_Description"  "视野增加：300"
 
 		"DOTA_Tooltip_ability_item_dragon_heart"   "艾瑞斯之血"
-		"DOTA_Tooltip_ability_item_dragon_heart_Description"  "+20生命\n两个可合成艾瑞斯之心"
+		"DOTA_Tooltip_ability_item_dragon_heart_Description"  "生命值增加：20<br/>两个可合成艾瑞斯之心"
 		"DOTA_Tooltip_ability_item_dragon_heart_2"   "艾瑞斯之心"
-		"DOTA_Tooltip_ability_item_dragon_heart_2_Description"  "+40生命"
+		"DOTA_Tooltip_ability_item_dragon_heart_2_Description"  "生命值增加：40"
 
 		"DOTA_Tooltip_ability_item_dragon_gem"   "泰拉尔结晶"
-		"DOTA_Tooltip_ability_item_dragon_gem_Description"  "+10生命\n+100视野\n两个可合成泰拉尔宝石"
+		"DOTA_Tooltip_ability_item_dragon_gem_Description"  "生命值增加：10<br/>视野增加：100<br/>两个可合成泰拉尔宝石"
 		"DOTA_Tooltip_ability_item_dragon_gem_2"   "泰拉尔宝石"
-		"DOTA_Tooltip_ability_item_dragon_gem_2_Description"  "+20生命\n+200视野"
+		"DOTA_Tooltip_ability_item_dragon_gem_2_Description"  "生命值增加：20<br/>视野增加：200"
 
 		"DOTA_Tooltip_ability_item_dragon_squama"   "艾瑞斯之皮"
-		"DOTA_Tooltip_ability_item_dragon_squama_Description"  "+10%免伤\n两个可合成艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_dragon_squama_Description"  "伤害减免：10%<br/>两个可合成艾瑞斯之鳞"
 		"DOTA_Tooltip_ability_item_dragon_squama_2"   "艾瑞斯之鳞"
-		"DOTA_Tooltip_ability_item_dragon_squama_2_Description"  "+20%免伤"
+		"DOTA_Tooltip_ability_item_dragon_squama_2_Description"  "伤害减免：20%"
 
 		"DOTA_Tooltip_ability_item_speed_shoe"   "布鞋"
-		"DOTA_Tooltip_ability_item_speed_shoe_Description"  "+20移动速度\n两个可合成速度鞋"
+		"DOTA_Tooltip_ability_item_speed_shoe_Description"  "移动速度增加：20移动速度<br/>两个可合成速度鞋"
 		"DOTA_Tooltip_ability_item_speed_shoe_2"   "速度鞋"
-		"DOTA_Tooltip_ability_item_speed_shoe_2_Description"  "+45移动速度"
+		"DOTA_Tooltip_ability_item_speed_shoe_2_Description"  "移动速度增加：45"
 
 		"DOTA_Tooltip_ability_item_dragon_claw"   "凯旋腿甲"
-		"DOTA_Tooltip_ability_item_dragon_claw_Description"  "+15移速\n+100视野\n两个可合成元帅腿甲"
+		"DOTA_Tooltip_ability_item_dragon_claw_Description"  "移动速度增加：15<br/>视野增加：100<br/>两个可合成元帅腿甲"
 		"DOTA_Tooltip_ability_item_dragon_claw_2"   "元帅腿甲"
-		"DOTA_Tooltip_ability_item_dragon_claw_2_Description"  "+25移速\n+200视野"
+		"DOTA_Tooltip_ability_item_dragon_claw_2_Description"  "移动速度增加：25<br/>视野增加：200"
 
 		"DOTA_Tooltip_ability_item_energy_shoe"   "动力鞋"
-		"DOTA_Tooltip_ability_item_energy_shoe_Description"  "+10%移速（每次施放技能后触发，持续1.25秒）\n两个可合成艾瑞斯之鳞"
+		"DOTA_Tooltip_ability_item_energy_shoe_Description"  "每次施放技能后移动速度增加：10%，持续1.25秒<br/>两个可合成艾瑞斯之鳞"
 		"DOTA_Tooltip_ability_item_energy_shoe_2"   "能量鞋"
-		"DOTA_Tooltip_ability_item_energy_shoe_2_Description"  "+20%移速（每次施放技能后触发，持续1.25秒）"
+		"DOTA_Tooltip_ability_item_energy_shoe_2_Description"  "每次施放技能后移动速度增加：20%，持续1.25秒"
 
 		"DOTA_Tooltip_ability_item_magic_staff"   "魔力法杖"
-		"DOTA_Tooltip_ability_item_magic_staff_Description"  "+20魔法\n两个可合成魔能权杖"
+		"DOTA_Tooltip_ability_item_magic_staff_Description"  "魔法值增加：20<br/>两个可合成魔能权杖"
 		"DOTA_Tooltip_ability_item_magic_staff_2"   "魔能权杖"
-		"DOTA_Tooltip_ability_item_magic_staff_2_Description"  "+40魔法"
+		"DOTA_Tooltip_ability_item_magic_staff_2_Description"  "魔法值增加：40"
 
 		"DOTA_Tooltip_ability_item_magic_gem"   "虚无宝石"
-		"DOTA_Tooltip_ability_item_magic_gem_Description"  "+1每秒魔法回复速度\n两个可合成魔能水晶"
+		"DOTA_Tooltip_ability_item_magic_gem_Description"  "每秒魔法回复速度增加：0.8<br/>两个可合成魔能水晶"
 		"DOTA_Tooltip_ability_item_magic_gem_2"   "魔能水晶"
-		"DOTA_Tooltip_ability_item_magic_gem_2_Description"  "+2每秒魔法回复速度"
+		"DOTA_Tooltip_ability_item_magic_gem_2_Description"  "每秒魔法回复速度增加：1.5"
 
-		"DOTA_Tooltip_ability_item_ability_speed_c"   "附魔匕首"
-		"DOTA_Tooltip_ability_item_ability_speed_c_Description"  "+70初级技能飞行速度\n+7%初级技能飞行速度\n两个可合成魔刃"
-		"DOTA_Tooltip_ability_item_ability_speed_c_2"   "蓝色闪光"
-		"DOTA_Tooltip_ability_item_ability_speed_c_2_Description"  "+100初级技能飞行速度\n+10%初级技能飞行速度"
 
-		"DOTA_Tooltip_ability_item_ability_speed_b"   "精制短剑"
-		"DOTA_Tooltip_ability_item_ability_speed_b_Description"  "+70中级技能飞行速度\n+7%中级技能飞行速度\n两个可合成魔刃"
-		"DOTA_Tooltip_ability_item_ability_speed_b_2"   "魔剑"
-		"DOTA_Tooltip_ability_item_ability_speed_b_2_Description"  "+100中级技能飞行速度\n+10%中级技能飞行速度"
 
-		"DOTA_Tooltip_ability_item_ability_speed_a"   "骑士长剑"
-		"DOTA_Tooltip_ability_item_ability_speed_a_Description"  "+70高级技能飞行速度\n+7%高级技能飞行速度\n两个可合成魔刃"
-		"DOTA_Tooltip_ability_item_ability_speed_a_2"   "魔灵之刃"
-		"DOTA_Tooltip_ability_item_ability_speed_a_2_Description"  "+100高级技能飞行速度\n+10%高级技能飞行速度"
 
-		"DOTA_Tooltip_ability_item_ability_speed_abc"   "猎鹰长弓"
-		"DOTA_Tooltip_ability_item_ability_speed_abc_Description"  "+10%技能飞行速度\n两个可合成魔刃"
-		"DOTA_Tooltip_ability_item_ability_speed_abc_2"   "冰霜之斧"
-		"DOTA_Tooltip_ability_item_ability_speed_abc_2_Description"  "+15%技能飞行速度"
+		"DOTA_Tooltip_ability_item_ability_speed_c"   "<font color='#E3BD8D'>附魔匕首</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_c_Description"  "<font color='#93DB70'>初级法术</font> <font color='#E3BD8D'>飞行速度增加：30</font><br/><font color='#93DB70'>初级法术</font> <font color='#E3BD8D'>基础飞行速度百分比增加：20%</font><br/>两个可合成<font color='#E3BD8D'>蓝色闪光</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_c_2"   "<font color='#E3BD8D'>蓝色闪光</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_c_2_Description"  "<font color='#93DB70'>初级法术</font> <font color='#E3BD8D'>飞行速度增加：80</font><br/><font color='#93DB70'>初级法术</font> <font color='#E3BD8D'>基础飞行速度百分比增加：40%</font>"
 
-		"DOTA_Tooltip_ability_item_range_c"   "魔力树枝"
-		"DOTA_Tooltip_ability_item_range_c_Description"  "+120初级技能射程\n+6%初级技能射程\n两个可合成"
-		"DOTA_Tooltip_ability_item_range_c_2"   "魔能法杖"
-		"DOTA_Tooltip_ability_item_range_c_2_Description"  "+200初级技能射程\n+10%初级技能射程"
+		"DOTA_Tooltip_ability_item_ability_speed_b"   "<font color='#E3BD8D'>精制短剑</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_b_Description"  "<font color='#3299CC'>中级法术</font> <font color='#E3BD8D'>飞行速度增加：30</font><br/><font color='#3299CC'>中级法术</font> <font color='#E3BD8D'>基础飞行速度百分比增加：20%</font><br/>两个可合成<font color='#E3BD8D'>魔剑</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_b_2"   "<font color='#E3BD8D'>魔剑</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_b_2_Description"  "<font color='#3299CC'>中级法术</font> <font color='#E3BD8D'>飞行速度增加：80</font><br/><font color='#3299CC'>中级法术</font> <font color='#E3BD8D'>基础飞行速度百分比增加：40%</font>"
 
-		"DOTA_Tooltip_ability_item_range_b"   "魔力树枝"
-		"DOTA_Tooltip_ability_item_range_b_Description"  "+120中级技能射程\n+6%中级技能射程\n两个可合成"
-		"DOTA_Tooltip_ability_item_range_b_2"   "魔能法杖"
-		"DOTA_Tooltip_ability_item_range_b_2_Description"  "+200中级技能射程\n+10%中级技能射程"
+		"DOTA_Tooltip_ability_item_ability_speed_a"   "<font color='#E3BD8D'>骑士长剑</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_a_Description"  "<font color='#9932CD'>高级法术</font> <font color='#E3BD8D'>飞行速度增加：30</font><br/><font color='#9932CD'>高级法术</font> <font color='#E3BD8D'>基础飞行速度百分比增加：20%</font><br/>两个可合成<font color='#E3BD8D'>魔灵之刃</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_a_2"   "<font color='#E3BD8D'>魔灵之刃</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_a_2_Description"  "<font color='#9932CD'>高级法术</font> <font color='#E3BD8D'>飞行速度增加：80</font><br/><font color='#9932CD'>高级法术</font> <font color='#E3BD8D'>基础飞行速度百分比增加：40%</font>"
 
-		"DOTA_Tooltip_ability_item_range_a"   "魔力树枝"
-		"DOTA_Tooltip_ability_item_range_a_Description"  "+120高级技能射程\n+6%高级技能射程\n两个可合成"
-		"DOTA_Tooltip_ability_item_range_a_2"   "魔能法杖"
-		"DOTA_Tooltip_ability_item_range_a_2_Description"  "+200高级技能射程\n+10%高级技能射程"
+		"DOTA_Tooltip_ability_item_ability_speed_abc"   "<font color='#E3BD8D'>猎鹰长弓</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_abc_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font><font color='#E3BD8D'>基础飞行速度百分比增加：12%</font><br/>两个可合成<font color='#E3BD8D'>冰霜之斧</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_abc_2"   "<font color='#E3BD8D'>冰霜之斧</font>"
+		"DOTA_Tooltip_ability_item_ability_speed_abc_2_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font><font color='#E3BD8D'>基础飞行速度百分比增加：25%</font>"
 
-		"DOTA_Tooltip_ability_item_range_abc"   "寒冰之杖"
-		"DOTA_Tooltip_ability_item_range_abc_Description"  "+12%技能射程\n两个可合成"
-		"DOTA_Tooltip_ability_item_range_abc_2"   "潜能法杖"
-		"DOTA_Tooltip_ability_item_range_abc_2_Description"  "+17%技能射程"
 
-		"DOTA_Tooltip_ability_item_damage_c"   "大地之怒"
-		"DOTA_Tooltip_ability_item_damage_c_Description"  "+4初级技能伤害\n+20%初级技能伤害\n两个可合成"
-		"DOTA_Tooltip_ability_item_damage_c_2"   "绝望之刃"
-		"DOTA_Tooltip_ability_item_damage_c_2_Description"  "+7初级技能伤害\n+45%初级技能伤害"
 
-		"DOTA_Tooltip_ability_item_damage_b"   "雷霆"
-		"DOTA_Tooltip_ability_item_damage_b_Description"  "+4中级技能伤害\n+20%中级技能伤害\n两个可合成"
-		"DOTA_Tooltip_ability_item_damage_b_2"   "风暴使者"
-		"DOTA_Tooltip_ability_item_damage_b_2_Description"  "+7中级技能伤害\n+45%中级技能伤害"
 
-		"DOTA_Tooltip_ability_item_damage_a"   "嗜血魔剑"
-		"DOTA_Tooltip_ability_item_damage_a_Description"  "+4高级技能伤害\n+20%高级技能伤害\n两个可合成"
-		"DOTA_Tooltip_ability_item_damage_a_2"   "龙骑之弩"
-		"DOTA_Tooltip_ability_item_damage_a_2_Description"  "+7高级技能伤害\n+45%高级技能伤害"
+		"DOTA_Tooltip_ability_item_range_c"   "<font color='#BCE3B9'>魔力树枝</font>"
+		"DOTA_Tooltip_ability_item_range_c_Description"  "<font color='#93DB70'>初级法术</font> <font color='#BCE3B9'>射程增加</font>：100<br/><font color='#93DB70'>初级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：15%<br/>或<font color='#93DB70'>初级法术</font> <font color='#BCE3B9'>作用范围百分比增加</font>：20%<br/>两个可合成"
+		"DOTA_Tooltip_ability_item_range_c_2"   "<font color='#BCE3B9'>魔能法杖</font>"
+		"DOTA_Tooltip_ability_item_range_c_2_Description"  "<font color='#93DB70'>初级法术</font> <font color='#BCE3B9'>射程增加</font>：200<br/><font color='#93DB70'>初级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：25%<br/>或<font color='#93DB70'>初级法术</font> <font color='#BCE3B9'>作用范围百分比增加</font>：35%"
 
-		"DOTA_Tooltip_ability_item_damage_abc"   "圣光之锤"
-		"DOTA_Tooltip_ability_item_damage_abc_Description"  "+20%技能伤害\n两个可合成"
-		"DOTA_Tooltip_ability_item_damage_abc_2"   "烈焰风暴"
-		"DOTA_Tooltip_ability_item_damage_abc_2_Description"  "+30%技能伤害"
+		"DOTA_Tooltip_ability_item_range_b"   "<font color='#BCE3B9'>魔力树枝</font>"
+		"DOTA_Tooltip_ability_item_range_b_Description"  "<font color='#3299CC'>中级法术</font> <font color='#BCE3B9'>射程增加</font>：100<br/><font color='#3299CC'>中级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：15%<br/>或<font color='#3299CC'>中级法术</font> <font color='#BCE3B9'>作用范围百分比增加</font>：20%<br/>两个可合成"
+		"DOTA_Tooltip_ability_item_range_b_2"   "<font color='#BCE3B9'>魔能法杖</font>"
+		"DOTA_Tooltip_ability_item_range_b_2_Description"  "<font color='#3299CC'>中级法术</font> <font color='#BCE3B9'>射程增加</font>：200<br/><font color='#3299CC'>中级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：25%<br/>或<font color='#3299CC'>中级法术</font> <font color='#BCE3B9'>作用范围百分比增加</font>：35%"
 
-		"DOTA_Tooltip_ability_item_control_c"   "巫术缚法指环"
-		"DOTA_Tooltip_ability_item_control_c_Description"  "+15%初级技能控制时间\n两个可合成"
-		"DOTA_Tooltip_ability_item_control_c_2"   "多彩莲花浮雕"
-		"DOTA_Tooltip_ability_item_control_c_2_Description"  "+25%初级技能控制时间"
+		"DOTA_Tooltip_ability_item_range_a"   "<font color='#BCE3B9'>魔力树枝</font>"
+		"DOTA_Tooltip_ability_item_range_a_Description"  "<font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>射程增加</font>：100<br/><font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：15%<br/>或<font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>作用范围百分比增加</font>：20%<br/>两个可合成"
+		"DOTA_Tooltip_ability_item_range_a_2"   "<font color='#BCE3B9'>魔能法杖</font>"
+		"DOTA_Tooltip_ability_item_range_a_2_Description"  "<font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>射程增加</font>：200<br/><font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：25%<br/>或<font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>作用范围百分比增加</font>：35%"
 
-		"DOTA_Tooltip_ability_item_control_b"   "混沌缠丝陵玉"
-		"DOTA_Tooltip_ability_item_control_b_Description"  "+15%中级技能控制时间\n两个可合成"
-		"DOTA_Tooltip_ability_item_control_b_2"   "致密晶化核心"
-		"DOTA_Tooltip_ability_item_control_b_2_Description"  "+25%中级技能控制时间"
+		"DOTA_Tooltip_ability_item_range_abc"   "<font color='#BCE3B9'>寒冰之杖</font>"
+		"DOTA_Tooltip_ability_item_range_abc_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：13%或<font color='#BCE3B9'>作用范围百分比增加</font>：11%<br/>两个可合成"
+		"DOTA_Tooltip_ability_item_range_abc_2"   "<font color='#BCE3B9'>潜能法杖</font>"
+		"DOTA_Tooltip_ability_item_range_abc_2_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#BCE3B9'>基础射程百分比增加</font>：25%或<font color='#BCE3B9'>作用范围百分比增加</font>：23%"
 
-		"DOTA_Tooltip_ability_item_control_a"   "相位指环"
-		"DOTA_Tooltip_ability_item_control_a_Description"  "+15%高级技能控制时间\n两个可合成"
-		"DOTA_Tooltip_ability_item_control_a_2"   "混沌虚空之源"
-		"DOTA_Tooltip_ability_item_control_a_2_Description"  "+25%高级技能控制时间"
 
-		"DOTA_Tooltip_ability_item_control_abc"   "魔力项链"
-		"DOTA_Tooltip_ability_item_control_abc_Description"  "+10%技能控制时间\n两个可合成"
-		"DOTA_Tooltip_ability_item_control_abc_2"   "混沌法球"
-		"DOTA_Tooltip_ability_item_control_abc_2_Description"  "+15%技能控制时间"
 
-		"DOTA_Tooltip_ability_item_energy_c"   "独角兽缰绳"
-		"DOTA_Tooltip_ability_item_energy_c_Description"  "+25%初级技能法魂\n+40%魔法损耗\n两个可合成"
-		"DOTA_Tooltip_ability_item_energy_c_2"   "远古灵纹锤"
-		"DOTA_Tooltip_ability_item_energy_c_2_Description"  "+45%初级技能法魂\n+40%魔法损耗"
 
-		"DOTA_Tooltip_ability_item_energy_b"   "古老法杖"
-		"DOTA_Tooltip_ability_item_energy_b_Description"  "+25%中级技能法魂\n+40%魔法损耗\n两个可合成"
-		"DOTA_Tooltip_ability_item_energy_b_2"   "风纹法杖"
-		"DOTA_Tooltip_ability_item_energy_b_2_Description"  "+45%中级技能法魂\n+40%魔法损耗"
+		"DOTA_Tooltip_ability_item_damage_c"   "<font color='#FFC0CB'>大地之怒</font>"
+		"DOTA_Tooltip_ability_item_damage_c_Description"  "<font color='#93DB70'>初级法术</font> <font color='#FFC0CB'>伤害增加</font>：4<br/><font color='#93DB70'>初级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：20%<br/>两个可合成<font color='#FFC0CB'>绝望之刃</font>"
+		"DOTA_Tooltip_ability_item_damage_c_2"   "<font color='#FFC0CB'>绝望之刃</font>"
+		"DOTA_Tooltip_ability_item_damage_c_2_Description"  "<font color='#93DB70'>初级法术</font> <font color='#FFC0CB'>伤害增加</font>：7<br/><font color='#93DB70'>初级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：45%"
 
-		"DOTA_Tooltip_ability_item_energy_a"   "幽魂法杖"
-		"DOTA_Tooltip_ability_item_energy_a_Description"  "+25%高级技能法魂\n+40%魔法损耗\n两个可合成"
-		"DOTA_Tooltip_ability_item_energy_a_2"   "远古灵剑"
-		"DOTA_Tooltip_ability_item_energy_a_2_Description"  "+45%高级技能法魂\n+40%魔法损耗"
+		"DOTA_Tooltip_ability_item_damage_b"   "<font color='#FFC0CB'>雷霆</font>"
+		"DOTA_Tooltip_ability_item_damage_b_Description"  "<font color='#3299CC'>中级法术</font> <font color='#FFC0CB'>伤害增加</font>：4<br/><font color='#3299CC'>中级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：21%<br/>两个可合成<font color='#FFC0CB'>风暴使者</font>"
+		"DOTA_Tooltip_ability_item_damage_b_2"   "<font color='#FFC0CB'>风暴使者</font>"
+		"DOTA_Tooltip_ability_item_damage_b_2_Description"  "<font color='#3299CC'>中级法术</font> <font color='#FFC0CB'>伤害增加</font>：7<br/><font color='#3299CC'>中级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：47%"
 
-		"DOTA_Tooltip_ability_item_energy_abc"   "远古幽魂灵镜"
-		"DOTA_Tooltip_ability_item_energy_abc_Description"  "+25%技能法魂\n+30%魔法损耗"
+		"DOTA_Tooltip_ability_item_damage_a"   "<font color='#FFC0CB'>嗜血魔剑</font>"
+		"DOTA_Tooltip_ability_item_damage_a_Description"  "<font color='#9932CD'>高级法术</font> <font color='#FFC0CB'>伤害增加</font>：4<br/><font color='#9932CD'>高级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：22%<br/>两个可合成<font color='#FFC0CB'>龙骑之弩</font>"
+		"DOTA_Tooltip_ability_item_damage_a_2"   "<font color='#FFC0CB'>龙骑之弩</font>"
+		"DOTA_Tooltip_ability_item_damage_a_2_Description"  "<font color='#9932CD'>高级法术</font> <font color='#FFC0CB'>伤害增加</font>：7<br/><font color='#9932CD'>高级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：50%"
+
+		"DOTA_Tooltip_ability_item_damage_abc"   "<font color='#FFC0CB'>圣光之锤</font>"
+		"DOTA_Tooltip_ability_item_damage_abc_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：15%<br/>两个可合成<font color='#FFC0CB'>烈焰风暴</font>"
+		"DOTA_Tooltip_ability_item_damage_abc_2"   "<font color='#FFC0CB'>烈焰风暴</font>"
+		"DOTA_Tooltip_ability_item_damage_abc_2_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#FFC0CB'>基础伤害百分比增加</font>：35%"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_item_control_c"   "<font color='#51C4D3'>巫术缚法指环</font>"
+		"DOTA_Tooltip_ability_item_control_c_Description"  "<font color='#93DB70'>初级法术</font> <font color='#51C4D3'>效果增强百分比</font>：15%<br/>两个可合成<font color='#51C4D3'>多彩莲花浮雕</font>"
+		"DOTA_Tooltip_ability_item_control_c_2"   "<font color='#51C4D3'>多彩莲花浮雕</font>"
+		"DOTA_Tooltip_ability_item_control_c_2_Description"  "<font color='#93DB70'>初级法术</font> <font color='#51C4D3'>效果增强百分比</font>：35%"
+
+		"DOTA_Tooltip_ability_item_control_b"   "<font color='#51C4D3'>混沌缠丝陵玉</font>"
+		"DOTA_Tooltip_ability_item_control_b_Description"  "<font color='#3299CC'>中级法术</font> <font color='#51C4D3'>效果增强百分比</font>：16%<br/>两个可合成<font color='#51C4D3'>致密晶化核心</font>"
+		"DOTA_Tooltip_ability_item_control_b_2"   "<font color='#51C4D3'>致密晶化核心</font>"
+		"DOTA_Tooltip_ability_item_control_b_2_Description"  "<font color='#3299CC'>中级法术</font> <font color='#51C4D3'>效果增强百分比</font>：37%"
+
+		"DOTA_Tooltip_ability_item_control_a"   "<font color='#51C4D3'>相位指环</font>"
+		"DOTA_Tooltip_ability_item_control_a_Description"  "<font color='#9932CD'>高级法术</font> <font color='#51C4D3'>效果增强百分比</font>：18%<br/>两个可合成<font color='#51C4D3'>混沌虚空之源</font>"
+		"DOTA_Tooltip_ability_item_control_a_2"   "<font color='#51C4D3'>混沌虚空之源</font>"
+		"DOTA_Tooltip_ability_item_control_a_2_Description"  "<font color='#9932CD'>高级法术</font> <font color='#51C4D3'>效果增强百分比</font>：40%"
+
+		"DOTA_Tooltip_ability_item_control_abc"   "<font color='#51C4D3'>魔力项链</font>"
+		"DOTA_Tooltip_ability_item_control_abc_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#51C4D3'>效果增强百分比</font>：12%<br/>两个可合成<font color='#51C4D3'>混沌法球</font>"
+		"DOTA_Tooltip_ability_item_control_abc_2"   "<font color='#51C4D3'>混沌法球</font>"
+		"DOTA_Tooltip_ability_item_control_abc_2_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#51C4D3'>效果增强百分比</font>：25%"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_item_energy_c"   "<font color='#FBA414'>独角兽缰绳</font>"
+		"DOTA_Tooltip_ability_item_energy_c_Description"  "<font color='#93DB70'>初级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：25%<br/>额外魔法消耗百分比：40%<br/>两个可合成<font color='#FBA414'>远古灵纹锤</font>"
+		"DOTA_Tooltip_ability_item_energy_c_2"   "<font color='#FBA414'>远古灵纹锤</font>"
+		"DOTA_Tooltip_ability_item_energy_c_2_Description"  "<font color='#93DB70'>初级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：50%<br/>额外魔法消耗百分比：40%"
+
+		"DOTA_Tooltip_ability_item_energy_b"   "<font color='#FBA414'>古老法杖</font>"
+		"DOTA_Tooltip_ability_item_energy_b_Description"  "<font color='#3299CC'>中级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：25%<br/>额外魔法消耗百分比：40%<br/>两个可合成<font color='#FBA414'>风纹法杖</font>"
+		"DOTA_Tooltip_ability_item_energy_b_2"   "<font color='#FBA414'>风纹法杖</font>"
+		"DOTA_Tooltip_ability_item_energy_b_2_Description"  "<font color='#3299CC'>中级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：50%<br/>额外魔法消耗百分比：40%"
+
+		"DOTA_Tooltip_ability_item_energy_a"   "<font color='#FBA414'>幽魂法杖</font>"
+		"DOTA_Tooltip_ability_item_energy_a_Description"  "<font color='#9932CD'>高级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：25%<br/>额外魔法消耗百分比：40%<br/>两个可合成<font color='#FBA414'>远古灵剑</font>"
+		"DOTA_Tooltip_ability_item_energy_a_2"   "<font color='#FBA414'>远古灵剑</font>"
+		"DOTA_Tooltip_ability_item_energy_a_2_Description"  "<font color='#9932CD'>高级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：50%<br/>额外魔法消耗百分比：40%"
+
+		"DOTA_Tooltip_ability_item_energy_abc"   "<font color='#FBA414'>远古幽魂灵镜</font>"
+		"DOTA_Tooltip_ability_item_energy_abc_Description"  "<font color='#93DB70'>初级法术</font>、<font color='#3299CC'>中级法术</font>、<font color='#9932CD'>高级法术</font> <font color='#FBA414'>基础法魂量增加百分比</font>：25%<br/>额外魔法消耗百分比：30%"
+
 		"DOTA_Tooltip_ability_item_energy_abc_2"   "远古幽魂灵镜"
-		"DOTA_Tooltip_ability_item_energy_abc_2_Description"  "+45%技能法魂\n+30%魔法损耗"
+		"DOTA_Tooltip_ability_item_energy_abc_2_Description"  "法术 法魂量增加百分比：25%<br/>额外魔法消耗百分比：40%"
+
+
+
+
 
 		"DOTA_Tooltip_ability_item_damage_match_helper_abc"   "嗜血大刀"
-		"DOTA_Tooltip_ability_item_damage_match_helper_abc_Description"  "+10%技能相生加强伤害\n两个可合成"
+		"DOTA_Tooltip_ability_item_damage_match_helper_abc_Description"  "被你的法术相生加强额外伤害增强百分比：15%<br/>两个可合成水晶剑"
 		"DOTA_Tooltip_ability_item_damage_match_helper_abc_2"   "水晶剑"
-		"DOTA_Tooltip_ability_item_damage_match_helper_abc_2_Description"  "+25%技能相生加强伤害"
+		"DOTA_Tooltip_ability_item_damage_match_helper_abc_2_Description"  "被你的法术相生加强额外伤害增强百分比：25%"
 
 		"DOTA_Tooltip_ability_item_control_match_helper_abc"   "泉守之刃"
-		"DOTA_Tooltip_ability_item_control_match_helper_abc_Description"  "+10%技能相生加强控制效果\n两个可合成"
+		"DOTA_Tooltip_ability_item_control_match_helper_abc_Description"  "被你的法术相生加强额外效果增强百分比：10%<br/>两个可合成魔能剑"
 		"DOTA_Tooltip_ability_item_control_match_helper_abc_2"   "魔能剑"
-		"DOTA_Tooltip_ability_item_control_match_helper_abc_2_Description"  "+20%技能相生加强控制效果"
+		"DOTA_Tooltip_ability_item_control_match_helper_abc_2_Description"  "被你的法术相生加强额外效果增强百分比：20%"
 
 		"DOTA_Tooltip_ability_item_energy_match_helper_abc"   "皇家守护者之剑"
-		"DOTA_Tooltip_ability_item_energy_match_helper_abc_Description"  "+20%技能相生加强法魂"
+		"DOTA_Tooltip_ability_item_energy_match_helper_abc_Description"  "被你的法术相生加强额外法魂增强百分比：25%"
+
 		"DOTA_Tooltip_ability_item_energy_match_helper_abc_2"   "皇家守护者之剑"
 		"DOTA_Tooltip_ability_item_energy_match_helper_abc_2_Description"  "+20%技能相生加强法魂"
 
+
+
+
+
 		"DOTA_Tooltip_ability_item_sky_eye"   "希望之光"
-		"DOTA_Tooltip_ability_item_sky_eye_Description"  "使用：获得顺畅视野3秒
+		"DOTA_Tooltip_ability_item_sky_eye_Description"  "使用后获得顺畅视野 持续时间：3秒
 		"DOTA_Tooltip_ability_item_sky_eye_2"   "月蚀之石"
-		"DOTA_Tooltip_ability_item_sky_eye_Description_2"  "使用：获得顺畅视野5秒
+		"DOTA_Tooltip_ability_item_sky_eye_Description_2"  "使用后获得顺畅视野 持续时间：5秒
+
+        "DOTA_Tooltip_ability_ice_beans_datadriven"  "冰豆"   //这是设置技能名字
+        "DOTA_Tooltip_ability_ice_beans_datadriven_Description"  "技能描述 Description Description"  //这是描述技能的作用啥的
+        "DOTA_Tooltip_ability_ice_beans_datadriven_Lore"   "ability Lore Lore Lore" //可以当作吐槽用，或者故事背景的描述
+		"DOTA_Tooltip_ability_ice_beans_datadriven_max_distance"	"施法距离："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_speed"        "弹道速度："
+        "DOTA_Tooltip_ability_ice_beans_datadriven_damage"               "攻击力："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_energy"				  "法魂量："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_maximum_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_ice_beans_datadriven_Note0"                "这是普通攻击"
+		"DOTA_Tooltip_modifier_ice_beans_counter_datadriven"  "储能数"
+		"DOTA_Tooltip_modifier_ice_beans_counter_datadriven_Description"  "剩余能量"
+
+
+		"DOTA_Tooltip_ability_fire_ball_datadriven"  "火球术"   //这是设置技能名字
+        "DOTA_Tooltip_ability_fire_ball_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动的火球，到达指定位置或击破后爆炸范围内敌方英雄造成爆炸伤害，并将敌方英雄击退一段距离"  
+        "DOTA_Tooltip_ability_fire_ball_datadriven_Lore"   "难度系数：★★★<br/>法术定位：后手控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_fire_ball_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_fire_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_fire_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_fire_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_fire_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_fire_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_fire_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_fire_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_fire_ball_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_fire_spirit_datadriven"  "火精灵-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_fire_spirit_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动的火精灵，到达指定位置后，经过蓄力后会产生范围爆炸，造成大量伤害，飞行或蓄力期间被击落不产生效果，蓄力期间被敌方法魂命中会被击退"  
+        "DOTA_Tooltip_ability_fire_spirit_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_fire_spirit_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_boom_delay"	"蓄力时间："
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_fire_spirit_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_fire_spirit_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven"  "火精灵"   //这是设置技能名字
+        "DOTA_Tooltip_ability_fire_spirit_pre_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动的火精灵，到达指定位置后，经过蓄力后会产生范围爆炸，造成大量伤害，飞行或蓄力期间被击落不产生效果，蓄力期间被敌方法魂命中会被击退"  
+        "DOTA_Tooltip_ability_fire_spirit_pre_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_fire_spirit_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_boom_delay"	"蓄力时间："
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_fire_spirit_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_fire_spirit_pre_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_fire_bottle_datadriven"  "高热火瓶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_fire_bottle_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动高热火瓶，到达指定位置或命中敌方英雄或击破后产生范围持续伤害火海，造成火焰伤害，中心半径伤害翻倍"  
+        "DOTA_Tooltip_ability_fire_bottle_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_fire_bottle_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_aoe_duration"	"燃烧持续时间："
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_boom_delay"	"蓄力时间："
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_fire_bottle_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_fire_bottle_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven"  "火灵箭"   //这是设置技能名字
+        "DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#E85827'>火属性</font><br/><br/>消耗一点能量向指定直线方向发出一支火灵箭，命中后火灵会附在敌方英雄身上，3秒后造成大量伤害，施法者与目标距离越远，该伤害越大"  
+        "DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_debuff_duration"	"伤害结算时间："
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_boom_delay"	"蓄力时间："
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_fire_arrow_bomb_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven"  "大火球术-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_big_fire_ball_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动的大火球，到达指定位置或击破后对爆炸范围内敌方英雄造成爆炸伤害，并击退一段距离，爆破瞬间击中敌方英雄正面造成会造成一段时间减少视野的致盲效果"  
+        "DOTA_Tooltip_ability_big_fire_ball_datadriven_Lore"   "难度系数：★★★<br/>法术定位：后手控制、魂抗" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_big_fire_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_big_fire_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_big_fire_ball_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven"  "大火球术"   //这是设置技能名字
+        "DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动的大火球，到达指定位置或击破后对爆炸范围内敌方英雄造成爆炸伤害，并击退一段距离，爆破瞬间击中敌方英雄正面造成会造成一段时间减少视野的致盲效果"  
+        "DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_Lore"   "难度系数：★★★<br/>法术定位：后手控制、魂抗" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_big_fire_ball_pre_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven"  "萤火球-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_blind_fire_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#E85827'>火属性</font><br/><br/>消耗一点能量向指定直线方向发出一个高速萤火球，命中敌方英雄正面会造成一段时间减少视野的致盲效果并造成伤害，命中敌方英雄背部无效果"  
+        "DOTA_Tooltip_ability_blind_fire_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_aoe_radius"        "作用范围："
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_blind_fire_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_blind_fire_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_blind_fire_ball_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven"  "萤火球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#E85827'>火属性</font><br/><br/>消耗一点能量向指定直线方向发出一个高速萤火球，命中敌方英雄正面会造成一段时间减少视野的致盲效果并造成伤害，命中敌方英雄背部无效果"  
+        "DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_aoe_radius"        "作用范围："
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_blind_fire_ball_pre_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_light_ball_datadriven"  "耀眼光球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_light_ball_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定方向发出两个耀眼光球，到达最远距离或命中敌方英雄或击破后爆炸产生范围爆炸强光圈，爆破瞬间击中敌方英雄正面造成一段时间减少视野的致盲效果并造成伤害，击中背部无效果"  
+        "DOTA_Tooltip_ability_light_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_light_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_light_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>作用范围：</font>"
+		"DOTA_Tooltip_ability_light_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_light_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_light_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_light_ball_datadriven_energy"				  "<font color='#FBA414'>单个基础法魂量：</font>"
+		"DOTA_Tooltip_ability_light_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_light_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_light_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_light_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_light_ball_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven"  "刺眼光波"   //这是设置技能名字
+        "DOTA_Tooltip_ability_glare_light_ball_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定直线方向发出一道刺眼光波，贯穿路光波照耀若命中敌方英雄正面造成一段时间减少视野的致盲效果并造成伤害，击中背部无效果，每个敌方英雄只作用一次"  
+        "DOTA_Tooltip_ability_glare_light_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_aoe_radius"        "最大作用范围："
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_glare_light_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_glare_light_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_glare_light_ball_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven"  "禁视光球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_vision_down_light_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#E85827'>火属性</font><br/><br/>向指定位置发出一个直线运动的光球，到达指定位置或击破后产生一个持续发射光波的光球，区域内敌方英雄面部朝向光球中心受到伤害，累计时间超过一定时间会被致盲，背部朝向不受影响"  
+        "DOTA_Tooltip_ability_vision_down_light_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_vision_down_light_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_aoe_duration"		"光球持续时间："
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>视野减少时间：</font>"
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_vision_down_light_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_vision_down_light_ball_datadriven_Note0"                "友方法术相生：<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font>、<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font>、<font color='#0EB0C9'>水</font>削弱<font color='#E85827'>火</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_clay_ball_datadriven"  "粘土弹"   //这是设置技能名字
+        "DOTA_Tooltip_ability_clay_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定位置直线方向发出一个粘土弹，粘土弹在飞行中会不断均加速，命中敌方英雄或到达指定位置产生小范围爆炸，命中敌方英雄立刻缠绕一段时间"  
+        "DOTA_Tooltip_ability_clay_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_clay_ball_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_clay_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_clay_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_clay_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_clay_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_clay_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_clay_ball_datadriven_aoe_duration"		"光球持续时间："
+		"DOTA_Tooltip_ability_clay_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_clay_ball_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_clay_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_clay_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_clay_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_clay_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_control_rock_datadriven"  "意念岩击-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_control_rock_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定方向发射一个大岩石，施法者可通过改变自身面朝方向来意念控制岩石飞行方向，控制期间施法者无法移动，再次释放可让岩石直线飞行且施法者可以重新移动，命中敌方英雄造成大量伤害"  
+        "DOTA_Tooltip_ability_control_rock_datadriven_Lore"   "难度系数：★★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_control_rock_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_control_rock_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_control_rock_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_control_rock_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_control_rock_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_control_rock_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_control_rock_datadriven_aoe_duration"		"光球持续时间："
+		"DOTA_Tooltip_ability_control_rock_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_control_rock_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_control_rock_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_control_rock_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_control_rock_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_control_rock_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_control_rock_stage_b_datadriven"  "岩击"   //这是设置技能名字
+        "DOTA_Tooltip_ability_control_rock_stage_b_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>释放可让岩石直线飞行，命中敌方英雄造成大量伤害"  
+
+
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven"  "意念岩击"   //这是设置技能名字
+        "DOTA_Tooltip_ability_control_rock_pre_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定方向发射一个大岩石，施法者可通过改变自身面朝方向来意念控制岩石飞行方向，控制期间施法者无法移动，再次释放可让岩石直线飞行且施法者可以重新移动，命中敌方英雄造成大量伤害"  
+        "DOTA_Tooltip_ability_control_rock_pre_datadriven_Lore"   "难度系数：★★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_control_rock_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_aoe_duration"		"光球持续时间："
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_control_rock_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_control_rock_pre_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_control_rock_stage_b_datadriven"  "岩击"   //这是设置技能名字
+        "DOTA_Tooltip_ability_control_rock_stage_b_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>释放可让岩石直线飞行，命中敌方英雄造成大量伤害"  
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven"  "散射土球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_scatter_soil_ball_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定方向散射出3个大土球，命中敌方英雄立刻缠绕一段时间"  
+        "DOTA_Tooltip_ability_scatter_soil_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_scatter_soil_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_energy"				  "<font color='#FBA414'>每个基础法魂量：</font>"
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_aoe_duration"		"光球持续时间："
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_scatter_soil_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_scatter_soil_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_stone_ball_datadriven"  "石头术"   //这是设置技能名字
+        "DOTA_Tooltip_ability_stone_ball_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定直线方向召唤一颗旋转石头，以相对角度击退路径上所有敌方英雄一段距离距离，并造成伤害"  
+        "DOTA_Tooltip_ability_stone_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：后手控制" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_stone_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_stone_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_stone_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_stone_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_stone_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_stone_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_stone_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_stone_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_swamp_area_datadriven"  "沼泽地带-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_swamp_area_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定位置发出一个直线运动沼泽发球，到达指定位置或命中敌方英雄或击破后会产生一个持续的沼泽地带，范围内敌方英雄会被缠绕且受到持续伤害"  
+        "DOTA_Tooltip_ability_swamp_area_datadriven_Lore"   "难度系数：★<br/>法术定位：后手控制/魂抗" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_swamp_area_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_swamp_area_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_swamp_area_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_swamp_area_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_swamp_area_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_swamp_area_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_swamp_area_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_swamp_area_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_swamp_area_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_swamp_area_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_swamp_area_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_swamp_area_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_swamp_area_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven"  "沼泽地带"   //这是设置技能名字
+        "DOTA_Tooltip_ability_swamp_area_pre_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定位置发出一个直线运动沼泽发球，到达指定位置或命中敌方英雄或击破后会产生一个持续的沼泽地带，范围内敌方英雄会被缠绕且受到持续伤害"  
+        "DOTA_Tooltip_ability_swamp_area_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：后手控制/魂抗" //最下面一行描述、故事
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_swamp_area_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_swamp_area_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_swamp_area_pre_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven"  "一秒麻痹弹"   //这是设置技能名字
+        "DOTA_Tooltip_ability_twice_stone_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定直线方向召唤一个能让人麻痹的小土弹，命中敌方英雄在1.5秒后缠绕其一小段时间和小量伤害，在5秒内可以释放第二段低速的含血半步颠药瓶，命中大量造成伤害，并在随后1.5秒内移动会受到伤害"  
+        "DOTA_Tooltip_ability_twice_stone_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制/输出<br/><br/>传说是大法师为致敬周星驰而创下的招式"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_max_distance"	"<font color='#BCE3B9'>最大射程：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_twice_stone_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_energy"				  "<font color='#FBA414'>每发基础法魂量：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_debuff_delay"		"延迟触发时间："
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_twice_stone_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_twice_stone_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven"  "含血半步颠"   //这是设置技能名字
+        "DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>在5秒内可以向指定直线方向释放含血半步颠药瓶，命中大量造成伤害，并在随后1.5秒内移动会受到伤害"  
+        "DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_max_distance"	"<font color='#BCE3B9'>最大射程：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_energy"				  "<font color='#FBA414'>每发基础法魂量：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_vision_time"		"累计时间："
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_debuff_duration"		"移动受伤时间："
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_twice_stone_ball_stage_b_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven"  "缠绕土球-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_twine_soil_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>消耗一点能量向指定直线方向发出一个土球，命中敌方英雄立刻缠绕一段时间，并造成伤害"  
+        "DOTA_Tooltip_ability_twine_soil_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制<br/>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_max_distance"	"<font color='#BCE3B9'>最大射程：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_twine_soil_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_debuff_delay"		"延迟触发时间："
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_twine_soil_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_twine_soil_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven"  "缠绕土球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>消耗一点能量向指定直线方向发出一个土球，命中敌方英雄立刻缠绕一段时间，并造成伤害"  
+        "DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：控制<br/>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_max_distance"	"<font color='#BCE3B9'>最大射程：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_debuff_delay"		"延迟触发时间："
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>缠绕时间：</font>"
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_twine_soil_ball_pre_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven"  "X型土球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_x_soil_ball_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>在身旁召唤2粒土球，短暂延迟后高速直线飞向指定方向，命中敌方英雄后立刻缠绕一段时间，命中同一单位缠绕时间会叠加"  
+        "DOTA_Tooltip_ability_x_soil_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制<br/>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_max_distance"	"<font color='#BCE3B9'>最大射程：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_x_soil_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_energy"				  "<font color='#FBA414'>每粒基础法魂量：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_vision_radius"		"视野减少："
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_debuff_delay"		"延迟触发时间："
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>单个缠绕时间：</font>"
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_x_soil_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_x_soil_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven"  "追踪石弹"   //这是设置技能名字
+        "DOTA_Tooltip_ability_trace_stone_ball_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#EBDB6C'>土属性</font><br/><br/>向指定直线方向召唤一颗追踪土弹，在飞行过程中会搜索小范围内敌方英雄，搜索成功将以超快飞向敌方英雄，土弹追踪距离越远，造成伤害越高（追踪行程为最大射程的一半），并有30%概率造成双倍伤害"  
+        "DOTA_Tooltip_ability_trace_stone_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_max_distance"	"<font color='#BCE3B9'>最大射程：</font>"
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_trace_stone_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_search_range"		"搜索范围："
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_double_damage_percentage"		"暴击概率："
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_debuff_duration"		"移动受伤时间："
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_trace_stone_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_trace_stone_ball_datadriven_Note0"                "友方法术相生：<font color='#E85827'>火</font>加强<font color='#EBDB6C'>土</font>、<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font>、<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_electric_arrow_datadriven"  "闪电箭"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_arrow_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#A762E6'>雷属性</font><br/><br/>释放后在身前召唤一支闪电箭，蓄能一小段时间后射向指定直线方向，命中敌人后会造成伤害，并追加已损生命25%固定伤害"  
+        "DOTA_Tooltip_ability_electric_arrow_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_arrow_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_bouns_damage_percentage"		"已损生命伤害百分比："
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_send_delay"		"蓄能时间："
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_debuff_duration"		"移动受伤时间："
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_arrow_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_arrow_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_electric_ball_datadriven"  "电球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定直线方向发出一个小电球，命中敌方英雄会造成持续一段时间的触电眩晕效果，每两秒晕1秒，并受到伤害"  
+        "DOTA_Tooltip_ability_electric_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_damage_percent_sp"		"已损伤害百分比："
+		"DOTA_Tooltip_ability_electric_ball_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_electric_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>触电时间：</font>"
+		"DOTA_Tooltip_ability_electric_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_ball_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_electric_gather_datadriven"  "蓄力闪电-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_gather_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#A762E6'>雷属性</font><br/><br/>消耗1点能量蓄力在身旁召唤2支小闪电，蓄力期间闪电箭会往身后拉，蓄力中断或蓄力结束会向指定方向发射，命中敌方英雄后造成大量伤害，蓄力时间越久闪电伤害越高"  
+        "DOTA_Tooltip_ability_electric_gather_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_gather_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_gather_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_energy"				  "<font color='#FBA414'>单支基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_charge_time"		"最大蓄力时间："
+		"DOTA_Tooltip_ability_electric_gather_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_electric_gather_datadriven_debuff_duration"		"<font color='#51C4D3'>触电时间：</font>"
+		"DOTA_Tooltip_ability_electric_gather_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_gather_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_gather_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven"  "蓄力闪电"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_gather_pre_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#A762E6'>雷属性</font><br/><br/>消耗1点能量蓄力在身旁召唤2支小闪电，蓄力期间闪电箭会往身后拉，蓄力中断或蓄力结束会向指定方向发射，命中敌方英雄后造成大量伤害，蓄力时间越久闪电伤害越高"  
+        "DOTA_Tooltip_ability_electric_gather_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_gather_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_energy"				  "<font color='#FBA414'>单支基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_charge_time"		"最大蓄力时间："
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>触电时间：</font>"
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_gather_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_gather_pre_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_electric_shock_datadriven"  "正负电极"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_shock_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#A762E6'>雷属性</font><br/><br/>在指定地点释放后生成正电荷，5秒内可再次释放第二段在指定地点生成负电荷。第二段释放后正负电荷互相吸引不断加速度并在中点相互碰撞，正电荷贯穿路径对敌方英雄造成短暂眩晕并造成伤害，负电荷对贯穿路径敌方英雄造成昏睡并造成伤害，碰撞后中心位置小范围爆炸英雄造成短暂眩晕后昏睡并造成伤害，电荷速度越高，效果越强，吸引过程中任意一个电荷被击破则两个都被击破（昏睡效果可被其队友法术唤醒）"  
+        "DOTA_Tooltip_ability_electric_shock_datadriven_Lore"   "难度系数：★★<br/>法术定位：后手控制<br/>昏睡效果可被其队友法术唤醒"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_shock_datadriven_max_distance"	"最大释放距离："
+		"DOTA_Tooltip_ability_electric_shock_datadriven_aoe_radius"        "<font color='#BCE3B9'>中心基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_speed"        "<font color='#E3BD8D'>吸引基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_shock_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础最大眩晕时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_sleep_debuff_duration"		"<font color='#51C4D3'>基础最大昏睡时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_electric_shock_datadriven_debuff_duration"		"<font color='#51C4D3'>触电时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_shock_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_shock_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven"  "正负电极"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#A762E6'>雷属性</font><br/><br/>在指定地点释放后生成正电荷，5秒内可再次释放第二段在指定地点生成负电荷。第二段释放后正负电荷互相吸引不断加速度并在中点相互碰撞，正电荷贯穿路径对敌方英雄造成短暂眩晕并造成伤害，负电荷对贯穿路径敌方英雄造成昏睡并造成伤害，碰撞后中心位置小范围爆炸英雄造成短暂眩晕后昏睡并造成伤害，电荷速度越高，效果越强，吸引过程中任意一个电荷被击破则两个都被击破（昏睡效果可被其队友法术唤醒）"  
+        "DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_Lore"   "难度系数：★★<br/>法术定位：后手控制<br/>昏睡效果可被其队友法术唤醒"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_max_distance"	"最大释放距离："
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_aoe_radius"        "<font color='#BCE3B9'>中心基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_speed"        "<font color='#E3BD8D'>吸引基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_aoe_duration"			"<font color='#51C4D3'>沼泽持续时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础最大眩晕时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_sleep_debuff_duration"		"<font color='#51C4D3'>基础最大昏睡时间：</font>"
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_shock_stage_b_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_electric_wall_datadriven"  "电力墙-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_wall_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定位置发出一个直线运动的超大电球，到达指定位置蓄力后会生一个大范围持续5秒的电力墙，每次触碰电力墙边缘的敌方英雄会被眩晕，位于电力墙圈内的敌方英雄会受到持续伤害，电力墙生效前被击破则会消失"  
+        "DOTA_Tooltip_ability_electric_wall_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制/魂抗"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_wall_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_electric_wall_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_wall_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_wall_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_wall_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_electric_wall_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_wall_datadriven_aoe_duration"			"电力墙持续时间："
+		"DOTA_Tooltip_ability_electric_wall_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_electric_wall_datadriven_boom_delay"		"蓄力时间："
+		"DOTA_Tooltip_ability_electric_wall_datadriven_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_electric_wall_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_wall_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_wall_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven"  "电力墙"   //这是设置技能名字
+        "DOTA_Tooltip_ability_electric_wall_pre_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定位置发出一个直线运动的超大电球，到达指定位置蓄力后会生一个大范围持续5秒的电力墙，每次触碰电力墙边缘的敌方英雄会被眩晕，位于电力墙圈内的敌方英雄会受到持续伤害，电力墙生效前被击破则会消失"  
+        "DOTA_Tooltip_ability_electric_wall_pre_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制/魂抗"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_electric_wall_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_aoe_duration"			"电力墙持续时间："
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_boom_delay"		"蓄力时间："
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_electric_wall_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_electric_wall_pre_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_thunder_area_datadriven"  "雷电区域"   //这是设置技能名字
+        "DOTA_Tooltip_ability_thunder_area_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定位置发出一个直线运动闪电雷球，到达指定位置或命中敌方英雄或击破后会产生一个持续的雷电区域，区域内每2秒被闪电眩晕一秒，并造成伤害"  
+        "DOTA_Tooltip_ability_thunder_area_datadriven_Lore"   "难度系数：★<br/>法术定位：后手控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_thunder_area_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_thunder_area_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_thunder_area_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_aoe_duration"			"<font color='#51C4D3'>雷电区域墙持续时间：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_thunder_area_datadriven_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_thunder_area_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_thunder_area_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_thunder_area_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven"  "雷精灵"   //这是设置技能名字
+        "DOTA_Tooltip_ability_thunder_spirit_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#A762E6'>雷属性</font><br/><br/>面朝指定直线方向持续施法每0.5S发出1个雷精灵，持续2.5秒，若施法者在雷精灵命中敌方英雄瞬间进行观察（施法者距离雷精灵不超过1200，且正面朝向雷精灵），雷精灵会造成翻倍伤害，若施法者没有进行观察，雷精灵会造成基础伤害，持续施法期间可移动，但朝向不会改变"  
+        "DOTA_Tooltip_ability_thunder_spirit_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_thunder_spirit_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_thunder_spirit_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_thunder_spirit_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven"  "贯穿雷球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定直线方向发射一个能贯穿敌方英雄的雷球，命中的敌方英雄会造成昏睡效果（昏睡效果可被其队友法术唤醒）"  
+        "DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制<br/>昏睡效果可被其队友法术唤醒"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>基础昏睡时间：</font>"
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_penetrate_thunder_ball_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven"  "散射雷球-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定直线方向散射发出三个高速小雷球，命中敌方英雄会造成昏睡效果，同一单位命中多个效果不叠加（昏睡效果可被其队友法术唤醒）"  
+        "DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制<br/>昏睡效果可被其队友法术唤醒"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>基础昏睡时间：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_scatter_thunder_ball_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven"  "散射雷球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#A762E6'>雷属性</font><br/><br/>向指定直线方向散射发出三个高速小雷球，命中敌方英雄会造成昏睡效果，同一单位命中多个效果不叠加（昏睡效果可被其队友法术唤醒）"  
+        "DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：控制<br/>昏睡效果可被其队友法术唤醒"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_stun_debuff_duration"		"<font color='#51C4D3'>基础眩晕时间：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_send_delay"		"延迟时间："
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>基础昏睡时间：</font>"
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_scatter_thunder_ball_pre_datadriven_Note0"                "友方法术相生：<font color='#EBDB6C'>土</font>加强<font color='#A762E6'>雷</font>、<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font>、<font color='#E85827'>火</font>削弱<font color='#A762E6'>雷</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_ice_ball_datadriven"  "冰球术"   //这是设置技能名字
+        "DOTA_Tooltip_ability_ice_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>消耗一点能量向指定直线方向发出一个冰球，命中敌方英雄会造成持续一段时间大量移速减少与销量转身速率减少"  
+        "DOTA_Tooltip_ability_ice_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_ice_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_beat_back_distance"        "<font color='#51C4D3'>基础击退距离：</font>"
+        "DOTA_Tooltip_ability_ice_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_ice_ball_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_ice_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_ice_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_ice_ball_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_ice_beans_datadriven"  "冰豆"   //这是设置技能名字
+        "DOTA_Tooltip_ability_ice_beans_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>释放后经过短暂蓄力成功后，5秒内会获得2点冰豆能量，每点能量可往指定方直线向发出2粒冰豆，每粒冰豆命中敌方英雄造成移速减少效果，持续2秒，并造成小量伤害，多粒冰豆命中可叠加减速效果与减速时间"  
+        "DOTA_Tooltip_ability_ice_beans_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制<br/>蓄力期间会被其他动作打断，失败CD与蓝耗不返还"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_ice_beans_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_channel_time"        "蓄力时间："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_stage_duration"        "冰豆释放时间："
+        "DOTA_Tooltip_ability_ice_beans_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_energy"				  "<font color='#FBA414'>每粒基础法魂量：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_debuff_speed_percent"		"每层移动速度减少百分比："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_debuff_duration"		"<font color='#51C4D3'>每层减速持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_beans_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_ice_beans_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_ice_beans_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven"  "冰豆"   //这是设置技能名字
+        "DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>释放后经过短暂蓄力成功后，5秒内会获得2点冰豆能量，每点能量可往指定方直线向发出2粒冰豆，每粒冰豆命中敌方英雄造成移速减少效果，持续2秒，并造成小量伤害，多粒冰豆命中可叠加减速效果与减速时间"  
+        "DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_channel_time"        "蓄力时间："
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_stage_duration"        "冰豆释放时间："
+        "DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_energy"				  "<font color='#FBA414'>每粒基础法魂量：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_debuff_speed_percent"		"每层移动速度减少百分比："
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_debuff_duration"		"<font color='#51C4D3'>每层减速持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_ice_beans_stage_b_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven"  "冰骷髅"   //这是设置技能名字
+        "DOTA_Tooltip_ability_ice_skeleton_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>消耗一点能量向指定直线方向召唤一颗冰骷髅，在飞行过程中会搜索一定范围内敌方英雄，搜索成功将追踪飞向敌方英雄（追踪距离为最大行程一半）造成伤害并追加其30%已损魔法值的额外伤害，命中背面会受到惊吓进入混乱状态"  
+        "DOTA_Tooltip_ability_ice_skeleton_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/>混乱状态会使目标肉体间歇性失去控制<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_search_range"        "搜索距离："
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_ice_skeleton_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_debuff_duration"		"混乱状态持续时间："
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_ice_skeleton_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_ice_skeleton_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven"  "冰水双弹"   //这是设置技能名字
+        "DOTA_Tooltip_ability_ice_water_ball_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定地点发出一个水弹与冰弹，水弹与冰弹将各自以弧形路径相离，在指定地点交汇，并运动至最远距离。水弹命中敌方英雄会小范围爆炸造成一段时间大量转身速率减少，冰弹命中敌方英雄会小范围爆炸造成一段时间大量移速减少"  
+        "DOTA_Tooltip_ability_ice_water_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：后手控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_aoe_radius"        "作用范围："
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_search_range"        "搜索距离："
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_ice_water_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_energy"				  "<font color='#FBA414'>每个基础法魂量：</font>"
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_ice_water_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_ice_water_ball_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_water_spirit_datadriven"  "水精灵-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_water_spirit_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定位置发出一个直线运动的水精灵，到达指定位置后，经过一段时间蓄力后会产生范围爆炸，造成大量伤害和一段时间小量双减速效果，飞行或蓄力期间被击落不产生效果，蓄力期间被敌方法魂命中会被往其方向跳"  
+        "DOTA_Tooltip_ability_water_spirit_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出、控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_water_spirit_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_water_spirit_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_water_spirit_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_water_spirit_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_water_spirit_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_water_spirit_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_water_spirit_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_water_spirit_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_water_spirit_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_water_spirit_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_water_spirit_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_water_spirit_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_water_spirit_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_water_spirit_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven"  "水精灵"   //这是设置技能名字
+        "DOTA_Tooltip_ability_water_spirit_pre_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定位置发出一个直线运动的水精灵，到达指定位置后，经过一段时间蓄力后会产生范围爆炸，造成大量伤害和一段时间小量双减速效果，飞行或蓄力期间被击落不产生效果，蓄力期间被敌方法魂命中会被往其方向跳"  
+        "DOTA_Tooltip_ability_water_spirit_pre_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出、控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_water_spirit_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_water_spirit_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_water_spirit_pre_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_water_ball_datadriven"  "水球术-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_water_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定位置发出一个直线运动的水球术，到达指定位置、命中敌方英雄或被击破后对爆炸范围内敌方英雄造成减少大量转速与小量移速效果，并造成小量伤害"  
+        "DOTA_Tooltip_ability_water_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_water_ball_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_water_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_water_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_water_ball_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_water_ball_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_water_ball_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_water_ball_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_water_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_water_ball_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_water_ball_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_water_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_water_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_water_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_water_ball_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven"  "水球术"   //这是设置技能名字
+        "DOTA_Tooltip_ability_water_ball_pre_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定位置发出一个直线运动的水球术，到达指定位置、命中敌方英雄或被击破后对爆炸范围内敌方英雄造成减少大量转速与小量移速效果，并造成小量伤害  "  
+        "DOTA_Tooltip_ability_water_ball_pre_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_water_ball_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_water_ball_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_water_ball_pre_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven"  "V字冰球"   //这是设置技能名字
+        "DOTA_Tooltip_ability_v_ice_ball_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定方向发出两个大冰球，到达最远距离或命中敌方英雄或击破后爆炸产生持续减速的冰冻区域，范围内敌方英雄受到移速减少与转身速率减少，并受到小量持续伤害，重叠区域减速与伤害翻倍"  
+        "DOTA_Tooltip_ability_v_ice_ball_datadriven_Lore"   "难度系数：★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>每个作用范围：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_v_ice_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_energy"				  "<font color='#FBA414'>每个基础法魂量：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_v_ice_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_v_ice_ball_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven"  "冰二重箭"   //这是设置技能名字
+        "DOTA_Tooltip_ability_twice_ice_ball_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定直线方向发出一个快速冰冻箭，命中敌方英雄造成短时间大量移速与转身速率减少，并造成小量伤害。在5秒内可以释放第二段慢速水灵箭，水灵箭飞行距离越远，伤害越高"  
+        "DOTA_Tooltip_ability_twice_ice_ball_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制、输出"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_twice_ice_ball_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_energy"				  "<font color='#FBA414'>每支基础法魂量：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_twice_ice_ball_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_twice_ice_ball_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven"  "水灵箭"   //这是设置技能名字
+        "DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定直线方向发出一个快速冰冻箭，命中敌方英雄造成短时间大量移速与转身速率减少，并造成小量伤害。在5秒内可以释放第二段慢速水灵箭，水灵箭飞行距离越远，伤害越高"  
+        "DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_damage_by_distance"        "提升1点伤害飞行距离："
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_bouns_damage_percentage"        "<font color='#FFC0CB'>已损魔法伤害百分比：</font>"
+        "DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_energy"				  "<font color='#FBA414'>每支基础法魂量：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_aoe_duration"			"<font color='#51C4D3'>电力墙持续时间：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_twice_ice_ball_stage_b_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_frost_blast_datadriven"  "冰霜冲击-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_frost_blast_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定位置发出一个直线运动超大冰球，到达指定位置或命中敌方英雄或击破后会产生以一定速度扩张的大范围冰霜冲击，对波及到的敌方英雄造成持续一段时间的移速与转速减少，并造成伤害"  
+        "DOTA_Tooltip_ability_frost_blast_datadriven_Lore"   "难度系数：★<br/>法术定位：后手控制/魂抗"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_frost_blast_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_frost_blast_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_frost_blast_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_frost_blast_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_frost_blast_datadriven_diffuse_speed"        "冰霜扩散速度："
+        "DOTA_Tooltip_ability_frost_blast_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_frost_blast_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_frost_blast_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_frost_blast_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_frost_blast_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_frost_blast_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_frost_blast_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_frost_blast_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_frost_blast_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
 
 
 
@@ -237,6 +1273,256 @@
 
 
 
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven"  "冰霜冲击"   //这是设置技能名字
+        "DOTA_Tooltip_ability_frost_blast_pre_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#2FB0B9'>水属性</font><br/><br/>向指定位置发出一个直线运动超大冰球，到达指定位置或命中敌方英雄或击破后会产生以一定速度扩张的大范围冰霜冲击，对波及到的敌方英雄造成持续一段时间的移速与转速减少，并造成伤害"  
+        "DOTA_Tooltip_ability_frost_blast_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：后手控制/魂抗"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_boom_delay"        "蓄力时间："
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_diffuse_speed"        "冰霜扩散速度："
+        "DOTA_Tooltip_ability_frost_blast_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>减速持续时间：</font>"
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_frost_blast_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_frost_blast_pre_datadriven_Note0"                "友方法术相生：<font color='#A762E6'>雷</font>加强<font color='#2FB0B9'>水</font>、<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#2FB0B9'>水</font>削弱<font color='#E85827'>火</font>、<font color='#EBDB6C'>土</font>削弱<font color='#2FB0B9'>水</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_wind_net_datadriven"  "风之网-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_wind_net_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#6CA984'>风属性</font><br/><br/>消耗一点能量向指定直线方向发出一个快速风网，命中敌方英雄将其束缚在一定范围内不能移动出去，并造成小量伤害"  
+        "DOTA_Tooltip_ability_wind_net_datadriven_Lore"   "难度系数：★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_wind_net_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_catch_radius"        "束缚范围："
+		"DOTA_Tooltip_ability_wind_net_datadriven_diffuse_speed"        "冰霜扩散速度："
+        "DOTA_Tooltip_ability_wind_net_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_debuff_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_wind_net_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_wind_net_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_net_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_wind_net_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_wind_net_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven"  "风之网"   //这是设置技能名字
+        "DOTA_Tooltip_ability_wind_net_pre_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#6CA984'>风属性</font><br/><br/>消耗一点能量向指定直线方向发出一个快速风网，命中敌方英雄将其束缚在一定范围内不能移动出去，并造成小量伤害"  
+        "DOTA_Tooltip_ability_wind_net_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_catch_radius"        "束缚范围："
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_diffuse_speed"        "冰霜扩散速度："
+        "DOTA_Tooltip_ability_wind_net_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_debuff_speed_percent"		"移动速度减少百分比："
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_wind_net_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_wind_net_pre_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+
+		"DOTA_Tooltip_ability_wind_dart_datadriven"  "风灵镖-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_wind_dart_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#6CA984'>风属性</font><br/><br/>消耗一点能量向指定方向召唤出一个直线运动的风灵镖，风灵镖出现瞬间会锁定观察方向上最近一名敌方英雄，锁定成功后，若该地方英雄背面面向风灵镖，风灵镖会增大幅度增加飞行速度。风灵镖命中敌方英雄背部会造成额外伤害"  
+        "DOTA_Tooltip_ability_wind_dart_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_wind_dart_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_catch_radius"        "束缚范围："
+		"DOTA_Tooltip_ability_wind_dart_datadriven_wind_speed"        "面向目标背部增加速度："
+        "DOTA_Tooltip_ability_wind_dart_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_wind_dart_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_wind_dart_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_dart_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_wind_dart_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_wind_dart_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven"  "风灵镖"   //这是设置技能名字
+        "DOTA_Tooltip_ability_wind_dart_pre_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#6CA984'>风属性</font><br/><br/>消耗一点能量向指定方向召唤出一个直线运动的风灵镖，风灵镖出现瞬间会锁定观察方向上最近一名敌方英雄，锁定成功后，若该地方英雄背面面向风灵镖，风灵镖会增大幅度增加飞行速度。风灵镖命中敌方英雄背部会造成额外伤害"  
+        "DOTA_Tooltip_ability_wind_dart_pre_datadriven_Lore"   "难度系数：★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_catch_radius"        "束缚范围："
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_wind_speed"        "面向目标背部增加速度："
+        "DOTA_Tooltip_ability_wind_dart_pre_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_wind_dart_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_wind_dart_pre_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_wind_arrow_datadriven"  "追风箭"   //这是设置技能名字
+        "DOTA_Tooltip_ability_wind_arrow_datadriven_Description"  "法术属性：<font color='#93DB70'>初级</font>-<font color='#6CA984'>风属性</font><br/><br/>消耗一点能量向指定方向发出一个直线运动的追风箭，命中地方英雄造成基础伤害且当前血量百分比（该伤害不能被加强），每当风箭身边经过一个友方发魂类法术，风箭飞行速度增加，最多增加3次"  
+        "DOTA_Tooltip_ability_wind_arrow_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_bounds_damage_percent"        "当前生命百分比："
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_wind_speed"        "每次相遇加速度："
+        "DOTA_Tooltip_ability_wind_arrow_datadriven_damage"               "<font color='#FFC0CB'>基础伤害：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_wind_arrow_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_wind_arrow_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven"  "旋风飞斧"   //这是设置技能名字
+        "DOTA_Tooltip_ability_whirlwind_axe_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#6CA984'>风属性</font><br/><br/>朝目标方向持续施法2秒，每0.2秒发出1把飞斧，施法期间可改变正面朝向控制发射方向，飞斧命中敌方英雄造成伤害，飞斧在3秒内命中同一个敌方英雄，每发会叠加伤害，叠加次数达到上限为最高伤害"  
+        "DOTA_Tooltip_ability_whirlwind_axe_datadriven_Lore"   "难度系数：★★<br/>法术定位：输出<br/>改变正面朝向控制发射方向<br/><font color='#51C4D3'>输出型法术无法加强或削弱效果"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_bounds_damage"        "每次伤害增加："
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_bounds_damage_count"        "叠加次数上限："
+        "DOTA_Tooltip_ability_whirlwind_axe_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_energy"				  "<font color='#FBA414'>每把基础法魂量：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_shoot_count"		"旋风飞斧数量："
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_whirlwind_axe_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_whirlwind_axe_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_o_boomerang_datadriven"  "回旋镖"   //这是设置技能名字
+        "DOTA_Tooltip_ability_o_boomerang_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#6CA984'>风属性</font><br/><br/>释放一个圆形运动飞向指定地点并以弧形飞回释放地点的回旋镖，飞行路径命中敌方英雄会其束缚，并造成小量伤害"  
+        "DOTA_Tooltip_ability_o_boomerang_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制<br/><font color='#BCE3B9'>回旋镖无法加强射程与范围</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_max_distance"	"最大释放距离："
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_bounds_damage"        "每次伤害增加："
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_catch_radius"        "束缚范围："
+        "DOTA_Tooltip_ability_o_boomerang_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_aoe_duration"			"<font color='#51C4D3'>冰冻区域持续时间：</font>"
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_o_boomerang_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_o_boomerang_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+		"DOTA_Tooltip_ability_big_tornado_datadriven"  "大龙卷风"   //这是设置技能名字
+        "DOTA_Tooltip_ability_big_tornado_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#6CA984'>风属性</font><br/><br/>向指定位置发出一个直线运动大龙卷风，到达指定位置或击破后会生成一个持续的超大龙卷风，以一定速度将范围内敌方英雄与法魂类法术牵引至中心，并造成小量伤害"  
+        "DOTA_Tooltip_ability_big_tornado_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_big_tornado_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_big_tornado_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_G_speed"        "<font color='#51C4D3'>基础牵引速度：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_catch_radius"        "束缚范围："
+        "DOTA_Tooltip_ability_big_tornado_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_aoe_duration"			"<font color='#51C4D3'>基础持续时间：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_big_tornado_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_big_tornado_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_big_tornado_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_big_tornado_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_big_tornado_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_small_tornado_datadriven"  "龙卷风"   //这是设置技能名字
+        "DOTA_Tooltip_ability_small_tornado_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#6CA984'>风属性</font><br/><br/>向指定直线方向发出一个快速强龙卷风，到达最远距离或命中敌方英雄或击破后会生成持续的龙卷风，以较强的速度将范围内敌方英雄与法魂类法术牵引至中心，并造成小量伤害"  
+        "DOTA_Tooltip_ability_small_tornado_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_small_tornado_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_aoe_radius"        "作用范围："
+		"DOTA_Tooltip_ability_small_tornado_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_G_speed"        "<font color='#51C4D3'>基础牵引速度：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_catch_radius"        "束缚范围："
+        "DOTA_Tooltip_ability_small_tornado_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_aoe_duration"			"<font color='#51C4D3'>基础持续时间：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_small_tornado_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_small_tornado_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_small_tornado_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_small_tornado_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_small_tornado_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_small_hurricane_datadriven"  "小飓风"   //这是设置技能名字
+        "DOTA_Tooltip_ability_small_hurricane_datadriven_Description"  "法术属性：<font color='#3299CC'>中级</font>-<font color='#6CA984'>风属性</font><br/><br/>向指定直线方向发出一个小飓风，将路径所有敌方英雄击退到最远距离，并产生一个持续小龙卷风，以较小速度将范围内敌方英雄与法魂类法术牵引至中心，并造成小量伤害"  
+        "DOTA_Tooltip_ability_small_hurricane_datadriven_Lore"   "难度系数：★★★<br/>法术定位：控制"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_max_distance"	"<font color='#BCE3B9'>基础射程：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_aoe_radius"        "作用范围："
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_G_speed"        "<font color='#51C4D3'>基础牵引速度：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_catch_radius"        "束缚范围："
+        "DOTA_Tooltip_ability_small_hurricane_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_aoe_duration"			"<font color='#51C4D3'>基础持续时间：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_small_hurricane_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_small_hurricane_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
+
+
+
+
+		"DOTA_Tooltip_ability_space_collapse_datadriven"  "空间坍缩-进阶"   //这是设置技能名字
+        "DOTA_Tooltip_ability_space_collapse_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#6CA984'>风属性</font><br/><br/>向指定位置发出一个直线运动超大暗能量龙卷风，到达指定位置或击破后会使范围空间坍缩，立刻将范围内敌方英雄与法魂类法术坍缩牵引至中心位置，敌方英雄受到小量伤害（空间坍缩会引起地形穿越）"  
+        "DOTA_Tooltip_ability_space_collapse_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制/魂抗<br/>加强或削弱<font color='#51C4D3'>效果可影响基础作用范围</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_space_collapse_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_space_collapse_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_space_collapse_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_space_collapse_datadriven_G_speed"        "坍缩牵引速度："
+        "DOTA_Tooltip_ability_space_collapse_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_space_collapse_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_space_collapse_datadriven_aoe_duration"			"<font color='#51C4D3'>基础持续时间：</font>"
+		"DOTA_Tooltip_ability_space_collapse_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_space_collapse_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_space_collapse_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_space_collapse_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_space_collapse_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_space_collapse_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
 
 
 
@@ -244,16 +1530,28 @@
 
 
 
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven"  "空间坍缩"   //这是设置技能名字
+        "DOTA_Tooltip_ability_space_collapse_pre_datadriven_Description"  "法术属性：<font color='#9932CD'>高级</font>-<font color='#6CA984'>风属性</font><br/><br/>向指定位置发出一个直线运动超大暗能量龙卷风，到达指定位置或击破后会使范围空间坍缩，立刻将范围内敌方英雄与法魂类法术坍缩牵引至中心位置，敌方英雄受到小量伤害（空间坍缩会引起地形穿越）"  
+        "DOTA_Tooltip_ability_space_collapse_pre_datadriven_Lore"   "难度系数：★★<br/>法术定位：控制/魂抗<br/>加强或削弱<font color='#51C4D3'>效果可影响基础作用范围</font>"//最下面一行描述、故事
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_max_distance"	"最大射程："
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_aoe_radius"        "<font color='#BCE3B9'>基础作用范围：</font>"
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_speed"        "<font color='#E3BD8D'>基础飞行速度：</font>"
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_G_speed"        "坍缩牵引速度："
+        "DOTA_Tooltip_ability_space_collapse_pre_datadriven_damage"               "<font color='#FFC0CB'>基础总伤害：</font>"
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_energy"				  "<font color='#FBA414'>基础法魂量：</font>"
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_aoe_duration"			"<font color='#51C4D3'>基础持续时间：</font>"
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_wind_damage_percent"		"命中背部额外伤害百分比："
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_debuff_turn_rate_percent"		"转身速度减少百分比："
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_debuff_duration"		"<font color='#51C4D3'>束缚持续时间：</font>"
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_max_charges"				  "储能上限："
+		"DOTA_Tooltip_ability_space_collapse_pre_datadriven_charge_replenish_time"		   "充能时间："
+        "DOTA_Tooltip_ability_space_collapse_pre_datadriven_Note0"                "友方法术相生：<font color='#2FB0B9'>水</font>加强<font color='#6CA984'>风</font>、<font color='#6CA984'>风</font>加强<font color='#E85827'>火</font><br/>加强25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量<br/><br/>敌方法术相克：<font color='#6CA984'>风</font>削弱<font color='#EBDB6C'>土</font>、<font color='#A762E6'>雷</font>削弱<font color='#6CA984'>风</font><br/>减少25％法术总<font color='#FFC0CB'>伤害</font>、基础<font color='#51C4D3'>效果</font>、基础<font color='#FBA414'>法魂</font>量"
 
 
 
 
 
-
-
-
-
-
+		"battlefield"	"法阵"
 
 
 

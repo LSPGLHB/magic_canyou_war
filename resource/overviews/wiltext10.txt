@@ -1,0 +1,8 @@
+wiltext10
+{
+	material materials/overviews/wiltext10.vmat
+	pos_x -12288
+	pos_y 12288
+	scale 24.000
+}
+
