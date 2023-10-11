@@ -112,7 +112,7 @@ function createShoot(keys)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, commonAttackSp1BoomCallBack, nil)
-
+	print("===shoot======")
 end
 
 --技能爆炸,单次伤害

@@ -24,11 +24,11 @@ function getPush(keys)
 
 	for k,unit in pairs(aroundUnits) do
         local unitPosition = unit:GetAbsOrigin()
-        local lable = unit:GetUnitLabel()
+        local label = unit:GetUnitLabel()
     
         local direction = (skillPoint - unitPosition):Normalized()
 
-        if unit ~= caster then
+        if GameRules.stoneLabel == label or unit:IsHero() and unit ~= caster then
             beatBackUnit(keys,caster,unit,pushSpeed,max_distance,direction,true)
         end
         

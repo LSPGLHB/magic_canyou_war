@@ -85,31 +85,19 @@ function initHeroCaptureChannelSucceeded(keys)
         print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
         print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
         
-        
+        --刷新占领方本身前线法阵成为关闭状态
         local lastCasterFrontFieldNum = #Battlefields[casterTeam]
         local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
-        --local lastCasterFrontFieldLocation = lastCasterFrontField:GetAbsOrigin()
-        --刷新占领方本身前线法阵
-        --destroyBattlefield(lastCasterFrontField)
-        --createBattlefield(lastCasterFrontFieldLocation,casterTeam,lastCasterFrontFieldNum)
-        print("==casterTeam=="..casterTeam..",lastCasterFrontFieldNum="..lastCasterFrontFieldNum)
         battlefieldInit(lastCasterFrontField)
 
         
-        --刷新被占领法阵
-        --local targetBattlefieldLoction = caster.battlefieldTarget:GetAbsOrigin()
-        print("==2==")
+        --刷新被占领法阵为占领方成为开启状态
         captrueBattlefield(caster.battlefieldTarget, casterTeam)
-        --caster.battlefieldTarget:ForceKill(true)
-        --battlefieldInit(caster.battlefieldTarget)
-        
-        
-        --createBattlefield(targetBattlefieldLoction,casterTeam,#casterBattlefields+1)
 
 
-        --刷新被占领方次前线法阵
-        --local nextBattlefield = targetBattlefields[#targetBattlefields-2]
-        Battlefields[casterTeam][# Battlefields[casterTeam]+1] = Battlefields[targetTeam][#Battlefields[targetTeam]]
+
+        --刷新被占领方次前线法阵成为开启状态
+        Battlefields[casterTeam][#Battlefields[casterTeam]+1] = Battlefields[targetTeam][#Battlefields[targetTeam]]
         Battlefields[targetTeam][#Battlefields[targetTeam]] = nil
 
         local goodFieldCount = #Battlefields[2]
@@ -119,6 +107,9 @@ function initHeroCaptureChannelSucceeded(keys)
         end
         if goodFieldCount == 0 then
             LaunchGoodBattlefield = nil
+            if goodMagicStone:HasModifier("modifier_magic_stone_protect_datadriven") then
+                goodMagicStone:RemoveModifierByName("modifier_magic_stone_protect_datadriven")
+            end
             print("goodFieldOver")
         end
 
@@ -130,6 +121,9 @@ function initHeroCaptureChannelSucceeded(keys)
 
         if badFieldCount == 0 then
             LaunchBadBattlefield = nil
+            if badMagicStone:HasModifier("modifier_magic_stone_protect_datadriven") then
+                badMagicStone:RemoveModifierByName("modifier_magic_stone_protect_datadriven")
+            end
             print("badFieldOver")
         end
         

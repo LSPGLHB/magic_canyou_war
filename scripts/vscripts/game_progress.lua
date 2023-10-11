@@ -97,7 +97,7 @@ function battleStep(gameRound)
         battleTime = battleTime - 1
 
         if battleTime % 30 == 0 then
-            --法阵激活
+            --法阵激活,每30秒一次
             battlefieldLaunchTimer()
             
         end
@@ -255,6 +255,15 @@ function checkWinTeam()
     if badAlive == 0 and GameRules.checkWinTeam == nil then--调试关闭,最终需要打开
         --GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
+
+    if not GameRules.goodMagicStone:IsAlive() then
+        GameRules.checkWinTeam = DOTA_TEAM_BADGUYS
+    end
+
+    if not GameRules.badMagicStone:IsAlive() then
+        GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
+    end
+
 end
 
 
@@ -263,10 +272,10 @@ end
 --每次轮回地图与玩家数据初始化
 function gameRoundInit()
     print("===================================gameRoundInit===================================")
-    --初始化所有玩家
-    initPlayerHero()
-    --初始化场景
-    initScene()
+    
+    initPlayerHero()--初始化所有玩家
+    initMagicStone()--初始化魔法石
+    initBattlefield()--初始化法阵
 
     --英雄位置初始化到预备阶段
     playerPositionTransfer(preparePointsTeam1,playersTeam1)
@@ -280,18 +289,15 @@ function initPlayerHero()
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             --初始化是否学习技能
             playerRoundLearn[playerID] = 0
-            --初始化所有临时BUFF（未做）
+            --初始化所有临时BUFF（未做好）（player_power）
             initTempPlayerPower()
-
-            --复活
+            --复活英雄
 
         end
     end
 end
 
-function initScene()
-    initMagicStone()
-end
+
 
 
 --指定玩家传送到指定地点

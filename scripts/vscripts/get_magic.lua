@@ -354,7 +354,7 @@ function openMagicListCKVTOLUA(keys)
 	local preMagic = hHero:GetAbilityByIndex(3):GetAbilityName()
 	local MagicLevel = 'c'
 	openUIMagicList( playerID )
-	getRandomMagicList(playerID,MagicLevel,preMagic,2)
+	getRandomMagicList(playerID,MagicLevel,preMagic,3)
 end
 
 function refreshMagicListJSTOLUA(index,keys)
@@ -379,7 +379,7 @@ function openMagicListC(playerID)
 	local preMagic = hHero:GetAbilityByIndex(3):GetAbilityName()
 	local MagicLevel = 'c'
 	openUIMagicList( playerID )
-	getRandomMagicList(playerID,MagicLevel,preMagic,2)
+	getRandomMagicList(playerID,MagicLevel,preMagic,3)
 end
 
 function openMagicListPreB(playerID)
@@ -394,7 +394,7 @@ function openMagicListB(playerID)
 	local preMagic = hHero:GetAbilityByIndex(4):GetAbilityName()
 	local MagicLevel = 'b'
 	openUIMagicList( playerID )
-	getRandomMagicList(playerID,MagicLevel,preMagic,2)
+	getRandomMagicList(playerID,MagicLevel,preMagic,3)
 end
 
 function openMagicListPreA(playerID)
@@ -409,7 +409,7 @@ function openMagicListA(playerID)
 	local preMagic = hHero:GetAbilityByIndex(5):GetAbilityName()
 	local MagicLevel = 'a'
 	openUIMagicList( playerID )
-	getRandomMagicList(playerID,MagicLevel,preMagic,2)
+	getRandomMagicList(playerID,MagicLevel,preMagic,3)
 end
 
 function openRebuildMagicList(playerID)

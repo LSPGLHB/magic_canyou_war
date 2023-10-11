@@ -77,10 +77,19 @@ function battlefieldIdle(keys)
     local casterLocation = caster:GetAbsOrigin()
     local ability = caster:GetAbilityByIndex(0)
     local refreshInterval = 20
+    local casterTeam = caster:GetTeam()
     
     Timers:CreateTimer(0,function()
         print("particlesLaunch")
-        local particlesLaunch = "particles/mofazhen_dizuo_1.vpcf"
+        local goodTeamParticlesLaunch = "particles/mofazhen_dizuo_1.vpcf"
+        local badTeamParticlesLaunch = "particles/mofazhen_dizuo_2.vpcf"
+        local particlesLaunch
+        if casterTeam == DOTA_TEAM_GOODGUYS then
+            particlesLaunch = goodTeamParticlesLaunch
+        end
+        if casterTeam == DOTA_TEAM_BADGUYS then
+            particlesLaunch = badTeamParticlesLaunch
+        end
         local particleID = ParticleManager:CreateParticle(particlesLaunch, PATTACH_ABSORIGIN_FOLLOW, caster)
         local groundPos = GetGroundPosition(caster:GetAbsOrigin(), caster)
         ParticleManager:SetParticleControl(particleID, 3, Vector(groundPos.x,groundPos.y,groundPos.z+10))
@@ -150,7 +159,17 @@ function battlefieldLaunch(keys)
         if workingFlag == true and loadingFlag == false then
             print("==================================battlefieldLaunch===========workingFlagtrue==============")
             loadingFlag = true
-            local particlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
+            local goodTeamParticlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
+            local badTeamParticlesGetBuff = "particles/mofahen_huoqu_yin.vpcf"
+            local particlesGetBuff
+            
+        print("battlefieldIdle"..casterTeam.."================================="..DOTA_TEAM_GOODGUYS)
+            if casterTeam == DOTA_TEAM_GOODGUYS then
+                particlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
+            end
+            if casterTeam == DOTA_TEAM_BADGUYS then
+                particlesGetBuff = "particles/mofahen_huoqu_yin.vpcf"
+            end
             Timers:CreateTimer(0,function()
                 local particleID = ParticleManager:CreateParticle(particlesGetBuff, PATTACH_ABSORIGIN_FOLLOW, caster)
                 ParticleManager:SetParticleControl(particleID, 1, position)

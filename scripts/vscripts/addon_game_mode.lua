@@ -143,13 +143,26 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 	GameRules.PreTime = 10
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
+	
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
+
+	
 	GameRules.nothingLabel ="nothingLabel" --抛物线用
 	GameRules.stoneLabel = "stoneLabel"
 	GameRules.shopLabel ="shopLabel"
 	GameRules.boxLabel = "boxLabel"
 	GameRules.battlefieldLabel = "battlefieldLabel"
+	--场景标签，一般不与子弹互动
+	GameRules.SceneLabel = {}
+	GameRules.SceneLabel[1] = GameRules.nothingLabel
+	GameRules.SceneLabel[2] = GameRules.stoneLabel
+	GameRules.SceneLabel[3] = GameRules.shopLabel
+	GameRules.SceneLabel[4] = GameRules.boxLabel
+	GameRules.SceneLabel[5] = GameRules.battlefieldLabel
+
+
+
 	GameRules.playerBaseHealth = 50
 	GameRules.playerBaseMana = 100
 	GameRules.playerBaseSpeed = 300
@@ -349,10 +362,12 @@ function magicCanyouWar:OnEntityKilled (keys)
 	--DeepPrintTable(keys)
 	local unit = EntIndexToHScript(keys.entindex_killed)
     local name = unit:GetContext("name")
-	local lable = unit:GetUnitLabel()
+	local label = unit:GetUnitLabel()
 
 	--物品掉落测试
-	RollDrops(unit)
+	if label == GameRules.boxLabel or unit:IsHero() then
+		RollDrops(unit)
+	end
 
 
 	--判断小怪被消灭，并刷新小怪
