@@ -1353,3 +1353,13 @@ function getRebuildMagicListByNameJSTOLUA( index,keys )
 	getRandomMagicList(playerID,MagicLevel,preMagic,2)
 
 end
+
+function closeMagicListTimeUp()
+	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+			if playerRoundLearn[playerID] == 0 then
+				closeUIMagicList(playerID)
+			end
+		end
+	end
+end

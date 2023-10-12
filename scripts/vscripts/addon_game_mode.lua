@@ -369,7 +369,6 @@ function magicCanyouWar:OnEntityKilled (keys)
 		RollDrops(unit)
 	end
 
-
 	--判断小怪被消灭，并刷新小怪
 	if name then
 		if name == "yang" then
@@ -378,9 +377,7 @@ function magicCanyouWar:OnEntityKilled (keys)
 		if name == "niu" then
 			createUnit("niu",DOTA_TEAM_BADGUYS)
 		end
-	end
-	
-	
+	end	
 end
 
 --导入页面文件

@@ -1,4 +1,5 @@
 require('shop')
+require('get_magic')
 require('player_status')
 function initShopStats()
     --初始化第一批商店列表
@@ -84,8 +85,10 @@ function openPlayerStatusJSTOLUA(index,keys)
     local myPlayerID = keys.PlayerID
     local myPlayer = PlayerResource:GetPlayer(myPlayerID)
     myPlayer.playerStatusShow = true
-    OnMyUIPlayerStatusOpen( myPlayerID )
-    showPlayerStatusPanel( myPlayerID )  
+    --OnMyUIPlayerStatusOpen( myPlayerID )
+    --showPlayerStatusPanel( myPlayerID )  
+    openRebuildMagicList(myPlayerID)
+
     --refreshPlayerStatus(myPlayerID) 
 end
 
