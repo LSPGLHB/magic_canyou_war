@@ -248,8 +248,30 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 
 	local listLength = #randomNameList
 
+	local titleLvl
+	local titleType
+	local titleValue
+	if MagicLevel == 'c' then
+		titleLvl = "初级"
+	end
+	if MagicLevel == 'b' then
+		titleLvl = "中级"
+	end
+	if MagicLevel == 'a' then
+		titleLvl = "高级"
+	end
+
+	if preMagic == 'null' then
+		titleType = "学习"
+	end
+	if preMagic ~= 'null' then
+		titleType = "进阶"
+	end
+	titleValue = "选择"..titleType.."一个"..titleLvl.."技能"
+	print("titleValue:"..titleValue)
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), functionForLUATOJS, {
         listLength=listLength, 
+		titleValue = titleValue,
         magicNameList = randomNameList,
 		abilityCooldownList = randomAbilityCooldownList,
 		abilityManaCostList = randomAbilityManaCostList,

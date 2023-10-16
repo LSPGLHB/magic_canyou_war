@@ -85,10 +85,13 @@ function openPlayerStatusJSTOLUA(index,keys)
     local myPlayerID = keys.PlayerID
     local myPlayer = PlayerResource:GetPlayer(myPlayerID)
     myPlayer.playerStatusShow = true
-    --OnMyUIPlayerStatusOpen( myPlayerID )
-    --showPlayerStatusPanel( myPlayerID )  
-    openRebuildMagicList(myPlayerID)
-
+    OnMyUIPlayerStatusOpen( myPlayerID )
+    showPlayerStatusPanel( myPlayerID )  
+    --openRebuildMagicList(myPlayerID)
+    --openMagicListPreC(myPlayerID)
+    --openRandomContractList(myPlayerID)
+    --openRandomTalentCList(myPlayerID)
+    --openRebuildMagicList(myPlayerID)
     --refreshPlayerStatus(myPlayerID) 
 end
 

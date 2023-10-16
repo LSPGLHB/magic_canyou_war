@@ -158,26 +158,6 @@ end
 
 
 
-function createBaby(playerid)
-    local followed_unit=PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']]
-    local chaoxiang=followed_unit:GetForwardVector()
-    local position=followed_unit:GetAbsOrigin()
-    local newposition=position-chaoxiang*100
-  
-  
-    local new_unit = CreateUnitByName("littlebug", newposition, true, nil, nil, followed_unit:GetTeam())
-    new_unit:SetForwardVector(chaoxiang)
-    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
-       function ()
-        new_unit:MoveToNPC(followed_unit)
-        return 0.2
-       end,0) 
-    --new_unit:SetControllableByPlayer(playerid, true)
-    PlayerStats[playerid]['group_pointer']=PlayerStats[playerid]['group_pointer']+1
-    PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']]=new_unit
-
-  end	
-
     --玩家英雄初始化
 function initHeroByPlayerID(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -200,9 +180,9 @@ function initHeroByPlayerID(playerID)
     hHero:AddAbility(commonAttack):SetLevel(1)
     hHero:AddAbility("pull_all_datadriven"):SetLevel(1)
     hHero:AddAbility("push_all_datadriven"):SetLevel(1)
-    hHero:AddAbility("fire_ball_datadriven"):SetLevel(1)
-    hHero:AddAbility("fire_bottle_datadriven"):SetLevel(1)
-    hHero:AddAbility("big_fire_ball_datadriven"):SetLevel(1)
+    hHero:AddAbility("nothing_c"):SetLevel(1)
+    hHero:AddAbility("nothing_b"):SetLevel(1)
+    hHero:AddAbility("nothing_a"):SetLevel(1)
     hHero:AddAbility("nothing_c_stage"):SetLevel(1)
     hHero:AddAbility("nothing_b_stage"):SetLevel(1)
     hHero:AddAbility("nothing_a_stage"):SetLevel(1)
@@ -327,5 +307,26 @@ function initGoldCoin()
 		end
         i = i + 1
 	end
-end]]
+end
 
+
+
+function createBaby(playerid)
+    local followed_unit=PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']
+    local chaoxiang=followed_unit:GetForwardVector()
+    local position=followed_unit:GetAbsOrigin()
+    local newposition=position-chaoxiang*100
+  
+  
+    local new_unit = CreateUnitByName("littlebug", newposition, true, nil, nil, followed_unit:GetTeam())
+    new_unit:SetForwardVector(chaoxiang)
+    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
+       function ()
+        new_unit:MoveToNPC(followed_unit)
+        return 0.2
+       end,0) 
+    --new_unit:SetControllableByPlayer(playerid, true)
+    PlayerStats[playerid]['group_pointer']=PlayerStats[playerid]['group_pointer']+1
+    PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']=new_unit
+
+  end	]]

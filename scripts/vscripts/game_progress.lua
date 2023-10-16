@@ -34,7 +34,7 @@ function prepareStep(gameRound)
     local step1 = "预备阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 3000 --准备阶段时长
+    local prepareTime = 1000 --准备阶段时长
     GameRules.checkWinTeam = nil
 
     initHeroStatus()
@@ -88,7 +88,7 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 2
-    local battleTime = 180 --战斗时间
+    local battleTime = 10 --战斗时间
     local battlefieldTimer = 30
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)

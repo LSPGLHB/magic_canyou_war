@@ -187,7 +187,7 @@ function traceStoneBallIntervalCallBack(shoot)
 		for k,unit in pairs(aroundUnits) do
 			--local unitEnergy = unit.energy_point
 			--local shootEnergy = shoot.energy_point
-			if checkIsEnemyNoSkill(shoot,unit) then
+			if checkIsEnemyHero(shoot,unit) then
 				shoot.trackUnit = unit
 				local shootSpeed = shoot.speed
 				shoot.speed = 0

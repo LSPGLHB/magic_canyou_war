@@ -14,14 +14,14 @@ function getRandomTalentList(playerID, talentType)
     print("getRandomTalentList===============:"..playerID.."==="..talentType)
     RandomTalentNameList[playerID][talentType] = getRandomArrayList(talentNameList[talentType], randomNumList)
     RandomTalentTextureNameList[playerID][talentType]  = getRandomArrayList(talentTextureNameList[talentType], randomNumList)
-    RandomTalentDescribeList[playerID][talentType]  = getRandomArrayList(talentDescribeList[talentType], randomNumList)
+    --RandomTalentDescribeList[playerID][talentType]  = getRandomArrayList(talentDescribeList[talentType], randomNumList)
 
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getRandomTalentListLUATOJS", {
         listLength = #RandomTalentNameList[playerID][talentType],
         talentType = talentType,
         nameList = RandomTalentNameList[playerID][talentType],
-        textureNameList = RandomTalentTextureNameList[playerID][talentType],
-        describeList = RandomTalentDescribeList[playerID][talentType]
+        textureNameList = RandomTalentTextureNameList[playerID][talentType]
+        --describeList = RandomTalentDescribeList[playerID][talentType]
     })
 
 end
@@ -37,7 +37,7 @@ function initTalentList()
     --公用数组随机列表
     RandomTalentNameList = {}
     RandomTalentTextureNameList= {}
-    RandomTalentDescribeList = {}
+    --RandomTalentDescribeList = {}
 
     playerTalentLearn = {}
     for i = 0, 9 do
@@ -47,30 +47,30 @@ function initTalentList()
         playerTalentLearn[i]['A'] = 'nil'
         RandomTalentNameList[i] = {}
         RandomTalentTextureNameList[i] = {}
-        RandomTalentDescribeList[i] = {}
+        --RandomTalentDescribeList[i] = {}
         RandomTalentNameList[i]['C'] = {}
         RandomTalentTextureNameList[i]['C']= {}
-        RandomTalentDescribeList[i]['C'] = {}
+        --RandomTalentDescribeList[i]['C'] = {}
         RandomTalentNameList[i]['B'] = {}
         RandomTalentTextureNameList[i]['B']= {}
-        RandomTalentDescribeList[i]['B'] = {}
+        --RandomTalentDescribeList[i]['B'] = {}
         RandomTalentNameList[i]['A'] = {}
         RandomTalentTextureNameList[i]['A']= {}
-        RandomTalentDescribeList[i]['A'] = {}
+        --RandomTalentDescribeList[i]['A'] = {}
     end
     --公用数组初始化
     talentNameList = {}
     talentTextureNameList = {}
-    talentDescribeList = {}
+    --talentDescribeList = {}
     talentNameList['C'] = {}
     talentTextureNameList['C']= {}
-    talentDescribeList['C'] = {}
+    --talentDescribeList['C'] = {}
     talentNameList['B'] = {}
     talentTextureNameList['B']= {}
-    talentDescribeList['B'] = {}
+    --talentDescribeList['B'] = {}
     talentNameList['A'] = {}
     talentTextureNameList['A']= {}
-    talentDescribeList['A'] = {}
+    --talentDescribeList['A'] = {}
 
 
     
@@ -86,14 +86,15 @@ function initTalentList()
                 talentCTextureName = v
                 c = c + 1
             end
+            --[[
             if k == "Describe" then
                 talentCDescribe = v
                 c = c + 1
-            end
-            if c == 2 then
+            end]]
+            if c == 1 then
                 table.insert(talentNameList['C'],talentCName)
                 table.insert(talentTextureNameList['C'],talentCTextureName)
-                table.insert(talentDescribeList['C'],talentCDescribe)
+                --table.insert(talentDescribeList['C'],talentCDescribe)
                 break
             end
         end
@@ -109,14 +110,15 @@ function initTalentList()
                 talentBTextureName = v
                 c = c + 1
             end
+            --[[
             if k == "Describe" then
                 talentBDescribe = v
                 c = c + 1
-            end
-            if c == 2 then
+            end]]
+            if c == 1 then
                 table.insert(talentNameList['B'],talentBName)
                 table.insert(talentTextureNameList['B'],talentBTextureName)
-                table.insert(talentDescribeList['B'],talentBDescribe)
+                --table.insert(talentDescribeList['B'],talentBDescribe)
                 break
             end
         end
@@ -132,14 +134,15 @@ function initTalentList()
                 talentATextureName = v
                 c = c + 1
             end
+            --[[
             if k == "Describe" then
                 talentADescribe = v
                 c = c + 1
-            end
+            end]]
             if c == 2 then
                 table.insert(talentNameList['A'],talentAName)
                 table.insert(talentTextureNameList['A'],talentATextureName)
-                table.insert(talentDescribeList['A'],talentADescribe)
+                --table.insert(talentDescribeList['A'],talentADescribe)
                 break
             end
         end
@@ -229,7 +232,7 @@ function learnTalentByNum(playerID, num, talentType)
 
     local talentName = RandomTalentNameList[playerID][talentType][num]
     local talentTextureName = RandomTalentTextureNameList[playerID][talentType][num]
-    local talentDescribe = RandomTalentDescribeList[playerID][talentType][num]
+    --local talentDescribe = RandomTalentDescribeList[playerID][talentType][num]
 
     
 
@@ -239,7 +242,7 @@ function learnTalentByNum(playerID, num, talentType)
         hHero:RemoveAbility(playerTalentLearn[playerID][talentType])
     end
     print("========talentName1=========:"..playerID..'='..talentType)
-    print("========talentName1=========:"..talentName..'='..talentDescribe)
+    --print("========talentName1=========:"..talentName..'='..talentDescribe)
     playerTalentLearn[playerID][talentType] = talentName
     hHero:AddAbility(talentName):SetLevel(1)
    
@@ -247,7 +250,7 @@ function learnTalentByNum(playerID, num, talentType)
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "setTalentUILUATOJS", {
         talentName = talentName,
         talentTextureName = talentTextureName,
-        talentDescribe = talentDescribe,
+        --talentDescribe = talentDescribe,
         talentType = talentType
     } )
     --标记已经学习技能
