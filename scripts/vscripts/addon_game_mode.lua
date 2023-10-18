@@ -146,13 +146,16 @@ function magicCanyouWar:InitGameMode()
 	
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
+	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
 
 	
-	GameRules.nothingLabel ="nothingLabel" --抛物线用
+	GameRules.nothingLabel ="nothingLabel" --抛物线用或其他不可被攻击的
 	GameRules.stoneLabel = "stoneLabel"
 	GameRules.shopLabel ="shopLabel"
 	GameRules.boxLabel = "boxLabel"
 	GameRules.battlefieldLabel = "battlefieldLabel"
+	GameRules.samsaraStoneLabel = "samsaraStoneLabel"
+
 	--场景标签，一般不与子弹互动
 	GameRules.SceneLabel = {}
 	GameRules.SceneLabel[1] = GameRules.nothingLabel
@@ -160,7 +163,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.SceneLabel[3] = GameRules.shopLabel
 	GameRules.SceneLabel[4] = GameRules.boxLabel
 	GameRules.SceneLabel[5] = GameRules.battlefieldLabel
-
+	GameRules.SceneLabel[6] = GameRules.samsaraStoneLabel
 
 
 	GameRules.playerBaseHealth = 50
@@ -171,7 +174,9 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 
-	GameRules:SetStartingGold(10)
+	GameRules:SetStartingGold(60)
+	GameRules:SetUseBaseGoldBountyOnHeroes(true)
+	GameRules:SetFirstBloodActive(false)
 	
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
@@ -269,10 +274,21 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "rebuildMagicByNameJSTOLUA", rebuildMagicByNameJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "getRebuildMagicListByNameJSTOLUA", getRebuildMagicListByNameJSTOLUA ) 
 	
-	--没用的家伙
-	--CustomGameEventManager:RegisterListener( "lua_to_js", OnLuaToJs )
-	CustomGameEventManager:RegisterListener( "myui_open", OnMyUIOpen )
-	--CustomGameEventManager:RegisterListener( "uimsg_open", OnUIMsg )
+	--测试的家伙
+	CustomGameEventManager:RegisterListener( "OnTestUIOpen", OnTestUIOpen )
+	CustomGameEventManager:RegisterListener( "buttonaJSTOLUA", buttonaJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonbJSTOLUA", buttonbJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttoncJSTOLUA", buttoncJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttondJSTOLUA", buttondJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttoneJSTOLUA", buttoneJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonfJSTOLUA", buttonfJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttongJSTOLUA", buttongJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonhJSTOLUA", buttonhJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttoniJSTOLUA", buttoniJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonjJSTOLUA", buttonjJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonkJSTOLUA", buttonkJSTOLUA )
+
+
 	--测试快捷键
 	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)
 		self:On_ed_open_my_shop(keys)
@@ -455,6 +471,11 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 					
 					--天赋面板
 					CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
+
+
+					--测试流程面板
+					CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+
 					--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 					--showPlayerStatusPanel( playerID ) 
 					--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)

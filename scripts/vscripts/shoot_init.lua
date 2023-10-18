@@ -279,7 +279,7 @@ function checkIsTeamHero(shoot,unit)
 	local unitTeam = unit:GetTeam()
 	local label = unit:GetUnitLabel()
 	local isSceneLabel = checkIsSceneLabel(unit)
-	if shoot ~= unit and unit ~= caster and casterTeam == unitTeam and unit:IsHero() then
+	if shoot ~= unit and unit ~= caster and casterTeam == unitTeam and (unit:IsHero() or label == GameRules.summonLabel) then
 		isTeamHero = true
 	end
 	return isTeamHero
@@ -293,7 +293,7 @@ function checkIsEnemyHero(shoot,unit)
 	local casterTeam = caster:GetTeam()
 	local unitTeam = unit:GetTeam()
 	local label = unit:GetUnitLabel()
-	if casterTeam ~= unitTeam and shoot ~= unit and unit ~= caster and (unit:IsHero() or label == GameRules.magicStoneLabel) then
+	if casterTeam ~= unitTeam and shoot ~= unit and unit ~= caster and (unit:IsHero() or label == GameRules.magicStoneLabel or label == GameRules.summonLabel) then
 		isEnemyHero = true
 	end
 	return isEnemyHero
@@ -301,7 +301,7 @@ end
 
 --是否非场景标签
 function checkIsSceneLabel(unit)
-	local isMainUnit = false
+	local isSceneLabel = false
 
 	local unitTeam = unit:GetTeam()
 	local label = unit:GetUnitLabel()

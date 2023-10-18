@@ -102,3 +102,60 @@ function closePlayerStatusJSTOLUA(index,keys)
     OnMyUIPlayerStatusClose(myPlayerID)
 end
 
+
+
+--test
+function buttonaJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openMagicListPreC(myPlayerID)
+end
+
+function buttonbJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openMagicListPreB(myPlayerID)
+end
+
+function buttoncJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openMagicListPreA(myPlayerID)
+end
+
+function buttondJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openRandomContractList(myPlayerID)
+end
+
+function buttoneJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openMagicListC(myPlayerID)
+end
+
+function buttonfJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openMagicListB(myPlayerID)
+end
+
+function buttongJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openMagicListA(myPlayerID)
+end
+
+function buttonhJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openRebuildMagicList(myPlayerID)
+end
+
+function buttoniJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openRandomTalentCList(myPlayerID)
+end
+
+function buttonjJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openRandomTalentBList(myPlayerID)
+end
+
+function buttonkJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    openRandomTalentAList(myPlayerID)
+end

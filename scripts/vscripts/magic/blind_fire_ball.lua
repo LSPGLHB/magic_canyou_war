@@ -17,7 +17,7 @@ function shootStartCharge(keys)
 		caster.blind_fire_ball_cooldown = 0.0
 		caster.blind_fire_ball_charges = max_charges
 	end
-
+	print("shootStartCharge:"..counterModifierName)
 	--ability:EndCooldown()
 	caster:SetModifierStackCount( counterModifierName, caster, caster.blind_fire_ball_charges )
 

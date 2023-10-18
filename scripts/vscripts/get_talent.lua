@@ -139,7 +139,7 @@ function initTalentList()
                 talentADescribe = v
                 c = c + 1
             end]]
-            if c == 2 then
+            if c == 1 then
                 table.insert(talentNameList['A'],talentAName)
                 table.insert(talentTextureNameList['A'],talentATextureName)
                 --table.insert(talentDescribeList['A'],talentADescribe)

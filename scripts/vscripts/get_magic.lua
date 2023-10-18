@@ -268,7 +268,7 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 		titleType = "进阶"
 	end
 	titleValue = "选择"..titleType.."一个"..titleLvl.."技能"
-	print("titleValue:"..titleValue)
+	--print("titleValue:"..titleValue)
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), functionForLUATOJS, {
         listLength=listLength, 
 		titleValue = titleValue,
@@ -1216,8 +1216,6 @@ function initMagicList()
 				table.insert(magicList['boundsDamageCountList_81'],boundsDamageCount_81)
 				table.insert(magicList['shootCountList_82'],shootCount_82)
 				table.insert(magicList['GSpeedList_83'],GSpeed_83)
-
-				
 				break
 			end
 		end
@@ -1291,11 +1289,21 @@ function learnMagicByNum(playerID, num)
 		--print("tempStageMagic",tempStageMagic)
 		--print("stageAbility",stageAbility)
 		hHero:RemoveAbility(tempStageMagic) 
+
+		local stageModifiersName = "modifier_counter_"..tempStageMagic
+		if hHero:HasModifier(stageModifiersName) then
+			hHero:RemoveModifierByName(stageModifiersName)
+		end
 		hHero:AddAbility(stageAbility)	
 		--hHero:FindAbilityByName(stageAbility):SetLevel(1)
 	end
 	local tempMagic = hHero:GetAbilityByIndex(abilityIndex):GetAbilityName()
-	hHero:RemoveAbility(tempMagic) 
+	hHero:RemoveAbility(tempMagic)
+	local modifiersName = "modifier_counter_"..tempMagic
+	print("ddddddddddddddddddd=============="..modifiersName)
+	if hHero:HasModifier(modifiersName) then
+		hHero:RemoveModifierByName(modifiersName)
+	end
 	hHero:AddAbility(magicName)
 	hHero:FindAbilityByName(magicName):SetLevel(1)
 

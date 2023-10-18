@@ -17,7 +17,8 @@ function initMapStats()
     playerRoundLearn = {}
 
     TreasureBoxGold = "treasureBoxGold"
-
+    --轮回石初始化
+    initSamsaraStone()
 
     --魔法石初始化
     initMagicStone()
@@ -59,7 +60,7 @@ function initMapStats()
     --CreateHeroForPlayer("niu",-1)
 
 end
-
+--测试用
 function initTreasureBox()
     local treasureBox1Entities = Entities:FindByName(nil,"treasureBox1") 
     local treasureBox1Location = treasureBox1Entities:GetAbsOrigin()
@@ -72,7 +73,18 @@ function initTreasureBox()
 
 end
 
+--轮回石初始化
+function initSamsaraStone()
+    local goodSamsaraStoneEntities = Entities:FindByName(nil,"goodSamsaraStone") 
+    local goodSamsaraStoneLocation = goodSamsaraStoneEntities:GetAbsOrigin()
+    local goodSamsaraStone = CreateUnitByName("samsaraStone", goodSamsaraStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    goodSamsaraStone:SetSkin(0)
+    goodSamsaraStone:SetAngles(0, 270, 10)
+    goodSamsaraStone:GetAbilityByIndex(0):SetLevel(1)
+    
 
+
+end
 
 
 --魔法石初始化
@@ -123,14 +135,18 @@ end
 function creatShop()
     local shop1=Entities:FindByName(nil,"shop1") 
     local shop1Pos = shop1:GetAbsOrigin()
-    local unit = CreateUnitByName("shopUnit", shop1Pos, true, nil, nil, DOTA_TEAM_GOODGUYS)
-    unit:SetContext("name", "shop", 0)
+    local unit1 = CreateUnitByName("shopUnit", shop1Pos, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    unit1:SetAngles(0, 225, 0)
+    unit1:GetAbilityByIndex(0):SetLevel(1)
+    unit1:SetContext("name", "shop", 0)
 
 
     local shop2=Entities:FindByName(nil,"shop2") 
     local shop2Pos = shop2:GetAbsOrigin()
-    local unit = CreateUnitByName("shopUnit", shop2Pos, true, nil, nil, DOTA_TEAM_BADGUYS)
-    unit:SetContext("name", "shop", 0)
+    local unit2 = CreateUnitByName("shopUnit", shop2Pos, true, nil, nil, DOTA_TEAM_BADGUYS)
+    unit2:SetAngles(0, 225, 0)
+    unit2:GetAbilityByIndex(0):SetLevel(1)
+    unit2:SetContext("name", "shop", 0)
 end
 
 
@@ -152,7 +168,6 @@ function createUnit(unitName,team)
     print("team=5"..DOTA_TEAM_NOTEAM)
     print("team=4"..DOTA_TEAM_NEUTRALS)]]
     local unit = CreateUnitByName(unitName, location, true, nil, nil, team)
-
     unit:SetContext("name", unitName, 0)
 end
 

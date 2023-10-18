@@ -432,7 +432,78 @@
 				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
             }
         }
+    }
 
+    //商人
+    "shop_datadriven"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilityType"               "scene"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "init_val"			    "0"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_samsara_stone_idle_datadriven"
+            {
+                "IsHidden"			"1"
+                "Passive"				"1"
+                "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+
+        }
+    }
+
+
+
+
+    //轮回石
+    "samsara_stone_datadriven"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilityType"               "scene"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "init_val"			    "0"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_samsara_stone_idle_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_IDLE"   
+            }
+
+            "modifier_samsara_stone_ability_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"   
+            }
+        }
     }
 
  

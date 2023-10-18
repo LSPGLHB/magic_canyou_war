@@ -34,7 +34,7 @@ function prepareStep(gameRound)
     local step1 = "预备阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 1000 --准备阶段时长
+    local prepareTime = 10000 --准备阶段时长
     GameRules.checkWinTeam = nil
 
     initHeroStatus()
@@ -191,7 +191,6 @@ end
 
 --预备阶段执行学习项目
 function getUpGradeListByRound(gameRound)
-  
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             if gameRound == 1 then
@@ -227,11 +226,8 @@ function getUpGradeListByRound(gameRound)
             if gameRound == 11 then
                 openRandomTalentAList(playerID)
             end
-
         end
-    end
-   
-       
+    end   
 end
 
 --判断回合胜利方

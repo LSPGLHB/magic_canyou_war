@@ -13,7 +13,7 @@
 		"ConsideredHero"            "1"  
 		// 小地图图标尺寸
 		"MinimapIconSize"	"50"
-		"UnitLabel"	"niuniu"
+		"UnitLabel"	"summonLabel"
 		// 技能 1.
 		"Ability1"	""
 		// 技能 2.
@@ -237,7 +237,7 @@
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/doom/doom.vmdl"//"models/heroes/invoker/forge_spirit.vmdl"//"models\heroes\gyro\gyro_missile.mdl"	// Model.
 		"BaseClass"					"npc_dota_hero"//"npc_dota_creature"//"npc_dota_base_additive"//(忘记哪里来的additive)
-		"UnitLabel"					"yangyang"
+		"UnitLabel"					"summonLabel"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"
 		"ModelScale"				"1"
@@ -267,9 +267,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"20"		// Experience earn.
-		"BountyGoldMin"				"20"		// Gold earned min.
-		"BountyGoldMax"				"30"		// Gold earned max.
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------
@@ -307,7 +307,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""			// Ability 1
+		"Ability1"					"shop_datadriven"			// Ability 1
 		"Ability2"					""			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
@@ -483,7 +483,7 @@
 		"ModelScale"	"1.0"
 		// 小地图图标尺寸
 		"MinimapIconSize"	"50"
-		//"UnitLabel"	"huoren"
+		"UnitLabel"	"summonLabel"
 		//"UnitFlag"                  "MKF"
 		// 技能 1.
 		"Ability1"	"frost_blast_datadriven"
@@ -811,54 +811,7 @@
         "IdleSoundLoop"             ""
 	}
 
-	"shootUnit2"
-	{
-	    "BaseClass"                 "npc_dota_earth_spirit_stone"
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
-        "UnitLabel"					"skillLabel"
-
-		"ModelScale"                "0.1"
-		"ShouldDoFlyHeightVisual"  "100"
-        "MinimapIcon" ""
-   		"MinimapIconSize" "50"
-    	"HealthBarOffset" "-1"
-    	"Ability1" ""  
-  	  	"Ability2" ""
-  	  	"Ability3" ""
-    	"Ability4" ""
-  	  	"Ability5" ""
-    	"Ability6" ""
-  	  	"Ability7" ""
-    	"Ability8" ""
-   	 	"ArmorPhysical" "3"                                             
-    	"MagicalResistance" "0"
-    	"AttackCapabilities" "DOTA_UNIT_CAP_NO_ATTACK"                 
- 		"AttackDamageMin" "0"                                                  
-  		"AttackDamageMax" "0"                                                 
- 		"AttackRate""0.45"                                         
-  		"AttackAnimationPoint" "1"                                  
- 		"AttackAcquisitionRange" "500"                                 
-   		"AttackRange" "400"
-    	"ProjectileModel" ""
-    	"ProjectileSpeed" ""
-	    "BountyXP" "0"
-    	"BountyGoldMin" "0"                                          
-    	"BountyGoldMax" "0"
-    	"BoundsHullName" "DOTA_HULL_SIZE_SMALL"
-    	"RingRadius" "50"                                               
-  		"MovementCapabilities" "DOTA_UNIT_CAP_MOVE_FLY"                
-        "MovementSpeed" "0"                                             
-        "MovementTurnRate" "1"                                           
-    	"StatusHealth"		"2"                             
-    	"StatusHealthRegen" "0"                                     
-    	"StatusMana" "0"
-    	"StatusManaRegen" "0"
-   	                              
-    	"CombatClassAttack" "DOTA_COMBAT_CLASS_ATTACK_PIRECE"            
-    	"CombatClassDefend" "DOTA_COMBAT_CLASS_DEFEND_SOFT"        
-    	"UnitRelationshipClass" "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-    	"VisionDaytimeRange" "1500"
-	}
+	
 
 	"skillUnit"
 	{
@@ -890,8 +843,8 @@
     	"ProjectileModel" ""
     	"ProjectileSpeed" ""
 	    "BountyXP" "0"
-    	"BountyGoldMin" "3"                                          
-    	"BountyGoldMax" "3"
+    	"BountyGoldMin" "0"                                          
+    	"BountyGoldMax" "0"
     	"BoundsHullName" "DOTA_HULL_SIZE_SMALL"
     	"RingRadius" "50"                                               
   		"MovementCapabilities" "DOTA_UNIT_CAP_MOVE_FLY"                
@@ -936,8 +889,8 @@
     	"ProjectileModel" ""
     	"ProjectileSpeed" ""
 	    "BountyXP" "0"
-    	"BountyGoldMin" "3"                                          
-    	"BountyGoldMax" "3"
+    	"BountyGoldMin" "0"                                          
+    	"BountyGoldMax" "0"
     	"BoundsHullName" "DOTA_HULL_SIZE_SMALL"
     	"RingRadius" "50"                                               
   		"MovementCapabilities" "DOTA_UNIT_CAP_MOVE_FLY"                
@@ -984,8 +937,8 @@
     	"ProjectileModel" ""
     	"ProjectileSpeed" ""
 	    "BountyXP" "0"
-    	"BountyGoldMin" "3"                                          
-    	"BountyGoldMax" "3"
+    	"BountyGoldMin" "0"                                          
+    	"BountyGoldMax" "0"
     	"BoundsHullName" "DOTA_HULL_SIZE_SMALL"
     	"RingRadius" "50"                                               
   		"MovementCapabilities" "DOTA_UNIT_CAP_MOVE_FLY"                
@@ -1032,8 +985,8 @@
     	"ProjectileModel" ""
     	"ProjectileSpeed" ""
 	    "BountyXP" "0"
-    	"BountyGoldMin" "3"                                          
-    	"BountyGoldMax" "3"
+    	"BountyGoldMin" "0"                                          
+    	"BountyGoldMax" "0"
     	"BoundsHullName" "DOTA_HULL_SIZE_SMALL"
     	"RingRadius" "50"                                               
   		"MovementCapabilities" "DOTA_UNIT_CAP_MOVE_FLY"                
@@ -1682,9 +1635,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"20"		// Experience earn.
-		"BountyGoldMin"				"20"		// Gold earned min.
-		"BountyGoldMax"				"30"		// Gold earned max.
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------
@@ -1744,9 +1697,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"20"		// Experience earn.
-		"BountyGoldMin"				"20"		// Gold earned min.
-		"BountyGoldMax"				"30"		// Gold earned max.
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------
@@ -1770,6 +1723,67 @@
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
+	}
+
+	"samsaraStone"
+	{
+		"Model"						"models/props_gameplay/team_portal/team_portal.vmdl"
+		"BaseClass"					"npc_dota_base_additive"
+		"UnitLabel"					"samsaraStoneLabel"
+		"SoundSet"					"0"			// Name of sound set.
+		"Level"						"1"
+		"ModelScale"				"1"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"samsara_stone_datadriven"			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.CAP_MOVE
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackRate"				"1.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"			// Speed.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"6"		// Base health.
+		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
+		"HealthBarOffset" 			"350"
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"400"		// Range of vision at night time.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}
 
 }
