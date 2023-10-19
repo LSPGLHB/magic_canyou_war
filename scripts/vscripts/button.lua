@@ -102,6 +102,19 @@ function closePlayerStatusJSTOLUA(index,keys)
     OnMyUIPlayerStatusClose(myPlayerID)
 end
 
+function getRandomGoldJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    --local myPlayer = PlayerResource:GetPlayer(myPlayerID)
+    --local hHero = PlayerResource:GetSelectedHeroEntity(myPlayerID)
+    local min = keys.min
+    local max = keys.max
+    local randomGold = string.format("%.1f", math.random()) * (max-min) + min
+    local playerGold = PlayerResource:GetGold(myPlayerID) + randomGold
+    PlayerResource:SetGold(myPlayerID,playerGold,true)
+    --添加获取金币声音
+    
+end
+
 
 
 --test

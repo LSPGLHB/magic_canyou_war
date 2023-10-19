@@ -19,9 +19,9 @@ function getGoldCoin(keys)
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
     local worth = keys.worth
-    local holder = keys.holder
-    --print('========================'..playerID)
-    PlayerResource:SetGold(playerID,worth,true)
+    --print('getGoldCoin=========='..playerID.."="..worth)
+    local playerGold = PlayerResource:GetGold(playerID) + worth
+    PlayerResource:SetGold(playerID,playerGold,true)
 end
 
 function initHeroOrder(keys)

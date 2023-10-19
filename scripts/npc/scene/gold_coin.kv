@@ -4,11 +4,10 @@
 	{
 		"ID"                                "1100"
 		"BaseClass"                         "item_datadriven"
-		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"  							"models/props_gameplay/gold_bag.vmdl"
 		"ItemType"               			"goldCoin" 
-        "Worth"                             "10"
-        "Holder"                            "player"
+
 
 		"ItemDroppable"                        "1"
 		"ItemSellable"                        "1"
@@ -22,21 +21,23 @@
 
 		"OnSpellStart"
 		{
+			//用于使用后消失
+			"SpendCharge"
+    		{}
 			"RunScript"
 			{
 				"ScriptFile"		"scene/order_click.lua"
                 "Function"			"getGoldCoin"
 				"worth"             "10"
-        		"holder"            "player"
 			}
 		}
 	}
 
     "item_gold_coin_5"
 	{
-		"ID"                                "1100"
+		"ID"                                "1101"
 		"BaseClass"                         "item_datadriven"
-		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"  							"models/props_gameplay/gold_bag.vmdl"
 		"ItemType"               			"goldCoin"
         
@@ -53,6 +54,9 @@
 
 		"OnSpellStart"
 		{
+			//用于使用后消失
+			"SpendCharge"
+    		{}
 			"RunScript"
 			{
 				"ScriptFile"		"scene/order_click.lua"
@@ -66,9 +70,9 @@
 
     "item_gold_coin_2"
 	{
-		"ID"                                "1100"
+		"ID"                                "1102"
 		"BaseClass"                         "item_datadriven"
-		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"  							"models/props_gameplay/gold_bag.vmdl"
 		"ItemType"               			"goldCoin"
         
@@ -85,6 +89,9 @@
 
 		"OnSpellStart"
 		{
+			//用于使用后消失
+			"SpendCharge"
+    		{}
 			"RunScript"
 			{
 				"ScriptFile"		"scene/order_click.lua"

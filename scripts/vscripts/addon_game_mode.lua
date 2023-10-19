@@ -136,11 +136,6 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupTimeout(1) --0后无法选英雄？？？设置设置(赛前)阶段的超时。 0 = 立即开始, -1 = 永远 (直到FinishCustomGameSetup 被调用) 
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
-	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
-	GameRules:SetStartingGold(60)
-	GameRules:SetUseBaseGoldBountyOnHeroes(true)
-	GameRules:SetFirstBloodActive(false)
-
 	GameRules.PreTime = 10
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
@@ -172,8 +167,12 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 
-
+	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
+	GameRules:SetStartingGold(0)
+	GameRules:SetUseBaseGoldBountyOnHeroes(true)
+	GameRules:SetFirstBloodActive(false)
 	
+	GameRules:SetHeroRespawnEnabled(false)
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)
@@ -234,9 +233,7 @@ function magicCanyouWar:InitGameMode()
 
 
 	--监听UI事件,这是按钮事件管理器 --(监听名，回调函数)
-	CustomGameEventManager:RegisterListener( "js_to_lua", OnJsToLua ) 
-
-
+	CustomGameEventManager:RegisterListener( "js_to_lua", OnJsToLua )
 
 	--商店按钮监听
 	CustomGameEventManager:RegisterListener( "openShopJSTOLUA", openShopJSTOLUA )  

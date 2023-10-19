@@ -211,6 +211,8 @@ function initHeroByPlayerID(playerID)
     --hHero:GetAbilityByIndex(10):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(999) --重新设置复活时间
+
+    PlayerResource:SetGold(playerID,60,true)
 end
 
 

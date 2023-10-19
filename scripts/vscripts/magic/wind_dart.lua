@@ -181,7 +181,7 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 										false)
 	--找到符合条件最近的
 	for k,unit in pairs(aroundUnits) do
-		local isEnemyHero = checkIsEnemyNoSkill(shoot,unit)
+		local isEnemyHero = checkIsEnemyHero(shoot,unit)
 		if isEnemyHero then 
 			local isfaceSp1 = isFaceByFaceAngle(unit, shoot, windAngle)
 			if isfaceSp1 then
