@@ -1,0 +1,148 @@
+"DOTAAbilities"
+{
+    "item_dragon_squama"
+    {
+        "ID"			"6030"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "boots_of_elves_lg"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+
+
+        "ItemType"               "equip"     //equip类型才会在商店出现
+        "IconSrc"                "file://{images}/custom_game/shop_item/boots_of_elves_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_dragon_squama"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_dragon_squama_Description"
+        "ItemCost"               "5"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_defense"              "10"  
+            }
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_dragon_squama_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/dragon_squama.lua"
+                        "Function"			"modifier_item_dragon_squama_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/dragon_squama.lua"
+                        "Function"			"modifier_item_dragon_squama_on_destroy"
+                    }
+                }
+            }
+
+           
+        }
+    }
+
+"item_dragon_squama_2"
+    {
+        "ID"			"6031"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "shivas_guard_lg"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "IconSrc"                "file://{images}/custom_game/shop_item/shivas_guard_lg.png" 
+		"ItemShowName"           "#DOTA_Tooltip_ability_item_dragon_squama_2"
+        "ItemDescribe"           "#DOTA_Tooltip_ability_item_dragon_squama_2_Description" 
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_defense"              "20"
+            }
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_dragon_squama_2_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/dragon_squama.lua"
+                        "Function"			"modifier_item_dragon_squama_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/dragon_squama.lua"
+                        "Function"			"modifier_item_dragon_squama_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "item_recipe_dragon_squama_2"
+    {
+        "ID"                          "6032"
+        "BaseClass"                      "item_recipe_arcane_boots"
+        "ItemCost"                    "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_dragon_squama_2"
+        ItemRequirements   
+        {
+                "01"    "item_dragon_squama;item_dragon_squama"
+        }
+
+    }
+
+
+}
+
