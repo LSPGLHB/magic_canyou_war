@@ -63,10 +63,7 @@ function Precache( context )
 
 	print("BEGIN TO PRECACHE RESOURCE")
 --[[
-
 	local time = GameRules:GetGameTime()
-	
-
 	time = time - GameRules:GetGameTime()
 	print("DONE PRECACHEING IN:"..tostring(time).."Seconds")
 ]]
@@ -91,8 +88,6 @@ function Precache( context )
 	PrecacheUnitByNameSync("npc_dota_hero_ancient_apparition", context)
 	PrecacheUnitByNameSync("npc_dota_hero_enigma", context)
 
-	
-	
 --[[
 	print("Precache...")
     local precache_list = require("precache")
@@ -132,7 +127,6 @@ function magicCanyouWar:InitGameMode()
 	local init_flag = 0
 	--GameRules:SetHeroSelectionTime(20)--选英雄时间(可用)
 	GameRules:SetStrategyTime(0) --选英雄了后选装备时间（可用）
-	
 	--GameRules:SetShowcaseTime(20)
 	--GameRules:SetTreeRegrowTime(60) -- 设置树木重生时间
 	--GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0) --物品交换冷却
@@ -141,9 +135,13 @@ function magicCanyouWar:InitGameMode()
 
 	--GameRules:SetCustomGameSetupTimeout(1) --0后无法选英雄？？？设置设置(赛前)阶段的超时。 0 = 立即开始, -1 = 永远 (直到FinishCustomGameSetup 被调用) 
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
-	GameRules.PreTime = 10
+
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
-	
+	GameRules:SetStartingGold(60)
+	GameRules:SetUseBaseGoldBountyOnHeroes(true)
+	GameRules:SetFirstBloodActive(false)
+
+	GameRules.PreTime = 10
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
 	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
@@ -174,9 +172,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 
-	GameRules:SetStartingGold(60)
-	GameRules:SetUseBaseGoldBountyOnHeroes(true)
-	GameRules:SetFirstBloodActive(false)
+
 	
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
@@ -208,7 +204,8 @@ function magicCanyouWar:InitGameMode()
 
 	
 
-	--设置4*4队伍组合
+	--设置队伍组合
+
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 5 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 5 )
 	--GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 5 )
@@ -273,6 +270,7 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "learnMagicByNameJSTOLUA", learnMagicByNameJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "rebuildMagicByNameJSTOLUA", rebuildMagicByNameJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "getRebuildMagicListByNameJSTOLUA", getRebuildMagicListByNameJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "getRandomGoldJSTOLUA", getRandomGoldJSTOLUA ) 
 	
 	--测试的家伙
 	CustomGameEventManager:RegisterListener( "OnTestUIOpen", OnTestUIOpen )
