@@ -82,8 +82,6 @@ function initSamsaraStone()
     goodSamsaraStone:SetAngles(0, 270, 10)
     goodSamsaraStone:GetAbilityByIndex(0):SetLevel(1)
     
-
-
 end
 
 
@@ -192,18 +190,19 @@ function initHeroByPlayerID(playerID)
     end
     --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
     --hHero:RemoveAbility(tempAbility) 
-    hHero:AddAbility(commonAttack):SetLevel(1)
-    hHero:AddAbility("pull_all_datadriven"):SetLevel(1)
-    hHero:AddAbility("push_all_datadriven"):SetLevel(1)
-    hHero:AddAbility("nothing_c"):SetLevel(1)
-    hHero:AddAbility("nothing_b"):SetLevel(1)
-    hHero:AddAbility("nothing_a"):SetLevel(1)
-    hHero:AddAbility("nothing_c_stage"):SetLevel(1)
-    hHero:AddAbility("nothing_b_stage"):SetLevel(1)
-    hHero:AddAbility("nothing_a_stage"):SetLevel(1)
-    hHero:AddAbility("hero_order_datadriven"):SetLevel(1)
-    hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1)
-    hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1)
+    hHero:AddAbility(commonAttack):SetLevel(1)  --0
+    hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --1
+    hHero:AddAbility("push_all_datadriven"):SetLevel(1) --2
+    hHero:AddAbility("nothing_c"):SetLevel(1) --3
+    hHero:AddAbility("nothing_b"):SetLevel(1) --4
+    hHero:AddAbility("nothing_a"):SetLevel(1) --5
+    hHero:AddAbility("nothing_c_stage"):SetLevel(1) --6
+    hHero:AddAbility("nothing_b_stage"):SetLevel(1) --7
+    hHero:AddAbility("nothing_a_stage"):SetLevel(1) --8
+    hHero:AddAbility("hero_order_datadriven"):SetLevel(1) --9
+    hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1) --10
+    hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1) --11
+    hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --12
     
 
 
@@ -303,6 +302,13 @@ function initDropInfo(unit)
         end
     end
 
+end
+
+function heroStudyFinish(playerID)
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+    if hHero:HasModifier("modifier_hero_study_datadriven") then
+		hHero:RemoveModifierByName("modifier_hero_study_datadriven")
+	end
 end
 
 

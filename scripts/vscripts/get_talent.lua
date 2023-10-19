@@ -256,4 +256,5 @@ function learnTalentByNum(playerID, num, talentType)
     --标记已经学习技能
 	playerRoundLearn[playerID] = 1
     closeUITalentList(playerID)
+    heroStudyFinish(playerID)
 end

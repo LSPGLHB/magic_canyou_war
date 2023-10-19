@@ -280,6 +280,25 @@
         }
     }
 
+    //英雄隐藏属性配置
+    "hero_hidden_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "MaxLevel"                      "1"
+
+        "Modifiers"
+        {
+            "modifier_hero_study_datadriven"
+            {
+                "OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
+                "States"
+                {
+                    "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+                }   
+            }
+        }
+    }
 
     //监测玩家点击动作使用
     "hero_order_datadriven"
@@ -303,7 +322,6 @@
                     }
                 }
             }
-
         }
     }
 
@@ -506,6 +524,7 @@
         }
     }
 
- 
 
+
+ 
 }

@@ -24,22 +24,57 @@ function gameProgress()
     gameInit()--游戏数据初始化，配置数据
     --游戏轮数
     local gameRound = 1
-    prepareStep(gameRound)--开始游戏进程
+    studyStep(gameRound)--开始游戏进程
 end
 
+--学习阶段
+function studyStep(gameRound)
+    print("onStepLoopStudy========start"..gameRound)
+    GameRules.checkWinTeam = nil
+    local step0 = "魔法学习阶段倒数："
+    local studyTime = 16
+    local interval = 1 --运算间隔
+    local loadingTime = 1.5 --延迟时间 
+
+    initHeroStatus()
+    getUpGradeListByRound(gameRound)
+
+    Timers:CreateTimer(0 ,function ()
+        studyTime = studyTime -1
+        local topTips = "第"..NumberStr[gameRound].."轮战斗"
+        local bottomTips = step0 .. studyTime .. "秒"
+        sendMsgOnScreenToAll(topTips,bottomTips)
+
+        if studyTime < 1 then
+            --为未学习技能的玩家启动随机学习
+            if gameRound ~= 4 and gameRound < 8 then
+                randomLearnMagic(gameRound)
+            end
+            if gameRound == 4 then 
+                randomLearnContract()
+            end
+            if gameRound == 8 then
+                closeMagicListTimeUp()
+            end
+            if gameRound > 8 then
+                randomLearnTalent(gameRound)
+            end
+            prepareStep(gameRound)
+            return nil
+        end
+
+        return interval
+    end)
+end
 
 --预备阶段
 function prepareStep(gameRound)
-    print("onStepLoop1========start"..gameRound)
-    local step1 = "预备阶段倒数："
+    print("onStepLoopPrepare========start"..gameRound)
+    local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 3000 --准备阶段时长
-    GameRules.checkWinTeam = nil
-
-    initHeroStatus()
+    local prepareTime = 21 --准备阶段时长 
     
-    getUpGradeListByRound(gameRound)
     --信息发送到前端
     Timers:CreateTimer(0 ,function ()
         --local gameTime = getNowTime()
@@ -49,25 +84,12 @@ function prepareStep(gameRound)
         sendMsgOnScreenToAll(topTips,bottomTips)
 
         --时间结束则跳出计时循环进行下一阶段
-        if prepareTime == 0  then
+        if prepareTime < 1  then
             --输出准备结束信息
             prepareOverMsgSend()
             --预备阶段结束后启动战斗阶段
             Timers:CreateTimer(loadingTime,function ()
                 print("onStepLoop1========over",gameRound)
-                --为未学习技能的玩家启动随机学习
-                if gameRound ~= 4 and gameRound < 8 then
-                    randomLearnMagic(gameRound)
-                end
-                if gameRound == 4 then 
-                    randomLearnContract()
-                end
-                if gameRound == 8 then
-                    closeMagicListTimeUp()
-                end
-                if gameRound > 8 then
-                    randomLearnTalent(gameRound)
-                end
                 --进入战斗阶段倒计时
                 battleStep(gameRound)
                 return nil
@@ -137,7 +159,6 @@ function battleStep(gameRound)
                 allPlayerStop()
                 
                 
-
                 --进行下一轮战斗
                 Timers:CreateTimer(loadingTime,function ()
                     GameRules.checkWinTeam = nil
@@ -145,7 +166,7 @@ function battleStep(gameRound)
                     --每次轮回初始化地图与数据
                     gameRoundInit()
 
-                    prepareStep(gameRound) 
+                    studyStep(gameRound) 
                     return nil
                 end)
                 return nil
@@ -184,14 +205,21 @@ function initHeroStatus()
             hHero:GetAbilityByIndex(6):EndCooldown()
             hHero:GetAbilityByIndex(7):EndCooldown()
             hHero:GetAbilityByIndex(8):EndCooldown()
+
+            
         end
     end
 end
 
 --预备阶段执行学习项目
 function getUpGradeListByRound(gameRound)
+   
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local heroHiddenStatusAbility = hHero:GetAbilityByIndex(12)
+            heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = -1}) 
+            
             if gameRound == 1 then
                 openMagicListPreC(playerID)
             end

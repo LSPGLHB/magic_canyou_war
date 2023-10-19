@@ -170,6 +170,7 @@ function learnContractByNum(playerID, num)
     --标记已经学习技能
 	playerRoundLearn[playerID] = 1
     closeUIContractList(playerID)
+    heroStudyFinish(playerID)
 end
 
 
