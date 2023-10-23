@@ -35,6 +35,8 @@ function initMapStats()
     playerOrderTarget = {}
     playerRandomItemNumList = {}
     playerOrderTimer = {}
+    playerShopLock = {}
+    playerRefreshCost = {}
     for i = 0, 9 do
         playerContractLearn[i]={}
         playerContractLearn[i]['contractName'] = 'nil'
@@ -46,6 +48,9 @@ function initMapStats()
         playerOrderTarget[i] = 'nil'
         playerOrderTimer[i] = 1
         playerRandomItemNumList[i] = {}
+
+        playerShopLock[i] = 0
+        playerRefreshCost[i] = GameRules.refreshCost
     end
    
 
@@ -173,6 +178,7 @@ end
 
     --玩家英雄初始化
 function initHeroByPlayerID(playerID)
+    --print("initHeroByPlayerID:"..playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local heroTeam = hHero:GetTeam()
     for i = 0 , hHero:GetAbilityCount() do
@@ -185,7 +191,7 @@ function initHeroByPlayerID(playerID)
     if heroTeam == DOTA_TEAM_GOODGUYS then
         commonAttack = "common_attack_good_datadriven"
     end
-    if heroTeam == DOTA_TEAM_BADDGUYS then
+    if heroTeam == DOTA_TEAM_BADGUYS then
         commonAttack = "common_attack_bad_datadriven"
     end
     --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
@@ -204,13 +210,10 @@ function initHeroByPlayerID(playerID)
     hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1) --11
     hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --12
     
-
-
     --hHero:GetAbilityByIndex(9):SetHidden(true)--也不行
     --hHero:GetAbilityByIndex(10):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(999) --重新设置复活时间
-
     PlayerResource:SetGold(playerID,60,true)
 end
 
@@ -310,6 +313,8 @@ function heroStudyFinish(playerID)
 		hHero:RemoveModifierByName("modifier_hero_study_datadriven")
 	end
 end
+
+
 
 
 --[[

@@ -228,25 +228,20 @@ function learnTalentByNum(playerID, num, talentType)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local talentTag = 'talentName'..talentType
 
-
-
     local talentName = RandomTalentNameList[playerID][talentType][num]
     local talentTextureName = RandomTalentTextureNameList[playerID][talentType][num]
     --local talentDescribe = RandomTalentDescribeList[playerID][talentType][num]
-
-    
 
     if playerTalentLearn[playerID][talentType] ~= 'nil' then
         local modifierName = "modifier_talent_"..playerTalentLearn[playerID][talentType].."_datadriven"
         hHero:RemoveModifierByName(modifierName)
         hHero:RemoveAbility(playerTalentLearn[playerID][talentType])
     end
-    print("========talentName1=========:"..playerID..'='..talentType)
+    --print("========talentName1=========:"..playerID..'='..talentType)
     --print("========talentName1=========:"..talentName..'='..talentDescribe)
     playerTalentLearn[playerID][talentType] = talentName
     hHero:AddAbility(talentName):SetLevel(1)
    
-
     CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "setTalentUILUATOJS", {
         talentName = talentName,
         talentTextureName = talentTextureName,

@@ -4,6 +4,7 @@ require('get_magic')
 require('get_talent')
 require('game_init')
 require('scene/battlefield')
+require('button')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
     --print("======sendMsgOnScreenToAll======")
@@ -36,8 +37,11 @@ function studyStep(gameRound)
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
 
-    initHeroStatus()
+    initHeroStatus()   
     getUpGradeListByRound(gameRound)
+
+    refreshShopList(true)
+    
 
     Timers:CreateTimer(0 ,function ()
         studyTime = studyTime -1
@@ -73,7 +77,8 @@ function prepareStep(gameRound)
     local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 21 --准备阶段时长 
+    local prepareTime = 210 --准备阶段时长 
+
     
     --信息发送到前端
     Timers:CreateTimer(0 ,function ()
@@ -111,7 +116,7 @@ function battleStep(gameRound)
     local interval = 1
     local loadingTime = 2
     local battleTime = 300 --战斗时间
-    local battlefieldTimer = 30
+    local battlefieldTimer = 30--法阵刷新
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
     playerPositionTransfer(battlePointsTeam2,playersTeam2)
@@ -205,8 +210,7 @@ function initHeroStatus()
             hHero:GetAbilityByIndex(6):EndCooldown()
             hHero:GetAbilityByIndex(7):EndCooldown()
             hHero:GetAbilityByIndex(8):EndCooldown()
-
-            
+  
         end
     end
 end
@@ -309,12 +313,12 @@ function gameRoundInit()
      
 end    
 
-function initPlayerHero()
-    
+function initPlayerHero()  
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             --初始化是否学习技能
             playerRoundLearn[playerID] = 0
+            playerRefreshCost[playerID] = GameRules.refreshCost
             --初始化所有临时BUFF（未做好）（player_power）
             initTempPlayerPower()
             --复活英雄
@@ -323,6 +327,17 @@ function initPlayerHero()
     end
 end
 
+function refreshShopList(initLockFlag)
+    --刷新商店列表
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            if playerShopLock[playerID] == 0 then
+                refreshShopListByPlayerID(playerID)
+            end
+            playerShopLock[playerID] = 0
+        end
+    end
+end
 
 
 

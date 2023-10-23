@@ -2,12 +2,6 @@ require('shop')
 require('get_magic')
 require('player_status')
 function initShopStats()
-    --初始化第一批商店列表
-    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-			refreshShopList(playerID)
-        end
-    end
 
     Timers:CreateTimer(0,function ()
         --print("==============checkShop================")
@@ -61,18 +55,35 @@ end
 function refreshShopJSTOLUA(index,keys)
     local playerID = keys.PlayerID
     --local player = PlayerResource:GetPlayer(playerID)
-    refreshShopList(playerID)
-    OnMyUIShopClose(playerID)
-    OnMyUIShopOpen(playerID)
-    getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
+    local currentGold = PlayerResource:GetGold(playerID)
+    local refreshCost = playerRefreshCost[playerID]
+    if currentGold >= refreshCost then
+        playerShopLock[playerID] = 0
+        PlayerResource:SpendGold(playerID, refreshCost,0)
+        currentGold = PlayerResource:GetGold(playerID)
+        CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
+            playerGold = currentGold
+        })
+        playerRefreshCost[playerID] = refreshCost + GameRules.refreshCostAdd
+        refreshShopListByPlayerID(playerID)
+        OnMyUIShopClose(playerID)
+        OnMyUIShopOpen(playerID)
+        getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
+    else
+        print("金币不足")
+    end
+    
 end
 
 
-function refreshShopList(playerID)
+
+function refreshShopListByPlayerID(playerID)
     local itemNameList = GameRules.itemNameList
     local count = #itemNameList
     --print("itemNameList=====================",count)
+    --print("================================================================refreshShopListByPlayerID:"..playerShopLock[playerID])
     playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
+
     --local randomItemNumList = getRandomNumList(1,count,6)
     --print("randomItemNumList",#randomItemNumList)
     --local player = PlayerResource:GetPlayer(playerID)
@@ -80,19 +91,14 @@ function refreshShopList(playerID)
 end
 
 
-
+--打开全局信息栏
 function openPlayerStatusJSTOLUA(index,keys)
     local myPlayerID = keys.PlayerID
     local myPlayer = PlayerResource:GetPlayer(myPlayerID)
     myPlayer.playerStatusShow = true
     OnMyUIPlayerStatusOpen( myPlayerID )
     showPlayerStatusPanel( myPlayerID )  
-    --openRebuildMagicList(myPlayerID)
-    --openMagicListPreC(myPlayerID)
-    --openRandomContractList(myPlayerID)
-    --openRandomTalentCList(myPlayerID)
-    --openRebuildMagicList(myPlayerID)
-    --refreshPlayerStatus(myPlayerID) 
+
 end
 
 function closePlayerStatusJSTOLUA(index,keys)

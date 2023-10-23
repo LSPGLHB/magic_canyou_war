@@ -4,8 +4,13 @@ function getRandomArrayList(arrayList, randomNumList)
     local randomArrayList = {}
     for i = 1, #randomNumList do
         local tempNum = randomNumList[i]
+        if tempNum == -1 then
+            table.insert(randomArrayList,"sellOut")
+        end
         --print("randomNumList",tempNum,arrayList[tempNum])
-        table.insert(randomArrayList,arrayList[tempNum])
+        if tempNum ~= -1 then
+            table.insert(randomArrayList,arrayList[tempNum])
+        end
         --print("randomNumList"..tempNum..":"..abilityNameList[tempNum])
     end
    --[[

@@ -603,13 +603,15 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	--控制时间(在其他地方执行)
 end
 
---施放技能时buff加强
+--施放技能时buff加强(目前存在重大bug，弃用，待重构)
 function initDurationBuff(keys)
+	--[[
 	setPlayerDurationBuffByName(keys,"vision",GameRules.playerBaseVision)
 	setPlayerDurationBuffByName(keys,"speed",GameRules.playerBaseSpeed)
 	setPlayerDurationBuffByName(keys,"health",GameRules.playerBaseHealth)
 	setPlayerDurationBuffByName(keys,"mana",GameRules.playerBaseMana)
 	setPlayerDurationBuffByName(keys,"mana_regen",GameRules.playerBaseManaRegen)
+	]]
 end
 
 function shootSoundAndParticle(shoot, type)--type为nil只发声

@@ -39,7 +39,6 @@ function initItemList()
 
 			if c == 3 then
 				table.insert(itemNameList,itemName)
-
 				table.insert(itemCostList,itemCost)
 				table.insert(itemTextureNameList,itemTextureName)
 				break
@@ -47,13 +46,8 @@ function initItemList()
 		end
 	end
 	GameRules.itemNameList = itemNameList
-
 	GameRules.itemCostList = itemCostList
 	GameRules.itemTextureNameList = itemTextureNameList
-
-
-
-	
 end
 
 function getPlayerShopListByRandomList(playerID, randomNumList)
@@ -69,6 +63,8 @@ function getPlayerShopListByRandomList(playerID, randomNumList)
 	--print("listLength",listLength)
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getShopItemListLUATOJS", {
 		num = listLength, 
+		lock = playerShopLock[playerID],
+		refreshCost = playerRefreshCost[playerID],
 		randomItemNameList = randomItemNameList, 
 		randomItemCostList = randomItemCostList,
 		randomItemTextureNameList = randomItemTextureNameList
@@ -101,10 +97,26 @@ function buyShopJSTOLUA(index,keys)
 		CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
 			playerGold = currentGold
 		})
+		playerRandomItemNumList[playerID][num] = -1
 	else
 		print("金币不足")
 	end
 	
+end
+
+
+function lockShopJSTOLUA(index,keys)
+	local playerID = keys.PlayerID
+	--print("lockShopJSTOLUAF:"..playerShopLock[playerID])
+	if playerShopLock[playerID] == 0 then
+		playerShopLock[playerID] = 1
+		return nil
+	end
+	if playerShopLock[playerID] == 1 then
+		playerShopLock[playerID] = 0
+		return nil
+	end
+
 end
 
 

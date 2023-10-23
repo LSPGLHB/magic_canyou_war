@@ -137,6 +137,8 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
 	GameRules.PreTime = 10
+	GameRules.refreshCost = 0
+	GameRules.refreshCostAdd = 0
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
 	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
@@ -240,6 +242,7 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "closeShopJSTOLUA", closeShopJSTOLUA )  
 	CustomGameEventManager:RegisterListener( "refreshShopJSTOLUA", refreshShopJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "buyShopJSTOLUA", buyShopJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "lockShopJSTOLUA", lockShopJSTOLUA )
 
 	--信息板按钮
 	CustomGameEventManager:RegisterListener( "openPlayerStatusJSTOLUA", openPlayerStatusJSTOLUA )
@@ -299,7 +302,7 @@ function magicCanyouWar:InitGameMode()
 		initTalentList() --初始化天赋信息
 		initMagicList()--初始化技能信息
 		--initGoldCoin() --初始化金币
-
+		--print("DOTA_MAX_TEAM_PLAYERS:"..DOTA_MAX_TEAM_PLAYERS)
 		init_flag = 1
 	end
 
@@ -452,35 +455,33 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-					--PlayerResource:SetGold(playerID,50,true)	--所有玩家金钱增量
-					--getRandomItem(playerID) 商店打开测试
-					--print("============initbutton============")
-					--CustomUI:DynamicHud_Destroy(-1,"UIButtonBox")
-					--右下按钮显示
-					CustomUI:DynamicHud_Create(playerID,"UIButtonBox","file://{resources}/layout/custom_game/UI_button.xml",nil)
-					Timers:CreateTimer(2,function ()
-						CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "initJS", {})
-					end)
-					--契约板面
-					CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
-					
-					--天赋面板
-					CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
+				local player = PlayerResource:GetPlayer(playerID)
+				--PlayerResource:SetGold(playerID,50,true)	--所有玩家金钱增量
+				--getRandomItem(playerID) 商店打开测试
+				--print("============initbutton============")
+				--CustomUI:DynamicHud_Destroy(-1,"UIButtonBox")
+				--右下按钮显示
+				CustomUI:DynamicHud_Create(playerID,"UIButtonBox","file://{resources}/layout/custom_game/UI_button.xml",nil)
+				Timers:CreateTimer(2,function ()
+					CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "initJS", {})
+				end)
+				--契约板面
+				CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
+				
+				--天赋面板
+				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
+				--测试流程面板
+				CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
 
-					--测试流程面板
-					CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
-
-					--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
-					--showPlayerStatusPanel( playerID ) 
-					--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)
-					initHeroByPlayerID(playerID)
+				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
+				--showPlayerStatusPanel( playerID ) 
+				--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)
+				initHeroByPlayerID(playerID)
 			end
 		end
-
 		gameProgress()--此处打开游戏流程的进程
-
-		
+	
 --[[
 		--开启游戏进程
 		local countPreTime = GameRules.PreTime
@@ -502,8 +503,6 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		end)
 ]]
 	end
-
-
 end
 
 

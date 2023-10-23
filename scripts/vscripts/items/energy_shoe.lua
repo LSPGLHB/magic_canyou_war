@@ -16,10 +16,10 @@ function refreshItemBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     local duration_speed_precent_final = ability:GetSpecialValueFor( "duration_speed_precent_final") 
     local item_speed_duration = ability:GetSpecialValueFor( "item_speed_duration") 
-
+--[[
     setPlayerPower(playerID, "duration_speed_precent_final", flag, duration_speed_precent_final)
     setPlayerPower(playerID, "player_speed_duration", flag, item_speed_duration)
 
     setPlayerBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
-
+]]
 end

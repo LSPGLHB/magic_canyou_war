@@ -157,13 +157,13 @@ function battlefieldLaunch(keys)
 
         
         if workingFlag == true and loadingFlag == false then
-            print("==================================battlefieldLaunch===========workingFlagtrue==============")
+            --print("==================================battlefieldLaunch===========workingFlagtrue==============")
             loadingFlag = true
             local goodTeamParticlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
             local badTeamParticlesGetBuff = "particles/mofahen_huoqu_yin.vpcf"
             local particlesGetBuff
             
-        print("battlefieldIdle"..casterTeam.."================================="..DOTA_TEAM_GOODGUYS)
+            --print("battlefieldIdle"..casterTeam.."================================="..DOTA_TEAM_GOODGUYS)
             if casterTeam == DOTA_TEAM_GOODGUYS then
                 particlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
             end
@@ -176,15 +176,17 @@ function battlefieldLaunch(keys)
                 caster.loadingParticleID = particleID
             end)
         end
-        if loadingFlag == true then
-            count = count + 0.1
-            print(count)
-        end
+       
         if workingFlag == false and loadingFlag == true then
-            print("==================================battlefieldFlatl===========workingFlagfalse==============")
+            --print("==================================battlefieldFlatl===========workingFlagfalse==============")
             loadingFlag = false
             ParticleManager:DestroyParticle(caster.loadingParticleID, true)
             count = 0
+        end
+        
+        if loadingFlag == true then
+            count = count + 0.1
+            --print(count)
         end
 
         if string.format("%.1f",count) > string.format("%.1f",getBuffTime) then 
@@ -232,11 +234,11 @@ end
 function battlefieldDelete(caster)
 
     if caster.loadingParticleID ~= nil then
-        print(caster.loadingParticleID)
+        --print(caster.loadingParticleID)
         ParticleManager:DestroyParticle(caster.loadingParticleID, true)
     end
     if caster.idleParticleID ~= nil then
-        print(caster.idleParticleID)
+        --print(caster.idleParticleID)
         ParticleManager:DestroyParticle(caster.idleParticleID, true)
     end
 

@@ -278,8 +278,13 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"20"		// Base health.
+		"StatusHealth"				"100"		// Base health.
 		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
+
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -330,9 +335,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"20"		// Experience earn.
-		"BountyGoldMin"				"20"		// Gold earned min.
-		"BountyGoldMax"				"30"		// Gold earned max.
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------
@@ -382,7 +387,7 @@
 		// 技能 8 -最高就显示6个技能，后面添加的技能将不显示
 		"Ability8"	""
 		// 基础护甲
-		"ArmorPhysical"	"3"
+		"ArmorPhysical"	"0"
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 攻击类型：DOTA_UNIT_CAP_NO_ATTACK         不能攻击

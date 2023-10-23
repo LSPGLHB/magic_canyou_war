@@ -39,6 +39,7 @@
 #base items/energy_abc.kv
 #base items/energy_match_helper_abc.kv
 
+//#base items/energy_shoe.kv
 
 #base items/sky_eye.kv
 #base items/dragon_eye.kv
