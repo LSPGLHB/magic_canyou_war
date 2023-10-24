@@ -110,7 +110,7 @@ function battlefieldLaunchTimer()
             end
             ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_ability2_datadriven", {Duration = buffStay}) --此modifier会启动算法battlefieldLaunch
             
-            local randomNum = math.random(1,100)
+            local randomNum = 1--= math.random(1,100)
             if randomNum < 33 then
                 ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_vision_datadriven", {Duration = buffStay})
                 Battlefields[i][fieldCount].battlefieldBuff = "vision"
@@ -211,8 +211,20 @@ function battlefieldLaunch(keys)
             
             local buffName = caster.battlefieldBuff
             print("getBuff:"..buffName)
-            for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+            local abilityName = "battlefield_"..buffName.."_buff_datadriven"
+            local modifierName = "modifier_battlefield_"..buffName.."_buff_datadriven"
 
+            for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+                if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+                    local hHero = PlayerResource:GetSelectedHeroEntity(playerID) --为什么是nil
+                    if hHero:HasModifier(modifierName) then
+                        hHero:RemoveModifierByName(modifierName)
+                    end
+                    if hHero:HasAbility(abilityName) then
+                        hHero:RemoveAbility(abilityName)
+                    end
+                    hHero:AddAbility(abilityName):SetLevel(1)
+                end
             end
             return nil
         end

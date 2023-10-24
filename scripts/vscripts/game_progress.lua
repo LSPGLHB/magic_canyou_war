@@ -77,7 +77,7 @@ function prepareStep(gameRound)
     local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
-    local prepareTime = 210 --准备阶段时长 
+    local prepareTime = 21 --准备阶段时长 
 
     
     --信息发送到前端

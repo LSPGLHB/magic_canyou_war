@@ -375,24 +375,17 @@
         }
 
 
-
+        //法阵加强用神符
         //持续时间限定
-        "ability_health_control_duration"
+        "ability_health_control_battlefield"
         {
                 "BaseClass"                     "ability_datadriven"
                 "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
-                "OnUpgrade"
-                {
-                        "RunScript"
-                        {
-                                "ScriptFile"			"contract/player_duration_buff.lua"
-                                "Function"			"initHealth"
-                        }
-                }
+
                 "Modifiers"
                 {
-                        "modifier_health_buff_duration"
+                        "modifier_health_buff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsBuff"                    "1"
@@ -405,7 +398,7 @@
                                 }
                         }
 
-                        "modifier_health_debuff_duration"
+                        "modifier_health_debuff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsDebuff"          "1"
@@ -420,26 +413,15 @@
                 }
         }
 
-        "ability_vision_control_duration"
+        "ability_vision_control_battlefield"
         {
                 "BaseClass"                     "ability_datadriven"
                 "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
 
-
-
-                "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"contract/player_duration_buff.lua"
-				"Function"			"initVision"
-			}
-		}
-
                 "Modifiers"
                 {
-                        "modifier_vision_buff_duration"
+                        "modifier_vision_buff_battlefield"
                         {
                                 //"Passive"	    "1"
                                 "IsBuff"            "1"
@@ -452,7 +434,7 @@
                                         "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"       "1"
                                 }
                         }
-                        "modifier_vision_debuff_duration"
+                        "modifier_vision_debuff_battlefield"
                         {
                                 //"Passive"	    "1"
                                 "IsDebuff"          "1"
@@ -469,23 +451,15 @@
                 }
         }
 
-        "ability_speed_control_duration"
+        "ability_speed_control_battlefield"
         {
                 "BaseClass"                     "ability_datadriven"
                 "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
 
-                "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"contract/player_duration_buff.lua"
-				"Function"			"initSpeed"
-			}
-		}
                 "Modifiers"
                 {
-                        "modifier_speed_buff_duration"
+                        "modifier_speed_buff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsBuff"                    "1"
@@ -497,7 +471,7 @@
                                         "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"        "1"
                                 }
                         }
-                        "modifier_speed_debuff_duration"
+                        "modifier_speed_debuff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsDebuff"          "1"
@@ -512,22 +486,14 @@
                 }
         }
 
-        "ability_mana_control_duration"
+        "ability_mana_control_battlefield"
         {
                 "BaseClass"                     "ability_datadriven"
                 "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
-                "OnUpgrade"
-                {
-                        "RunScript"
-                        {
-                                "ScriptFile"			"contract/player_duration_buff.lua"
-                                "Function"			"initMana"
-                        }
-                }
                 "Modifiers"
                 {
-                        "modifier_mana_buff_duration"
+                        "modifier_mana_buff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsBuff"                    "1"
@@ -539,7 +505,7 @@
                                         "MODIFIER_PROPERTY_MANA_BONUS"        "1"
                                 }
                         }
-                        "modifier_mana_debuff_duration"
+                        "modifier_mana_debuff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsDebuff"          "1"
@@ -554,22 +520,15 @@
                 }
         }
         
-        "ability_mana_regen_control_duration"
+        "ability_mana_regen_control_battlefield"
         {
                 "BaseClass"                     "ability_datadriven"
                 "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
-                "OnUpgrade"
-                {
-                        "RunScript"
-                        {
-                                "ScriptFile"			"contract/player_duration_buff.lua"
-                                "Function"			"initManaRegen"
-                        }
-                }
+
                 "Modifiers"
                 {
-                        "modifier_mana_regen_buff_duration"
+                        "modifier_mana_regen_buff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsBuff"                    "1"
@@ -581,7 +540,7 @@
                                         "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"        "1"
                                 }
                         }
-                        "modifier_mana_regen_debuff_duration"
+                        "modifier_mana_regen_debuff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsDebuff"          "1"
@@ -596,14 +555,14 @@
                 }
         }
 
-        "ability_defense_control_duration"
+        "ability_defense_control_battlefield"
         {
                 "BaseClass"                     "ability_datadriven"
                 "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
-                        "modifier_defense_buff_duration"
+                        "modifier_defense_buff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsHidden"          "0"
@@ -614,7 +573,7 @@
                                         "MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"        "1"
                                 }
                         }
-                        "modifier_defense_debuff_duration"
+                        "modifier_defense_debuff_battlefield"
                         {
                                 //"Passive"		    "1"
                                 "IsDebuff"          "1"
