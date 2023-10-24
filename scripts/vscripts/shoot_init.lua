@@ -597,7 +597,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 		shoot.aoe_radius = ability:GetSpecialValueFor("hit_range")
 	else
 		local rangeBase = shoot.aoe_radius
-		local rangeBuffName = 'range'
+		local rangeBuffName = 'radius'
 		shoot.aoe_radius = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
 	end
 	--控制时间(在其他地方执行)

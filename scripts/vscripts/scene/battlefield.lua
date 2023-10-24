@@ -99,7 +99,7 @@ end
 
 --法阵定期激活
 function battlefieldLaunchTimer()
-
+    --good=2,bad=3
     for i=2,3,1 do
         local fieldCount = #Battlefields[i]
         if fieldCount > 0 then
@@ -109,7 +109,24 @@ function battlefieldLaunchTimer()
                 LaunchBattlefield:RemoveModifierByName("modifier_battlefield_idle_ACT_datadriven")
             end
             ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_ability2_datadriven", {Duration = buffStay}) --此modifier会启动算法battlefieldLaunch
-            ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_vision_datadriven", {Duration = buffStay})
+            
+            local randomNum = math.random(1,100)
+            if randomNum < 33 then
+                ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_vision_datadriven", {Duration = buffStay})
+                Battlefields[i][fieldCount].battlefieldBuff = "vision"
+            end
+
+            if randomNum > 33 and randomNum < 66 then
+                ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_speed_datadriven", {Duration = buffStay})
+                Battlefields[i][fieldCount].battlefieldBuff = "speed"
+            end
+
+            if randomNum > 66 then
+                ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_mana_regan_datadriven", {Duration = buffStay})
+                Battlefields[i][fieldCount].battlefieldBuff = "manaRegan"
+            end
+
+            
         end
 
     end
@@ -162,7 +179,6 @@ function battlefieldLaunch(keys)
             local goodTeamParticlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
             local badTeamParticlesGetBuff = "particles/mofahen_huoqu_yin.vpcf"
             local particlesGetBuff
-            
             --print("battlefieldIdle"..casterTeam.."================================="..DOTA_TEAM_GOODGUYS)
             if casterTeam == DOTA_TEAM_GOODGUYS then
                 particlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
@@ -192,7 +208,12 @@ function battlefieldLaunch(keys)
         if string.format("%.1f",count) > string.format("%.1f",getBuffTime) then 
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
-            print("getBuff")
+            
+            local buffName = caster.battlefieldBuff
+            print("getBuff:"..buffName)
+            for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+
+            end
             return nil
         end
 

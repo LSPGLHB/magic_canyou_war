@@ -1322,10 +1322,8 @@ function getRebuildMagicList(playerID)
 	local magic_b = hHero:GetAbilityByIndex(4):GetAbilityName()
 	local magic_a = hHero:GetAbilityByIndex(5):GetAbilityName()
 
-
 	local rebuildNameList = {}
 	local rebuildIconList = {}
-
 
 	for i = 1 , #magicList['magicNameList'] do
 		local listNum = 0
@@ -1381,7 +1379,7 @@ function getRebuildMagicListByNameJSTOLUA( index,keys )
 
 	closeUIMagicList(playerID)
 	openUIMagicList( playerID )
-	getRandomMagicList(playerID,MagicLevel,preMagic,2)
+	getRandomMagicList(playerID,MagicLevel,preMagic,3)
 
 end
 
