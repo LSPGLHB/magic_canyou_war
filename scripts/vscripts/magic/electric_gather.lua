@@ -157,9 +157,9 @@ function moveElectricGatherSp1(keys,shoot)
 	local pull_back_distance = ability:GetSpecialValueFor("pull_back_distance") 
 	local charge_time = ability:GetSpecialValueFor("charge_time") 
 	local charge_interval =  ability:GetSpecialValueFor("charge_interval")
-	local speed = ability:GetSpecialValueFor("speed")
-    local max_distance = ability:GetSpecialValueFor("max_distance")
 
+    local max_distance = ability:GetSpecialValueFor("max_distance")
+	
 	local timeCount = 0
 	caster.electric_gather_send = 0
 	shoot.traveled_back_distance = 0

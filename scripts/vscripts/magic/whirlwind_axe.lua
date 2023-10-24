@@ -4,10 +4,8 @@ function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
-	--local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
-    local max_distance = ability:GetSpecialValueFor("max_distance") -- (skillPoint - casterPoint ):Length2D()
+    local max_distance = ability:GetSpecialValueFor("max_distance") 
     local sendDirection = (skillPoint - casterPoint):Normalized()
     caster:SetForwardVector(sendDirection)
     
@@ -31,9 +29,8 @@ function createShoot(keys)
         local casterDirection = caster:GetForwardVector()
         local shoot = CreateUnitByName(keys.unitModel, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,casterDirection)
-        --过滤掉增加施法距离的操作
-        --shoot.max_distance_operation = max_distance
-        --shoot.aoe_radius = aoe_radius
+
+
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID

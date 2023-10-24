@@ -7,8 +7,7 @@ function createShoot(keys)
     --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate")
-    --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
-    local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
+   
     
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -26,8 +25,8 @@ function createShoot(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
-        --shoot.aoe_radius = aoe_radius
 
+        local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
         aoe_duration = getFinalValueOperation(caster:GetPlayerID(),aoe_duration,'control',keys.AbilityLevel,nil)
         aoe_duration = getApplyControlValue(shoot, aoe_duration)
         shoot.aoe_duration = aoe_duration

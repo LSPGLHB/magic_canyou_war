@@ -5,7 +5,6 @@ function createLightBall(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate")
 

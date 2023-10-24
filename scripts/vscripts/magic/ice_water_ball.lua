@@ -7,10 +7,7 @@ function createShoot(keys)
     --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
 
-    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
-    local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
     local casterPoint = caster:GetAbsOrigin()
-
 
     local direction = (skillPoint - casterPoint):Normalized()
     local xPoint_distance = (skillPoint - casterPoint):Length2D()
@@ -29,8 +26,7 @@ function createShoot(keys)
     
     local shoot_sp1 = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot_sp1,caster,max_distance,direction_sp1)
-    shoot_sp1.aoe_radius = aoe_radius
-    shoot_sp1.aoe_duration = aoe_duration
+
     local particleID = ParticleManager:CreateParticle(keys.particles_nm_sp1, PATTACH_ABSORIGIN_FOLLOW , shoot_sp1)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot_sp1, PATTACH_POINT_FOLLOW, nil, shoot_sp1:GetAbsOrigin(), true)
     shoot_sp1.particleID = particleID
@@ -48,8 +44,7 @@ function createShoot(keys)
 
     local shoot_sp2 = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot_sp2,caster,max_distance,direction_sp2)
-    shoot_sp2.aoe_radius = aoe_radius
-    shoot_sp2.aoe_duration = aoe_duration
+
     local particleID = ParticleManager:CreateParticle(keys.particles_nm_sp2, PATTACH_ABSORIGIN_FOLLOW , shoot_sp2)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot_sp2, PATTACH_POINT_FOLLOW, nil, shoot_sp2:GetAbsOrigin(), true)
     shoot_sp2.particleID = particleID

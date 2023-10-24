@@ -5,7 +5,7 @@ function createShoot(keys)
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
-    local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+    --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
 
 
 
@@ -18,7 +18,7 @@ function createShoot(keys)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
-    shoot.aoe_radius = aoe_radius
+    --shoot.aoe_radius = aoe_radius
 
     local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
     aoe_duration = getFinalValueOperation(caster:GetPlayerID(),aoe_duration,'control',keys.AbilityLevel,nil)

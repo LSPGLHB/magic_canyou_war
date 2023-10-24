@@ -4,8 +4,6 @@ function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
-	--local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance") -- (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()

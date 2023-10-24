@@ -4,7 +4,6 @@ function createControlRock(keys)
     local caster = keys.caster
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
-    local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
     local casterPoint = caster:GetAbsOrigin()
@@ -14,7 +13,7 @@ function createControlRock(keys)
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     shoot.angleRate = angleRate
     local casterBuff = keys.modifier_caster_syn_name
-	local flyDuration = shoot.max_distance_operation / speed 
+	local flyDuration = shoot.max_distance_operation / shoot.speed 
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = flyDuration})
 
     local ability_a_name	= keys.ability_a_name
