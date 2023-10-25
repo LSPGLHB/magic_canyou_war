@@ -365,7 +365,7 @@
 	"sky_eye"
 	{
 		"BaseClass"	"npc_dota_creature"//"npc_dota_base_additive"//
-		"Model"	 "models/heroes/snapfire/snapfire_magma_projectile.vmdl"
+		"Model"	 "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl"
 		"ModelScale"	"0.1"
 		// 小地图图标尺寸
 		"MinimapIconSize"	"5"
@@ -605,7 +605,7 @@
 	"shootUnit"
 	{
 	    "BaseClass"               "npc_dota_earth_spirit_stone"//"npc_dota_creature" // 
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
         "UnitLabel"					"skillLabel"
 
         "SoundSet"                  "0"                 // Name of sound set.
@@ -711,7 +711,7 @@
 	"shootUnit-control"
 	{
 		"BaseClass"                 "npc_dota_creature"//"npc_dota_base" // Class of entity of link to.
-        "Model"						"models/heroes/invoker/forge_spirit.vmdl"//"models/heroes/snapfire/snapfire_magma_projectile.vmdl"//
+        "Model"						"models/heroes/invoker/forge_spirit.vmdl"//"particles/units/heroes/hero_tinker/defense_matrix_model.vmdl"//
 		"ModelScale"                "0.1"
         "SoundSet"                  "0"                 // Name of sound set.
         "Level"                     "1"
@@ -821,7 +821,7 @@
 	"skillUnit"
 	{
 	    "BaseClass"                 "npc_dota_creature"
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" 
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" 
         "UnitLabel"					"mu"
 		"ModelScale"                "0.1"
 		"ShouldDoFlyHeightVisual"  "100"
@@ -869,7 +869,7 @@
 	"shootBoomUnit"
 	{
 	    "BaseClass"               "npc_dota_creature"
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" 
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" 
 		"ModelScale"                "0.1"
         "MinimapIcon" ""
    		"MinimapIconSize" "50"
@@ -915,7 +915,7 @@
 	"cannonUnit"
 	{
 	    "BaseClass"               "npc_dota_creature" //"npc_dota_earth_spirit_stone"//
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" 
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" 
         "UnitLabel"					"cannon"
 		"ModelScale"                "0.1"
 		"ShouldDoFlyHeightVisual"  "100"
@@ -963,7 +963,7 @@
 	"hookUnit"
 	{
 	    "BaseClass"                "npc_dota_earth_spirit_stone"
-        "Model"                		"models/heroes/snapfire/snapfire_magma_projectile.vmdl" 
+        "Model"                		"particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" 
         "ModelScale"                "0.1"
 		"UnitLabel"					"hookUnit"
 		//"ShouldDoFlyHeightVisual"  "100"
@@ -1011,7 +1011,8 @@
 	"shootUnit-L"
 	{
 	    "BaseClass"               "npc_dota_earth_spirit_stone"//"npc_dota_creature" // 
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+		"ModelScale"                "0.1"
         "UnitLabel"					"skillLabel"
         "SoundSet"                  "0"                 // Name of sound set.
         "Level"                     "1"
@@ -1101,7 +1102,8 @@
 	"shootUnit-M"
 	{
 	    "BaseClass"               "npc_dota_earth_spirit_stone"//"npc_dota_creature" // 
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+		"ModelScale"                "0.1"
         "UnitLabel"					"skillLabel"
         "SoundSet"                  "0"                 // Name of sound set.
         "Level"                     "1"
@@ -1190,7 +1192,8 @@
 	"shootUnit-S"
 	{
 	    "BaseClass"               "npc_dota_earth_spirit_stone"//"npc_dota_creature" // 
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+		"ModelScale"                "0.1"
         "UnitLabel"					"skillLabel"
         "SoundSet"                  "0"                 // Name of sound set.
         "Level"                     "1"
@@ -1279,7 +1282,8 @@
 	"shootUnit-XS"
 	{
 	    "BaseClass"               "npc_dota_earth_spirit_stone"//"npc_dota_creature" // 
-        "Model"                  "models/heroes/snapfire/snapfire_magma_projectile.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+        "Model"                  "particles/units/heroes/hero_tinker/defense_matrix_model.vmdl" // "models/heroes/mirana/mirana_javelin.vmdl"
+		"ModelScale"                "0.1"
         "UnitLabel"					"skillLabel"
         "SoundSet"                  "0"                 // Name of sound set.
         "Level"                     "1"

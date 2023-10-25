@@ -163,9 +163,9 @@ function magicCanyouWar:InitGameMode()
 
 	GameRules.playerBaseHealth = 50
 	GameRules.playerBaseMana = 100
-	GameRules.playerBaseSpeed = 300
-	GameRules.playerBaseVision = 1200
-	GameRules.playerBaseManaRegen = 10
+	GameRules.playerBaseSpeed = 250
+	GameRules.playerBaseVision = 800
+	GameRules.playerBaseManaRegen = 5
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 

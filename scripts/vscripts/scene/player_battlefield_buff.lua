@@ -16,7 +16,6 @@ function modifier_battlefield_vision_buff_on_destroy(keys)
     removePlayerBuffByAbilityAndModifier(hero, abilityName, "nil", "nil")
 end
 
-
 function refreshVisionBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
@@ -28,57 +27,63 @@ end
 
 
 
+function modifier_battlefield_speed_buff_on_created(keys)
+    print("onCreated")
+    refreshSpeedBuff(keys,true)
+end
 
-
-
-
-
-
-
-
-
-
-
-function initSpeed(keys)
-    print("onCreated_player_temp_buff_speed")
+function modifier_battlefield_speed_buff_on_destroy(keys)
+    print("onDestroy")
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-
-    local buffName = "speed"  
-    local baseValue = caster:GetIdealSpeed()
-    setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    refreshSpeedBuff(keys,false)
+    local abilityName = "battlefield_speed_buff_datadriven"
+    removePlayerBuffByAbilityAndModifier(hero, abilityName, "nil", "nil")
 end
 
-function initHealth(keys)
-    print("onCreated_player_temp_buff_health")
+function refreshSpeedBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-
-    local buffName = "health"  
-    local baseValue = caster:GetHealth()
-    setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
+    local speed_init_val = ability:GetSpecialValueFor("speed_init_val")
+    setPlayerPower(playerID, "battlefield_speed", flag, speed_init_val)
+    setBattlefieldBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
 end
 
-function initMana(keys)
-    print("onCreated_player_temp_buff_mana")
+
+
+
+function modifier_battlefield_mana_regen_buff_on_created(keys)
+    print("onCreated")
+    refreshManaRegenBuff(keys,true)
+end
+
+function modifier_battlefield_mana_regen_buff_on_destroy(keys)
+    print("onDestroy")
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-
-    local buffName = "mana"  
-    local baseValue = caster:GetMana()
-    setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    refreshManaRegenBuff(keys,false)
+    local abilityName = "battlefield_mana_regen_buff_datadriven"
+    removePlayerBuffByAbilityAndModifier(hero, abilityName, "nil", "nil")
 end
 
-function initManaRegen(keys)
-    print("onCreated_player_temp_buff_mana_regen")
+function refreshManaRegenBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-
-    local buffName = "mana_regen"  
-    local baseValue = caster:GetManaRegen()
-    setPlayerDurationBuffByAbilityAndModifier(keys, buffName, baseValue)
+    local mana_regen_init_val = ability:GetSpecialValueFor("mana_regen_init_val")
+    setPlayerPower(playerID, "battlefield_mana_regen", flag, mana_regen_init_val)
+    setBattlefieldBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
 end
+
+
+
+
+
+
+
+

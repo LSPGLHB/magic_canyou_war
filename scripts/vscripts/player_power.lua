@@ -12,12 +12,11 @@ end
 function setBattlefieldBuffByNameAndBValue(keys,buffName,baseValue)
     print("setBattlefieldBuffByNameAndBValue",buffName,"=",baseValue)
     local modifierName = "battlefield_"..buffName
-    local abilityName = "ability_"..buffName.."_control"
-    local modifierNameBuff = "modifier_"..buffName.."_buff"  
-    local modifierNameDebuff = "modifier_"..buffName.."_debuff"
+    local abilityName = "ability_"..buffName.."_control_battlefield"
+    local modifierNameBuff = "modifier_"..buffName.."_buff_battlefield"  
+    local modifierNameDebuff = "modifier_"..buffName.."_debuff_battlefield"
     setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,modifierNameDebuff,baseValue)
 end
-
 
 
 function setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,modifierNameDebuff,baseValue)
@@ -30,7 +29,7 @@ function setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,m
     --print("setPlayerBuffByAbilityAndModifier",abilityName)
     --print(modifierNameBuff,"==",modifierNameDebuff)
     --print("HasModifier")
-    --print(hero:HasModifier(modifierNameAdd))  
+    --print(hero:HasModifier(modifierNameAdd)) 
     print("modifierNameCount=",modifierStackCount)
 
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
@@ -46,7 +45,8 @@ function setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,m
             modifierNameRemove = modifierNameBuff
             modifierStackCount = modifierStackCount * -1
         end
-        --print("modifierNameAdd",modifierNameAdd)
+        print("modifierNameAdd",modifierNameAdd,modifierStackCount)
+
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
@@ -77,7 +77,7 @@ function removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuf
 end
 
 function setPlayerPower(playerID, powerName, isAdd, value)
-    print("setPlayerPower",playerID)
+    print("setPlayerPower==",playerID)
     if( not isAdd ) then
         value = value * -1
     end
@@ -197,6 +197,12 @@ function initPlayerPower()
         initPlayerPowerOPeration(playerID,playerType)
         --装备受flag控制
         initPlayerPowerFlagOPeration(playerID,playerType)
+
+        --英雄临时能力容器
+        local tempType = "temp"
+        local battlefieldType = "battlefield"
+        initPlayerPowerOPeration(playerID,tempType)
+        initPlayerPowerOPeration(playerID,battlefieldType)
     end
 end
 
@@ -204,20 +210,11 @@ end
 --用于回合重置能力
 function initTempPlayerPower()
     for playerID = 0, 9 do --10个玩家的数据包 
-        --用于记录正负电击的两个电极子弹
-        PlayerPower[playerID]["electric_shock_a"] = nil
-        PlayerPower[playerID]["electric_shock_b"] = nil
-
-        --英雄能力容器
-        --talent不受flag控制
-        local tempType = "temp"
-
-        local battlefieldType = "battlefield"
-
-        initPlayerPowerOPeration(playerID,tempType)
-        initPlayerPowerOPeration(playerID,battlefieldType)
- 
+       
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
+             --用于记录正负电击的两个电极子弹
+            PlayerPower[playerID]["electric_shock_a"] = nil
+            PlayerPower[playerID]["electric_shock_b"] = nil
             print("removeremove",playerID)
             local hero = PlayerResource:GetSelectedHeroEntity(playerID)
             --法阵神符

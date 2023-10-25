@@ -110,7 +110,7 @@ function battlefieldLaunchTimer()
             end
             ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_ability2_datadriven", {Duration = buffStay}) --此modifier会启动算法battlefieldLaunch
             
-            local randomNum = 1--= math.random(1,100)
+            local randomNum = math.random(1,100)
             if randomNum < 33 then
                 ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_vision_datadriven", {Duration = buffStay})
                 Battlefields[i][fieldCount].battlefieldBuff = "vision"
@@ -123,7 +123,7 @@ function battlefieldLaunchTimer()
 
             if randomNum > 66 then
                 ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_mana_regan_datadriven", {Duration = buffStay})
-                Battlefields[i][fieldCount].battlefieldBuff = "manaRegan"
+                Battlefields[i][fieldCount].battlefieldBuff = "mana_regen"
             end
 
             
@@ -145,7 +145,7 @@ function battlefieldLaunch(keys)
     local getBuffTime = 3.0
     local buffStayTime = 10
     local timerFlag = false
-    print("=================battlefieldLaunch==ininin==================")
+    print("=================battlefieldLaunch==ininin==================team:"..casterTeam)
     --倒计时关闭激活
     Timers:CreateTimer(buffStayTime,function()
         timerFlag = true
@@ -208,15 +208,13 @@ function battlefieldLaunch(keys)
         if string.format("%.1f",count) > string.format("%.1f",getBuffTime) then 
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
-            
             local buffName = caster.battlefieldBuff
             print("getBuff:"..buffName)
             local abilityName = "battlefield_"..buffName.."_buff_datadriven"
             local modifierName = "modifier_battlefield_"..buffName.."_buff_datadriven"
-
             for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
                 if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-                    local hHero = PlayerResource:GetSelectedHeroEntity(playerID) --为什么是nil
+                    local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
                     if hHero:HasModifier(modifierName) then
                         hHero:RemoveModifierByName(modifierName)
                     end

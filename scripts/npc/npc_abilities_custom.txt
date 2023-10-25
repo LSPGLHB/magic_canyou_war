@@ -47,6 +47,7 @@
 #base magic/fire_ball.kv
 #base magic/vision_down_light_ball.kv
 #base magic/fire_spirit.kv
+#base magic/fire_spirit_pre.kv
 #base magic/blind_fire_ball.kv
 #base magic/blind_fire_ball_pre.kv
 #base magic/glare_light_ball.kv
@@ -83,6 +84,7 @@
 
 //水系
 #base magic/frost_blast.kv
+#base magic/frost_blast_pre.kv
 #base magic/ice_beans.kv
 #base magic/ice_ball.kv
 #base magic/water_spirit.kv
@@ -101,6 +103,7 @@
 #base magic/electric_ball.kv
 #base magic/electric_shock.kv
 #base magic/electric_wall.kv
+#base magic/electric_wall_pre.kv
 #base magic/electric_gather.kv
 #base magic/electric_gather_pre.kv
 #base magic/thunder_spirit.kv
