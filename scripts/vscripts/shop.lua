@@ -90,17 +90,25 @@ function buyShopJSTOLUA(index,keys)
 	local itemCost = randomItemCostList[num]
 	--print("buyShopJSTOLUA",itemName)
 	--CreateItem(itemName,player,player)
-	if(currentGold >= itemCost) then
-		hHero:AddItemByName(itemName)
-		PlayerResource:SpendGold(playerID,itemCost,0)
-		currentGold = PlayerResource:GetGold(playerID)
-		CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
-			playerGold = currentGold
-		})
-		playerRandomItemNumList[playerID][num] = -1
-	else
-		print("金币不足")
-	end
+	local itemCount = hHero:GetNumItemsInInventory()
+		if(currentGold >= itemCost) then
+			if(itemCount < 9) then
+				local ownerItem = CreateItem(itemName, hHero, hHero)
+				hHero:AddItem(ownerItem)
+				--hHero:AddItemByName(itemName)
+				PlayerResource:SpendGold(playerID,itemCost,0)
+				currentGold = PlayerResource:GetGold(playerID)
+				CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
+					playerGold = currentGold
+				})
+				playerRandomItemNumList[playerID][num] = -1
+			else
+				print("物品栏已满")
+			end
+		else
+			print("金币不足")
+		end
+	
 	
 end
 

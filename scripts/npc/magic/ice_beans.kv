@@ -140,6 +140,21 @@
 			}
 		}
 
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_ice_beans_charge_datadriven"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		    "magic/ice_beans.lua"
+				"Function"			    "channelInterrupted"
+			}
+		}
+
 
 		"OnUpgrade"
 		{

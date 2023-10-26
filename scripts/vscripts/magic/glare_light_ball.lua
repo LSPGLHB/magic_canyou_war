@@ -50,7 +50,7 @@ function glareLightBallBoomCallBack(shoot)
 		--local unitHealth = unit.energy_point
 		--local lable = unit:GetUnitLabel()
 		--只作用于敌方,非技能单位
-		if checkIsEnemyNoSkill(shoot,unit) and checkIsHitUnit(shoot,unit) then
+		if checkIsEnemyHero(shoot,unit) and checkIsHitUnit(shoot,unit) then
             local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
             if isface then
 				local damage = getApplyDamageValue(shoot)

@@ -78,7 +78,7 @@ function Precache( context )
 	--PrecacheResource("model", "particles/heroes/viper/viper.vmdl", context)
 	--PrecacheModel("models/heroes/viper/viper.vmdl", context)
 	-- Sounds can precached here like anything else
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
+	--PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
 	-- Entire items can be precached by name
 	-- Abilities can also be precached in this way despite the name
 	PrecacheItemByNameSync("example_ability", context)
@@ -113,7 +113,7 @@ function Precache( context )
 ]]
 	--此处开始比较有用
 	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_magic.vsndevts", context)
-
+	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_scene.vsndevts", context)
 end
 
 -- Create the game mode when we activate
@@ -325,6 +325,12 @@ function magicCanyouWar:OnItemPickup (keys)
 	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
 	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local team = HeroEntity:GetTeam()
+	local ownerID = ItemEntity:GetOwner():GetPlayerID()
+	--不是自己的物品丢回地上
+	if playerID == ownerID then
+		HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
+		EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
+	end
 	--local itemName2 = ItemEntity:GetName()
 	--print("playerID",playerID)
 	--print("team",team)
@@ -341,10 +347,7 @@ function magicCanyouWar:OnItemPickup (keys)
 				hHero:RemoveItem(ItemEntity)
 			end
 		end
-	end
-]]
-	
-	
+	end]]
 
 	--不能拾取会掉落（可行的）
 	--[[
@@ -433,8 +436,6 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 
 ]]
 
-
-
 	--时间结束没有选的话，随机英雄
 	if state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
         for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
@@ -482,8 +483,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		end
 		gameProgress()--此处打开游戏流程的进程
 	
---[[
-		--开启游戏进程
+--[[--开启游戏进程
 		local countPreTime = GameRules.PreTime
 		local sec = 1
 		--local gameTime = getNowTime()

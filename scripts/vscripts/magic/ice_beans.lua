@@ -115,3 +115,11 @@ function AOEOperationCallback(shoot,unit)
     ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
 	unit:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
 end
+
+
+function channelInterrupted(keys)
+	local caster	= keys.caster
+	local ability	= keys.ability
+	--ability:EndCooldown()
+	--ability:RefundManaCost()
+end
