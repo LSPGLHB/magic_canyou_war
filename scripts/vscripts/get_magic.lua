@@ -1,4 +1,5 @@
 require('myMaths')
+require('game_init')
 function openUIMagicList( playerID )
 	CustomUI:DynamicHud_Create(playerID,"UIMagicListPanelBox","file://{resources}/layout/custom_game/UI_magic_list.xml",nil)
 end

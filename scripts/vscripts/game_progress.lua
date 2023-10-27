@@ -59,6 +59,11 @@ function studyStep(gameRound)
             end
             if gameRound == 8 then
                 closeMagicListTimeUp()
+                for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+                    if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+                        heroStudyFinish(playerID)
+                    end
+                end
             end
             if gameRound > 8 then
                 randomLearnTalent(gameRound)
@@ -78,8 +83,7 @@ function prepareStep(gameRound)
     local interval = 1 --运算间隔
     local loadingTime = 1.5 --延迟时间 
     local prepareTime = 21 --准备阶段时长 
-
-    
+ 
     --信息发送到前端
     Timers:CreateTimer(0 ,function ()
         --local gameTime = getNowTime()
@@ -163,7 +167,6 @@ function battleStep(gameRound)
                 --所有玩家不能控制
                 allPlayerStop()
                 
-                
                 --进行下一轮战斗
                 Timers:CreateTimer(loadingTime,function ()
                     GameRules.checkWinTeam = nil
@@ -210,7 +213,6 @@ function initHeroStatus()
             hHero:GetAbilityByIndex(6):EndCooldown()
             hHero:GetAbilityByIndex(7):EndCooldown()
             hHero:GetAbilityByIndex(8):EndCooldown()
-  
         end
     end
 end

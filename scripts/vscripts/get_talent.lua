@@ -1,4 +1,5 @@
 require('myMaths')
+require('game_init')
 function openUITalentList( playerID )
 	CustomUI:DynamicHud_Create(playerID,"UITalentListPanelBox","file://{resources}/layout/custom_game/UI_talent_list.xml",nil)
 end

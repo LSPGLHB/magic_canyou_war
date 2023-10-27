@@ -1,4 +1,5 @@
 require('player_power')
+--目前铭文全部是技能效果相关，所以只需保存数值即可
 --c级技能分界线
 function modifier_talent_range_c_on_created(keys)
     print("modifier_talent_range_c_on_created")
@@ -18,6 +19,7 @@ function refreshPublicRangeCPowerUpBuff(keys,flag)
     local talent_range_c_precent_final = ability:GetSpecialValueFor( "talent_range_c_precent_final")
 
     setPlayerPower(playerID, "talent_range_c_precent_final", flag, talent_range_c_precent_final)
+
 end
 
 

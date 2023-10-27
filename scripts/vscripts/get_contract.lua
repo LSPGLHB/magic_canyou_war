@@ -1,4 +1,5 @@
 require('myMaths')
+require('game_init')
 function openUIContractList( playerID )
 	CustomUI:DynamicHud_Create(playerID,"UIContractListPanelBox","file://{resources}/layout/custom_game/UI_contract_list.xml",nil)
 end

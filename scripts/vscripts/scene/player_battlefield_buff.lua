@@ -22,7 +22,7 @@ function refreshVisionBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     local vision_init_val = ability:GetSpecialValueFor("vision_init_val")
     setPlayerPower(playerID, "battlefield_vision", flag, vision_init_val)
-    setBattlefieldBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
+    setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
 end
 
 
@@ -49,7 +49,7 @@ function refreshSpeedBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     local speed_init_val = ability:GetSpecialValueFor("speed_init_val")
     setPlayerPower(playerID, "battlefield_speed", flag, speed_init_val)
-    setBattlefieldBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
+    setPlayerBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
 end
 
 
@@ -77,7 +77,7 @@ function refreshManaRegenBuff(keys,flag)
     local playerID = caster:GetPlayerID()
     local mana_regen_init_val = ability:GetSpecialValueFor("mana_regen_init_val")
     setPlayerPower(playerID, "battlefield_mana_regen", flag, mana_regen_init_val)
-    setBattlefieldBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
+    setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
 end
 
 

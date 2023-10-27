@@ -327,7 +327,7 @@ function magicCanyouWar:OnItemPickup (keys)
 	local team = HeroEntity:GetTeam()
 	local ownerID = ItemEntity:GetOwner():GetPlayerID()
 	--不是自己的物品丢回地上
-	if playerID == ownerID then
+	if playerID ~= ownerID then
 		HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
 		EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
 	end
@@ -481,7 +481,9 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				initHeroByPlayerID(playerID)
 			end
 		end
-		gameProgress()--此处打开游戏流程的进程
+		Timers:CreateTimer(5,function ()
+			gameProgress()--此处打开游戏流程的进程
+		end)
 	
 --[[--开启游戏进程
 		local countPreTime = GameRules.PreTime

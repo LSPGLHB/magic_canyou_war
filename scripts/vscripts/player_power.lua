@@ -1,36 +1,18 @@
---永久类modifier，天赋与装备专用
+--永久类modifier
+--装备，契约，神符，铭文临时等能力用
 function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
-    print("setPlayerBuffByNameAndBValue",buffName,"=",baseValue)
-    local modifierName = "player_"..buffName
+    local hero = keys.caster
+    local playerID = hero:GetPlayerID()
+    local modifierNameAdd
+    local modifierNameRemove
     local abilityName = "ability_"..buffName.."_control"
     local modifierNameBuff = "modifier_"..buffName.."_buff"  
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
-    setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,modifierNameDebuff,baseValue)
-end
+    local modifierStackCount =  getFinalValueOperation(playerID,baseValue,buffName,nil,'buffStack')
 
---法阵神符专用
-function setBattlefieldBuffByNameAndBValue(keys,buffName,baseValue)
-    print("setBattlefieldBuffByNameAndBValue",buffName,"=",baseValue)
-    local modifierName = "battlefield_"..buffName
-    local abilityName = "ability_"..buffName.."_control_battlefield"
-    local modifierNameBuff = "modifier_"..buffName.."_buff_battlefield"  
-    local modifierNameDebuff = "modifier_"..buffName.."_debuff_battlefield"
-    setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,modifierNameDebuff,baseValue)
-end
-
-
-function setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,modifierNameDebuff,baseValue)
-    local hero = keys.caster
-    local playerID = hero:GetPlayerID()
-    --local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]
-    local modifierStackCount =  getPlayerPowerValueByName(hero, modifierName, baseValue)
-    local modifierNameAdd
-    local modifierNameRemove
     --print("setPlayerBuffByAbilityAndModifier",abilityName)
     --print(modifierNameBuff,"==",modifierNameDebuff)
-    --print("HasModifier")
-    --print(hero:HasModifier(modifierNameAdd)) 
-    print("modifierNameCount=",modifierStackCount)
+    --print("modifierNameCount=",modifierStackCount)
 
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
    
@@ -58,7 +40,6 @@ function setPlayerBuffOperation(keys,modifierName,abilityName,modifierNameBuff,m
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
         hero:RemoveAbility(abilityName)
     end
-
 end
 
 
@@ -91,7 +72,8 @@ function setPlayerPowerFlag(playerID, powerName, value)
     PlayerPower[playerID][powerName] = value
 end
 
---获取Modifiers层数值
+--获取单独计算的Modifiers层数值（弃用，已合并到总表）
+--[[
 function getPlayerPowerValueByName(hero, powerName, playerBaseValue)
     --local caster = keys.caster
     local playerID = hero:GetPlayerID()
@@ -109,10 +91,10 @@ function getPlayerPowerValueByName(hero, powerName, playerBaseValue)
     --print(powerName,"=stackCount=",stackCount)
 
     return stackCount
-end
+end]]
 
 --能力数值运算，获取装备与辅助buff的计算值
-function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
+function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
     local abilityBuffName = buffName
     if abilityLevel ~= nil then
         abilityBuffName = buffName.."_"..abilityLevel
@@ -123,63 +105,54 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,owner)
 	local talentBonusValue = PlayerPower[playerID]['talent_'..abilityBuffName]
 	local talentPrecentFinal = PlayerPower[playerID]['talent_'..abilityBuffName..'_precent_final'] / 100
 
+    --契约专用
+	local contractPrecentBase = PlayerPower[playerID]['contract_'..abilityBuffName..'_precent_base'] / 100
+	local contractBonusValue = PlayerPower[playerID]['contract_'..abilityBuffName]
+	local contractPrecentFinal = PlayerPower[playerID]['contract_'..abilityBuffName..'_precent_final'] / 100
 
+    --装备专用
+	local equipPrecentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
+	local equipBonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
+	local equipPrecentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
 
-    --装备-契约专用
-	local precentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
-	local bonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
-	local precentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
-    --单回合装备专用（死亡后队友加属性）
+    --单回合能力专用
 	local tempPrecentBase = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_base'] / 100
 	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
 	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
-
+    
     --法阵神符专用（弃用，不加攻击和基础之类复杂加强的不用这个）
-    --[[
-	local talentTempPrecentBase = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_base'] / 100
-	local talentTempBonusValue = PlayerPower[playerID]['battlefield_'..abilityBuffName]
-	local talentTempPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100
-    ]]
 
-	--临时带持续时间的加强的功能还没做
-    --[[
-	local durationPrecentBase = PlayerPower[playerID]['duration_'..abilityBuffName..'_precent_base'] / 100
-	local durationBonusValue = PlayerPower[playerID]['duration_'..abilityBuffName]
-	local durationPrecentFinal = PlayerPower[playerID]['duration_'..abilityBuffName..'_precent_final'] / 100
-    ]]
+	local battlefieldPrecentBase = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_base'] / 100
+	local battlefieldBonusValue = PlayerPower[playerID]['battlefield_'..abilityBuffName]
+	local battlefieldPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100
 
 
 	--print("getFinalValueOperation")
 	--print(precentBase..","..bonusValue..","..precentFinal)
 	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
-	local flag = PlayerPower[playerID]['player_'..buffName..'_flag']
-	local returnValue = 0
+	local flag = PlayerPower[playerID]['contract_'..buffName..'_flag']
 
     --装备不受加强的契约使用
-    if (precentBase > 0) then
-        precentBase = precentBase * flag
+    if (equipPrecentBase > 0) then
+        equipPrecentBase = equipPrecentBase * flag
     end
-    if (bonusValue > 0) then
-        bonusValue = bonusValue * flag
+    if (equipBonusValue > 0) then
+        equipBonusValue = equipBonusValue * flag
     end
-    if (precentFinal > 0) then
-        precentFinal = precentFinal * flag
-    end
-
-    if (tempPrecentBase > 0) then
-        tempPrecentBase = tempPrecentBase * flag
-    end
-    if (tempBonusValue > 0) then
-        tempBonusValue = tempBonusValue * flag
-    end
-    if (tempPrecentFinal > 0) then
-        tempPrecentFinal = tempPrecentFinal * flag
+    if (equipPrecentFinal > 0) then
+        equipPrecentFinal = equipPrecentFinal * flag
     end
 
-	local operationValue =  (baseValue * (1 + precentBase + tempPrecentBase + talentPrecentBase ) + bonusValue + tempBonusValue + talentBonusValue) * (1 + precentFinal + tempPrecentFinal + talentPrecentFinal)
+    local precentBaseTotal =  contractPrecentBase + equipPrecentBase + talentPrecentBase + battlefieldPrecentBase + tempPrecentBase
+    local bonusValueTotal = contractBonusValue + equipBonusValue + talentBonusValue + battlefieldBonusValue + tempBonusValue
+    local precentFinalTotal = contractPrecentFinal + equipPrecentFinal + talentPrecentFinal + battlefieldPrecentFinal + tempPrecentFinal
 
+	local operationValue =  (baseValue * (1 + precentBaseTotal ) + bonusValueTotal) * (1 + precentFinalTotal)
 
-	--print("flag:"..flag..",baseValue:"..baseValue..",returnValue"..returnValue)
+    if type == 'buffStack' then
+        operationValue  =  operationValue - baseValue
+    end
+
 	return operationValue
 end
 
@@ -188,19 +161,22 @@ function initPlayerPower()
     PlayerPower={}
     for playerID = 0, 9 do --10个玩家的数据包
         PlayerPower[playerID] = {} 
-        local talentType = "talent"
-        local playerType = "player"
+        local talentType = "talent" --铭文
+        local playerType = "player" --装备
+        local contractType = "contract" --契约
         --Modifiers能力
         --铭文初始化
         initPlayerPowerOPeration(playerID,talentType)
         --装备加强初始化
         initPlayerPowerOPeration(playerID,playerType)
-        --装备受flag控制
-        initPlayerPowerFlagOPeration(playerID,playerType)
+        --装备受契约flag控制初始化
+        initPlayerPowerFlagOPeration(playerID,contractType)
+        --契约初始化
+        initPlayerPowerOPeration(playerID,contractType)
 
         --英雄临时能力容器
-        local tempType = "temp"
-        local battlefieldType = "battlefield"
+        local tempType = "temp" --装备临时
+        local battlefieldType = "battlefield" --法阵临时
         initPlayerPowerOPeration(playerID,tempType)
         initPlayerPowerOPeration(playerID,battlefieldType)
     end
@@ -209,8 +185,7 @@ end
 
 --用于回合重置能力
 function initTempPlayerPower()
-    for playerID = 0, 9 do --10个玩家的数据包 
-       
+    for playerID = 0, 9 do --10个玩家的数据包   
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
              --用于记录正负电击的两个电极子弹
             PlayerPower[playerID]["electric_shock_a"] = nil
@@ -221,7 +196,6 @@ function initTempPlayerPower()
             removeBattlefieldBuff(hero)
             --装备临时能力
             removeTempBuff(hero)
-
         end
     end
 end
