@@ -26,14 +26,14 @@ function refreshContractBuff(keys,flag)
 
 
 
-    setPlayerPower(playerID, "player_health_precent_final", flag, contract_health_precent_final)
-    setPlayerPower(playerID, "player_vision", flag, contract_vision)
+    setPlayerPower(playerID, "contract_health_precent_final", flag, contract_health_precent_final)
+    setPlayerPower(playerID, "contract_vision", flag, contract_vision)
 
-    setPlayerPowerFlag(playerID, "player_range_flag", contract_range_flag)
-    setPlayerPowerFlag(playerID, "player_ability_speed_flag", contract_ability_speed_flag)
-    setPlayerPowerFlag(playerID, "player_damage_flag", contract_damage_flag)
-    setPlayerPowerFlag(playerID, "player_control_flag", contract_control_flag)
-    setPlayerPowerFlag(playerID, "player_energy_flag", contract_energy_flag)
+    setPlayerPowerFlag(playerID, "contract_range_flag", contract_range_flag)
+    setPlayerPowerFlag(playerID, "contract_ability_speed_flag", contract_ability_speed_flag)
+    setPlayerPowerFlag(playerID, "contract_damage_flag", contract_damage_flag)
+    setPlayerPowerFlag(playerID, "contract_control_flag", contract_control_flag)
+    setPlayerPowerFlag(playerID, "contract_energy_flag", contract_energy_flag)
 
     setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
     setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)

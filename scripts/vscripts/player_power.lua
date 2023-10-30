@@ -68,7 +68,7 @@ function setPlayerPower(playerID, powerName, isAdd, value)
 end
 
 function setPlayerPowerFlag(playerID, powerName, value)
-    print("setPlayerPowerFlag")
+    print("setPlayerPowerFlag:"..powerName.."="..value)
     PlayerPower[playerID][powerName] = value
 end
 
@@ -127,11 +127,11 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
 	local battlefieldPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100
 
 
-	--print("getFinalValueOperation")
+	print("getFinalValueOperation")
 	--print(precentBase..","..bonusValue..","..precentFinal)
-	--print(tempPrecentBase..","..tempBonusValue..","..tempPrecentFinal)
+	print(equipPrecentBase..","..equipBonusValue..","..equipPrecentFinal)
 	local flag = PlayerPower[playerID]['contract_'..buffName..'_flag']
-
+    print(flag)
     --装备不受加强的契约使用
     if (equipPrecentBase > 0) then
         equipPrecentBase = equipPrecentBase * flag

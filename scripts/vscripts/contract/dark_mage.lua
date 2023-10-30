@@ -30,29 +30,29 @@ function refreshContractBuff(keys,flag)
 
 
 
-    setPlayerPower(playerID, "player_mana", flag, contract_mana)
-    setPlayerPower(playerID, "player_vision", flag, contract_vision)
-    setPlayerPower(playerID, "player_health_precent_final", flag, contract_health_precent_final)
-    setPlayerPower(playerID, "player_speed", flag, contract_speed) 
+    setPlayerPower(playerID, "contract_mana", flag, contract_mana)
+    setPlayerPower(playerID, "contract_vision", flag, contract_vision)
+    setPlayerPower(playerID, "contract_health_precent_final", flag, contract_health_precent_final)
+    setPlayerPower(playerID, "contract_speed", flag, contract_speed) 
 
-    setPlayerPower(playerID, "player_range_c_precent_final", flag, contract_range_precent_final)
-    setPlayerPower(playerID, "player_range_b_precent_final", flag, contract_range_precent_final)
-    setPlayerPower(playerID, "player_range_a_precent_final", flag, contract_range_precent_final)
+    setPlayerPower(playerID, "contract_range_c_precent_final", flag, contract_range_precent_final)
+    setPlayerPower(playerID, "contract_range_b_precent_final", flag, contract_range_precent_final)
+    setPlayerPower(playerID, "contract_range_a_precent_final", flag, contract_range_precent_final)
 
-    setPlayerPower(playerID, "player_ability_speed_c_precent_final", flag, contract_ability_speed_precent_final)
-    setPlayerPower(playerID, "player_ability_speed_b_precent_final", flag, contract_ability_speed_precent_final)
-    setPlayerPower(playerID, "player_ability_speed_a_precent_final", flag, contract_ability_speed_precent_final)
+    setPlayerPower(playerID, "contract_ability_speed_c_precent_final", flag, contract_ability_speed_precent_final)
+    setPlayerPower(playerID, "contract_ability_speed_b_precent_final", flag, contract_ability_speed_precent_final)
+    setPlayerPower(playerID, "contract_ability_speed_a_precent_final", flag, contract_ability_speed_precent_final)
 
-    setPlayerPower(playerID, "player_damage_c_precent_final", flag, contract_damage_precent_final)
-    setPlayerPower(playerID, "player_damage_b_precent_final", flag, contract_damage_precent_final)
-    setPlayerPower(playerID, "player_damage_a_precent_final", flag, contract_damage_precent_final)
+    setPlayerPower(playerID, "contract_damage_c_precent_final", flag, contract_damage_precent_final)
+    setPlayerPower(playerID, "contract_damage_b_precent_final", flag, contract_damage_precent_final)
+    setPlayerPower(playerID, "contract_damage_a_precent_final", flag, contract_damage_precent_final)
 
-    setPlayerPower(playerID, "player_control_c_precent_final", flag, contract_control_precent_final)
-    setPlayerPower(playerID, "player_control_b_precent_final", flag, contract_control_precent_final)
-    setPlayerPower(playerID, "player_control_a_precent_final", flag, contract_control_precent_final)
+    setPlayerPower(playerID, "contract_control_c_precent_final", flag, contract_control_precent_final)
+    setPlayerPower(playerID, "contract_control_b_precent_final", flag, contract_control_precent_final)
+    setPlayerPower(playerID, "contract_control_a_precent_final", flag, contract_control_precent_final)
 
 
-    setPlayerPower(playerID, "player_cooldown_precent_final", flag, cooldown_precent_final * -1)
+    setPlayerPower(playerID, "contract_cooldown_precent_final", flag, cooldown_precent_final * -1)
 
 
     setPlayerBuffByNameAndBValue(keys,"mana",GameRules.playerBaseMana)

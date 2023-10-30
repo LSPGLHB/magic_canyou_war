@@ -18,8 +18,7 @@
 		"StageAbility"					"twice_stone_ball_stage_b_datadriven"
 
 		"IconSrc"                       "file://{images}/custom_game/ability_button/hoodwink_acorn_shot.png"  //选择框图标
-		"AbilityShowName"               "#UIButton4"
-		"AbilityDescribe"					"#UIButton4"
+
 		
 		"precache"						
 		{
@@ -124,7 +123,7 @@
 				"hitTargetDebuff"        "modifier_twice_stone_ball_debuff"
 
 
-				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_buff"
+				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_datadriven_buff"
 				"ability_a_name"		   "twice_stone_ball_datadriven"
 				"ability_b_name"		   "twice_stone_ball_stage_b_datadriven"
 				
@@ -152,12 +151,23 @@
 				"EffectAttachType"		"follow_origin"
 			}
 
-			"modifier_twice_stone_ball_buff"
+			"modifier_twice_stone_ball_datadriven_buff"
 			{
 				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 				"IsDebuff"				"0"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/twice_stone_ball.lua"
+						"Function"			"initStage"
+						"ability_a_name"		   "twice_stone_ball_datadriven"
+						"ability_b_name"	"twice_stone_ball_stage_b_datadriven"
+					}
+				}
 			}
 
 
@@ -276,7 +286,7 @@
 
 
 
-
+				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_datadriven_buff"
                 "hitTargetDebuff"	   "modifier_twice_stone_ball_sp2_debuff"
 				"ability_a_name"	   "twice_stone_ball_datadriven"
 				"ability_b_name"	   "twice_stone_ball_stage_b_datadriven"
@@ -284,8 +294,6 @@
 		}
 		"Modifiers"
 		{	
-
-
             "modifier_twice_stone_ball_sp2_debuff"
 			{
 				"IsDebuff"			"1"

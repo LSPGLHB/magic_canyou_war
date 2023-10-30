@@ -29,22 +29,16 @@ function stepOne(keys)
     local casterBuff = keys.modifier_caster_syn_name
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
     shoot.launchElectricShock = 0
-    Timers:CreateTimer(5 ,function()
-        --print("launchElectricShock:",shoot.launchElectricShock)
-        if shoot.launchElectricShock == 0 and shoot.energy_point ~= 0 then
-            initStageA(keys)
-            shootSoundAndParticle(shoot, 'miss')
-            shootKill(shoot)
-        end
-        return nil
-    end)
+    local ability_a_name	= keys.ability_a_name
+    local ability_b_name	= keys.ability_b_name
+    caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
 
     local timeCount = 0
     Timers:CreateTimer(0.1 ,function()
-        if shoot.energy_point == 0 and shoot.launchElectricShock == 0 then
-            initStage(keys)
-            shootSoundAndParticle(shoot, 'miss')
-            shootKill(shoot)
+        if shoot.energy_point == 0 then
+            if caster:HasModifier(casterBuff) then
+                caster:RemoveModifierByName(casterBuff) 
+            end
             return nil
         end
         timeCount = timeCount + 0.1
@@ -54,9 +48,7 @@ function stepOne(keys)
         return 0.1
     end)
 
-    local ability_a_name	= keys.ability_a_name
-    local ability_b_name	= keys.ability_b_name
-    caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
+    
 
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -92,10 +84,7 @@ function stepTwo(keys)
     --过滤掉增加施法距离的操作
 	--shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
-
-    local ability_a_name	= keys.ability_a_name
-    local ability_b_name	= keys.ability_b_name
-    caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
+    
 
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -106,7 +95,10 @@ function stepTwo(keys)
     shoot.playerID = playerID
     local shoot_a =  PlayerPower[playerID]["electric_shock_a"] 
     shoot_a.launchElectricShock = 1
-
+    local casterBuff = keys.modifier_caster_syn_name
+    if caster:HasModifier(casterBuff) then
+        caster:RemoveModifierByName(casterBuff) 
+    end
     Timers:CreateTimer(0.5,function()
         launchElectricShock(keys)
     end)
@@ -138,7 +130,7 @@ function launchElectricShock(keys)
     moveShoot(keys, shoot_a, nil, electricShockAHitCallback)
     moveShoot(keys, shoot_b, nil, electricShockBHitCallback)
 
-    initStage(keys)
+    --initStage(keys)
 end
 
 function electricShockAHitCallback(shoot,unit)
@@ -291,18 +283,30 @@ end
 function initStage(keys)
     local caster	= keys.caster
 	local ability	= keys.ability
+    local playerID = caster:GetPlayerID()
 --[[local pfx = caster.fire_spirits_pfx
 	ParticleManager:DestroyParticle( pfx, false )
 ]]-- Swap main ability
-    local ability_a_name	= ability:GetAbilityName()
+    local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
+
+    local shoot_a = PlayerPower[playerID]["electric_shock_a"]
+
+    if shoot_a.launchElectricShock == 0 then
+        shootSoundAndParticle(shoot_a, 'miss')
+        shootKill(shoot_a)
+    end
+    
 end
 
+--[[
 function initStageA(keys)
     local caster	= keys.caster
+    local playerID = caster:GetPlayerID()
 	local ability	= keys.ability
-    local ability_b_name	= ability:GetAbilityName()
+    local ability_b_name	= keys.ability_b_name
     local ability_a_name	= keys.ability_a_name
     caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
-end
+
+end]]

@@ -17,9 +17,9 @@ function refreshContractBuff(keys,flag)
     local contract_speed = ability:GetSpecialValueFor( "contract_speed")
     local contract_health_precent_final = ability:GetSpecialValueFor( "contract_health_precent_final")
 
-    setPlayerPower(playerID, "player_vision", flag, contract_vision)
-    setPlayerPower(playerID, "player_speed", flag, contract_speed)
-    setPlayerPower(playerID, "player_health_precent_final", flag, contract_health_precent_final)
+    setPlayerPower(playerID, "contract_vision", flag, contract_vision)
+    setPlayerPower(playerID, "contract_speed", flag, contract_speed)
+    setPlayerPower(playerID, "contract_health_precent_final", flag, contract_health_precent_final)
 
     setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
     setPlayerBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)

@@ -90,6 +90,7 @@
 			{
 				"ScriptFile"	"magic/twice_ice_ball.lua"
 				"Function"		"LevelUpAbility"
+				"ability_a_name"	"twice_ice_ball_datadriven"
 				"ability_b_name"	"twice_ice_ball_stage_b_datadriven"
 			}
 		}
@@ -130,7 +131,7 @@
 				"hitTargetDebuff"        "modifier_twice_ice_ball_debuff"
 
 
-				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_buff"
+				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_datadriven_buff"
 				"ability_a_name"		   "twice_ice_ball_datadriven"
 				"ability_b_name"		   "twice_ice_ball_stage_b_datadriven"
 				
@@ -152,13 +153,23 @@
 			}
 
 
-
-			"modifier_twice_ice_ball_buff"
+			"modifier_twice_ice_ball_datadriven_buff"
 			{
 				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 				"IsDebuff"				"0"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/twice_ice_ball.lua"
+						"Function"			"initStage"
+						"ability_a_name"	"twice_ice_ball_datadriven"
+						"ability_b_name"	"twice_ice_ball_stage_b_datadriven"
+					}
+				}
 			}
 
 
@@ -184,7 +195,7 @@
 		"UnitType"         				"shui"
 		"AbilityLevel"					"cb"
 		"IconSrc"                       "file://{images}/custom_game/ability_button/drow_ranger_marksmanship.png"  //选择框图标
-		"AbilityShowName"               "#UIButton4"
+
 		
 		"precache"						
 		{
@@ -274,7 +285,7 @@
 
 
 
-				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_buff"
+				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_datadriven_buff"
               
 				"ability_a_name"	   "twice_ice_ball_datadriven"
 				"ability_b_name"	   "twice_ice_ball_stage_b_datadriven"

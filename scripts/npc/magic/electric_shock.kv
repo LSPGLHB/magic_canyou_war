@@ -18,8 +18,7 @@
 		"StageAbility"					"electric_shock_stage_b_datadriven"
 
 		"IconSrc"                       "file://{images}/custom_game/ability_button/storm_spirit_electric_vortex.png"  //选择框图标
-		"AbilityShowName"               "#UIButton4"
-		"AbilityDescribe"					"#UIButton4"
+
 		
 		"precache"						
 		{
@@ -91,6 +90,7 @@
 			{
 				"ScriptFile"	"magic/electric_shock.lua"
 				"Function"		"LevelUpAbility"
+				"ability_a_name"		   "electric_shock_datadriven"
 				"ability_b_name"	"electric_shock_stage_b_datadriven"
 			}
 		}
@@ -132,7 +132,7 @@
                 "stunDebuff"        "modifier_electric_shock_stun"
 
 
-                "modifier_caster_syn_name"	   "modifier_electric_shock_datadriven"
+                "modifier_caster_syn_name"	   "modifier_electric_shock_datadriven_buff"
 				"ability_a_name"		   "electric_shock_datadriven"
 				"ability_b_name"		   "electric_shock_stage_b_datadriven"
 
@@ -155,12 +155,22 @@
                 }  
 			}
 
-            "modifier_electric_shock_datadriven"
+            "modifier_electric_shock_datadriven_buff"
 			{
 				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 				"IsDebuff"				"0"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/electric_shock.lua"
+						"Function"			"initStage"
+						"ability_a_name"		   "electric_shock_datadriven"
+						"ability_b_name"	"electric_shock_stage_b_datadriven"
+					}
+				}
 			}
         }
         
@@ -287,7 +297,7 @@
 				"stunDebuff"    "modifier_electric_shock_stun"
 
 
-                "modifier_caster_syn_name"	   "modifier_electric_shock_datadriven"
+                "modifier_caster_syn_name"	   "modifier_electric_shock_datadriven_buff"
 				"ability_a_name"		   "electric_shock_datadriven"
 				"ability_b_name"		   "electric_shock_stage_b_datadriven"
 			}
@@ -342,13 +352,6 @@
 				}
 			}
 
-            "modifier_electric_shock_datadriven"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-			}
         }
     }
 }

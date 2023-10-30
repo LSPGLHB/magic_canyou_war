@@ -654,6 +654,7 @@ function initMagicList()
 				--print("icon:"..v)
 				c = c+1
 			end
+			--[[
 			if k == "AbilityShowName"  then
 				tempShowName = v
 				--print("showName:"..v)
@@ -662,7 +663,7 @@ function initMagicList()
             if k == "AbilityDescribe" then
                 tempDescribe = v
                 c= c+1
-            end
+            end]]
 			if k == "PreAbility" then
 				tempPreMagic = v
 				c= c+1
@@ -1140,7 +1141,7 @@ function initMagicList()
 				c=c+1
 			end
 
-			if c == 10 then
+			if c == 8 then
                 --print("===============idName:"..tempMagicName.."speed:"..tempSpeed)
 				table.insert(magicList['magicNameList'],tempMagicName)
 				table.insert(magicList['abilityCooldownList'],tempAbilityCooldown)

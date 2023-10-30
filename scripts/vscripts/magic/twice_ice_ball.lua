@@ -16,6 +16,7 @@ function stepOne(keys)
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
+    
     caster.twice_ice_ball_on = 1
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -23,6 +24,7 @@ function stepOne(keys)
 	EmitSoundOn(keys.soundCast, caster)
     local casterBuff = keys.modifier_caster_stage_name
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
+    /*
     Timers:CreateTimer(5, function()
         if caster.twice_ice_ball_on == 1 then
             initStage(keys)
@@ -31,8 +33,7 @@ function stepOne(keys)
             end
         end
         return nil
-    end)
-
+    end)*/
     moveShoot(keys, shoot, twiceIceBallBoomCallBackSp1, nil)
 end
 
@@ -52,16 +53,12 @@ function stepTwo(keys)
 	--shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
 
-
-    local ability_a_name	= keys.ability_a_name
-    local ability_b_name	= keys.ability_b_name
-    caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
     caster.twice_ice_ball_on = 0
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
-    initStage(keys)
+    --initStage(keys)
     local casterBuff = keys.modifier_caster_stage_name
     if caster:HasModifier(casterBuff) then
         caster:RemoveModifierByName(casterBuff) 
@@ -144,7 +141,7 @@ function initStage(keys)
     local caster	= keys.caster
 	local ability	= keys.ability
 
-    local ability_a_name	= ability:GetAbilityName()
+    local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
 end
