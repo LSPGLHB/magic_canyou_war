@@ -181,7 +181,7 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 	--找到符合条件最近的
 	for k,unit in pairs(aroundUnits) do
 		local isEnemyHero = checkIsEnemyHero(shoot,unit)
-		if isEnemyHero then 
+		if isEnemyHero and unit:IsHero() then 
 			local isfaceSp1 = isFaceByFaceAngle(unit, shoot, windAngle)
 			if isfaceSp1 then
 				local distance = (unit:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()

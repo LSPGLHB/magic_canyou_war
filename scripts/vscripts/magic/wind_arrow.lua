@@ -140,8 +140,7 @@ function windArrowAOEOperationCallback(shoot,unit)
 	
 	local ability = keys.ability
     local bounds_damage_percent =  ability:GetSpecialValueFor("bounds_damage_percent") / 100
-    
-    
+
     local damage = getApplyDamageValue(shoot) + unit:GetHealth() * bounds_damage_percent
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 

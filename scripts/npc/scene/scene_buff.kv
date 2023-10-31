@@ -366,7 +366,7 @@
 			"FireSound"
 			{
 				"Target"				"CASTER"
-				"EffectName"			"magic_ice_beans_channel"
+				"EffectName"			"scene_voice_box_collect"
 			}
 
 			"ApplyModifier"
@@ -380,7 +380,7 @@
         {			
             "FireSound"
             {
-                "EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+                "EffectName"		"scene_voice_coin_drop"
                 "Target"			"CASTER"
             }           
 
@@ -390,6 +390,22 @@
                 "Function"			    "initHeroOpenBoxChannelSucceeded"
             }
         }
+
+        "OnChannelInterrupted"
+		{
+            "RemoveModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_channel_act_datadriven"
+			}
+
+			"FireSound"
+            {
+                "EffectName"		"scene_voice_stop"
+                "Target"			"CASTER"
+            }  
+        }
+
         "Modifiers"
         {
             "modifier_channel_act_datadriven"
@@ -415,7 +431,7 @@
 			"FireSound"
 			{
 				"Target"				"CASTER"
-				"EffectName"			"magic_ice_beans_channel"
+				"EffectName"			"scene_voice_battlefield_ability1"
 			}
 
 			"ApplyModifier"
@@ -430,7 +446,7 @@
         {			
             "FireSound"
             {
-                "EffectName"		"Hero_Phoenix.FireSpirits.Cast"
+                "EffectName"		"scene_voice_stop"
                 "Target"			"CASTER"
             }           
 
@@ -439,6 +455,21 @@
                 "ScriptFile"		    "scene/order_click.lua"
                 "Function"			    "initHeroCaptureChannelSucceeded"
             }
+        }
+
+        "OnChannelInterrupted"
+		{
+            "RemoveModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_channel_act_datadriven"
+			}
+
+			"FireSound"
+            {
+                "EffectName"		"scene_voice_stop"
+                "Target"			"CASTER"
+            }  
         }
 
 

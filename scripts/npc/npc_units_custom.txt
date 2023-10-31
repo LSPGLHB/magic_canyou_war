@@ -1411,7 +1411,7 @@
 		// 攻击间隔
 		"AttackRate"	"0"
 		// 攻击前摇
-		"AttackAnimationPoint"	"0.75"
+		"AttackAnimationPoint"	"0"
 		// 警戒范围
 		"AttackAcquisitionRange"	"0"
 		// 攻击范围

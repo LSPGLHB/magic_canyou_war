@@ -81,9 +81,9 @@ function initHeroCaptureChannelSucceeded(keys)
         local casterTeam = caster:GetTeam()
         local targetTeam = caster.battlefieldTarget:GetTeam()
 
-        print("===================================================")
-        print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
-        print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
+        --print("=========================initHeroCaptureChannelSucceeded==========================")
+        --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
+        --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
         
         --刷新占领方本身前线法阵成为关闭状态
         local lastCasterFrontFieldNum = #Battlefields[casterTeam]
@@ -127,10 +127,9 @@ function initHeroCaptureChannelSucceeded(keys)
             print("badFieldOver")
         end
         
-        
-        print("----------------------------------------------------------")
-        print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
-        print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
+        print("------------------------------initHeroCaptureChannelSucceeded----------------------------")
+        --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
+        --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
 
     end
 end
@@ -238,5 +237,6 @@ function initHeroSearchTarget(keys)
         end
     end)
 end
+
 
 

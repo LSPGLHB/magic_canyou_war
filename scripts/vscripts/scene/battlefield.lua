@@ -69,6 +69,8 @@ end
 function battlefieldFlail(keys)
     local caster = keys.caster
     battlefieldInit(caster)
+    EmitSoundOn("scene_voice_battlefield_flail", caster)
+    
 end
 
 --法阵启动
@@ -78,7 +80,7 @@ function battlefieldIdle(keys)
     local ability = caster:GetAbilityByIndex(0)
     local refreshInterval = 20
     local casterTeam = caster:GetTeam()
-    
+    EmitSoundOn("scene_voice_battlefield_idle", caster)
     Timers:CreateTimer(0,function()
         print("particlesLaunch")
         local goodTeamParticlesLaunch = "particles/mofazhen_dizuo_1.vpcf"
@@ -104,6 +106,7 @@ function battlefieldLaunchTimer()
         local fieldCount = #Battlefields[i]
         if fieldCount > 0 then
             local LaunchBattlefield = Battlefields[i][fieldCount]
+            EmitSoundOn("scene_voice_battlefield_ability2", LaunchBattlefield)
             local ability = LaunchBattlefield:GetAbilityByIndex(0)
             if LaunchBattlefield:HasModifier("modifier_battlefield_idle_ACT_datadriven") then
                 LaunchBattlefield:RemoveModifierByName("modifier_battlefield_idle_ACT_datadriven")
@@ -172,19 +175,21 @@ function battlefieldLaunch(keys)
             end
         end
 
-        
+        --workingFlag:法阵处于转圈状态
+        --loadingFlag:已经判断
         if workingFlag == true and loadingFlag == false then
             --print("==================================battlefieldLaunch===========workingFlagtrue==============")
+            EmitSoundOn("scene_voice_battlefield_buff_collect", caster)
             loadingFlag = true
             local goodTeamParticlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
             local badTeamParticlesGetBuff = "particles/mofahen_huoqu_yin.vpcf"
             local particlesGetBuff
             --print("battlefieldIdle"..casterTeam.."================================="..DOTA_TEAM_GOODGUYS)
             if casterTeam == DOTA_TEAM_GOODGUYS then
-                particlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
+                particlesGetBuff = goodTeamParticlesGetBuff
             end
             if casterTeam == DOTA_TEAM_BADGUYS then
-                particlesGetBuff = "particles/mofahen_huoqu_yin.vpcf"
+                particlesGetBuff = badTeamParticlesGetBuff
             end
             Timers:CreateTimer(0,function()
                 local particleID = ParticleManager:CreateParticle(particlesGetBuff, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -197,6 +202,7 @@ function battlefieldLaunch(keys)
             --print("==================================battlefieldFlatl===========workingFlagfalse==============")
             loadingFlag = false
             ParticleManager:DestroyParticle(caster.loadingParticleID, true)
+            EmitSoundOn("scene_voice_stop", caster)
             count = 0
         end
         
@@ -205,7 +211,9 @@ function battlefieldLaunch(keys)
             --print(count)
         end
 
+        --转圈完成
         if string.format("%.1f",count) > string.format("%.1f",getBuffTime) then 
+            
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
             local buffName = caster.battlefieldBuff
@@ -222,12 +230,14 @@ function battlefieldLaunch(keys)
                         hHero:RemoveAbility(abilityName)
                     end
                     hHero:AddAbility(abilityName):SetLevel(1)
+                    EmitSoundOn("scene_voice_battlefield_buff_get", hHero)
                 end
             end
             return nil
         end
 
         if timerFlag == true and loadingFlag == false then
+            
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
             return nil
@@ -242,7 +252,7 @@ end
 
 --初始化删除法阵激活的动作和特效
 function battlefieldInit(caster)
-
+    EmitSoundOn("scene_voice_stop", caster)
     if caster:HasModifier("modifier_battlefield_ability2_datadriven") then
         caster:RemoveModifierByName("modifier_battlefield_ability2_datadriven")
     end

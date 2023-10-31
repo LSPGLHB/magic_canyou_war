@@ -169,7 +169,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 
-	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
+	--GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules:SetStartingGold(0)
 	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	GameRules:SetFirstBloodActive(false)
@@ -481,7 +481,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				initHeroByPlayerID(playerID)
 			end
 		end
-		Timers:CreateTimer(5,function ()
+		Timers:CreateTimer(2,function ()
 			gameProgress()--此处打开游戏流程的进程
 		end)
 	
