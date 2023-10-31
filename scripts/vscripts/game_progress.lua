@@ -213,6 +213,26 @@ function initHeroStatus()
             hHero:GetAbilityByIndex(6):EndCooldown()
             hHero:GetAbilityByIndex(7):EndCooldown()
             hHero:GetAbilityByIndex(8):EndCooldown()
+
+            local abilityNameC = hHero:GetAbilityByIndex(6):GetAbilityName()
+            local abilityNameB = hHero:GetAbilityByIndex(7):GetAbilityName()
+            local abilityNameA = hHero:GetAbilityByIndex(8):GetAbilityName()
+            local modifierNameC = "modifier_"..abilityNameC.."_buff"
+            local modifierNameB = "modifier_"..abilityNameB.."_buff"
+            local modifierNameA = "modifier_"..abilityNameA.."_buff"
+            print("============initHeroStatus================")
+            print(modifierNameC)
+            print(modifierNameB)
+            print(modifierNameA)
+            if hHero:HasModifier(modifierNameC) then
+                hHero:RemoveModifierByName(modifierNameC)
+            end
+            if hHero:HasModifier(modifierNameB) then
+                hHero:RemoveModifierByName(modifierNameB)
+            end
+            if hHero:HasModifier(modifierNameA) then
+                hHero:RemoveModifierByName(modifierNameA)
+            end
         end
     end
 end

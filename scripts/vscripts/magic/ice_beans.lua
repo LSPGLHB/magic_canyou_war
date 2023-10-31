@@ -9,7 +9,7 @@ function stageOne (keys)
     caster.fire_spirits_numSpirits	= chargeCount
 	caster:SetModifierStackCount( modifierStageName, ability, chargeCount )
     local ability_b_name	= keys.ability_b_name
-	local ability_a_name	= ability:GetAbilityName()
+	local ability_a_name	= keys.ability_a_name
 	caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
 
     initDurationBuff(keys)
@@ -18,7 +18,7 @@ end
 function LevelUpAbility(keys)
     local caster = keys.caster
 	local this_ability = keys.ability
-	local this_abilityName = this_ability:GetAbilityName()
+	--local this_abilityName = this_ability:GetAbilityName()
 	local this_abilityLevel = this_ability:GetLevel()
 
 	-- The ability to level up
@@ -36,7 +36,7 @@ function initStage(keys)
     local caster	= keys.caster
 	local ability	= keys.ability
 
-	local ability_a_name = ability:GetAbilityName()
+	local ability_a_name = keys.ability_a_name
 	local ability_b_name = keys.ability_b_name
 	caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
 end
@@ -120,6 +120,7 @@ end
 function channelInterrupted(keys)
 	local caster	= keys.caster
 	local ability	= keys.ability
+	--可返回CD和蓝
 	--ability:EndCooldown()
 	--ability:RefundManaCost()
 end
