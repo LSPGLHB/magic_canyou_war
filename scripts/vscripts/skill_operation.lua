@@ -1,9 +1,16 @@
 require('player_power')
-----伤害相生增强计算(子弹实体)
+----伤害相生增强计算(子弹实体)(只计算相生相关的)
 function getApplyDamageValue(shoot)
 	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, shoot.damage) 
 	if damage < 0 then
-		damage = 0  --伤害保底
+		damage = 1  --伤害保底
+	end
+	return damage
+end
+function getApplyDamageValuePlus(shoot,damageVal)
+	local damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, damageVal) 
+	if damage < 0 then
+		damage = 1  --伤害保底
 	end
 	return damage
 end
@@ -23,10 +30,11 @@ function getApplyEnergyValue(shoot, shootEnergy, flag)
 	end
 	local energy = powerLevelOperation(shoot, 'energy', powerLv, shootEnergy) 
 	if energy <= 0 then
-		energy = 1  --伤害保底
+		energy = 1  --法魂保底
 	end
 	return energy
 end
+
 --克制增强运算（依赖match_helper数值）
 function powerLevelOperation(shoot, abilityName, powerLv, value)
 	--print("powerLevelOperation",powerLv,"=",damage)

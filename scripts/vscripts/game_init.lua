@@ -1,6 +1,6 @@
 require('scene/battlefield')
 
-function initMapStats()
+function initMapStatus()
 
     --真随机设定
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','') 
@@ -17,19 +17,10 @@ function initMapStats()
     playerRoundLearn = {}
 
     TreasureBoxGold = "treasureBoxGold"
-    --轮回石初始化
-    initSamsaraStone()
-
-    --魔法石初始化
-    initMagicStone()
-
-    --宝箱初始化
-    initTreasureBox()
-
-    --法阵初始化
-    initBattlefield()
+ 
 
     --初始化所有玩家的天赋
+    playerOrderTimer = {}
     playerContractLearn = {}
     playerTalentLearn = {}
     playerOrderTarget = {}
@@ -37,6 +28,7 @@ function initMapStats()
     playerOrderTimer = {}
     playerShopLock = {}
     playerRefreshCost = {}
+    dorpItems = {}
     for i = 0, 9 do
         playerContractLearn[i]={}
         playerContractLearn[i]['contractName'] = 'nil'
@@ -92,6 +84,7 @@ end
 
 --魔法石初始化
 function initMagicStone()
+    print("=========initHeroStatus============")
     if goodMagicStone ~= nil then
         goodMagicStone:ForceKill(true)
     end
@@ -220,11 +213,12 @@ end
 
 --死亡物品掉落
 function RollDrops(unit)
-	initDropInfo(unit)
+	local dropInfoSort = initDropInfo(unit:GetUnitName())
+    --print("===========RollDrops=============:"..#dropInfoSort)
 
-    for k = 0 , #DropInfoSort do
-        local item_name = DropInfoSort[k]['name']
-        local chance = DropInfoSort[k]['chance']
+    for k = 0 , #dropInfoSort do
+        local item_name = dropInfoSort[k]['name']
+        local chance = dropInfoSort[k]['chance']
         print("Creating "..item_name.."="..chance)
         if RollPercentage(chance) then
             -- 创建对应的物品
@@ -235,13 +229,12 @@ function RollDrops(unit)
             -- 用LaunchLoot函数可以有一个掉落动画，当然，也可以用CreateItemOnPositionSync来直接掉落。
               -- item:LaunchLoot(false, 50, 50, pos)
             CreateItemOnPositionSync(pos,item)
-
             break;
         end
     end
 -- 循环所有需要掉落的物品
 --[[
-        for item_name,chance in pairs(DropInfoSort) do
+        for item_name,chance in pairs(dropInfoSort) do
             print("Creating "..item_name.."="..chance)
             if RollPercentage(chance) then
                 -- 创建对应的物品
@@ -255,8 +248,9 @@ function RollDrops(unit)
                 
             end
         end]]
-
 end
+
+
 
 function RollPercentageFlag(randomNum)
     local flag = false
@@ -268,35 +262,35 @@ function RollPercentageFlag(randomNum)
     return flag
 end
 
-function initDropInfo(unit)
+function initDropInfo(unitName)
     -- 读取上面读取的掉落KV文件，然后读取到对应的单位的定义文件
-    local DropInfo = GameRules.DropTable[unit:GetUnitName()]
-    DropInfoSort = {}
-    
-    if DropInfo then
+    local dropInfo = GameRules.DropTable[unitName]
+    local dropInfoSort = {}
+    print("initDropInfo")
+    if dropInfo then
         local i = 0
-        for item_name,chance in pairs(DropInfo) do
+        for item_name,chance in pairs(dropInfo) do
             local tempName = item_name
             local tempChance = chance
-            --print("start:"..tempName.."="..tempChance)
+            print("start:"..tempName.."="..tempChance)
             for j = 0 , i do  
                 if j == i then
-                    DropInfoSort[i] = {}
-                    DropInfoSort[i]['name'] = tempName
-                    DropInfoSort[i]['chance'] = tempChance
+                    dropInfoSort[i] = {}
+                    dropInfoSort[i]['name'] = tempName
+                    dropInfoSort[i]['chance'] = tempChance
                     --print("i="..i..",name="..tempName.."="..tempChance)
                     break;
                 end
-                    --print("check:"..tempChance..'<'..DropInfoSort[j]['chance'])
-                if tempChance < DropInfoSort[j]['chance'] then
+                    --print("check:"..tempChance..'<'..dropInfoSort[j]['chance'])
+                if tempChance < dropInfoSort[j]['chance'] then
                     local inputName = tempName
                     local inputChance = tempChance
-                    tempName = DropInfoSort[j]['name']
-                    tempChance = DropInfoSort[j]['chance']
+                    tempName = dropInfoSort[j]['name']
+                    tempChance = dropInfoSort[j]['chance']
                     --print("tempname="..tempName.."="..tempChance)
-                    DropInfoSort[j] = {}
-                    DropInfoSort[j]['name'] = inputName
-                    DropInfoSort[j]['chance'] = inputChance
+                    dropInfoSort[j] = {}
+                    dropInfoSort[j]['name'] = inputName
+                    dropInfoSort[j]['chance'] = inputChance
                     --print("j="..j..",name="..item_name.."="..chance)
                 end
 
@@ -304,7 +298,7 @@ function initDropInfo(unit)
             i = i + 1
         end
     end
-
+    return dropInfoSort
 end
 
 function heroStudyFinish(playerID)

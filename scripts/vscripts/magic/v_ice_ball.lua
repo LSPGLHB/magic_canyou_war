@@ -74,7 +74,7 @@ function vIceBallDamageCallback(shoot, unit, interval)
     local ability = keys.ability
     local duration = shoot.aoe_duration
     local damageTotal = getApplyDamageValue(shoot)
-    local damage = damageTotal / (duration / interval)
+    local damage = damageTotal / (duration / interval) / 2
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

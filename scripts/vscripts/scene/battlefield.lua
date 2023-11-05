@@ -1,48 +1,55 @@
-
 --法阵初始化
 function initBattlefield()
 
-    if Battlefields ~= nil then
-        for i = 1, #Battlefields[2],1 do
-            local goodBattlefield = Battlefields[2][i]
-            battlefieldDelete(goodBattlefield)
+    if Battlefields ~= nil  then
+        local maxCountGoodBattlefields = #Battlefields[DOTA_TEAM_GOODGUYS]
+        for i = 1, maxCountGoodBattlefields, 1 do
+            local goodBattlefield = Battlefields[DOTA_TEAM_GOODGUYS][i]
             goodBattlefield:ForceKill(true)
-            Battlefields[2][i] = nil
+            battlefieldInitAll(goodBattlefield)
+            Battlefields[DOTA_TEAM_GOODGUYS][i] = nil
+            --goodBattlefield:SetTeam(DOTA_TEAM_GOODGUYS)
+            --battlefieldParticleSet(goodBattlefield,DOTA_TEAM_GOODGUYS,i)
+
         end
 
-        for i = 1, #Battlefields[3],1 do
-            local goodBattlefield = Battlefields[3][i]
-            battlefieldDelete(goodBattlefield)
-            goodBattlefield:ForceKill(true)
-            Battlefields[3][i] = nil
+        local maxCountBadBattlefields = #Battlefields[DOTA_TEAM_BADGUYS]
+        for i = 1, maxCountBadBattlefields, 1 do
+            local badBattlefield = Battlefields[DOTA_TEAM_BADGUYS][i]
+            badBattlefield:ForceKill(true)
+            battlefieldInitAll(badBattlefield)
+            --badBattlefield:SetTeam(DOTA_TEAM_BADGUYS)
+            --battlefieldParticleSet(badBattlefield,DOTA_TEAM_BADGUYS,i)
+            Battlefields[DOTA_TEAM_BADGUYS][i] = nil
         end
-        
+
+        --Battlefields[DOTA_TEAM_GOODGUYS] = BattlefieldsStatic[DOTA_TEAM_GOODGUYS]
+        --Battlefields[DOTA_TEAM_BADGUYS] = BattlefieldsStatic[DOTA_TEAM_BADGUYS]
     end
 
+
     Battlefields = {}
-    Battlefields[2] = {}    
+    --BattlefieldsStatic = {}
+    Battlefields[DOTA_TEAM_GOODGUYS] = {}
+    --BattlefieldsStatic[DOTA_TEAM_GOODGUYS] = {}    
     --LaunchGoodBattlefield = 'nil'
     for i=1, 3 ,1 do
         local fieldName = "goodBattlefield"..i
-
         local goodBattlefieldEntities = Entities:FindByName(nil,fieldName) 
         local goodBattlefieldLocation = goodBattlefieldEntities:GetAbsOrigin()
         local goodBattlefield = CreateUnitByName("battlefield", goodBattlefieldLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
         goodBattlefield.fieldName = fieldName
-        Battlefields[2][i] = goodBattlefield
+        Battlefields[DOTA_TEAM_GOODGUYS][i] = goodBattlefield
+        --BattlefieldsStatic[DOTA_TEAM_GOODGUYS][i] = goodBattlefield
         local goodBattlefieldAbility = goodBattlefield:GetAbilityByIndex(0)
         goodBattlefieldAbility:SetLevel(1)
-        goodBattlefield:SetSkin(1)
-        goodBattlefieldAbility:ApplyDataDrivenModifier(goodBattlefield, goodBattlefield, "modifier_battlefield_flatl_datadriven", {Duration = -1}) 
-        if i == 3 then
-            goodBattlefield:RemoveModifierByName("modifier_battlefield_flatl_datadriven")
-            goodBattlefieldAbility:ApplyDataDrivenModifier(goodBattlefield, goodBattlefield, "modifier_battlefield_idle_datadriven", {Duration = -1}) 
-            goodBattlefieldAbility:ApplyDataDrivenModifier(goodBattlefield, goodBattlefield, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
-            --LaunchGoodBattlefield = goodBattlefield
-        end
+
+        battlefieldParticleSet(goodBattlefield,DOTA_TEAM_GOODGUYS,i)
+        
     end
 
-    Battlefields[3] = {}
+    Battlefields[DOTA_TEAM_BADGUYS] = {}
+    --BattlefieldsStatic[DOTA_TEAM_BADGUYS] = {}
     --LaunchBadBattlefield = 'nil'
     for i=1, 3 ,1 do
         local fieldName = "badBattlefield"..i
@@ -50,18 +57,17 @@ function initBattlefield()
         local badBattlefieldLocation = badBattlefieldEntities:GetAbsOrigin()
         local badBattlefield = CreateUnitByName("battlefield", badBattlefieldLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
         badBattlefield.fieldName = fieldName
-        Battlefields[3][i] = badBattlefield
+        Battlefields[DOTA_TEAM_BADGUYS][i] = badBattlefield
+        --BattlefieldsStatic[DOTA_TEAM_BADGUYS][i] = badBattlefield
         local badBattlefieldAbility = badBattlefield:GetAbilityByIndex(0)
         badBattlefieldAbility:SetLevel(1)
-        badBattlefield:SetSkin(2)
-        badBattlefieldAbility:ApplyDataDrivenModifier(badBattlefield, badBattlefield, "modifier_battlefield_flatl_datadriven", {Duration = -1}) 
-        if i == 3 then
-            badBattlefield:RemoveModifierByName("modifier_battlefield_flatl_datadriven")
-            badBattlefieldAbility:ApplyDataDrivenModifier(badBattlefield, badBattlefield, "modifier_battlefield_idle_datadriven", {Duration = -1}) 
-            badBattlefieldAbility:ApplyDataDrivenModifier(badBattlefield, badBattlefield, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
-            --LaunchBadBattlefield = badBattlefield
-        end
+
+        battlefieldParticleSet(badBattlefield,DOTA_TEAM_BADGUYS,i)
     end
+
+
+
+    
 end
 
 
@@ -129,9 +135,7 @@ function battlefieldLaunchTimer()
                 Battlefields[i][fieldCount].battlefieldBuff = "mana_regen"
             end
 
-            
         end
-
     end
 end
 
@@ -149,6 +153,7 @@ function battlefieldLaunch(keys)
     local buffStayTime = 10
     local timerFlag = false
     print("=================battlefieldLaunch==ininin==================team:"..casterTeam)
+    --print(caster:GetName())
     --倒计时关闭激活
     Timers:CreateTimer(buffStayTime,function()
         timerFlag = true
@@ -168,17 +173,17 @@ function battlefieldLaunch(keys)
         for k,unit in pairs(aroundUnits) do
             workingFlag = false
             local unitTeam = unit:GetTeam()
+            local unitLabel = unit:GetUnitLabel()
 
-            if  casterTeam == unitTeam and unit ~= caster then
+            if  casterTeam == unitTeam and unit ~= caster and unitLabel ~= GameRules.battlefieldLabel then
                 workingFlag = true
                 break;
             end
         end
-
-        --workingFlag:法阵处于转圈状态
+        --workingFlag:法阵处于有友军状态
         --loadingFlag:已经判断
         if workingFlag == true and loadingFlag == false then
-            --print("==================================battlefieldLaunch===========workingFlagtrue==============")
+            print("==================================battlefieldLaunch===========workingFlagtrue==============")
             EmitSoundOn("scene_voice_battlefield_buff_collect", caster)
             loadingFlag = true
             local goodTeamParticlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
@@ -213,11 +218,10 @@ function battlefieldLaunch(keys)
 
         --转圈完成
         if string.format("%.1f",count) > string.format("%.1f",getBuffTime) then 
-            
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
             local buffName = caster.battlefieldBuff
-            print("getBuff:"..buffName)
+            --print("getBuff:"..buffName)
             local abilityName = "battlefield_"..buffName.."_buff_datadriven"
             local modifierName = "modifier_battlefield_"..buffName.."_buff_datadriven"
             for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
@@ -235,9 +239,8 @@ function battlefieldLaunch(keys)
             end
             return nil
         end
-
+        --当buff时间到消失，并且没有友军在获取
         if timerFlag == true and loadingFlag == false then
-            
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
             return nil
@@ -245,6 +248,10 @@ function battlefieldLaunch(keys)
 
         if caster:HasModifier("modifier_battlefield_ability2_datadriven") then
             return 0.1
+        end
+
+        if not caster:IsAlive() then
+            return nil
         end
     end)
 
@@ -268,20 +275,24 @@ function battlefieldInit(caster)
     if caster.loadingParticleID ~= nil then
         ParticleManager:DestroyParticle(caster.loadingParticleID, true)
     end
-   
-
+    
 end
 
-function battlefieldDelete(caster)
-
-    if caster.loadingParticleID ~= nil then
-        --print(caster.loadingParticleID)
-        ParticleManager:DestroyParticle(caster.loadingParticleID, true)
-    end
+function battlefieldInitAll(caster)
+    battlefieldInit(caster)
     if caster.idleParticleID ~= nil then
-        --print(caster.idleParticleID)
         ParticleManager:DestroyParticle(caster.idleParticleID, true)
     end
+end
 
+function battlefieldParticleSet(battlefield,team,i)
+    battlefield:SetSkin(team-1)
+    local battlefieldAbility = battlefield:GetAbilityByIndex(0)
+    battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_flatl_datadriven", {Duration = -1}) 
+    if i == 3 then
+        battlefield:RemoveModifierByName("modifier_battlefield_flatl_datadriven")
+        battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_idle_datadriven", {Duration = -1}) 
+        battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
+    end
 end
 

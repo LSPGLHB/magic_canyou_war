@@ -871,8 +871,8 @@ function blackHole(shoot)
 		for k,unit in pairs(aroundUnits) do
 			local unitTeam = unit:GetTeam()
 			local label = unit:GetUnitLabel()
-			--只作用于敌方，或石头单位
-			if (casterTeam ~= unitTeam or label == GameRules.stoneLabel) and label ~= GameRules.magicStoneLabel  then
+			--只作用于敌方技能或英雄或召唤，或石头单位
+			if (casterTeam ~= unitTeam and (label == GameRules.summonLabel or label == GameRules.skillLabel or unit:IsHero())) or label == GameRules.stoneLabel  then
 				local shootPos = shoot:GetAbsOrigin()
 				local unitPos = unit:GetAbsOrigin()
 				local vectorDistance = Vector(shootPos.x,shootPos.y,0) - Vector(unitPos.x,unitPos.y,0)

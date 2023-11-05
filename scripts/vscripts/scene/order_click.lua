@@ -39,13 +39,14 @@ function initHeroOrder(keys)
     if caster:HasModifier('modifier_channel_act_datadriven') then
         caster:RemoveModifierByName('modifier_channel_act_datadriven')
     end
+    
     playerOrderTimer[playerID] = nil
     local target = keys.target
     if target ~= nil  then
         local targetLabel = target:GetUnitLabel()
-        print('targetLabel:'..targetLabel)
+        --print('targetLabel:'..targetLabel)
         --如果是则开启打开进程(宝箱/商人/法阵)
-        if targetLabel == GameRules.boxLabel or targetLabel == GameRules.shopLabel or targetLabel == GameRules.battlefieldLabel then
+        if targetLabel == GameRules.boxLabel or targetLabel == GameRules.shopLabel or targetLabel == GameRules.battlefieldLabel or targetLabel == GameRules.remainsLabel then
             playerOrderTarget[playerID] = target
             caster:AddAbility('hero_search_target_timer_datadriven'):SetLevel(1)
         end  
@@ -58,7 +59,7 @@ function initHeroOpenBoxChannelSucceeded(keys)
     local playerID = caster:GetPlayerID()
     local target = playerOrderTarget[playerID]
     local targetName = target:GetUnitName()
-    print(target:GetUnitName())
+    --print(target:GetUnitName())
     --如果目标是金币箱子，打开掉落金币
     if targetName == TreasureBoxGold then
         local position = target:GetAbsOrigin()
@@ -90,11 +91,8 @@ function initHeroCaptureChannelSucceeded(keys)
         local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
         battlefieldInit(lastCasterFrontField)
 
-        
         --刷新被占领法阵为占领方成为开启状态
         captrueBattlefield(caster.battlefieldTarget, casterTeam)
-
-
 
         --刷新被占领方次前线法阵成为开启状态
         Battlefields[casterTeam][#Battlefields[casterTeam]+1] = Battlefields[targetTeam][#Battlefields[targetTeam]]
@@ -227,6 +225,19 @@ function initHeroSearchTarget(keys)
                         caster:CastAbilityNoTarget(caster:GetAbilityByIndex(11),playerID)
                         caster.battlefieldTarget = target
                         
+                    end
+                end
+
+                --拾取遗物
+                if targetLabel == GameRules.remainsLabel then
+                    local itemCount = caster:GetNumItemsInInventory()
+                    if itemCount <= 9 then
+                        --local ownerItem = CreateItem("item_remains_icon_2", nil, nil)
+                        caster:AddItemByName("item_remains_box")
+                        target:SetModelScale(0.01)
+                        target:ForceKill(true)
+                    else
+                        print("物品栏已满")
                     end
                 end
 

@@ -91,7 +91,7 @@ function twiceStoneBallAOEOperationCallbackSp1(shoot,unit)
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
 
-    local damage = getApplyDamageValue(shoot) * (8 / 30)
+    local damage = getApplyDamageValue(shoot) * (8 / 20)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local AbilityLevel = shoot.abilityLevel
@@ -118,7 +118,7 @@ function twiceStoneBallAOEOperationCallbackSp2(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
 
-    local damage = getApplyDamageValue(shoot) * (22 / 30)
+    local damage = getApplyDamageValue(shoot) * (12 / 20)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
@@ -132,6 +132,8 @@ function twiceStoneBallAOEOperationCallbackSp2(shoot,unit)
 
         local distance = (unit:GetAbsOrigin() - unit.tsb_position):Length2D()
         local damage = distance * ability:GetSpecialValueFor("damage_by_distance")
+        --damage = powerLevelOperation(shoot, 'damage', shoot.power_lv, damage) 
+
         ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
 

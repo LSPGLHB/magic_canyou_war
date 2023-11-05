@@ -61,6 +61,8 @@ function refreshShopJSTOLUA(index,keys)
         playerShopLock[playerID] = 0
         PlayerResource:SpendGold(playerID, refreshCost,0)
         currentGold = PlayerResource:GetGold(playerID)
+        local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+	    EmitSoundOn("scene_voice_shop_refresh", hHero)
         CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
             playerGold = currentGold
         })

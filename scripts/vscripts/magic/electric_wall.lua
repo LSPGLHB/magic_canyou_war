@@ -110,7 +110,7 @@ function electricWallAOEIntervalCallBack(shoot)
                                     false)
 
     for k,unit in pairs(aroundUnitsSp1) do
-        local isEnemyNoSkill = checkIsEnemyNoSkill(shoot,unit)
+        local isEnemyNoSkill = checkIsEnemyHero(shoot,unit)
         if isEnemyNoSkill then
             table.insert(shoot.hitRangeUnits, unit)
         end
@@ -130,7 +130,7 @@ function electricWallAOEIntervalCallBack(shoot)
 										false)
 
         for k,unit in pairs(aroundUnitsSp2) do
-            local isEnemyNoSkill = checkIsEnemyNoSkill(shoot,unit)
+            local isEnemyNoSkill = checkIsEnemyHero(shoot,unit)
             if isEnemyNoSkill then
                 table.insert(shoot.tempHitRangeUnits, unit)
             end

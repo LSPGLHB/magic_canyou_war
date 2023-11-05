@@ -178,7 +178,7 @@ function moveElectricGatherSp1(keys,shoot)
 			return nil
 		end
 
-		shoot.speed = pull_back_distance * 2 / (charge_time*charge_time) * timeCount * 0.02
+		shoot.speed = pull_back_distance * 2 / (charge_time * charge_time) * timeCount * 0.02
 		shoot.traveled_back_distance = shoot.traveled_back_distance + shoot.speed
 		timeCount = timeCount + charge_interval
 		return charge_interval

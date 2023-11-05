@@ -68,8 +68,9 @@ function thunderAreaDamageCallback(shoot, unit, interval)
     local caster = keys.caster
     local ability = keys.ability
     local duration = ability:GetSpecialValueFor("aoe_duration")
+    
     local damageTotal = getApplyDamageValue(shoot)
-    local damage = damageTotal / (duration / interval)
+    local damage = damageTotal / (duration / interval + 1)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
     ability:ApplyDataDrivenModifier(caster, unit, keys.aoeTargetStun, {Duration = 1})
 

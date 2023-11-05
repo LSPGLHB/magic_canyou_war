@@ -31,7 +31,10 @@ end
 --学习阶段
 function studyStep(gameRound)
     print("onStepLoopStudy========start"..gameRound)
-    GameRules.checkWinTeam = nil
+    --每次轮回初始化地图与数据
+    gameRoundInit()
+
+    
     local step0 = "魔法学习阶段倒数："
     local studyTime = 16
     local interval = 1 --运算间隔
@@ -39,7 +42,6 @@ function studyStep(gameRound)
 
     initHeroStatus()   
     getUpGradeListByRound(gameRound)
-
     refreshShopList(true)
     
 
@@ -120,7 +122,7 @@ function battleStep(gameRound)
     local interval = 1
     local loadingTime = 2
     local battleTime = 300 --战斗时间
-    local battlefieldTimer = 30--法阵刷新
+    local battlefieldTimer = 30--法阵刷新激活
     --英雄位置初始化到战斗阶段
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
     playerPositionTransfer(battlePointsTeam2,playersTeam2)
@@ -130,7 +132,7 @@ function battleStep(gameRound)
         --local gameTime = getNowTime()
         battleTime = battleTime - 1
 
-        if battleTime % 30 == 0 then
+        if battleTime % battlefieldTimer == 0 and battleTime / battlefieldTimer > 0 then
             --法阵激活,每30秒一次
             battlefieldLaunchTimer()
             
@@ -171,8 +173,7 @@ function battleStep(gameRound)
                 Timers:CreateTimer(loadingTime,function ()
                     GameRules.checkWinTeam = nil
                     gameRound = gameRound + 1
-                    --每次轮回初始化地图与数据
-                    gameRoundInit()
+                    
 
                     studyStep(gameRound) 
                     return nil
@@ -198,6 +199,7 @@ end
 --初始化英雄状态
 
 function initHeroStatus()
+    print("============initHeroStatus================")
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -220,10 +222,7 @@ function initHeroStatus()
             local modifierNameC = "modifier_"..abilityNameC.."_buff"
             local modifierNameB = "modifier_"..abilityNameB.."_buff"
             local modifierNameA = "modifier_"..abilityNameA.."_buff"
-            print("============initHeroStatus================")
-            print(modifierNameC)
-            print(modifierNameB)
-            print(modifierNameA)
+
             if hHero:HasModifier(modifierNameC) then
                 hHero:RemoveModifierByName(modifierNameC)
             end
@@ -239,7 +238,6 @@ end
 
 --预备阶段执行学习项目
 function getUpGradeListByRound(gameRound)
-   
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -327,26 +325,30 @@ function gameRoundInit()
     
     initPlayerHero()--初始化所有玩家
     initMagicStone()--初始化魔法石
-    initBattlefield()--初始化法阵
+    initBattlefield()--初始化法阵   
+    initSamsaraStone()--轮回石初始化（未完成）
+    initTreasureBox()--宝箱初始化（未删除上局的）
 
-    --英雄位置初始化到预备阶段
-    playerPositionTransfer(preparePointsTeam1,playersTeam1)
-    playerPositionTransfer(preparePointsTeam2,playersTeam2)
-     
+
+    dorpItems = {}
+    GameRules.checkWinTeam = nil
 end    
 
+--初始化英雄局内数据
 function initPlayerHero()  
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-            --初始化是否学习技能
+            --初始化是否学习技能,初始化刷新第一次装备金币
             playerRoundLearn[playerID] = 0
             playerRefreshCost[playerID] = GameRules.refreshCost
             --初始化所有临时BUFF（未做好）（player_power）
-            initTempPlayerPower()
-            --复活英雄
+            --initTempPlayerPower()
 
         end
     end
+     --英雄位置初始化到预备阶段
+     playerPositionTransfer(preparePointsTeam1,playersTeam1)
+     playerPositionTransfer(preparePointsTeam2,playersTeam2)
 end
 
 function refreshShopList(initLockFlag)

@@ -11,7 +11,7 @@ function createShoot(keys)
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     --过滤掉增加施法距离的操作
-	shoot.max_distance_operation = max_distance
+	--shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
 
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)

@@ -51,8 +51,8 @@ function electricArrowAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
-    local bouns_damage_percentage = ability:GetSpecialValueFor("bouns_damage_percentage")
-    local damage_bouns = (unit:GetMaxHealth() - unit:GetHealth()) * (bouns_damage_percentage / 100)
+    local damage_percent_sp = ability:GetSpecialValueFor("damage_percent_sp")
+    local damage_bouns = (unit:GetMaxHealth() - unit:GetHealth()) * (damage_percent_sp / 100)
 	local damage = getApplyDamageValue(shoot) + damage_bouns
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

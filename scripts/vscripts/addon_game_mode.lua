@@ -136,7 +136,7 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupTimeout(1) --0后无法选英雄？？？设置设置(赛前)阶段的超时。 0 = 立即开始, -1 = 永远 (直到FinishCustomGameSetup 被调用) 
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
-	GameRules.PreTime = 10
+	GameRules.PreTime = 2
 	GameRules.refreshCost = 0
 	GameRules.refreshCostAdd = 0
 	GameRules.magicStoneLabel = "magicStoneLabel"
@@ -150,6 +150,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.boxLabel = "boxLabel"
 	GameRules.battlefieldLabel = "battlefieldLabel"
 	GameRules.samsaraStoneLabel = "samsaraStoneLabel"
+	GameRules.remainsLabel ="remainsLabel" --遗物
 
 	--场景标签，一般不与子弹互动
 	GameRules.SceneLabel = {}
@@ -159,6 +160,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.SceneLabel[4] = GameRules.boxLabel
 	GameRules.SceneLabel[5] = GameRules.battlefieldLabel
 	GameRules.SceneLabel[6] = GameRules.samsaraStoneLabel
+	GameRules.SceneLabel[7] = GameRules.remainsLabel
 
 
 	GameRules.playerBaseHealth = 50
@@ -169,12 +171,12 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 
-	--GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
+	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules:SetStartingGold(0)
 	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	GameRules:SetFirstBloodActive(false)
 	
-	GameRules:SetHeroRespawnEnabled(false)
+	--GameRules:SetHeroRespawnEnabled(false)
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)
@@ -294,7 +296,7 @@ function magicCanyouWar:InitGameMode()
 
 	--初始化玩家数据
 	if init_flag == 0 then
-		initMapStats() -- 初始化地图数据
+		initMapStatus() -- 初始化地图数据
 		initItemList() -- 初始化物品信息
 		initPlayerPower() --初始化契约容器
 		initTempPlayerPower()--初始化回合临时能力提升容器
@@ -307,6 +309,8 @@ function magicCanyouWar:InitGameMode()
 	end
 
 end
+
+
 
 function magicCanyouWar:On_ed_open_my_shop(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
@@ -324,13 +328,46 @@ function magicCanyouWar:OnItemPickup (keys)
 	local playerID = keys.PlayerID
 	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
 	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	local team = HeroEntity:GetTeam()
-	local ownerID = ItemEntity:GetOwner():GetPlayerID()
-	--不是自己的物品丢回地上
-	if playerID ~= ownerID then
-		HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
-		EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
+	local playerTeam = HeroEntity:GetTeam()
+	--全体弃用，重做
+	--[[
+	local itemLabel
+	for name, item in pairs(GameRules.itemList) do
+		if itemName == name then
+			for key, value in pairs(item) do
+				if key == "ItemType" then
+					itemLabel = value
+				end
+			end
+		end
 	end
+
+	
+
+	--不是自己的物品丢回地上
+	if (itemLabel == 'equip' or itemLabel == 'equip_plus') then
+		local ownerID = ItemEntity:GetOwner():GetPlayerID()
+		if playerID ~= ownerID then
+			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
+			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
+		end
+	end
+
+	if itemLabel == 'remainsBox' then
+		
+		local remainsTeam  = ItemEntity:GetOwner():GetTeam() --ItemEntity:GetContext("team")--
+		--for key, val in pairs(dorpItems) do
+		--	remainsItem = val
+		--end
+		--local remainsTeam = remainsItem:GetContext("team")
+		print("playerTeam:"..playerTeam)
+		print("remainsTeam:"..remainsTeam)
+		--print("ItemEntityTeam:"..ItemEntity:GetContext('team'))
+		if playerTeam == remainsTeam then
+			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
+			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
+		end
+	end]]
 	--local itemName2 = ItemEntity:GetName()
 	--print("playerID",playerID)
 	--print("team",team)
@@ -377,13 +414,33 @@ end]]
 function magicCanyouWar:OnEntityKilled (keys)
 	
 	--DeepPrintTable(keys)
-	local unit = EntIndexToHScript(keys.entindex_killed)
+	local unit = EntIndexToHScript(keys.entindex_killed) --受害者
+	local killer = EntIndexToHScript(keys.entindex_attacker) --凶手
     local name = unit:GetContext("name")
 	local label = unit:GetUnitLabel()
+	local position = unit:GetAbsOrigin()
+	local team = killer:GetTeam()
 
 	--物品掉落测试
-	if label == GameRules.boxLabel or unit:IsHero() then
+	if label == GameRules.boxLabel then
 		RollDrops(unit)
+	end
+
+	if unit:IsHero() then
+		--print("======heroDie======")
+		local dorpUnit = CreateUnitByName("heroDropUnit", position, true, nil, nil, team)
+		--local itemName = "item_remains_box"
+		--local dropOwnerItem = CreateItemOnPositionSync(position,CreateItem(itemName, unit, unit))
+		
+		--貌似没用
+		--dropOwnerItem:SetContext("team", tostring(unit:GetTeam()), 0)
+		--table.insert(dorpItems,dropOwnerItem)
+		--print(dropOwnerItem:GetContext('team'))
+		--dorpUnit:AddItemDrop(dropOwnerItem)
+		--dorpUnit:AddItem(dropOwnerItem)
+		--local tempItem = 
+		--dorpUnit:DropItemAtPositionImmediate(dropOwnerItem, position)
+		--dorpUnit:ForceKill(true)
 	end
 
 	--判断小怪被消灭，并刷新小怪
@@ -479,6 +536,10 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				--showPlayerStatusPanel( playerID ) 
 				--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)
 				initHeroByPlayerID(playerID)
+				
+				local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+				local heroHiddenStatusAbility = hHero:GetAbilityByIndex(12)
+				heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = 2}) 
 			end
 		end
 		Timers:CreateTimer(2,function ()

@@ -2,10 +2,14 @@ require('myMaths')
 --打开商店界面
 function OnMyUIShopOpen( PlayerID )
 	--CustomUI:DynamicHud_Destroy(PlayerID,"UIShopBox")
+	local hHero = PlayerResource:GetSelectedHeroEntity(PlayerID)
+	EmitSoundOn("scene_voice_shop_open", hHero)
 	CustomUI:DynamicHud_Create(PlayerID,"UIShopBox","file://{resources}/layout/custom_game/UI_shop.xml",nil)
 end
 
 function OnMyUIShopClose(PlayerID)
+	local hHero = PlayerResource:GetSelectedHeroEntity(PlayerID)
+	EmitSoundOn("scene_voice_shop_close", hHero)
 	CustomUI:DynamicHud_Destroy(PlayerID,"UIShopBox")
 end
 
@@ -36,7 +40,6 @@ function initItemList()
 				itemTextureName = value
 				c = c+1
 			end
-
 			if c == 3 then
 				table.insert(itemNameList,itemName)
 				table.insert(itemCostList,itemCost)
@@ -61,6 +64,8 @@ function getPlayerShopListByRandomList(playerID, randomNumList)
 
 	local listLength = #randomItemNameList
 	--print("listLength",listLength)
+	--local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+	--EmitSoundOn("scene_voice_shop_refresh", hHero)
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getShopItemListLUATOJS", {
 		num = listLength, 
 		lock = playerShopLock[playerID],
@@ -92,12 +97,13 @@ function buyShopJSTOLUA(index,keys)
 	--CreateItem(itemName,player,player)
 	local itemCount = hHero:GetNumItemsInInventory()
 		if(currentGold >= itemCost) then
-			if(itemCount < 9) then
+			if(itemCount <= 9) then
 				local ownerItem = CreateItem(itemName, hHero, hHero)
 				hHero:AddItem(ownerItem)
 				--hHero:AddItemByName(itemName)
 				PlayerResource:SpendGold(playerID,itemCost,0)
 				currentGold = PlayerResource:GetGold(playerID)
+				EmitSoundOn("scene_voice_shop_buy", hHero)
 				CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
 					playerGold = currentGold
 				})

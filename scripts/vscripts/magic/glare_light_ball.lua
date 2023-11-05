@@ -7,14 +7,14 @@ function createGlareLightBall(keys)
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
-	--local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
+	local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance") 
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     initDurationBuff(keys)
-	--shoot.aoe_radius = aoe_radius --重置aoe范围，不受攻击范围加强
+	shoot.aoe_radius = aoe_radius --重置aoe范围，不受攻击范围加强
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID

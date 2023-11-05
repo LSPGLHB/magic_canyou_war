@@ -15,7 +15,8 @@ function createShoot(keys)
 		local shoot = CreateUnitByName(keys.unitModel, position, true, nil, nil, caster:GetTeam())
         creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		initDurationBuff(keys)
-
+		--过滤掉增加施法距离的操作
+		shoot.max_distance_operation = max_distance
 		--效果可加强项目
 		local aoe_duration = ability:GetSpecialValueFor("aoe_duration") --AOE持续作用时间
         aoe_duration = getFinalValueOperation(playerID,aoe_duration,'control',shoot.abilityLevel,nil)--数值加强

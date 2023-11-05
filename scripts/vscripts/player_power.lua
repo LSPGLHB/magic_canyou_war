@@ -9,13 +9,10 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
     local modifierNameBuff = "modifier_"..buffName.."_buff"  
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
     local modifierStackCount =  getFinalValueOperation(playerID,baseValue,buffName,nil,'buffStack')
-
     --print("setPlayerBuffByAbilityAndModifier",abilityName)
     --print(modifierNameBuff,"==",modifierNameDebuff)
     --print("modifierNameCount=",modifierStackCount)
-
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
-   
     --不在总层数统计，单层统计才对（试删除）
     --if ( modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0 ) then --增幅且没被禁止，或减幅
     if modifierStackCount ~= 0 then
@@ -27,14 +24,12 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
             modifierNameRemove = modifierNameBuff
             modifierStackCount = modifierStackCount * -1
         end
-        print("modifierNameAdd",modifierNameAdd,modifierStackCount)
-
+        --print("modifierNameAdd",modifierNameAdd,modifierStackCount)
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
         hero:RemoveAbility(abilityName)
-
-    --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
+        --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
         hero:AddAbility(abilityName):SetLevel(1)
         hero:RemoveModifierByName(modifierNameRemove)
         hero:SetModifierStackCount(modifierNameAdd, hero, modifierStackCount)
@@ -44,7 +39,7 @@ end
 
 
 function removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff, modifierNameDebuff)
-    print("removePlayerBuffByAbilityAndModifier")
+    --print("removePlayerBuffByAbilityAndModifier")
     --print(abilityName..modifierNameBuff..modifierNameDebuff)
     if (hero:HasAbility(abilityName)) then
         hero:RemoveAbility(abilityName)
@@ -58,40 +53,20 @@ function removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuf
 end
 
 function setPlayerPower(playerID, powerName, isAdd, value)
-    print("setPlayerPower==",playerID)
+    --print("setPlayerPower==",playerID)
     if( not isAdd ) then
         value = value * -1
     end
-    print(powerName.."=="..value)
+    --print(powerName.."=="..value)
     PlayerPower[playerID][powerName] = PlayerPower[playerID][powerName] + value
     --print("PlayerPower=="..PlayerPower[playerID][powerName])
 end
 
 function setPlayerPowerFlag(playerID, powerName, value)
-    print("setPlayerPowerFlag:"..powerName.."="..value)
+    --print("setPlayerPowerFlag:"..powerName.."="..value)
     PlayerPower[playerID][powerName] = value
 end
 
---获取单独计算的Modifiers层数值（弃用，已合并到总表）
---[[
-function getPlayerPowerValueByName(hero, powerName, playerBaseValue)
-    --local caster = keys.caster
-    local playerID = hero:GetPlayerID()
-    --print("getPlayerPowerValueByName",playerID,powerName,playerBaseValue)
-    local precentBaseBuff = powerName .. "_precent_base"
-    local precentFinalBuff = powerName .. "_precent_final"
-
-
-    local powerValue = PlayerPower[playerID][powerName]
-    local precentBaseValue = PlayerPower[playerID][precentBaseBuff] / 100
-    local precentFinalValue = PlayerPower[playerID][precentFinalBuff] /100
-    --print(powerValue,precentBaseValue,precentFinalValue)
-
-    local stackCount = (playerBaseValue * (1 + precentBaseValue) + powerValue ) * (1 + precentFinalValue) - playerBaseValue
-    --print(powerName,"=stackCount=",stackCount)
-
-    return stackCount
-end]]
 
 --能力数值运算，获取装备与辅助buff的计算值
 function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
@@ -121,17 +96,15 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
 	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
     
     --法阵神符专用（弃用，不加攻击和基础之类复杂加强的不用这个）
-
 	local battlefieldPrecentBase = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_base'] / 100
 	local battlefieldBonusValue = PlayerPower[playerID]['battlefield_'..abilityBuffName]
 	local battlefieldPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100
 
-
-	print("getFinalValueOperation")
+	--print("getFinalValueOperation")
 	--print(precentBase..","..bonusValue..","..precentFinal)
-	print(equipPrecentBase..","..equipBonusValue..","..equipPrecentFinal)
+	--print(equipPrecentBase..","..equipBonusValue..","..equipPrecentFinal)
 	local flag = PlayerPower[playerID]['contract_'..buffName..'_flag']
-    print(flag)
+    --print(flag)
     --装备不受加强的契约使用
     if (equipPrecentBase > 0) then
         equipPrecentBase = equipPrecentBase * flag

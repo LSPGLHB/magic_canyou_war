@@ -24,7 +24,7 @@ function stepOne(keys)
 	EmitSoundOn(keys.soundCast, caster)
     local casterBuff = keys.modifier_caster_stage_name
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
-    /*
+--[[
     Timers:CreateTimer(5, function()
         if caster.twice_ice_ball_on == 1 then
             initStage(keys)
@@ -33,7 +33,7 @@ function stepOne(keys)
             end
         end
         return nil
-    end)*/
+    end)]]
     moveShoot(keys, shoot, twiceIceBallBoomCallBackSp1, nil)
 end
 
@@ -115,11 +115,6 @@ function twiceIceBallAOEOperationCallbackSp2(shoot,unit)
 
     
 end
-
-
-
-
-
 
 function LevelUpAbility(keys)
     local caster = keys.caster
