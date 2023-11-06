@@ -91,7 +91,7 @@ function initHeroCaptureChannelSucceeded(keys)
         local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
         battlefieldInit(lastCasterFrontField)
 
-        --刷新被占领法阵为占领方成为开启状态
+        --刷新被占领法阵为占领方成为初始关闭状态
         captrueBattlefield(caster.battlefieldTarget, casterTeam)
 
         --刷新被占领方次前线法阵成为开启状态

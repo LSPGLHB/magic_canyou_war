@@ -326,7 +326,7 @@ function gameRoundInit()
     initPlayerHero()--初始化所有玩家
     initMagicStone()--初始化魔法石
     initBattlefield()--初始化法阵   
-    initSamsaraStone()--轮回石初始化（未完成）
+    --initSamsaraStone()--轮回石初始化（未完成）
     initTreasureBox()--宝箱初始化（未删除上局的）
 
 

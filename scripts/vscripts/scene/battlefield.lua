@@ -43,9 +43,7 @@ function initBattlefield()
         --BattlefieldsStatic[DOTA_TEAM_GOODGUYS][i] = goodBattlefield
         local goodBattlefieldAbility = goodBattlefield:GetAbilityByIndex(0)
         goodBattlefieldAbility:SetLevel(1)
-
-        battlefieldParticleSet(goodBattlefield,DOTA_TEAM_GOODGUYS,i)
-        
+        battlefieldParticleSet(goodBattlefield,DOTA_TEAM_GOODGUYS,i)   
     end
 
     Battlefields[DOTA_TEAM_BADGUYS] = {}
@@ -64,10 +62,7 @@ function initBattlefield()
 
         battlefieldParticleSet(badBattlefield,DOTA_TEAM_BADGUYS,i)
     end
-
-
-
-    
+ 
 end
 
 
@@ -75,8 +70,9 @@ end
 function battlefieldFlail(keys)
     local caster = keys.caster
     battlefieldInit(caster)
-    EmitSoundOn("scene_voice_battlefield_flail", caster)
-    
+    Timers:CreateTimer(0,function()
+        EmitSoundOn("scene_voice_battlefield_flail", caster) 
+    end)
 end
 
 --法阵启动
@@ -86,9 +82,9 @@ function battlefieldIdle(keys)
     local ability = caster:GetAbilityByIndex(0)
     local refreshInterval = 20
     local casterTeam = caster:GetTeam()
-    EmitSoundOn("scene_voice_battlefield_idle", caster)
-    Timers:CreateTimer(0,function()
-        print("particlesLaunch")
+    print("=-=-=-particlesLaunch-=-=-=")
+    Timers:CreateTimer(0.05,function()    
+        EmitSoundOn("scene_voice_battlefield_idle", caster)
         local goodTeamParticlesLaunch = "particles/mofazhen_dizuo_1.vpcf"
         local badTeamParticlesLaunch = "particles/mofazhen_dizuo_2.vpcf"
         local particlesLaunch
@@ -218,6 +214,7 @@ function battlefieldLaunch(keys)
 
         --转圈完成
         if string.format("%.1f",count) > string.format("%.1f",getBuffTime) then 
+            --EmitSoundOn("scene_voice_stop", caster)
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
             local buffName = caster.battlefieldBuff
@@ -241,6 +238,7 @@ function battlefieldLaunch(keys)
         end
         --当buff时间到消失，并且没有友军在获取
         if timerFlag == true and loadingFlag == false then
+            --EmitSoundOn("scene_voice_stop", caster)
             battlefieldInit(caster)
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1}) 
             return nil
