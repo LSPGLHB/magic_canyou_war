@@ -365,7 +365,7 @@
 		{
 			"FireSound"
 			{
-				"Target"				"CASTER"
+				"Target"				"UNIT"
 				"EffectName"			"scene_voice_box_collect"
 			}
 
@@ -381,7 +381,7 @@
             "FireSound"
             {
                 "EffectName"		"scene_voice_coin_drop"
-                "Target"			"CASTER"
+                "Target"			"UNIT"
             }           
 
             "RunScript"
@@ -393,17 +393,17 @@
 
         "OnChannelInterrupted"
 		{
+            "FireSound"
+            {
+                "EffectName"		"scene_voice_stop"
+                "Target"			"UNIT"
+            }  
+
             "RemoveModifier"
 			{
 				"Target"				"CASTER"
 				"ModifierName"			"modifier_channel_act_datadriven"
 			}
-
-			"FireSound"
-            {
-                "EffectName"		"scene_voice_stop"
-                "Target"			"CASTER"
-            }  
         }
 
         "Modifiers"

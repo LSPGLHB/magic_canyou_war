@@ -1,6 +1,5 @@
 --法阵初始化
 function initBattlefield()
-
     if Battlefields ~= nil  then
         local maxCountGoodBattlefields = #Battlefields[DOTA_TEAM_GOODGUYS]
         for i = 1, maxCountGoodBattlefields, 1 do
@@ -10,7 +9,6 @@ function initBattlefield()
             Battlefields[DOTA_TEAM_GOODGUYS][i] = nil
             --goodBattlefield:SetTeam(DOTA_TEAM_GOODGUYS)
             --battlefieldParticleSet(goodBattlefield,DOTA_TEAM_GOODGUYS,i)
-
         end
 
         local maxCountBadBattlefields = #Battlefields[DOTA_TEAM_BADGUYS]
@@ -22,7 +20,6 @@ function initBattlefield()
             --battlefieldParticleSet(badBattlefield,DOTA_TEAM_BADGUYS,i)
             Battlefields[DOTA_TEAM_BADGUYS][i] = nil
         end
-
         --Battlefields[DOTA_TEAM_GOODGUYS] = BattlefieldsStatic[DOTA_TEAM_GOODGUYS]
         --Battlefields[DOTA_TEAM_BADGUYS] = BattlefieldsStatic[DOTA_TEAM_BADGUYS]
     end

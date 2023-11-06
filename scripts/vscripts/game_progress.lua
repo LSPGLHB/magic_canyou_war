@@ -329,7 +329,6 @@ function gameRoundInit()
     --initSamsaraStone()--轮回石初始化（未完成）
     initTreasureBox()--宝箱初始化（未删除上局的）
 
-
     dorpItems = {}
     GameRules.checkWinTeam = nil
 end    
