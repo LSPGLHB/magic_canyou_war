@@ -360,12 +360,13 @@
 
         "AbilityCooldown"               "0"
         "AbilityChannelTime"			"1.5"
+        "AbilityCastPoint"				"0.1"
 
         "OnSpellStart"
 		{
 			"FireSound"
 			{
-				"Target"				"UNIT"
+				"Target"				"CASTER"
 				"EffectName"			"scene_voice_box_collect"
 			}
 
@@ -381,7 +382,7 @@
             "FireSound"
             {
                 "EffectName"		"scene_voice_coin_drop"
-                "Target"			"UNIT"
+                "Target"			"CASTER"
             }           
 
             "RunScript"
@@ -396,9 +397,8 @@
             "FireSound"
             {
                 "EffectName"		"scene_voice_stop"
-                "Target"			"UNIT"
+                "Target"			"CASTER"
             }  
-
             "RemoveModifier"
 			{
 				"Target"				"CASTER"
@@ -425,6 +425,7 @@
 
         "AbilityCooldown"               "0"
         "AbilityChannelTime"			"2"
+        "AbilityCastPoint"				"0.1"
 
         "OnSpellStart"
 		{
@@ -491,6 +492,7 @@
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
         "AbilityType"               "scene"
+        "AbilityCastPoint"				"0.1"
 
         "AbilitySpecial"
         {
