@@ -180,3 +180,17 @@ function buttonkJSTOLUA(index,keys)
     local myPlayerID = keys.PlayerID
     openRandomTalentAList(myPlayerID)
 end
+
+function buttonlJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    heroRespawn(myPlayerID)
+end
+
+
+
+function heroRespawn(myPlayerID)
+    local hHero = PlayerResource:GetSelectedHeroEntity(myPlayerID)
+    if not hHero:IsAlive() then
+        hHero:RespawnUnit()
+    end
+end

@@ -1101,7 +1101,7 @@
 
 	"heroDropUnit"
 	{
-		"Model"						"models/props_gameplay/red_box.vmdl"
+		"Model"						"models/props_winter/present.vmdl"
 		"BaseClass"					"npc_dota_base_additive"
 		"UnitLabel"					"remainsLabel"
 		"SoundSet"					"0"			// Name of sound set.

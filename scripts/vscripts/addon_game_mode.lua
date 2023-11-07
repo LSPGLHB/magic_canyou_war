@@ -166,17 +166,19 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseHealth = 50
 	GameRules.playerBaseMana = 100
 	GameRules.playerBaseSpeed = 250
-	GameRules.playerBaseVision = 800
+	GameRules.playerBaseVision = 1200
 	GameRules.playerBaseManaRegen = 5
 	GameRules.playerBaseDefense = 0
 	GameRules.speedConstant  = 1.66
 
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules:SetStartingGold(0)
-	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	GameRules:SetFirstBloodActive(false)
+	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	
-	--GameRules:SetHeroRespawnEnabled(false)
+	
+	
+	GameRules:SetHeroRespawnEnabled(false)  --复活规则
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)
@@ -231,8 +233,8 @@ function magicCanyouWar:InitGameMode()
 	ListenToGameEvent("game_rules_state_change", Dynamic_Wrap(magicCanyouWar,"OnGameRulesStateChange"), self)
 	
 
-	--监听物品被捡起
-	ListenToGameEvent("dota_item_picked_up", Dynamic_Wrap(magicCanyouWar, "OnItemPickup"), self)
+	--监听物品被捡起 --捡起无法确定物品所有者，弃用自己重做一套
+	--ListenToGameEvent("dota_item_picked_up", Dynamic_Wrap(magicCanyouWar, "OnItemPickup"), self)
 
 
 
@@ -287,7 +289,7 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "buttoniJSTOLUA", buttoniJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonjJSTOLUA", buttonjJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonkJSTOLUA", buttonkJSTOLUA )
-
+	CustomGameEventManager:RegisterListener( "buttonlJSTOLUA", buttonlJSTOLUA )
 
 	--测试快捷键
 	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)
@@ -307,9 +309,7 @@ function magicCanyouWar:InitGameMode()
 		--print("DOTA_MAX_TEAM_PLAYERS:"..DOTA_MAX_TEAM_PLAYERS)
 		init_flag = 1
 	end
-
 end
-
 
 
 function magicCanyouWar:On_ed_open_my_shop(keys)
@@ -317,99 +317,6 @@ function magicCanyouWar:On_ed_open_my_shop(keys)
 	print("On_ed_open_my_shop"..keys.PlayerID)
 end
 
-
-
-
-
---捡起物品监听
-function magicCanyouWar:OnItemPickup (keys)
-	--local unit = EntIndexToHScript(keys.dota_item_picked_up)
-	local itemName = keys.itemname
-	local playerID = keys.PlayerID
-	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	local playerTeam = HeroEntity:GetTeam()
-	--全体弃用，重做
-	--[[
-	local itemLabel
-	for name, item in pairs(GameRules.itemList) do
-		if itemName == name then
-			for key, value in pairs(item) do
-				if key == "ItemType" then
-					itemLabel = value
-				end
-			end
-		end
-	end
-
-	
-
-	--不是自己的物品丢回地上
-	if (itemLabel == 'equip' or itemLabel == 'equip_plus') then
-		local ownerID = ItemEntity:GetOwner():GetPlayerID()
-		if playerID ~= ownerID then
-			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
-			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
-		end
-	end
-
-	if itemLabel == 'remainsBox' then
-		
-		local remainsTeam  = ItemEntity:GetOwner():GetTeam() --ItemEntity:GetContext("team")--
-		--for key, val in pairs(dorpItems) do
-		--	remainsItem = val
-		--end
-		--local remainsTeam = remainsItem:GetContext("team")
-		print("playerTeam:"..playerTeam)
-		print("remainsTeam:"..remainsTeam)
-		--print("ItemEntityTeam:"..ItemEntity:GetContext('team'))
-		if playerTeam == remainsTeam then
-			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
-			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
-		end
-	end]]
-	--local itemName2 = ItemEntity:GetName()
-	--print("playerID",playerID)
-	--print("team",team)
-	--print("itemName:"..itemName)
---[[
-	local player = PlayerResource:GetPlayer(playerID) 
-	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-	for i=0, #goldCoin do
-		if goldCoin[i]['name'] == itemName then
-			if goldCoin[i]['holder'] == 'player' then
-				print(goldCoin[i]['worth'])
-				--hHero:ModifyGold(goldCoin[i]['worth'],true,1)
-				PlayerResource:SetGold(playerID,goldCoin[i]['worth'],true)
-				hHero:RemoveItem(ItemEntity)
-			end
-		end
-	end]]
-
-	--不能拾取会掉落（可行的）
-	--[[
-	local pos = GameRules.BaoshiPos  --全局变量保存好掉落的宝石位置
-	if team == 2 and itemname == 'item_lvxie2' then
-		--print('pos:',pos) --宝石位置
-		--print('drop:',itemname)
-
-		HeroEntity:DropItemAtPositionImmediate(ItemEntity, pos)		
-	end	]]
-end
-
-
--- Evaluate the state of the game
---GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )配合使用
---[[
-function magicCanyouWar:OnThink()
-	
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
-	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-		return nil
-	end
-	return 1
-end]]
 
 function magicCanyouWar:OnEntityKilled (keys)
 	
@@ -420,7 +327,9 @@ function magicCanyouWar:OnEntityKilled (keys)
 	local label = unit:GetUnitLabel()
 	local position = unit:GetAbsOrigin()
 	local team = killer:GetTeam()
-
+	print("OnEntityKilled:")
+	print(killer:GetGoldBounty())
+	print(killer:GetGold())
 	--物品掉落测试
 	if label == GameRules.boxLabel then
 		RollDrops(unit)
@@ -568,4 +477,92 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 	end
 end
 
+
+
+--整体弃用
+--[[
+--捡起物品监听
+function magicCanyouWar:OnItemPickup (keys)
+	--local unit = EntIndexToHScript(keys.dota_item_picked_up)
+	local itemName = keys.itemname
+	local playerID = keys.PlayerID
+	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
+	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
+	local playerTeam = HeroEntity:GetTeam()
+
+	local itemLabel
+	for name, item in pairs(GameRules.itemList) do
+		if itemName == name then
+			for key, value in pairs(item) do
+				if key == "ItemType" then
+					itemLabel = value
+				end
+			end
+		end
+	end
+	--不是自己的物品丢回地上
+	if (itemLabel == 'equip' or itemLabel == 'equip_plus') then
+		local ownerID = ItemEntity:GetOwner():GetPlayerID()
+		if playerID ~= ownerID then
+			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
+			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
+		end
+	end
+
+	if itemLabel == 'remainsBox' then
+		
+		local remainsTeam  = ItemEntity:GetOwner():GetTeam() --ItemEntity:GetContext("team")--
+		--for key, val in pairs(dorpItems) do
+		--	remainsItem = val
+		--end
+		--local remainsTeam = remainsItem:GetContext("team")
+		print("playerTeam:"..playerTeam)
+		print("remainsTeam:"..remainsTeam)
+		--print("ItemEntityTeam:"..ItemEntity:GetContext('team'))
+		if playerTeam == remainsTeam then
+			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
+			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
+		end
+	end
+	--local itemName2 = ItemEntity:GetName()
+	--print("playerID",playerID)
+	--print("team",team)
+	--print("itemName:"..itemName)
+
+	local player = PlayerResource:GetPlayer(playerID) 
+	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+	for i=0, #goldCoin do
+		if goldCoin[i]['name'] == itemName then
+			if goldCoin[i]['holder'] == 'player' then
+				print(goldCoin[i]['worth'])
+				--hHero:ModifyGold(goldCoin[i]['worth'],true,1)
+				PlayerResource:SetGold(playerID,goldCoin[i]['worth'],true)
+				hHero:RemoveItem(ItemEntity)
+			end
+		end
+	end
+
+	--不能拾取会掉落（可行的）
+	local pos = GameRules.BaoshiPos  --全局变量保存好掉落的宝石位置
+	if team == 2 and itemname == 'item_lvxie2' then
+		--print('pos:',pos) --宝石位置
+		--print('drop:',itemname)
+
+		HeroEntity:DropItemAtPositionImmediate(ItemEntity, pos)		
+	end	
+end]]
+
+
+-- Evaluate the state of the game
+--GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )配合使用
+--[[
+function magicCanyouWar:OnThink()
+	
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		--print( "Template addon script is running." )
+	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+		return nil
+	end
+	return 1
+end]]
 

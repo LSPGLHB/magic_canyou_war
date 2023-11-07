@@ -20,9 +20,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"800"
+		"VisionDaytimeRange"	"1200"
 		// 夜晚视野
-		"VisionNighttimeRange"	"800"
+		"VisionNighttimeRange"	"1200"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -47,7 +47,12 @@
 		"StatusManaRegen"	"5"
 		// 单位诞生时的魔法值，-1意味着默认满魔法值
 		"StatusStartingMana"	"-1"
-
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
 		
 	}
 	"npc_dota_hero_lina"
@@ -67,9 +72,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"800"
+		"VisionDaytimeRange"	"1200"
 		// 夜晚视野
-		"VisionNighttimeRange"	"800"
+		"VisionNighttimeRange"	"1200"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -94,6 +99,12 @@
 		"StatusManaRegen"	"5"
 		// 单位诞生时的魔法值，-1意味着默认满魔法值
 		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
 	}
 	
 
@@ -118,9 +129,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"800"
+		"VisionDaytimeRange"	"1200"
 		// 夜晚视野
-		"VisionNighttimeRange"	"800"
+		"VisionNighttimeRange"	"1200"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -145,6 +156,12 @@
 		"StatusManaRegen"	"5"
 		// 单位诞生时的魔法值，-1意味着默认满魔法值
 		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
 	}
 	
 }

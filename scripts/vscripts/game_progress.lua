@@ -458,6 +458,7 @@ end
 
 
 
+
 --游戏数据初始化
 function gameInit()   
     --用于传送的位置标记实体

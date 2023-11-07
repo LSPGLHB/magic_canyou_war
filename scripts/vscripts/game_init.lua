@@ -206,7 +206,9 @@ function initHeroByPlayerID(playerID)
     --hHero:GetAbilityByIndex(9):SetHidden(true)--也不行
     --hHero:GetAbilityByIndex(10):SetLevel(1)
 
-	hHero:SetTimeUntilRespawn(999) --重新设置复活时间
+	hHero:SetTimeUntilRespawn(1) --重新设置复活时间
+    hHero:SetMaximumGoldBounty(0)
+    hHero:SetMinimumGoldBounty(0)
     PlayerResource:SetGold(playerID,60,true)
 end
 
