@@ -174,7 +174,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules:SetStartingGold(0)
 	GameRules:SetFirstBloodActive(false)
-	GameRules:SetUseBaseGoldBountyOnHeroes(true)
+	GameRules:SetUseBaseGoldBountyOnHeroes(false)
 	
 	
 	
