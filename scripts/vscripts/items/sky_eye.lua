@@ -66,7 +66,7 @@ function setClassBuff(keys,buffName,baseValue,unit)
     local modifierNameBuff = "modifier_"..buffName.."_buff"  
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
     local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]
-    local modifierStackCount =  getPlayerPowerValueByName(hero, modifierName, baseValue)
+    local modifierStackCount = getFinalValueOperation(playerID,baseValue,buffName,nil,"buffStack")-- getPlayerPowerValueByName(hero, modifierName, baseValue)
     local modifierNameAdd
     local modifierNameRemove
     print("modifierNameCount=",modifierStackCount)

@@ -146,7 +146,6 @@ function battleStep(gameRound)
         
         --此处两队人数判断，死光就结束
         checkWinTeam()
-        
         if battleTime == 0 or GameRules.checkWinTeam ~= nil then -- 时间等于0结束
             --print("onStepLoop2========over")
             --时间结束，双方都-1
@@ -294,14 +293,15 @@ function checkWinTeam()
                 if heroTeam == DOTA_TEAM_GOODGUYS then
                     goodAlive = goodAlive + 1
                 end
-                if heroTeam == DOTA_TEAM_BADDGUYS then
+                if heroTeam == DOTA_TEAM_BADGUYS then
                     badAlive = badAlive + 1
                 end
             end
         end
     end
+
     if goodAlive == 0 and GameRules.checkWinTeam == nil then
-        GameRules.checkWinTeam = DOTA_TEAM_BADDGUYS
+        GameRules.checkWinTeam = DOTA_TEAM_BADGUYS
     end
     if badAlive == 0 and GameRules.checkWinTeam == nil then--调试关闭,最终需要打开
         --GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
@@ -314,7 +314,6 @@ function checkWinTeam()
     if not GameRules.badMagicStone:IsAlive() then
         GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
-
 end
 
 
