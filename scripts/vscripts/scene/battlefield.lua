@@ -37,7 +37,6 @@ function initBattlefield()
         local goodBattlefield = CreateUnitByName("battlefield", goodBattlefieldLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
         goodBattlefield.fieldName = fieldName
         Battlefields[DOTA_TEAM_GOODGUYS][i] = goodBattlefield
-        --BattlefieldsStatic[DOTA_TEAM_GOODGUYS][i] = goodBattlefield
         local goodBattlefieldAbility = goodBattlefield:GetAbilityByIndex(0)
         goodBattlefieldAbility:SetLevel(1)
         battlefieldParticleSet(goodBattlefield,DOTA_TEAM_GOODGUYS,i)   
@@ -53,10 +52,8 @@ function initBattlefield()
         local badBattlefield = CreateUnitByName("battlefield", badBattlefieldLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
         badBattlefield.fieldName = fieldName
         Battlefields[DOTA_TEAM_BADGUYS][i] = badBattlefield
-        --BattlefieldsStatic[DOTA_TEAM_BADGUYS][i] = badBattlefield
         local badBattlefieldAbility = badBattlefield:GetAbilityByIndex(0)
         badBattlefieldAbility:SetLevel(1)
-
         battlefieldParticleSet(badBattlefield,DOTA_TEAM_BADGUYS,i)
     end
  

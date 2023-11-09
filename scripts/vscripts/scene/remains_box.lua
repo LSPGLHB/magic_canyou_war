@@ -12,6 +12,7 @@ function openRemainsBox(keys)
     local playerGold = caster:GetGold() + reward
   
     PlayerResource:SetGold(playerID,playerGold,true)
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     --caster:ModifyGold(reward, true, 12)--SetGold(reward,true)
     local particlesGold = "particles/shiqujinbi.vpcf"
     local particleGoldID = ParticleManager:CreateParticle(particlesGold, PATTACH_OVERHEAD_FOLLOW, caster)

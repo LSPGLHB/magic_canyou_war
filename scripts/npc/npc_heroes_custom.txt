@@ -63,16 +63,6 @@
 		//模型大小
 		"ModelScale"	"0.7"
 
-		"Ability1"	""
-		"Ability2"	""
-		"Ability3"	""
-		"Ability4"	""
-		"Ability5"	""
-		"Ability6"	""
-		"Ability7"	""
-		"Ability8"	""
-
-
 		//转身速度
 		"MovementTurnRate"	"1.0"
 		//移动速度

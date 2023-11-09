@@ -18,6 +18,7 @@ function getGoldCoin(keys)
     local playerGold = PlayerResource:GetGold(playerID) + worth
     --caster:ModifyGold(worth, true, 11)
     PlayerResource:SetGold(playerID,playerGold,true)
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
 end
 
 function initHeroOrder(keys)
@@ -78,13 +79,20 @@ function initHeroCaptureChannelSucceeded(keys)
     if caster.battlefieldTarget ~= nil then
         local casterTeam = caster:GetTeam()
         local targetTeam = caster.battlefieldTarget:GetTeam()
+        local stoneModifierName = "modifier_magic_stone_protect_datadriven"
+        --[[
+        if casterTeam == targetTeam then
+            casterTeam = 3
+        end]]
         --print("=========================initHeroCaptureChannelSucceeded==========================")
         --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
         --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])       
         --刷新占领方本身前线法阵成为关闭状态
         local lastCasterFrontFieldNum = #Battlefields[casterTeam]
         local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
-        battlefieldInit(lastCasterFrontField)
+        if lastCasterFrontField~= nil then
+            battlefieldInit(lastCasterFrontField)
+        end
 
         --刷新被占领法阵为占领方成为初始关闭状态
         captrueBattlefield(caster.battlefieldTarget, casterTeam)
@@ -97,6 +105,9 @@ function initHeroCaptureChannelSucceeded(keys)
         if goodFieldCount > 0 then
             LaunchGoodBattlefield = Battlefields[2][goodFieldCount]
             updateFrontBattlefield(LaunchGoodBattlefield)
+            if not goodMagicStone:HasModifier(stoneModifierName) then
+                goodMagicStone:GetAbilityByIndex(0):ApplyDataDrivenModifier( goodMagicStone, goodMagicStone, stoneModifierName, {})
+            end
         end
         if goodFieldCount == 0 then
             LaunchGoodBattlefield = nil
@@ -110,6 +121,9 @@ function initHeroCaptureChannelSucceeded(keys)
         if badFieldCount > 0 then
             LaunchBadBattlefield = Battlefields[3][badFieldCount]
             updateFrontBattlefield(LaunchBadBattlefield)
+            if not badMagicStone:HasModifier("modifier_magic_stone_protect_datadriven") then
+                badMagicStone:GetAbilityByIndex(0):ApplyDataDrivenModifier( badMagicStone, badMagicStone, stoneModifierName, {})
+            end
         end
 
         if badFieldCount == 0 then
@@ -120,7 +134,7 @@ function initHeroCaptureChannelSucceeded(keys)
             print("badFieldOver")
         end
         
-        print("------------------------------initHeroCaptureChannelSucceeded----------------------------")
+        --print("------------------------------initHeroCaptureChannelSucceeded----------------------------")
         --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
         --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
 
