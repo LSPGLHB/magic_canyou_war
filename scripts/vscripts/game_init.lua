@@ -1,5 +1,5 @@
 require('scene/battlefield')
-
+require('myMaths')
 function initMapStatus()
 
     --真随机设定
@@ -44,7 +44,9 @@ function initMapStatus()
         playerShopLock[i] = 0
         playerRefreshCost[i] = GameRules.refreshCost
     end
-   
+
+    centerTreasureBox = {}
+    otherTreasureBox = {}
 
     --刷怪
     for i=1, 8 ,1 do
@@ -57,16 +59,71 @@ function initMapStatus()
     --CreateHeroForPlayer("niu",-1)
 
 end
---测试用
+
+function clearTreasureBox()
+    for k,val in pairs(centerTreasureBox) do
+        DeepPrintTable(val)
+        if val.alive == 1 then
+            val:ForceKill(true)
+        end
+    end
+    centerTreasureBox = {}
+
+    for k,val in pairs(otherTreasureBox) do
+        DeepPrintTable(val)
+        if val.alive == 1 then
+            val:ForceKill(true)
+        end
+    end
+    otherTreasureBox ={}
+end
+
 function initTreasureBox()
-    local treasureBox1Entities = Entities:FindByName(nil,"treasureBox1") 
-    local treasureBox1Location = treasureBox1Entities:GetAbsOrigin()
-    --local item_name = 'item_gold_coin_10'
-    --local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
-    --CreateItemOnPositionSync(treasureBox1Location,item)
-    local treasureBox = CreateUnitByName("treasureBoxGold", treasureBox1Location, true, nil, nil, DOTA_TEAM_NOTEAM)
-    treasureBox:GetAbilityByIndex(0):SetLevel(1)
-    treasureBox:GetAbilityByIndex(1):SetLevel(1)
+    print("=====================initTreasureBox==========================")
+    local centerBox = "centerbox"
+    local goodBox = "goodbox"
+    local badBox = "badbox"
+    
+    local centerRandonNumList = getRandomNumList(1, 3, 2)
+    local goodRandonNumList = getRandomNumList(1, 6, 3)
+    local badRandonNumList = getRandomNumList(1, 6, 3)
+
+    local delayTime = 45
+   
+    Timers:CreateTimer(delayTime,function ()
+        for i = 1, 2 ,1 do
+            local centerBoxName = "centerbox"..centerRandonNumList[i]
+            local centerBoxEntities = Entities:FindByName(nil,centerBoxName) 
+            local centerBox = CreateUnitByName("treasureBoxGold", centerBoxEntities:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_NEUTRALS)
+            centerBox:GetAbilityByIndex(0):SetLevel(1)
+            centerBox:GetAbilityByIndex(1):SetLevel(1)
+            centerBox.alive = 1
+            table.insert(centerTreasureBox,centerBox)
+            
+        end
+        return nil
+    end)
+    
+
+    for i = 1, 3 ,1 do
+        local goodBoxName = "goodbox"..goodRandonNumList[i]
+        local goodBoxEntities = Entities:FindByName(nil,goodBoxName) 
+        local goodBox = CreateUnitByName("treasureBoxGold", goodBoxEntities:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_NEUTRALS)
+        goodBox:GetAbilityByIndex(0):SetLevel(1)
+        goodBox:GetAbilityByIndex(1):SetLevel(1)
+        goodBox.alive = 1
+        table.insert(otherTreasureBox,goodBox)
+    end
+
+    for i = 1, 3 ,1 do
+        local badBoxName = "badbox"..badRandonNumList[i]
+        local badBoxEntities = Entities:FindByName(nil,badBoxName) 
+        local badBox = CreateUnitByName("treasureBoxGold", badBoxEntities:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_NEUTRALS)
+        badBox:GetAbilityByIndex(0):SetLevel(1)
+        badBox:GetAbilityByIndex(1):SetLevel(1)
+        badBox.alive = 1
+        table.insert(otherTreasureBox,badBox)
+    end
 
 end
 
@@ -207,17 +264,15 @@ function initHeroByPlayerID(playerID)
     --hHero:GetAbilityByIndex(10):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(1) --重新设置复活时间
-    hHero:SetMaximumGoldBounty(0)
-    hHero:SetMinimumGoldBounty(0)
+    
     PlayerResource:SetGold(playerID,60,true)
 end
 
 
---死亡物品掉落
+--物品掉落（金币箱打开）
 function RollDrops(unit)
 	local dropInfoSort = initDropInfo(unit:GetUnitName())
     --print("===========RollDrops=============:"..#dropInfoSort)
-
     for k = 0 , #dropInfoSort do
         local item_name = dropInfoSort[k]['name']
         local chance = dropInfoSort[k]['chance']
@@ -226,7 +281,6 @@ function RollDrops(unit)
             -- 创建对应的物品
             print("item_name:==========================="..item_name)
             local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
-
             local pos = unit:GetAbsOrigin()
             -- 用LaunchLoot函数可以有一个掉落动画，当然，也可以用CreateItemOnPositionSync来直接掉落。
               -- item:LaunchLoot(false, 50, 50, pos)
@@ -311,7 +365,17 @@ function heroStudyFinish(playerID)
 end
 
 
-
+--测试用
+function initTreasureBoxTest()
+    local treasureBox1Entities = Entities:FindByName(nil,"treasureBox1") 
+    local treasureBox1Location = treasureBox1Entities:GetAbsOrigin()
+    --local item_name = 'item_gold_coin_10'
+    --local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
+    --CreateItemOnPositionSync(treasureBox1Location,item)
+    local treasureBox = CreateUnitByName("treasureBoxGold", treasureBox1Location, true, nil, nil, DOTA_TEAM_NOTEAM)
+    treasureBox:GetAbilityByIndex(0):SetLevel(1)
+    treasureBox:GetAbilityByIndex(1):SetLevel(1)
+end
 
 --[[
 function initGoldCoin()

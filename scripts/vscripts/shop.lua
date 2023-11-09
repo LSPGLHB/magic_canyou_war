@@ -96,10 +96,12 @@ function buyShopJSTOLUA(index,keys)
 	--print("buyShopJSTOLUA",itemName)
 	--CreateItem(itemName,player,player)
 	local itemCount = hHero:GetNumItemsInInventory()
+	--local stashCount = hHero:GetNumItemsInStash()
 		if(currentGold >= itemCost) then
-			if(itemCount <= 9) then
+			if(itemCount < 9) then
 				local ownerItem = CreateItem(itemName, hHero, hHero)
 				hHero:AddItem(ownerItem)
+				--DeepPrintTable(ownerItem)
 				--hHero:AddItemByName(itemName)
 				PlayerResource:SpendGold(playerID,itemCost,0)
 				currentGold = PlayerResource:GetGold(playerID)

@@ -1,12 +1,7 @@
 require('shop')
 function treasureBoxInit(keys)
     local caster = keys.caster
-    --local casterTeam = caster:GetTeam()
 	local position = caster:GetAbsOrigin()
-    --local openBoxTime = string.format("%.1f",3.0)
-    --local searchRadius = 100
-    --local countTime = 0
-    --local openUnit = nil
     Timers:CreateTimer(0,function()
         local particlesName = "particles/baoxiangtexiao.vpcf"
         local particleID = ParticleManager:CreateParticle(particlesName, PATTACH_WORLDORIGIN, caster)
@@ -21,6 +16,7 @@ function getGoldCoin(keys)
     local worth = keys.worth
     --print('getGoldCoin=========='..playerID.."="..worth)
     local playerGold = PlayerResource:GetGold(playerID) + worth
+    --caster:ModifyGold(worth, true, 11)
     PlayerResource:SetGold(playerID,playerGold,true)
 end
 
@@ -70,6 +66,7 @@ function initHeroOpenBoxChannelSucceeded(keys)
         local particleGoldID = ParticleManager:CreateParticle(particlesGold, PATTACH_WORLDORIGIN, target)
         ParticleManager:SetParticleControl(particleGoldID, 0, position)
         target:ForceKill(true)
+        target.alive = 0
         target:AddNoDraw()
     end
 end
@@ -81,11 +78,9 @@ function initHeroCaptureChannelSucceeded(keys)
     if caster.battlefieldTarget ~= nil then
         local casterTeam = caster:GetTeam()
         local targetTeam = caster.battlefieldTarget:GetTeam()
-
         --print("=========================initHeroCaptureChannelSucceeded==========================")
         --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
-        --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
-        
+        --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])       
         --刷新占领方本身前线法阵成为关闭状态
         local lastCasterFrontFieldNum = #Battlefields[casterTeam]
         local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
@@ -184,6 +179,7 @@ function initHeroSearchTarget(keys)
     print("==========initHeroSearchTarget========")
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local casterTeam = caster:GetTeam()
     local target = playerOrderTarget[playerID]
     local targetTeam = target:GetTeam()
@@ -196,7 +192,7 @@ function initHeroSearchTarget(keys)
             local distance = (casterLocation - targetLocation ):Length2D()
             --  print(distance)
              --如果是箱子则启动打开进程
-            if distance < 200 then
+            if distance < 150 then
                 if caster:HasAbility('hero_search_target_timer_datadriven') then
                     caster:RemoveAbility('hero_search_target_timer_datadriven')
                 end
@@ -224,20 +220,19 @@ function initHeroSearchTarget(keys)
                     if target:HasModifier("modifier_battlefield_idle_datadriven") then
                         caster:CastAbilityNoTarget(caster:GetAbilityByIndex(11),playerID)
                         caster.battlefieldTarget = target
-                        
                     end
                 end
 
                 --拾取遗物
                 if targetLabel == GameRules.remainsLabel then
                     local itemCount = caster:GetNumItemsInInventory()
-                    if itemCount <= 9 then
-                        --local ownerItem = CreateItem("item_remains_icon_2", nil, nil)
-                        caster:AddItemByName("item_remains_box")
+                    if itemCount <= 9 and casterTeam == targetTeam then
+                        local ownerItem = CreateItem("item_remains_box", hHero, hHero)
+                        caster:AddItem(ownerItem)
                         target:SetModelScale(0.01)
                         target:ForceKill(true)
                     else
-                        print("物品栏已满")
+                        print("物品栏已满或不是你队伍的")
                     end
                 end
 

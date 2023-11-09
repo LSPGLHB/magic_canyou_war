@@ -8,8 +8,11 @@ function openRemainsBox(keys)
     else
         EmitSoundOn("scene_voice_coin_get_small", caster)
     end
-    local playerGold = PlayerResource:GetGold(playerID) + reward
+    --local playerGold = PlayerResource:GetGold(playerID) + reward
+    local playerGold = caster:GetGold() + reward
+  
     PlayerResource:SetGold(playerID,playerGold,true)
+    --caster:ModifyGold(reward, true, 12)--SetGold(reward,true)
     local particlesGold = "particles/shiqujinbi.vpcf"
     local particleGoldID = ParticleManager:CreateParticle(particlesGold, PATTACH_OVERHEAD_FOLLOW, caster)
     ParticleManager:SetParticleControl(particleGoldID, 0, caster:GetAbsOrigin())

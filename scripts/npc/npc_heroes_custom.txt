@@ -38,7 +38,7 @@
 		// 敏捷成长
 		"AttributeAgilityGain"	"0"
 		// 基础生命值
-		"StatusHealth"	"1000"
+		"StatusHealth"	"50"
 		// 生命恢复速度，负值无效
 		"StatusHealthRegen"	"0"
 		// 基础魔法值，设置为0会导致没有魔法条
@@ -62,6 +62,17 @@
         "RingRadius"                "100"                   // 选择圈半径
 		//模型大小
 		"ModelScale"	"0.7"
+
+		"Ability1"	""
+		"Ability2"	""
+		"Ability3"	""
+		"Ability4"	""
+		"Ability5"	""
+		"Ability6"	""
+		"Ability7"	""
+		"Ability8"	""
+
+
 		//转身速度
 		"MovementTurnRate"	"1.0"
 		//移动速度

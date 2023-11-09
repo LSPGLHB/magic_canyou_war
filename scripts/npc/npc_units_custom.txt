@@ -261,9 +261,9 @@
 		// 经验奖励
 		"BountyXP"	"0"
 		// 最小金钱奖励
-		"BountyGoldMin"	"0"
+		"BountyGoldMin"	"8"
 		// 最大金钱奖励
-		"BountyGoldMax"	"0"
+		"BountyGoldMax"	"9"
 		// 边界设置
 		// ----------------------------------------------------------------
 		// 碰撞边界类型，以下为单位尺寸参数:
@@ -912,68 +912,7 @@
 		"VisionNighttimeRange"	"0"
 	}
 
-	"treasureBoxGold"						
-	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/props_gameplay/treasure_chest_gold.vmdl"
-		"BaseClass"					"npc_dota_base_additive"
-		"UnitLabel"					"boxLabel"
-		"SoundSet"					"0"			// Name of sound set.
-		"Level"						"1"
-		"ModelScale"				"1"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"treasure_box_status_datadriven"			// Ability 1
-		"Ability2"					"treasure_box_gold"			// Ability 2
-		"Ability3"					""			// Ability 3
-		"Ability4"					""			// Ability 4
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"			// Physical protection.CAP_MOVE
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"			// Damage range min.
-		"AttackDamageMax"			"0"			// Damage range max.	
-		"AttackRate"				"1.0"		// Speed of attack.
-		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
-		"AttackRange"				"0"			// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"0"			// Speed.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"10000"		// Base health.
-		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"400"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}	
+	
 
 	
 	"battlefield"
@@ -1099,10 +1038,73 @@
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}
 
+	"treasureBoxGold"						
+	{										
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/props_gameplay/treasure_chest_gold.vmdl"
+		"BaseClass"					"npc_dota_creature"
+		"UnitLabel"					"boxLabel"
+		"SoundSet"					"0"			// Name of sound set.
+		"Level"						"1"
+		"ModelScale"				"1"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"treasure_box_status_datadriven"			// Ability 1
+		"Ability2"					"treasure_box_gold"			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.CAP_MOVE
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackRate"				"1.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"			// Speed.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"10000"		// Base health.
+		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	}	
+
 	"heroDropUnit"
 	{
 		"Model"						"models/props_winter/present.vmdl"
-		"BaseClass"					"npc_dota_base_additive"
+		"BaseClass"					"npc_dota_creature"
 		"UnitLabel"					"remainsLabel"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"
@@ -1110,7 +1112,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""			// Ability 1
+		"Ability1"					"remains_box_status_datadriven"			// Ability 1
 		"Ability2"					""			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
@@ -1277,9 +1279,9 @@
 		// 经验奖励
 		"BountyXP"	"0"
 		// 最小金钱奖励
-		"BountyGoldMin"	"0"
+		"BountyGoldMin"	"1"
 		// 最大金钱奖励
-		"BountyGoldMax"	"0"
+		"BountyGoldMax"	"7"
 		// 边界设置
 		// ----------------------------------------------------------------
 		// 碰撞边界类型，以下为单位尺寸参数:
@@ -1362,8 +1364,8 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"0"		// Experience earn.
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
+		"BountyGoldMin"				"5"		// Gold earned min.
+		"BountyGoldMax"				"6"		// Gold earned max.
 
 		// Movement
 		//----------------------------------------------------------------

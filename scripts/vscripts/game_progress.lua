@@ -127,6 +127,7 @@ function battleStep(gameRound)
     playerPositionTransfer(battlePointsTeam1,playersTeam1)
     playerPositionTransfer(battlePointsTeam2,playersTeam2)
     initHeroStatus()
+    initTreasureBox()--宝箱创建
     Timers:CreateTimer(0,function ()
         --print("onStepLoop2========check")
         --local gameTime = getNowTime()
@@ -327,8 +328,7 @@ function gameRoundInit()
     initMagicStone()--初始化魔法石
     initBattlefield()--初始化法阵   
     --initSamsaraStone()--轮回石初始化（未完成）
-    initTreasureBox()--宝箱初始化（未删除上局的）
-
+    clearTreasureBox() --清理上局的箱子
     dorpItems = {}
     GameRules.checkWinTeam = nil
 end    

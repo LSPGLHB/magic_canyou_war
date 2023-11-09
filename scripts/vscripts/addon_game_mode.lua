@@ -125,6 +125,8 @@ end
 function magicCanyouWar:InitGameMode()
 	print( "============Init Game Mode============" )
 	local init_flag = 0
+
+	
 	--GameRules:SetHeroSelectionTime(20)--选英雄时间(可用)
 	GameRules:SetStrategyTime(0) --选英雄了后选装备时间（可用）
 	--GameRules:SetShowcaseTime(20)
@@ -174,11 +176,12 @@ function magicCanyouWar:InitGameMode()
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules:SetStartingGold(0)
 	GameRules:SetFirstBloodActive(false)
-	GameRules:SetUseBaseGoldBountyOnHeroes(false)
+	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	
 	
 	
 	GameRules:SetHeroRespawnEnabled(false)  --复活规则
+	
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)
@@ -226,6 +229,9 @@ function magicCanyouWar:InitGameMode()
 	--监听单位被击杀
 	ListenToGameEvent("entity_killed", Dynamic_Wrap(magicCanyouWar, "OnEntityKilled"), self)
 
+	--ListenToGameEvent("dota_player_kill", Dynamic_Wrap(magicCanyouWar, "OnPlayerKill"), self)
+
+
 	--监听单位重生
 	--ListenToGameEvent("npc_spawned", Dynamic_Wrap(magicCanyouWar, "OnNPCSpawned"), self)
 
@@ -234,7 +240,7 @@ function magicCanyouWar:InitGameMode()
 	
 
 	--监听物品被捡起 --捡起无法确定物品所有者，弃用自己重做一套
-	--ListenToGameEvent("dota_item_picked_up", Dynamic_Wrap(magicCanyouWar, "OnItemPickup"), self)
+	ListenToGameEvent("dota_item_picked_up", Dynamic_Wrap(magicCanyouWar, "OnItemPickup"), self)
 
 
 
@@ -296,6 +302,15 @@ function magicCanyouWar:InitGameMode()
 		self:On_ed_open_my_shop(keys)
 	end)
 
+
+
+	--金币过滤器(清理所有dota金币逻辑)
+	local gameSelf = GameRules:GetGameModeEntity()
+	gameSelf:SetModifyGoldFilter(function(keys)
+		return false
+   end,gameSelf)
+
+
 	--初始化玩家数据
 	if init_flag == 0 then
 		initMapStatus() -- 初始化地图数据
@@ -317,7 +332,6 @@ function magicCanyouWar:On_ed_open_my_shop(keys)
 	print("On_ed_open_my_shop"..keys.PlayerID)
 end
 
-
 function magicCanyouWar:OnEntityKilled (keys)
 	
 	--DeepPrintTable(keys)
@@ -327,20 +341,18 @@ function magicCanyouWar:OnEntityKilled (keys)
 	local label = unit:GetUnitLabel()
 	local position = unit:GetAbsOrigin()
 	local team = killer:GetTeam()
-	print("OnEntityKilled:")
-	print(killer:GetGoldBounty())
-	print(killer:GetGold())
-	--物品掉落测试
+
+	--物品掉落测试(金币箱子打开)
 	if label == GameRules.boxLabel then
 		RollDrops(unit)
 	end
 
 	if unit:IsHero() then
-		--print("======heroDie======")
+		--print("======heroDie======:"..team)
 		local dorpUnit = CreateUnitByName("heroDropUnit", position, true, nil, nil, team)
+		dorpUnit:GetAbilityByIndex(0):SetLevel(1)
 		--local itemName = "item_remains_box"
 		--local dropOwnerItem = CreateItemOnPositionSync(position,CreateItem(itemName, unit, unit))
-		
 		--貌似没用
 		--dropOwnerItem:SetContext("team", tostring(unit:GetTeam()), 0)
 		--table.insert(dorpItems,dropOwnerItem)
@@ -480,7 +492,6 @@ end
 
 
 --整体弃用
---[[
 --捡起物品监听
 function magicCanyouWar:OnItemPickup (keys)
 	--local unit = EntIndexToHScript(keys.dota_item_picked_up)
@@ -489,7 +500,9 @@ function magicCanyouWar:OnItemPickup (keys)
 	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
 	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local playerTeam = HeroEntity:GetTeam()
-
+	--DeepPrintTable(keys)
+	--print("OnItemPickup"..ItemEntity:GetOwner())
+	--[[
 	local itemLabel
 	for name, item in pairs(GameRules.itemList) do
 		if itemName == name then
@@ -543,14 +556,15 @@ function magicCanyouWar:OnItemPickup (keys)
 	end
 
 	--不能拾取会掉落（可行的）
+
 	local pos = GameRules.BaoshiPos  --全局变量保存好掉落的宝石位置
 	if team == 2 and itemname == 'item_lvxie2' then
 		--print('pos:',pos) --宝石位置
 		--print('drop:',itemname)
 
 		HeroEntity:DropItemAtPositionImmediate(ItemEntity, pos)		
-	end	
-end]]
+	end	]]
+end
 
 
 -- Evaluate the state of the game

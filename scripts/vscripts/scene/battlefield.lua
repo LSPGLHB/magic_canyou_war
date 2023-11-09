@@ -221,14 +221,17 @@ function battlefieldLaunch(keys)
             for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
                 if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
                     local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
-                    if hHero:HasModifier(modifierName) then
-                        hHero:RemoveModifierByName(modifierName)
+                    local hHeroTeam = hHero:GetTeam()
+                    if casterTeam == hHeroTeam then
+                        if hHero:HasModifier(modifierName) then
+                            hHero:RemoveModifierByName(modifierName)
+                        end
+                        if hHero:HasAbility(abilityName) then
+                            hHero:RemoveAbility(abilityName)
+                        end
+                        hHero:AddAbility(abilityName):SetLevel(1)
+                        EmitSoundOn("scene_voice_battlefield_buff_get", hHero)
                     end
-                    if hHero:HasAbility(abilityName) then
-                        hHero:RemoveAbility(abilityName)
-                    end
-                    hHero:AddAbility(abilityName):SetLevel(1)
-                    EmitSoundOn("scene_voice_battlefield_buff_get", hHero)
                 end
             end
             return nil
