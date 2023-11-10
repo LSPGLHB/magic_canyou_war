@@ -111,13 +111,13 @@ function buyShopJSTOLUA(index,keys)
 				})
 				playerRandomItemNumList[playerID][num] = -1
 			else
+				EmitSoundOn("scene_voice_player_disable", hHero)
 				print("物品栏已满")
 			end
 		else
+			EmitSoundOn("scene_voice_player_disable", hHero)
 			print("金币不足")
 		end
-	
-	
 end
 
 

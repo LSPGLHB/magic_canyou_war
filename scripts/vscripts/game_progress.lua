@@ -38,7 +38,7 @@ function studyStep(gameRound)
     local step0 = "魔法学习阶段倒数："
     local studyTime = 16
     local interval = 1 --运算间隔
-    local loadingTime = 1.5 --延迟时间 
+    local loadingTime = 2 --延迟时间 
 
     initHeroStatus()   
     getUpGradeListByRound(gameRound)
@@ -83,7 +83,7 @@ function prepareStep(gameRound)
     print("onStepLoopPrepare========start"..gameRound)
     local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
-    local loadingTime = 1.5 --延迟时间 
+    local loadingTime = 3 --延迟时间 
     local prepareTime = 21 --准备阶段时长 
  
     --信息发送到前端
@@ -98,7 +98,12 @@ function prepareStep(gameRound)
         if prepareTime < 1  then
             --输出准备结束信息
             prepareOverMsgSend()
+             --所有玩家不能控制
+            allPlayerStop()
             --预备阶段结束后启动战斗阶段
+            --英雄位置初始化到战斗阶段
+            playerPositionTransfer(battlePointsTeam1,playersTeam1)
+            playerPositionTransfer(battlePointsTeam2,playersTeam2)
             Timers:CreateTimer(loadingTime,function ()
                 print("onStepLoop1========over",gameRound)
                 --进入战斗阶段倒计时
@@ -120,12 +125,10 @@ function battleStep(gameRound)
     local step2 = "战斗时间还有："
     --扫描进程
     local interval = 1
-    local loadingTime = 2
+    local loadingTime = 3
     local battleTime = 300 --战斗时间
     local battlefieldTimer = 30--法阵刷新激活
-    --英雄位置初始化到战斗阶段
-    playerPositionTransfer(battlePointsTeam1,playersTeam1)
-    playerPositionTransfer(battlePointsTeam2,playersTeam2)
+
     initHeroStatus()
     initTreasureBox()--宝箱创建
     Timers:CreateTimer(0,function ()
@@ -170,10 +173,12 @@ function battleStep(gameRound)
                 allPlayerStop()
                 
                 --进行下一轮战斗
+                --英雄位置初始化到预备阶段
+                playerPositionTransfer(preparePointsTeam1,playersTeam1)
+                playerPositionTransfer(preparePointsTeam2,playersTeam2)
                 Timers:CreateTimer(loadingTime,function ()
                     GameRules.checkWinTeam = nil
                     gameRound = gameRound + 1
-                    
 
                     studyStep(gameRound) 
                     return nil
@@ -344,9 +349,6 @@ function initPlayerHero()
 
         end
     end
-     --英雄位置初始化到预备阶段
-     playerPositionTransfer(preparePointsTeam1,playersTeam1)
-     playerPositionTransfer(preparePointsTeam2,playersTeam2)
 end
 
 function refreshShopList(initLockFlag)
@@ -366,36 +368,48 @@ end
 --指定玩家传送到指定地点
 function playerPositionTransfer(points,playersID)
     print("playerPositionTransfer")
+    local loadingTime = 3
     for i = 1, #playersID do
         local point = points[i]
         local position = point:GetAbsOrigin()
         local playerID = playersID[i]
         local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+        local landParticlesName ="particles/items2_fx/teleport_end.vpcf"
+        local oldPosition = hero:GetAbsOrigin()
+        local landParticlesID = ParticleManager:CreateParticle(landParticlesName, PATTACH_ABSORIGIN_FOLLOW, hero)
+        ParticleManager:SetParticleControl(landParticlesID, 0, oldPosition)
+        ParticleManager:SetParticleControl(landParticlesID, 1, oldPosition)
 
-        --传送到指定地点
-        FindClearSpaceForUnit( hero, position, false )
-        --过滤之前移动操作
-        hero:MoveToPosition(position)
-        --移除玩家不能控制
-        allPlayerStopRemove()
-        --镜头跟随英雄
-        PlayerResource:SetCameraTarget(playerID,hero)           
-        Timers:CreateTimer(0.1,function ()
-            PlayerResource:SetCameraTarget(playerID,nil)
+        Timers:CreateTimer(loadingTime,function ()
+            --传送到指定地点
+            FindClearSpaceForUnit( hero, position, false )
+            --过滤之前移动操作
+            hero:MoveToPosition(position)
+            --移除玩家不能控制
+            allPlayerStopRemove()
+            --镜头跟随英雄
+            PlayerResource:SetCameraTarget(playerID,hero)           
+            Timers:CreateTimer(0.5,function ()
+                PlayerResource:SetCameraTarget(playerID,nil)
+                ParticleManager:DestroyParticle(landParticlesID, true)
+                return nil
+            end)
             return nil
         end)
     end
 end
 
 --定身
-function allPlayerStop()
+function allPlayerStop(flag)
     local playersID = playersAll
     for i = 1, #playersID do
         local playerID = playersID[i]
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
-            local hero = PlayerResource:GetSelectedHeroEntity(playerID)
-            hero:AddAbility("ability_init_stop"):SetLevel(1)
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            hHero:AddAbility("ability_init_stop"):SetLevel(1)
+            EmitSoundOn("scene_voice_player_fly",hHero)
         end
+        
     end
 end
 --移除定身
@@ -404,14 +418,15 @@ function allPlayerStopRemove()
     for i = 1, #playersID do
         local playerID = playersID[i]
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-            local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             --解除不可控制状态
-            if (hero:HasAbility("ability_init_stop")) then
-                hero:RemoveAbility("ability_init_stop")
+            if (hHero:HasAbility("ability_init_stop")) then
+                hHero:RemoveAbility("ability_init_stop")
             end
-            if(hero:HasModifier("modifier_init_stop")) then
-                hero:RemoveModifierByName("modifier_init_stop")
+            if(hHero:HasModifier("modifier_init_stop")) then
+                hHero:RemoveModifierByName("modifier_init_stop")
             end
+            EmitSoundOn("scene_voice_player_land",hHero)
         end
     end
 end

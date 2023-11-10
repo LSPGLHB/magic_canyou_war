@@ -34,7 +34,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1"
-        "AbilityChannelTime"			"1"
+        "AbilityChannelTime"			"0.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -161,6 +161,21 @@
 
         "OnChannelFinish"
         {
+            "RemoveModifier"
+            {
+                "Target"				"CASTER"
+                "ModifierName"			"modifier_electric_gather_channel_datadriven"
+            }
+            
+            "RunScript"
+            {
+                "ScriptFile"			"magic/electric_gather.lua"
+                "Function"				"electricGatherSend"
+            }
+        }
+		
+		"OnChannelInterrupted"
+		{
             "RemoveModifier"
             {
                 "Target"				"CASTER"

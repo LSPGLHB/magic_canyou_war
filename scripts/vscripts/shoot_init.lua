@@ -299,6 +299,21 @@ function checkIsEnemyHero(shoot,unit)
 	return isEnemyHero
 end
 
+--敌方英雄单位不含魔法石
+function checkIsEnemyHeroNoMagicStone(shoot,unit)
+	local isEnemyHero = false
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local label = unit:GetUnitLabel()
+	if casterTeam ~= unitTeam and shoot ~= unit and unit ~= caster and (unit:IsHero() or label == GameRules.summonLabel) then
+		isEnemyHero = true
+	end
+	return isEnemyHero
+end
+
+
 --是否非场景标签
 function checkIsSceneLabel(unit)
 	local isSceneLabel = false

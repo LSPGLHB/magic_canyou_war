@@ -114,6 +114,7 @@ function createShoot(keys)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
+	shoot.intervalCallBack = blindFireBallIntervalCallBack
     moveShoot(keys, shoot, blindFireBallBoomCallBack, nil)
 
 end
@@ -154,4 +155,46 @@ function blindFireBallAOEOperationCallback(shoot,unit)
                 return nil
         end)
     end
+end
+
+--技能追踪
+function blindFireBallIntervalCallBack(shoot)
+
+	local keys = shoot.keysTable
+	local caster = keys.caster
+	local ability = keys.ability
+	local casterTeam = caster:GetTeam()
+	local position=shoot:GetAbsOrigin()
+	local searchRadius = ability:GetSpecialValueFor("search_range")
+	if shoot.trackUnit == nil then
+		local aroundUnits = FindUnitsInRadius(casterTeam, 
+											position,
+											nil,
+											searchRadius,
+											DOTA_UNIT_TARGET_TEAM_BOTH,
+											DOTA_UNIT_TARGET_ALL,
+											0,
+											0,
+											false)
+
+		for k,unit in pairs(aroundUnits) do
+			--local unitEnergy = unit.energy_point
+			--local shootEnergy = shoot.energy_point
+			if checkIsEnemyHeroNoMagicStone(shoot,unit) then
+				shoot.trackUnit = unit
+
+				
+				shoot.position = shoot:GetAbsOrigin()
+				--shoot.traveled_distance =  0.5 * shoot.max_distance
+				
+				
+			end
+		end
+	end
+
+	--print("ooo:",shoot.traveled_distance)
+	if shoot.trackUnit ~= nil then
+		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
+	end
+
 end

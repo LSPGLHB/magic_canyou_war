@@ -907,9 +907,9 @@
 		// 视野设置
 		// ----------------------------------------------------------------
 		// 白天视野范围
-		"VisionDaytimeRange"	"0"
+		"VisionDaytimeRange"	"100"
 		// 夜晚视野范围
-		"VisionNighttimeRange"	"0"
+		"VisionNighttimeRange"	"100"
 	}
 
 	

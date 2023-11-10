@@ -224,7 +224,7 @@ function iceSkeletonIntervalCallBack(shoot)
 		for k,unit in pairs(aroundUnits) do
 			--local unitEnergy = unit.energy_point
 			--local shootEnergy = shoot.energy_point
-			if checkIsEnemyHero(shoot,unit) then
+			if checkIsEnemyHeroNoMagicStone(shoot,unit) then
 				shoot.trackUnit = unit
 				--shoot.speed = shoot.speed * 1.35
 				shoot.traveled_distance = 0.5 * shoot.max_distance

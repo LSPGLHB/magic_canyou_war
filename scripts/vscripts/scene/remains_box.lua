@@ -2,12 +2,31 @@ require('game_init')
 function openRemainsBox(keys)
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
-    local reward = math.random(5,15)
-    if reward >= 12 then
+    local bingoRandom = math.random(1,100)
+    if bingoRandom < 2 then 
         EmitSoundOn("scene_voice_coin_get_big", caster)
+        reward = math.random(40,50)
     else
-        EmitSoundOn("scene_voice_coin_get_small", caster)
+        if bingoRandom < 7 then
+            reward = math.random(12,40)
+            EmitSoundOn("scene_voice_coin_get_big", caster)
+        else
+            if bingoRandom < 20 then
+                reward = math.random(8,12)
+                EmitSoundOn("scene_voice_coin_get_small", caster)
+            else
+                if bingoRandom < 45 then
+                    reward = math.random(5,8)
+                    EmitSoundOn("scene_voice_coin_get_small", caster)
+                else
+                    reward = math.random(3,5)
+                    EmitSoundOn("scene_voice_coin_get_small", caster)
+                end
+            end
+        end
+       
     end
+    
     --local playerGold = PlayerResource:GetGold(playerID) + reward
     local playerGold = caster:GetGold() + reward
   

@@ -139,8 +139,8 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
 	GameRules.PreTime = 2
-	GameRules.refreshCost = 0
-	GameRules.refreshCostAdd = 0
+	GameRules.refreshCost = 10
+	GameRules.refreshCostAdd = 10
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
 	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
@@ -310,6 +310,9 @@ function magicCanyouWar:InitGameMode()
 		return false
    end,gameSelf)
 
+   GameRules:GetGameModeEntity():SetModifyExperienceFilter(function(keys)
+	return false
+   end,self)
 
 	--初始化玩家数据
 	if init_flag == 0 then
@@ -341,7 +344,7 @@ function magicCanyouWar:OnEntityKilled (keys)
 	local label = unit:GetUnitLabel()
 	local position = unit:GetAbsOrigin()
 	local team = killer:GetTeam()
-
+	local killerID = killer:GetPlayerID()
 	--物品掉落测试(金币箱子打开)
 	if label == GameRules.boxLabel then
 		RollDrops(unit)
@@ -351,6 +354,24 @@ function magicCanyouWar:OnEntityKilled (keys)
 		--print("======heroDie======:"..team)
 		local dorpUnit = CreateUnitByName("heroDropUnit", position, true, nil, nil, team)
 		dorpUnit:GetAbilityByIndex(0):SetLevel(1)
+
+		local killerBonus = 4
+		local teamBonus = 4
+
+		PlayerResource:SetGold(killerID,killer:GetGold()killerBonus,true)
+
+
+		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
+				local hHeroTeam = hHero:GetTeam()
+				if hHeroTeam == team then
+
+					PlayerResource:SetGold(playerID,killer:GetGold()+teamBonus,true)
+					EmitSoundOn("scene_voice_coin_get_small",hHero)
+				end
+			end
+		end
 		--local itemName = "item_remains_box"
 		--local dropOwnerItem = CreateItemOnPositionSync(position,CreateItem(itemName, unit, unit))
 		--貌似没用
@@ -451,7 +472,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
 				--测试流程面板
-				CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+				--CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
 
 				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 				--showPlayerStatusPanel( playerID ) 

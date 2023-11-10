@@ -2,7 +2,6 @@ require('shop')
 require('get_magic')
 require('player_status')
 function initShopStats()
-
     Timers:CreateTimer(0,function ()
         --print("==============checkShop================")
         for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
@@ -57,11 +56,12 @@ function refreshShopJSTOLUA(index,keys)
     --local player = PlayerResource:GetPlayer(playerID)
     local currentGold = PlayerResource:GetGold(playerID)
     local refreshCost = playerRefreshCost[playerID]
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     if currentGold >= refreshCost then
-        playerShopLock[playerID] = 0
+        --playerShopLock[playerID] = 0
         PlayerResource:SpendGold(playerID, refreshCost,0)
         currentGold = PlayerResource:GetGold(playerID)
-        local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+       
 	    EmitSoundOn("scene_voice_shop_refresh", hHero)
         CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
             playerGold = currentGold
@@ -72,9 +72,9 @@ function refreshShopJSTOLUA(index,keys)
         OnMyUIShopOpen(playerID)
         getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
     else
+        EmitSoundOn("scene_voice_player_disable", hHero)
         print("金币不足")
     end
-    
 end
 
 
@@ -86,10 +86,6 @@ function refreshShopListByPlayerID(playerID)
     --print("================================================================refreshShopListByPlayerID:"..playerShopLock[playerID])
     playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
 
-    --local randomItemNumList = getRandomNumList(1,count,6)
-    --print("randomItemNumList",#randomItemNumList)
-    --local player = PlayerResource:GetPlayer(playerID)
-    --player.randomItemNumList = randomItemNumList
 end
 
 
@@ -122,8 +118,6 @@ function getRandomGoldJSTOLUA(index,keys)
     --添加获取金币声音
     
 end
-
-
 
 --test
 function buttonaJSTOLUA(index,keys)

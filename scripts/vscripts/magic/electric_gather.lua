@@ -157,9 +157,11 @@ function moveElectricGatherSp1(keys,shoot)
 	local pull_back_distance = ability:GetSpecialValueFor("pull_back_distance") 
 	local charge_time = ability:GetSpecialValueFor("charge_time") 
 	local charge_interval =  ability:GetSpecialValueFor("charge_interval")
-
     local max_distance = ability:GetSpecialValueFor("max_distance")
-	
+
+	local playerID = caster:GetPlayerID()
+	local speedBase = ability:GetSpecialValueFor("speed")
+
 	local timeCount = 0
 	caster.electric_gather_send = 0
 	shoot.traveled_back_distance = 0
@@ -170,17 +172,21 @@ function moveElectricGatherSp1(keys,shoot)
 			max_distance = max_distance + shoot.traveled_back_distance
 			local shootDirection = shoot.direction * -1
 			
-			Timers:CreateTimer(0.15,function()
+			Timers:CreateTimer(charge_time/2,function()
 				EmitSoundOn(keys.soundCastSp2, shoot)
 				creatSkillShootInit(keys,shoot,caster,max_distance,shootDirection)
 				return nil
 			end)
 			return nil
 		end
-
-		shoot.speed = pull_back_distance * 2 / (charge_time * charge_time) * timeCount * 0.02
-		shoot.traveled_back_distance = shoot.traveled_back_distance + shoot.speed
+		--local maxSpeed = getFinalValueOperation(playerID,speedBase,'ability_speed',shoot.abilityLevel,nil) * GameRules.speedConstant * 0.02
 		timeCount = timeCount + charge_interval
+
+		shoot.speed = pull_back_distance * 2 / (charge_time * charge_time) *  (charge_time - timeCount) * 0.02
+
+		--print(timeCount)
+		shoot.traveled_back_distance = shoot.traveled_back_distance + shoot.speed
+		
 		return charge_interval
 	end)
 	

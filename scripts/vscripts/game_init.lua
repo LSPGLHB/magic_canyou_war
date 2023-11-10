@@ -12,13 +12,11 @@ function initMapStatus()
         PlayerStats[i]['changdu'] = 0
     end
 ]]
-   
     --用于记录玩家是否学习，用于启动随机学习
     playerRoundLearn = {}
 
     TreasureBoxGold = "treasureBoxGold"
  
-
     --初始化所有玩家的天赋
     playerOrderTimer = {}
     playerContractLearn = {}
@@ -48,21 +46,20 @@ function initMapStatus()
     centerTreasureBox = {}
     otherTreasureBox = {}
 
+    --建立商店
+    creatShop()
+
     --刷怪
+    --[[
     for i=1, 8 ,1 do
         createUnit('yang',DOTA_TEAM_BADGUYS)
     end
-
-    --建立商店
-    creatShop()
-    --createHuohai()
-    --CreateHeroForPlayer("niu",-1)
+    ]]
 
 end
 
 function clearTreasureBox()
     for k,val in pairs(centerTreasureBox) do
-        DeepPrintTable(val)
         if val.alive == 1 then
             val:ForceKill(true)
         end
@@ -70,7 +67,6 @@ function clearTreasureBox()
     centerTreasureBox = {}
 
     for k,val in pairs(otherTreasureBox) do
-        DeepPrintTable(val)
         if val.alive == 1 then
             val:ForceKill(true)
         end
@@ -83,11 +79,9 @@ function initTreasureBox()
     local centerBox = "centerbox"
     local goodBox = "goodbox"
     local badBox = "badbox"
-    
     local centerRandonNumList = getRandomNumList(1, 3, 2)
     local goodRandonNumList = getRandomNumList(1, 6, 3)
     local badRandonNumList = getRandomNumList(1, 6, 3)
-
     local delayTime = 45
    
     Timers:CreateTimer(delayTime,function ()
@@ -99,11 +93,9 @@ function initTreasureBox()
             centerBox:GetAbilityByIndex(1):SetLevel(1)
             centerBox.alive = 1
             table.insert(centerTreasureBox,centerBox)
-            
         end
         return nil
     end)
-    
 
     for i = 1, 3 ,1 do
         local goodBoxName = "goodbox"..goodRandonNumList[i]
@@ -135,7 +127,6 @@ function initSamsaraStone()
     goodSamsaraStone:SetSkin(0)
     goodSamsaraStone:SetAngles(0, 270, 10)
     goodSamsaraStone:GetAbilityByIndex(0):SetLevel(1)
-    
 end
 
 
@@ -181,8 +172,8 @@ function initMagicStone()
     badMagicStone:SetSkin(1)
     GameRules.badMagicStone = badMagicStone
     --badMagicStone:SetContext("name", "magicStone", 0)
-    
 end
+
 
 -- 商人
 function creatShop()
@@ -248,7 +239,7 @@ function initHeroByPlayerID(playerID)
     --hHero:RemoveAbility(tempAbility) 
     hHero:AddAbility(commonAttack):SetLevel(1)  --0
     hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --1
-    hHero:AddAbility("make_friend_datadriven"):SetLevel(1) --2   --push_all_datadriven
+    hHero:AddAbility("push_all_datadriven"):SetLevel(1) --2   --  make_friend_datadriven
     hHero:AddAbility("nothing_c"):SetLevel(1) --3
     hHero:AddAbility("nothing_b"):SetLevel(1) --4
     hHero:AddAbility("nothing_a"):SetLevel(1) --5
@@ -305,8 +296,6 @@ function RollDrops(unit)
             end
         end]]
 end
-
-
 
 function RollPercentageFlag(randomNum)
     local flag = false
@@ -376,45 +365,3 @@ function initTreasureBoxTest()
     treasureBox:GetAbilityByIndex(0):SetLevel(1)
     treasureBox:GetAbilityByIndex(1):SetLevel(1)
 end
-
---[[
-function initGoldCoin()
-
-	goldCoin = {}
-    local i = 0
-	for key, value in pairs(GameRules.goldCoin) do
-        goldCoin[i]={}
-        goldCoin[i]['name'] = key
-		for k,v in pairs(value) do
-            if k == 'Holder' then
-                goldCoin[i]['holder'] = v
-            end
-            if k == 'Worth' then
-                goldCoin[i]['worth'] = v
-            end
-		end
-        i = i + 1
-	end
-end
-
-
-
-function createBaby(playerid)
-    local followed_unit=PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']
-    local chaoxiang=followed_unit:GetForwardVector()
-    local position=followed_unit:GetAbsOrigin()
-    local newposition=position-chaoxiang*100
-  
-  
-    local new_unit = CreateUnitByName("littlebug", newposition, true, nil, nil, followed_unit:GetTeam())
-    new_unit:SetForwardVector(chaoxiang)
-    GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
-       function ()
-        new_unit:MoveToNPC(followed_unit)
-        return 0.2
-       end,0) 
-    --new_unit:SetControllableByPlayer(playerid, true)
-    PlayerStats[playerid]['group_pointer']=PlayerStats[playerid]['group_pointer']+1
-    PlayerStats[playerid]['group'][PlayerStats[playerid]['group_pointer']=new_unit
-
-  end	]]
