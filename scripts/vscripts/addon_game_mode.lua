@@ -358,7 +358,7 @@ function magicCanyouWar:OnEntityKilled (keys)
 		local killerBonus = 4
 		local teamBonus = 4
 
-		PlayerResource:SetGold(killerID,killer:GetGold()killerBonus,true)
+		PlayerResource:SetGold(killerID,killer:GetGold()+killerBonus,true)
 
 
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
