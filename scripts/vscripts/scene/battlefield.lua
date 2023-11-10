@@ -227,8 +227,8 @@ function battlefieldLaunch(keys)
                             hHero:RemoveAbility(abilityName)
                         end
                         hHero:AddAbility(abilityName):SetLevel(1)
-                        --EmitSoundOn("scene_voice_battlefield_buff_get", hHero)
-                        EmitSoundOn("scene_voice_player_fly",hHero)
+                        EmitSoundOn("scene_voice_battlefield_buff_get", hHero)
+                        --EmitSoundOn("scene_voice_player_fly",hHero)
                     end
                 end
             end
