@@ -193,6 +193,14 @@ function battleStep(gameRound)
                 if BadStoneHP == 0 then
                     finalWinTeam = DOTA_TEAM_GOODGUYS
                 end
+
+                if GoodStoneHP + BadStoneHP <= 11 then
+                    if GoodStoneHP > BadStoneHP then
+                        finalWinTeam = DOTA_TEAM_GOODGUYS
+                    else
+                        finalWinTeam = DOTA_TEAM_BADGUYS
+                    end
+                end
                 GameRules:SetGameWinner(finalWinTeam)
             end
             return nil
