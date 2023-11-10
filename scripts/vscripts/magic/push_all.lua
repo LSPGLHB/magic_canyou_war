@@ -30,14 +30,14 @@ function getPush(keys)
 
         if GameRules.stoneLabel == label or unit:IsHero() and unit ~= caster then
             beatBackUnit(keys,caster,unit,pushSpeed,max_distance,direction,true)
+            catchFlag = true
         end
         
     end
 
-    --[[
     if not catchFlag then
         ability:EndCooldown()
     end
-    ]]
+
 end
 
