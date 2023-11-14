@@ -33,7 +33,7 @@ function studyStep(gameRound)
     print("onStepLoopStudy========start"..gameRound)
     --每次轮回初始化地图与数据
     gameRoundInit()
-
+    
     
     local step0 = "魔法学习阶段倒数："
     local studyTime = 16
@@ -42,6 +42,9 @@ function studyStep(gameRound)
 
     initHeroStatus()   
     getUpGradeListByRound(gameRound)
+
+    roundPowerUp(gameRound)
+
     refreshShopList(true)
     
 
@@ -371,7 +374,23 @@ function refreshShopList(initLockFlag)
     end
 end
 
-
+--每回合提升
+function roundPowerUp(gameRound)
+    print("roundPowerUp")
+    local healthArray = {0,10,10,10,10,10,10,10,10,10,10,10}
+    local visionArray = {0,50,50,50,50,0,0,0,0,0,0,0}
+    local keys = {}
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            keys.caster = hHero
+            setPlayerPower(playerID, "player_health", true, healthArray[gameRound])
+            setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
+            setPlayerPower(playerID, "player_vision", true, visionArray[gameRound])
+            setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
+        end
+    end
+end
 
 --指定玩家传送到指定地点
 function playerPositionTransfer(points,playersID)

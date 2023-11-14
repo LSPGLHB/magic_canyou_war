@@ -13,8 +13,7 @@ function setPlayerBuffByNameAndBValue(keys,buffName,baseValue)
     --print(modifierNameBuff,"==",modifierNameDebuff)
     --print("modifierNameCount=",modifierStackCount)
     removePlayerBuffByAbilityAndModifier(hero, abilityName, modifierNameBuff,modifierNameDebuff)
-    --不在总层数统计，单层统计才对（试删除）
-    --if ( modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0 ) then --增幅且没被禁止，或减幅
+
     if modifierStackCount ~= 0 then
         if (modifierStackCount > 0) then   
             modifierNameAdd = modifierNameBuff
@@ -95,7 +94,7 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
 	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
 	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
     
-    --法阵神符专用（弃用，不加攻击和基础之类复杂加强的不用这个）
+    --法阵神符专用
 	local battlefieldPrecentBase = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_base'] / 100
 	local battlefieldBonusValue = PlayerPower[playerID]['battlefield_'..abilityBuffName]
 	local battlefieldPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100

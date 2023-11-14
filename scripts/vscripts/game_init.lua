@@ -1,17 +1,13 @@
-require('scene/battlefield')
+--require('scene/battlefield')
+--require('scene/player_battlefield_buff')
 require('myMaths')
 function initMapStatus()
 
     --真随机设定
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','') 
     math.randomseed(tonumber(timeTxt))
---[[
-    PlayerStats={}
-    for i = 0, 9 do
-        PlayerStats[i] = {} --每个玩家数据包
-        PlayerStats[i]['changdu'] = 0
-    end
-]]
+
+
     --用于记录玩家是否学习，用于启动随机学习
     playerRoundLearn = {}
 
@@ -27,6 +23,7 @@ function initMapStatus()
     playerShopLock = {}
     playerRefreshCost = {}
     dorpItems = {}
+    playerBattlefieldBuff = {}
     for i = 0, 9 do
         playerContractLearn[i]={}
         playerContractLearn[i]['contractName'] = 'nil'
@@ -41,14 +38,26 @@ function initMapStatus()
 
         playerShopLock[i] = 0
         playerRefreshCost[i] = GameRules.refreshCost
+
+        playerBattlefieldBuff[i] = {}
+
     end
 
+    
+
+    
     centerTreasureBox = {}
     otherTreasureBox = {}
+
+    --法阵能力设置
+    BattlefieldBuffVision = {200,200,300,300,400,400,400,400,400,400}
+    BattlefieldBuffSpeed = {30,38,46,54,62,70,78,86,94,102}
+    BattlefieldBuffManaRegen = {10,12,13,15,16,18,19,21,22,24}
 
     --建立商店
     creatShop()
 
+    
     --刷怪
     --[[
     for i=1, 8 ,1 do

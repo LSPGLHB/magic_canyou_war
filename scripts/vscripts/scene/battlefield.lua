@@ -1,5 +1,10 @@
+require('scene/player_battlefield_buff')
+require('game_init')
 --法阵初始化
-function initBattlefield()
+function initBattlefield()    
+    --法阵神符能量级别(用于每局神符逐渐加强)
+    BattlefieldBuffLvl = 0
+
     if Battlefields ~= nil  then
         local maxCountGoodBattlefields = #Battlefields[DOTA_TEAM_GOODGUYS]
         for i = 1, maxCountGoodBattlefields, 1 do
@@ -98,6 +103,7 @@ end
 --法阵定期激活
 function battlefieldLaunchTimer()
     --good=2,bad=3
+    BattlefieldBuffLvl = BattlefieldBuffLvl + 1
     for i=2,3,1 do
         local fieldCount = #Battlefields[i]
         if fieldCount > 0 then
@@ -124,7 +130,6 @@ function battlefieldLaunchTimer()
                 ability:ApplyDataDrivenModifier(LaunchBattlefield, LaunchBattlefield, "modifier_battlefield_mana_regan_datadriven", {Duration = buffStay})
                 Battlefields[i][fieldCount].battlefieldBuff = "mana_regen"
             end
-
         end
     end
 end
@@ -143,7 +148,7 @@ function battlefieldLaunch(keys)
     local buffStayTime = 10
     local timerFlag = false
     print("=================battlefieldLaunch==ininin==================team:"..casterTeam)
-    --print(caster:GetName())
+
     --倒计时关闭激活
     Timers:CreateTimer(buffStayTime,function()
         timerFlag = true
@@ -190,6 +195,7 @@ function battlefieldLaunch(keys)
                 local particleID = ParticleManager:CreateParticle(particlesGetBuff, PATTACH_ABSORIGIN_FOLLOW, caster)
                 ParticleManager:SetParticleControl(particleID, 1, position)
                 caster.loadingParticleID = particleID
+
             end)
         end
        
@@ -227,6 +233,9 @@ function battlefieldLaunch(keys)
                             hHero:RemoveAbility(abilityName)
                         end
                         hHero:AddAbility(abilityName):SetLevel(1)
+
+                        
+
                         EmitSoundOn("scene_voice_battlefield_buff_get", hHero)
                         --EmitSoundOn("scene_voice_player_fly",hHero)
                     end
