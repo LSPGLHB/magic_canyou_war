@@ -175,4 +175,16 @@ function learnContractByNum(playerID, num)
 end
 
 
+function closeKillCam()
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+			CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "closeKillCamLUATOJS", {
+
+                
+            } )
+		end
+	end
+
+end
+
 

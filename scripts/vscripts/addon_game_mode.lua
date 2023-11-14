@@ -177,7 +177,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules:SetStartingGold(0)
 	GameRules:SetFirstBloodActive(false)
 	GameRules:SetUseBaseGoldBountyOnHeroes(true)
-	
+	--GameRules:SetHideKillMessageHeaders(true)--隐藏击杀提示
 	
 	
 	GameRules:SetHeroRespawnEnabled(false)  --复活规则

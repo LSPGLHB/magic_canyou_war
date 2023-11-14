@@ -220,7 +220,8 @@ function initHeroStatus()
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             if not hHero:IsAlive() then
-                hHero:RespawnUnit()
+                --hHero:RespawnUnit()
+                hHero:RespawnHero(false,false) --自然复活，解决死亡回放问题
             end
             hHero:GetAbilityByIndex(0):EndCooldown()
             hHero:GetAbilityByIndex(1):EndCooldown()
@@ -357,7 +358,6 @@ function initPlayerHero()
             playerRefreshCost[playerID] = GameRules.refreshCost
             --初始化所有临时BUFF（未做好）（player_power）
             --initTempPlayerPower()
-
         end
     end
 end
