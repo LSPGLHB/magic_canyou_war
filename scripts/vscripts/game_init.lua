@@ -43,11 +43,10 @@ function initMapStatus()
 
     end
 
-    
-
-    
+    --各种箱子
     centerTreasureBox = {}
     otherTreasureBox = {}
+    remainsBox = {}
 
     --法阵能力设置
     BattlefieldBuffVision = {200,200,300,300,400,400,400,400,400,400}
@@ -81,6 +80,13 @@ function clearTreasureBox()
         end
     end
     otherTreasureBox ={}
+
+    for k,val in pairs(remainsBox) do
+        if val.alive == 1 then
+            val:ForceKill(true)
+        end
+    end
+    remainsBox = {}
 end
 
 function initTreasureBox()
@@ -141,8 +147,9 @@ end
 
 --魔法石初始化
 function initMagicStone()
-    print("=========initHeroStatus============")
-    if goodMagicStone ~= nil then
+    print("=========initMagicStone============")
+    
+    if GameRules.goodMagicStone ~= nil then
         goodMagicStone:ForceKill(true)
     end
 
@@ -150,7 +157,8 @@ function initMagicStone()
         goodMagicStonePan:ForceKill(true)
     end
 
-    if badMagicStone ~= nil then
+    if GameRules.badMagicStone ~= nil then
+        --print("==222==",GameRules.badMagicStone:IsAlive())
         badMagicStone:ForceKill(true)
     end
 

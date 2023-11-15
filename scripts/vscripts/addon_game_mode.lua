@@ -354,20 +354,22 @@ function magicCanyouWar:OnEntityKilled (keys)
 		--print("======heroDie======:"..team)
 		local dorpUnit = CreateUnitByName("heroDropUnit", position, true, nil, nil, team)
 		dorpUnit:GetAbilityByIndex(0):SetLevel(1)
+		dorpUnit.alive = 1
+		table.insert(remainsBox,dorpUnit)
 
-		local killerBonus = 4
-		local teamBonus = 4
-
-		PlayerResource:SetGold(killerID,killer:GetGold()+killerBonus,true)
-
+		local killerBonus = 4  --击杀者获得金币数
+		local teamBonus = 4 --击杀者全队获得金币数
+		PlayerResource:SetGold(killerID, killer:GetGold()+killerBonus, true)
 
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
 				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
 				local hHeroTeam = hHero:GetTeam()
 				if hHeroTeam == team then
-
-					PlayerResource:SetGold(playerID,killer:GetGold()+teamBonus,true)
+					PlayerResource:SetGold(playerID, hHero:GetGold()+teamBonus, true)
+					local particlesGold =  "particles/shiqujinbi.vpcf"
+					local particleGoldID = ParticleManager:CreateParticle(particlesGold, PATTACH_OVERHEAD_FOLLOW, hHero)
+					ParticleManager:SetParticleControl(particleGoldID, 0, position)
 					EmitSoundOn("scene_voice_coin_get_small",hHero)
 				end
 			end

@@ -245,6 +245,7 @@ function initHeroSearchTarget(keys)
                         caster:AddItem(ownerItem)
                         target:SetModelScale(0.01)
                         target:ForceKill(true)
+                        target.alive = 0
                     else
                         print("物品栏已满或不是你队伍的")
                     end

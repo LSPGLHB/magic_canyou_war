@@ -44,7 +44,6 @@ function studyStep(gameRound)
     getUpGradeListByRound(gameRound)
 
     roundPowerUp(gameRound)
-
     refreshShopList(true)
     
 
@@ -155,6 +154,8 @@ function battleStep(gameRound)
         if battleTime == 0 or GameRules.checkWinTeam ~= nil then -- 时间等于0结束
             --print("onStepLoop2========over")
             --时间结束，双方都-1
+            local delayTime = 0 
+            local winWay = false
             if battleTime == 0 then
                 GoodStoneHP = GoodStoneHP - 1
                 BadStoneHP = BadStoneHP - 1
@@ -165,25 +166,37 @@ function battleStep(gameRound)
             if GameRules.checkWinTeam == DOTA_TEAM_BADGUYS then
                 GoodStoneHP = GoodStoneHP - 1
             end
+            if GameRules.checkWinTeam ~= nil then
+                delayTime = 1 --战斗决胜负后准备跳转空余时间
+                winWay = true
+            end
 
             if GoodStoneHP > 0 and BadStoneHP > 0 then  
-                --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏？？？？？？？？？？？？？
+                --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏
                 --结算数据
-
-                --输出回合结束信息
-                roundOverMsgSend()
-                --所有玩家不能控制
-                allPlayerStop()
                 
-                --进行下一轮战斗
-                --英雄位置初始化到预备阶段
-                playerPositionTransfer(preparePointsTeam1,playersTeam1)
-                playerPositionTransfer(preparePointsTeam2,playersTeam2)
-                Timers:CreateTimer(loadingTime,function ()
-                    GameRules.checkWinTeam = nil
-                    gameRound = gameRound + 1
+                --输出回合结束信息
+                roundOverMsgSend(winWay)
 
-                    studyStep(gameRound) 
+                Timers:CreateTimer(delayTime,function ()
+                    --所有玩家不能控制
+                    allPlayerStop()
+                    
+                    --进行下一轮战斗
+                    --英雄位置初始化到预备阶段
+                    playerPositionTransfer(preparePointsTeam1,playersTeam1)
+                    playerPositionTransfer(preparePointsTeam2,playersTeam2)
+
+                    --initMagicStone()
+
+                    Timers:CreateTimer(loadingTime,function ()
+                        
+                        GameRules.checkWinTeam = nil
+                        gameRound = gameRound + 1
+                        
+                        studyStep(gameRound) 
+                        return nil
+                    end)
                     return nil
                 end)
                 return nil
@@ -206,6 +219,7 @@ function battleStep(gameRound)
                 end
                 GameRules:SetGameWinner(finalWinTeam)
             end
+                
             return nil
         end
         return interval
@@ -329,8 +343,10 @@ function checkWinTeam()
     end
 
     if not GameRules.badMagicStone:IsAlive() then
+        --print("==111==",GameRules.badMagicStone:IsAlive())
         GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
+    
 end
 
 
@@ -465,7 +481,7 @@ function prepareOverMsgSend()
     sendMsgOnScreenToAll(topTips,bottomTips)
 end
 
-function roundOverMsgSend()
+function roundOverMsgSend(winWay)
     --print(GameRules.checkWinTeam)
     local winTeamStr
     if GameRules.checkWinTeam == DOTA_TEAM_GOODGUYS then
@@ -474,10 +490,25 @@ function roundOverMsgSend()
     if GameRules.checkWinTeam == DOTA_TEAM_BADGUYS then
         winTeamStr =  "夜魇胜利！"
     end
-    print("比分："..GoodStoneHP..":"..BadStoneHP)
+    --print("比分："..GoodStoneHP..":"..BadStoneHP)
     local topTips = winTeamStr
     local bottomTips = "此轮战斗结束，时间宝石启动，新的战斗即将开始"
+    
     sendMsgOnScreenToAll(topTips,bottomTips)
+    local timeCount = 5
+    if winWay then
+        Timers:CreateTimer(function()
+            bottomTips = "此轮战斗结束，时间宝石启动，新的战斗秒"..timeCount.."后开始"
+            sendMsgOnScreenToAll(topTips,bottomTips)
+            timeCount = timeCount - 1
+            if timeCount < 0 then
+                bottomTips = "此轮战斗结束，时间宝石启动，新的战斗即将开始"
+                sendMsgOnScreenToAll(topTips,bottomTips)
+                return nil
+            end
+            return 1
+        end)
+    end
 end
 
 
