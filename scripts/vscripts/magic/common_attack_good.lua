@@ -137,5 +137,8 @@ function commonAttackSp1AOEOperationCallback(shoot,unit)
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	if unitLabel == GameRules.magicStoneLabel then
 		ApplyDamage({victim = unit, attacker = caster, damage = 1, damage_type = DAMAGE_TYPE_PURE})
+		if not unit:IsAlive() then
+			unit.alive = 0
+		end
 	end
 end

@@ -149,17 +149,20 @@ end
 function initMagicStone()
     print("=========initMagicStone============")
     
-    if GameRules.goodMagicStone ~= nil then
-        goodMagicStone:ForceKill(true)
+    if goodMagicStone ~= nil then
+        if goodMagicStone.alive == 1 then
+            goodMagicStone:ForceKill(true)
+        end
     end
 
     if goodMagicStonePan ~= nil then
         goodMagicStonePan:ForceKill(true)
     end
 
-    if GameRules.badMagicStone ~= nil then
-        --print("==222==",GameRules.badMagicStone:IsAlive())
-        badMagicStone:ForceKill(true)
+    if badMagicStone ~= nil then
+        if badMagicStone.alive == 1 then
+            badMagicStone:ForceKill(true)
+        end
     end
 
     if badMagicStonePan ~= nil then
@@ -175,7 +178,8 @@ function initMagicStone()
     goodMagicStone:AddAbility("magic_stone_good")
     goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStone:SetSkin(0)
-    GameRules.goodMagicStone = goodMagicStone
+    goodMagicStone.alive = 1
+    --GameRules.goodMagicStone = goodMagicStone
     --goodMagicStone:SetContext("name", "magicStone", 0)
     
     local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone")
@@ -187,7 +191,8 @@ function initMagicStone()
     badMagicStone:AddAbility("magic_stone_bad")
     badMagicStone:GetAbilityByIndex(0):SetLevel(1)
     badMagicStone:SetSkin(1)
-    GameRules.badMagicStone = badMagicStone
+    badMagicStone.alive = 1
+    --GameRules.badMagicStone = badMagicStone
     --badMagicStone:SetContext("name", "magicStone", 0)
 end
 

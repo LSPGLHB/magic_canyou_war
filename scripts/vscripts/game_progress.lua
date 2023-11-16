@@ -167,7 +167,7 @@ function battleStep(gameRound)
                 GoodStoneHP = GoodStoneHP - 1
             end
             if GameRules.checkWinTeam ~= nil then
-                delayTime = 1 --战斗决胜负后准备跳转空余时间
+                delayTime = 5 --战斗决胜负后准备跳转空余时间
                 winWay = true
             end
 
@@ -338,11 +338,11 @@ function checkWinTeam()
         --GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
 
-    if not GameRules.goodMagicStone:IsAlive() then
+    if goodMagicStone.alive == 0 or not goodMagicStone:IsAlive() then
         GameRules.checkWinTeam = DOTA_TEAM_BADGUYS
     end
 
-    if not GameRules.badMagicStone:IsAlive() then
+    if badMagicStone.alive == 0 or not badMagicStone:IsAlive() then
         --print("==111==",GameRules.badMagicStone:IsAlive())
         GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end

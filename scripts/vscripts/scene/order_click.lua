@@ -224,8 +224,7 @@ function initHeroSearchTarget(keys)
                 --打开商店
                 if targetLabel == GameRules.shopLabel then
                     print(targetLabel)
-                    OnMyUIShopOpen(playerID)
-                    getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
+                    CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "shopDoorOperationLUATOJS", {})
                 end
 
                 --抢夺法阵
@@ -250,7 +249,6 @@ function initHeroSearchTarget(keys)
                         print("物品栏已满或不是你队伍的")
                     end
                 end
-
 
                 return nil
             end
