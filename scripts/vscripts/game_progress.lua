@@ -36,7 +36,7 @@ function studyStep(gameRound)
     
     
     local step0 = "魔法学习阶段倒数："
-    local studyTime = 16
+    local studyTime = GameRules.studyTime
     local interval = 1 --运算间隔
     local loadingTime = 2 --延迟时间 
 
@@ -86,7 +86,7 @@ function prepareStep(gameRound)
     local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
     local loadingTime = 3 --延迟时间 
-    local prepareTime = 21 --准备阶段时长 
+    local prepareTime = GameRules.prepareTime --策略阶段时长 
  
     --信息发送到前端
     Timers:CreateTimer(0 ,function ()
@@ -128,8 +128,9 @@ function battleStep(gameRound)
     --扫描进程
     local interval = 1
     local loadingTime = 3
-    local battleTime = 300 --战斗时间
-    local battlefieldTimer = 30--法阵刷新激活
+    local battleTime = GameRules.battleTime --战斗时间
+    local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
+    local freeTime = GameRules.freeTime --自由活动时间
 
     initHeroStatus()
     initTreasureBox()--宝箱创建
@@ -154,6 +155,7 @@ function battleStep(gameRound)
         if battleTime == 0 or GameRules.checkWinTeam ~= nil then -- 时间等于0结束
             --print("onStepLoop2========over")
             --时间结束，双方都-1
+            winTeamParticle(GameRules.checkWinTeam)
             local delayTime = 0 
             local winWay = false
             if battleTime == 0 then
@@ -167,7 +169,7 @@ function battleStep(gameRound)
                 GoodStoneHP = GoodStoneHP - 1
             end
             if GameRules.checkWinTeam ~= nil then
-                delayTime = 5 --战斗决胜负后准备跳转空余时间
+                delayTime = freeTime --战斗决胜负后准备跳转空余时间
                 winWay = true
             end
 
@@ -227,7 +229,6 @@ function battleStep(gameRound)
 end
 
 --初始化英雄状态
-
 function initHeroStatus()
     print("============initHeroStatus================")
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
@@ -346,7 +347,22 @@ function checkWinTeam()
         --print("==111==",GameRules.badMagicStone:IsAlive())
         GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
-    
+end
+
+--为胜利方添加胜利特效
+function winTeamParticle(winTeam)
+    local winTeamParticle = "particles/units/heroes/hero_legion_commander/legion_commander_duel_victory.vpcf"
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local heroTeam = hHero:GetTeam()
+            if heroTeam == winTeam then
+                local particleID = ParticleManager:CreateParticle(winTeamParticle, PATTACH_ABSORIGIN_FOLLOW , hHero)
+                ParticleManager:SetParticleControl(particleID, 0, hHero:GetAbsOrigin())
+                EmitSoundOn("scene_voice_player_win",hHero)
+            end
+        end
+    end
 end
 
 
@@ -354,8 +370,7 @@ end
 
 --每次轮回地图与玩家数据初始化
 function gameRoundInit()
-    print("===================================gameRoundInit===================================")
-    
+    print("===================================gameRoundInit===================================")   
     initPlayerHero()--初始化所有玩家
     initMagicStone()--初始化魔法石
     initBattlefield()--初始化法阵   
@@ -513,7 +528,7 @@ end
 
 
 function getNowTime()
-    local time = GameRules:GetGameTime() - GameRules.prepareTime
+    local time = GameRules:GetGameTime() - GameRules.PreTime
     time = math.floor(time)
     local min =  math.floor(time / 60)
     local sec =  time % 60

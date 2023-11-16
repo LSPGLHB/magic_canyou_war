@@ -239,7 +239,7 @@ end
 
 
 
-    --玩家英雄初始化
+--玩家英雄初始化
 function initHeroByPlayerID(playerID)
     --print("initHeroByPlayerID:"..playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)

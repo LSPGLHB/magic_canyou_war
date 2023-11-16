@@ -138,9 +138,16 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupTimeout(1) --0后无法选英雄？？？设置设置(赛前)阶段的超时。 0 = 立即开始, -1 = 永远 (直到FinishCustomGameSetup 被调用) 
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
-	GameRules.PreTime = 2
-	GameRules.refreshCost = 10
-	GameRules.refreshCostAdd = 10
+	GameRules.PreTime = 2  --开局延迟吹号角
+	GameRules.refreshCost = 10    --刷新需要金币
+	GameRules.refreshCostAdd = 10 --刷新叠加金币
+	GameRules.studyTime = 21   --学习阶段时间
+	GameRules.prepareTime = 21 --策略阶段时间
+	GameRules.battleTime = 300 --战斗阶段时间
+	GameRules.battlefieldTimer = 30 --法阵激活间隔
+	GameRules.freeTime = 5 --战后自由活动时间
+	GameRules.remainsBoxAliveTime = 15 --遗物箱消失时间
+
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
 	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
@@ -165,13 +172,15 @@ function magicCanyouWar:InitGameMode()
 	GameRules.SceneLabel[7] = GameRules.remainsLabel
 
 
-	GameRules.playerBaseHealth = 50
-	GameRules.playerBaseMana = 100
-	GameRules.playerBaseSpeed = 250
-	GameRules.playerBaseVision = 1200
-	GameRules.playerBaseManaRegen = 5
-	GameRules.playerBaseDefense = 0
-	GameRules.speedConstant  = 1.66
+	GameRules.playerBaseHealth = 50 --基础血量
+	GameRules.playerBaseMana = 100  --基础蓝量
+	GameRules.playerBaseSpeed = 250 --基础移速
+	GameRules.playerBaseVision = 1200 --基础视野
+	GameRules.playerBaseManaRegen = 5 --基础回蓝
+	GameRules.playerBaseDefense = 0   -- 基础防御
+
+
+	GameRules.speedConstant  = 1.66  --弹道速度换算常数
 
 	GameRules:SetPreGameTime(GameRules.PreTime) --选择英雄与开始时间，吹号角时间
 	GameRules:SetStartingGold(0)
@@ -343,19 +352,40 @@ function magicCanyouWar:OnEntityKilled (keys)
     local name = unit:GetContext("name")
 	local label = unit:GetUnitLabel()
 	local position = unit:GetAbsOrigin()
-	local team = killer:GetTeam()
+	local killerTeam = killer:GetTeam()
 	local killerID = killer:GetPlayerID()
+	
 	--物品掉落测试(金币箱子打开)
 	if label == GameRules.boxLabel then
 		RollDrops(unit)
 	end
 
 	if unit:IsHero() then
-		--print("======heroDie======:"..team)
-		local dorpUnit = CreateUnitByName("heroDropUnit", position, true, nil, nil, team)
+		local remainsBoxAliveTime = GameRules.remainsBoxAliveTime
+		local timeCount = 5--remainsBoxAliveTime
+		local dorpUnit = CreateUnitByName("heroDropUnit", position, true, nil, nil, killerTeam)
 		dorpUnit:GetAbilityByIndex(0):SetLevel(1)
+		if killerTeam == DOTA_TEAM_GOODGUYS then
+			dorpUnit:SetSkin(0)
+		end
+		if killerTeam == DOTA_TEAM_BADGUYS then
+			dorpUnit:SetSkin(1)
+		end
+
 		dorpUnit.alive = 1
 		table.insert(remainsBox,dorpUnit)
+
+		--遗物如果未捡自动消失
+		Timers:CreateTimer(1,function()
+			timeCount = timeCount - 1
+			if timeCount <= 0 and dorpUnit.alive == 1 then
+				dorpUnit:ForceKill(true)
+				dorpUnit.alive = 0
+				dorpUnit:SetModelScale(0.01)
+				return nil
+			end
+			return 1
+		end)
 
 		local killerBonus = 4  --击杀者获得金币数
 		local teamBonus = 4 --击杀者全队获得金币数
@@ -365,7 +395,7 @@ function magicCanyouWar:OnEntityKilled (keys)
 			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
 				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
 				local hHeroTeam = hHero:GetTeam()
-				if hHeroTeam == team then
+				if hHeroTeam == killerTeam then
 					PlayerResource:SetGold(playerID, hHero:GetGold()+teamBonus, true)
 					local particlesGold =  "particles/shiqujinbi.vpcf"
 					local particleGoldID = ParticleManager:CreateParticle(particlesGold, PATTACH_OVERHEAD_FOLLOW, hHero)
@@ -374,17 +404,6 @@ function magicCanyouWar:OnEntityKilled (keys)
 				end
 			end
 		end
-		--local itemName = "item_remains_box"
-		--local dropOwnerItem = CreateItemOnPositionSync(position,CreateItem(itemName, unit, unit))
-		--貌似没用
-		--dropOwnerItem:SetContext("team", tostring(unit:GetTeam()), 0)
-		--table.insert(dorpItems,dropOwnerItem)
-		--print(dropOwnerItem:GetContext('team'))
-		--dorpUnit:AddItemDrop(dropOwnerItem)
-		--dorpUnit:AddItem(dropOwnerItem)
-		--local tempItem = 
-		--dorpUnit:DropItemAtPositionImmediate(dropOwnerItem, position)
-		--dorpUnit:ForceKill(true)
 	end
 
 	--判断小怪被消灭，并刷新小怪
@@ -523,70 +542,6 @@ function magicCanyouWar:OnItemPickup (keys)
 	local ItemEntity = EntIndexToHScript(keys.ItemEntityIndex)
 	local HeroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local playerTeam = HeroEntity:GetTeam()
-	--DeepPrintTable(keys)
-	--print("OnItemPickup"..ItemEntity:GetOwner())
-	--[[
-	local itemLabel
-	for name, item in pairs(GameRules.itemList) do
-		if itemName == name then
-			for key, value in pairs(item) do
-				if key == "ItemType" then
-					itemLabel = value
-				end
-			end
-		end
-	end
-	--不是自己的物品丢回地上
-	if (itemLabel == 'equip' or itemLabel == 'equip_plus') then
-		local ownerID = ItemEntity:GetOwner():GetPlayerID()
-		if playerID ~= ownerID then
-			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
-			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
-		end
-	end
-
-	if itemLabel == 'remainsBox' then
-		
-		local remainsTeam  = ItemEntity:GetOwner():GetTeam() --ItemEntity:GetContext("team")--
-		--for key, val in pairs(dorpItems) do
-		--	remainsItem = val
-		--end
-		--local remainsTeam = remainsItem:GetContext("team")
-		print("playerTeam:"..playerTeam)
-		print("remainsTeam:"..remainsTeam)
-		--print("ItemEntityTeam:"..ItemEntity:GetContext('team'))
-		if playerTeam == remainsTeam then
-			HeroEntity:DropItemAtPositionImmediate(ItemEntity, HeroEntity:GetAbsOrigin())
-			EmitSoundOn("scene_voice_pick_item_fail", HeroEntity)	
-		end
-	end
-	--local itemName2 = ItemEntity:GetName()
-	--print("playerID",playerID)
-	--print("team",team)
-	--print("itemName:"..itemName)
-
-	local player = PlayerResource:GetPlayer(playerID) 
-	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-	for i=0, #goldCoin do
-		if goldCoin[i]['name'] == itemName then
-			if goldCoin[i]['holder'] == 'player' then
-				print(goldCoin[i]['worth'])
-				--hHero:ModifyGold(goldCoin[i]['worth'],true,1)
-				PlayerResource:SetGold(playerID,goldCoin[i]['worth'],true)
-				hHero:RemoveItem(ItemEntity)
-			end
-		end
-	end
-
-	--不能拾取会掉落（可行的）
-
-	local pos = GameRules.BaoshiPos  --全局变量保存好掉落的宝石位置
-	if team == 2 and itemname == 'item_lvxie2' then
-		--print('pos:',pos) --宝石位置
-		--print('drop:',itemname)
-
-		HeroEntity:DropItemAtPositionImmediate(ItemEntity, pos)		
-	end	]]
 end
 
 

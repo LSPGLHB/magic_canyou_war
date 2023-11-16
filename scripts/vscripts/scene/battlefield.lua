@@ -79,7 +79,7 @@ function battlefieldIdle(keys)
     local caster = keys.caster
     local casterLocation = caster:GetAbsOrigin()
     local ability = caster:GetAbilityByIndex(0)
-    local refreshInterval = 20
+    --local refreshInterval = 20
     local casterTeam = caster:GetTeam()
     print("=-=-=-particlesLaunch-=-=-=")
     Timers:CreateTimer(0.05,function()    
