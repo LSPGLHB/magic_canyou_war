@@ -20,7 +20,7 @@ function getPush(keys)
 										false)
 
     local catchFlag = false
-    EmitSoundOn(keys.soundPush, caster)
+    
 
 	for k,unit in pairs(aroundUnits) do
         local unitPosition = unit:GetAbsOrigin()
@@ -30,13 +30,21 @@ function getPush(keys)
 
         if GameRules.stoneLabel == label or unit:IsHero() and unit ~= caster then
             beatBackUnit(keys,caster,unit,pushSpeed,max_distance,direction,true)
+            local particleName = "particles/shenluotianzheng.vpcf"
+            local particleID = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
+            ParticleManager:SetParticleControl(particleID, 0, caster:GetAbsOrigin())
             catchFlag = true
+            EmitSoundOn(keys.soundPush, caster)
         end
         
     end
 
     if not catchFlag then
         ability:EndCooldown()
+        EmitSoundOn("magic_pull_push_fail",caster)
+        local particleName = "particles/fasheshibai.vpcf"
+        local particleID = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
+        ParticleManager:SetParticleControl(particleID, 0, caster:GetAbsOrigin())
     end
 
 end

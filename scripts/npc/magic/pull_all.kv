@@ -57,16 +57,12 @@
 				"ScriptFile"		"magic/pull_all.lua"
 				"Function"			"getPull"
 				"Target"			"POINT"
-		
+
 				"AbilityLevel"		"d"
 				"unitType"          "base"
-				
-				
+								
 				"soundPullStaff"	"magic_pull_push_staff"
-				
 
-				
-                
 				"soundPull"			"magic_pull_all"
 
                 "hitTargetDebuff"   "modifier_pull_all_target_buff"
@@ -91,7 +87,9 @@
 			"modifier_pull_all_caster_buff"
 			{
 				"IsBuff"			"1"
-
+				"EffectName"       "particles/wanxiangtianyin_fashe.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"

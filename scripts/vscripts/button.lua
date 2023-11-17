@@ -180,6 +180,37 @@ function buttonlJSTOLUA(index,keys)
     heroRespawn(myPlayerID)
 end
 
+function buttonmJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    local hHero = PlayerResource:GetSelectedHeroEntity(myPlayerID)
+
+    hHero:GetAbilityByIndex(0):EndCooldown()
+    hHero:GetAbilityByIndex(1):EndCooldown()
+    hHero:GetAbilityByIndex(2):EndCooldown()
+    hHero:GetAbilityByIndex(3):EndCooldown()
+    hHero:GetAbilityByIndex(4):EndCooldown()
+    hHero:GetAbilityByIndex(5):EndCooldown()
+    hHero:GetAbilityByIndex(6):EndCooldown()
+    hHero:GetAbilityByIndex(7):EndCooldown()
+    hHero:GetAbilityByIndex(8):EndCooldown()
+
+    local abilityNameC = hHero:GetAbilityByIndex(6):GetAbilityName()
+    local abilityNameB = hHero:GetAbilityByIndex(7):GetAbilityName()
+    local abilityNameA = hHero:GetAbilityByIndex(8):GetAbilityName()
+    local modifierNameC = "modifier_"..abilityNameC.."_buff"
+    local modifierNameB = "modifier_"..abilityNameB.."_buff"
+    local modifierNameA = "modifier_"..abilityNameA.."_buff"
+
+    if hHero:HasModifier(modifierNameC) then
+        hHero:RemoveModifierByName(modifierNameC)
+    end
+    if hHero:HasModifier(modifierNameB) then
+        hHero:RemoveModifierByName(modifierNameB)
+    end
+    if hHero:HasModifier(modifierNameA) then
+        hHero:RemoveModifierByName(modifierNameA)
+    end
+end
 
 
 function heroRespawn(myPlayerID)
@@ -188,3 +219,4 @@ function heroRespawn(myPlayerID)
         hHero:RespawnUnit()
     end
 end
+

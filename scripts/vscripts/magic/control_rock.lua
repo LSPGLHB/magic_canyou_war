@@ -13,14 +13,13 @@ function createControlRock(keys)
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     shoot.angleRate = angleRate
     local casterBuff = keys.modifier_caster_syn_name
-	local flyDuration = shoot.max_distance_operation / shoot.speed 
+	local flyDuration = shoot.max_distance_operation / (shoot.speed / GameRules.speedConstant / 0.02)
     ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = flyDuration})
 
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
     
-
     initDurationBuff(keys)
 
     local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)

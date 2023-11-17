@@ -132,12 +132,10 @@ function initHeroCaptureChannelSucceeded(keys)
                 badMagicStone:RemoveModifierByName("modifier_magic_stone_protect_datadriven")
             end
             print("badFieldOver")
-        end
-        
+        end 
         --print("------------------------------initHeroCaptureChannelSucceeded----------------------------")
         --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
         --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])
-
     end
 end
 

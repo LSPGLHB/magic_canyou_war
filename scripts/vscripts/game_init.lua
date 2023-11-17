@@ -259,12 +259,15 @@ function initHeroByPlayerID(playerID)
     end
     --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
     --hHero:RemoveAbility(tempAbility) 
-    hHero:AddAbility(commonAttack):SetLevel(1)  --0
-    hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --1
-    hHero:AddAbility("push_all_datadriven"):SetLevel(1) --2   --  make_friend_datadriven
-    hHero:AddAbility("nothing_c"):SetLevel(1) --3
-    hHero:AddAbility("nothing_b"):SetLevel(1) --4
-    hHero:AddAbility("nothing_a"):SetLevel(1) --5
+    
+    hHero:AddAbility("nothing_c"):SetLevel(1) --0
+    hHero:AddAbility("nothing_b"):SetLevel(1) --1
+    hHero:AddAbility("nothing_a"):SetLevel(1) --2
+    
+    hHero:AddAbility(commonAttack):SetLevel(1)  --3
+    hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --4
+    hHero:AddAbility("push_all_datadriven"):SetLevel(1) --5   --  make_friend_datadriven
+
     hHero:AddAbility("nothing_c_stage"):SetLevel(1) --6
     hHero:AddAbility("nothing_b_stage"):SetLevel(1) --7
     hHero:AddAbility("nothing_a_stage"):SetLevel(1) --8

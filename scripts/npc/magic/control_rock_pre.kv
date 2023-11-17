@@ -118,27 +118,16 @@
 		{
 			"modifier_control_rock_under_control"
 			{
-				"IsBuff"				"1"
+				"IsBuff"			"1"
 				"EffectName"		"particles/37yinianyanji_buff.vpcf"
 				"EffectAttachType"	"follow_origin"
+				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
 				"States"
 				{
                     "MODIFIER_STATE_ROOTED"         "MODIFIER_STATE_VALUE_ENABLED"
 				}	
 
-				
-				"OnStateChanged"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"magic/control_rock.lua"
-						"Function"			"CheckToInterrupt"
-						"ability_a_name"	"control_rock_pre_datadriven"
-						"ability_b_name"	"control_rock_pre_stage_b_datadriven"
-						"modifier_caster_syn_name"	"modifier_control_rock_under_control"
-					}
-				}
-
+			
                 "OnDestroy"
 				{
 					"RunScript"
@@ -148,7 +137,6 @@
 						"ability_a_name"	"control_rock_pre_datadriven"
 						"ability_b_name"	"control_rock_pre_stage_b_datadriven"
 					}
-
 				}
 
 				"OnOrder"
@@ -194,7 +182,6 @@
 		
 		"OnSpellStart"
 		{
-			
 			"RunScript"
 			{
 				"ScriptFile"		"magic/control_rock.lua"

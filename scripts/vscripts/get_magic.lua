@@ -374,7 +374,7 @@ function openMagicListCKVTOLUA(keys)
 	local caster = keys.caster
 	local playerID = caster:GetPlayerID()
 	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-	local preMagic = hHero:GetAbilityByIndex(3):GetAbilityName()
+	local preMagic = hHero:GetAbilityByIndex(0):GetAbilityName()
 	local MagicLevel = 'c'
 	openUIMagicList( playerID )
 	getRandomMagicList(playerID,MagicLevel,preMagic,3)
@@ -399,7 +399,7 @@ end
 
 function openMagicListC(playerID)
 	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-	local preMagic = hHero:GetAbilityByIndex(3):GetAbilityName()
+	local preMagic = hHero:GetAbilityByIndex(0):GetAbilityName()
 	local MagicLevel = 'c'
 	openUIMagicList( playerID )
 	getRandomMagicList(playerID,MagicLevel,preMagic,3)
@@ -414,7 +414,7 @@ end
 
 function openMagicListB(playerID)
 	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-	local preMagic = hHero:GetAbilityByIndex(4):GetAbilityName()
+	local preMagic = hHero:GetAbilityByIndex(1):GetAbilityName()
 	local MagicLevel = 'b'
 	openUIMagicList( playerID )
 	getRandomMagicList(playerID,MagicLevel,preMagic,3)
@@ -429,7 +429,7 @@ end
 
 function openMagicListA(playerID)
 	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-	local preMagic = hHero:GetAbilityByIndex(5):GetAbilityName()
+	local preMagic = hHero:GetAbilityByIndex(2):GetAbilityName()
 	local MagicLevel = 'a'
 	openUIMagicList( playerID )
 	getRandomMagicList(playerID,MagicLevel,preMagic,3)
@@ -1274,15 +1274,15 @@ function learnMagicByNum(playerID, num)
 	end
 
 	if magicLv == 'c' then
-		abilityIndex = 3
+		abilityIndex = 0
 		stageAbilityIndex = 6
 	end
 	if magicLv== 'b' then
-		abilityIndex = 4
+		abilityIndex = 1
 		stageAbilityIndex = 7
 	end
 	if magicLv == 'a' then
-		abilityIndex = 5
+		abilityIndex = 2
 		stageAbilityIndex = 8
 	end
 

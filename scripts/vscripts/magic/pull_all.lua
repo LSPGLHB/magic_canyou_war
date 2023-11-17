@@ -16,16 +16,16 @@ function getPull(keys)
         target.FloatingAirLevel = 9
         local bufferTempDis = 100
         local hitTargetDebuff = keys.hitTargetDebuff
-        ability:ApplyDataDrivenModifier(caster, target, hitTargetDebuff, {Duration = -1})
+        local buffTime = max_distance / ability:GetSpecialValueFor("pull_speed")
+        ability:ApplyDataDrivenModifier(caster, target, hitTargetDebuff, {Duration = buffTime})
         local casterBuff = keys.modifier_caster_name
-        ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = -1})
+        ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = buffTime})
         local interval = 0.02
         local pullSpeed = ability:GetSpecialValueFor("pull_speed") * GameRules.speedConstant * interval
         local traveled_distance = 0
         Timers:CreateTimer(function()
             if traveled_distance < max_distance and target.FloatingAirLevel == 9 then
                 local newPosition = target:GetAbsOrigin() +  direction * pullSpeed 
-
                 local groundPos = GetGroundPosition(newPosition, target)
                 --中途可穿模，最后不能穿
                 local tempLastDis = max_distance - traveled_distance
@@ -39,8 +39,7 @@ function getPull(keys)
                 end
                 traveled_distance = traveled_distance + pullSpeed
             else
-                target:RemoveModifierByName(hitTargetDebuff)
-                
+                target:RemoveModifierByName(hitTargetDebuff)   
                 target.FloatingAirLevel = nil
                 return nil
             end
@@ -50,6 +49,10 @@ function getPull(keys)
     else
         --ability:ReduceMana()
         ability:EndCooldown()
+        EmitSoundOn("magic_pull_push_fail",caster)
+        local particleName = "particles/fasheshibai.vpcf"
+        local particleID = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
+        ParticleManager:SetParticleControl(particleID, 0, caster:GetAbsOrigin())
     end
     
 

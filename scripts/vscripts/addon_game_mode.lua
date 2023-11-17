@@ -187,8 +187,6 @@ function magicCanyouWar:InitGameMode()
 	GameRules:SetFirstBloodActive(false)
 	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	--GameRules:SetHideKillMessageHeaders(true)--隐藏击杀提示
-	
-	
 	GameRules:SetHeroRespawnEnabled(false)  --复活规则
 	
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
@@ -271,7 +269,6 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "getMagicDetailByNumJSTOLUA", getMagicDetailByNumJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "getItemDetailByNumJSTOLUA", getItemDetailByNumJSTOLUA ) 
 	
-
 	--契约列表
 	--CustomGameEventManager:RegisterListener( "openContractListJSTOLUA", openContractListJSTOLUA ) --打开启用KVTPLUA通道
 	CustomGameEventManager:RegisterListener( "closeContractListJSTOLUA", closeContractListJSTOLUA ) 
@@ -305,6 +302,7 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "buttonjJSTOLUA", buttonjJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonkJSTOLUA", buttonkJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonlJSTOLUA", buttonlJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonmJSTOLUA", buttonmJSTOLUA )
 
 	--测试快捷键
 	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)
@@ -493,7 +491,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
 				--测试流程面板
-				--CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+				CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
 
 				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 				--showPlayerStatusPanel( playerID ) 
