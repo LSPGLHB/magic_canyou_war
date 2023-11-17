@@ -491,7 +491,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
 				--测试流程面板
-				CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+				--CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
 
 				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 				--showPlayerStatusPanel( playerID ) 
