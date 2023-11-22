@@ -51,17 +51,56 @@ function initItemList()
 	GameRules.itemNameList = itemNameList
 	GameRules.itemCostList = itemCostList
 	GameRules.itemTextureNameList = itemTextureNameList
+	getShopItemListByRound(gameRound)
+end
+
+function getShopItemListByRound(gameRound)
+	GameRules.shopProbability = LoadKeyValues("scripts/kv/shopProbability.kv")
+	local roundList = GameRules.shopProbability["shopProbability"]
+	shopProbabilityItemByRound = {}
+	--print("============================getShopItemListByRound======================================")
+	for k,v in pairs(roundList) do
+		local round = tonumber(string.sub(k,7,7))
+		shopProbabilityItemByRound[round] = {}
+		for key,val  in pairs(v) do
+			if val == 1 then
+				table.insert(shopProbabilityItemByRound[round] , key)
+			end
+		end
+	end
+	shopProbabilityItemByRound[5] = shopProbabilityItemByRound[4]
+	shopProbabilityItemByRound[6] = shopProbabilityItemByRound[4]
+	shopProbabilityItemByRound[8] = shopProbabilityItemByRound[7]
+	shopProbabilityItemByRound[9] = shopProbabilityItemByRound[7]
+	shopProbabilityItemByRound[10] = shopProbabilityItemByRound[7]
+	shopProbabilityItemByRound[11] = shopProbabilityItemByRound[7]
 end
 
 function getPlayerShopListByRandomList(playerID, randomNumList)
 	local itemNameList = GameRules.itemNameList
 	local itemCostList = GameRules.itemCostList
 	local itemTextureNameList = GameRules.itemTextureNameList
+	local gameRound = GameRules.gameRound
+	roundItemNameList = {}
+	roundItemNameList[playerID] = {}
+	roundItemCostList = {}
+	roundItemCostList[playerID] = {}
+	roundItemTextureNameList = {}
+	roundItemTextureNameList[playerID] = {}
+	for i = 1, #itemNameList,1 do
+		for j = 1, #shopProbabilityItemByRound[gameRound],1 do	
+			if shopProbabilityItemByRound[gameRound][j] == itemNameList[i] then
+				print(shopProbabilityItemByRound[gameRound][j].."======"..itemNameList[i])
+				table.insert(roundItemNameList[playerID],itemNameList[i])
+				table.insert(roundItemCostList[playerID],itemCostList[i])
+				table.insert(roundItemTextureNameList[playerID],itemTextureNameList[i])
+			end
+		end
+	end
 
-	local randomItemNameList = getRandomArrayList(itemNameList, randomNumList)
-	local randomItemCostList = getRandomArrayList(itemCostList, randomNumList)
-	local randomItemTextureNameList = getRandomArrayList(itemTextureNameList, randomNumList)
-
+	local randomItemNameList = getRandomArrayList(roundItemNameList[playerID], randomNumList)
+	local randomItemCostList = getRandomArrayList(roundItemCostList[playerID], randomNumList)
+	local randomItemTextureNameList = getRandomArrayList(roundItemTextureNameList[playerID], randomNumList)
 	local listLength = #randomItemNameList
 	--print("listLength",listLength)
 	--local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -85,8 +124,8 @@ function buyShopJSTOLUA(index,keys)
 	local currentGold = PlayerResource:GetGold(playerID)
 	
 	local randomItemNumList = playerRandomItemNumList[playerID]
-	local itemNameList = GameRules.itemNameList
-	local itemCostList = GameRules.itemCostList
+	local itemNameList = roundItemNameList[playerID]
+	local itemCostList = roundItemCostList[playerID]
 	--local itemTextureNameList = GameRules.itemTextureNameList
 	local randomItemNameList = getRandomArrayList(itemNameList, randomItemNumList)
 	local randomItemCostList = getRandomArrayList(itemCostList, randomItemNumList)

@@ -1320,9 +1320,9 @@ end
 function getRebuildMagicList(playerID)
 	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-	local magic_c = hHero:GetAbilityByIndex(3):GetAbilityName()
-	local magic_b = hHero:GetAbilityByIndex(4):GetAbilityName()
-	local magic_a = hHero:GetAbilityByIndex(5):GetAbilityName()
+	local magic_c = hHero:GetAbilityByIndex(0):GetAbilityName()
+	local magic_b = hHero:GetAbilityByIndex(1):GetAbilityName()
+	local magic_a = hHero:GetAbilityByIndex(2):GetAbilityName()
 
 	local rebuildNameList = {}
 	local rebuildIconList = {}

@@ -40,7 +40,6 @@ function initMapStatus()
         playerRefreshCost[i] = GameRules.refreshCost
 
         playerBattlefieldBuff[i] = {}
-
     end
 
     --各种箱子
@@ -53,6 +52,8 @@ function initMapStatus()
     BattlefieldBuffSpeed = {30,38,46,54,62,70,78,86,94,102}
     BattlefieldBuffManaRegen = {10,12,13,15,16,18,19,21,22,24}
 
+    --商店刷新库
+    shopProbability = {}
     --建立商店
     creatShop()
 
@@ -213,6 +214,11 @@ function creatShop()
     unit2:SetAngles(0, 225, 0)
     unit2:GetAbilityByIndex(0):SetLevel(1)
     unit2:SetContext("name", "shop", 0)
+
+
+    --local testdog = CreateUnitByName("shopUnit", Vector(-6618.95,1543.69,384), true, nil, nil, DOTA_TEAM_GOODGUYS)
+    --testdog:GetAbilityByIndex(0):SetLevel(1)
+    --unit2:SetContext("name", "testdog", 0)
 end
 
 
@@ -376,6 +382,52 @@ function heroStudyFinish(playerID)
     if hHero:HasModifier("modifier_hero_study_datadriven") then
 		hHero:RemoveModifierByName("modifier_hero_study_datadriven")
 	end
+end
+
+
+function getGoldWorthOperation(worth)
+    local worthValue = {}
+    worthValue["value"] = {0,0,0}
+    worthValue["type"] = {0,0,0}
+    local bai = math.floor(worth / 100)
+    local shi = math.floor((worth % 100) / 10)
+    local ge = math.floor(worth % 10)
+
+    if bai > 0 then
+        worthValue["value"][1] = bai
+        worthValue["value"][2] = shi
+        worthValue["value"][3] = ge
+        worthValue["type"][1] = 1
+        worthValue["type"][2] = 1
+        worthValue["type"][3] = 1
+    else
+        if shi > 0 then
+            worthValue["value"][1] = shi
+            worthValue["value"][2] = ge
+            worthValue["type"][1] = 1
+            worthValue["type"][2] = 1
+        else
+            worthValue["value"][1] = ge
+            worthValue["type"][1] = 1
+        end
+    end
+    return worthValue
+end
+
+function showGoldWorthParticle(playerID,worth)
+    local worthValue = getGoldWorthOperation(worth)
+    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local particleName = "particles/jinbihuoqu.vpcf"
+    local particleID = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, hHero)
+    ParticleManager:SetParticleControl(particleID, 0, hHero:GetAbsOrigin())
+    ParticleManager:SetParticleControl(particleID, 1, Vector(worthValue["value"][1],worthValue["value"][2],worthValue["value"][3]))
+    ParticleManager:SetParticleControl(particleID, 2, Vector(worthValue["type"][1],worthValue["type"][2],worthValue["type"][3]))
+    ParticleManager:SetParticleControl(particleID, 3, Vector(worth+5,0,0))
+    if worth >= 17 then
+        EmitSoundOn("scene_voice_coin_get_big", caster)
+    else
+        EmitSoundOn("scene_voice_coin_get_small", caster)
+    end
 end
 
 

@@ -32,7 +32,7 @@ end
 function studyStep(gameRound)
     print("onStepLoopStudy========start"..gameRound)
     --每次轮回初始化地图与数据
-    gameRoundInit()
+    gameRoundInit(gameRound)
     
     
     local step0 = "魔法学习阶段倒数："
@@ -44,7 +44,7 @@ function studyStep(gameRound)
     getUpGradeListByRound(gameRound)
 
     roundPowerUp(gameRound)
-    refreshShopList(true)
+    refreshShopList(true,gameRound)
     
 
     Timers:CreateTimer(0 ,function ()
@@ -369,7 +369,7 @@ end
 
 
 --每次轮回地图与玩家数据初始化
-function gameRoundInit()
+function gameRoundInit(gameRound)
     print("===================================gameRoundInit===================================")   
     initPlayerHero()--初始化所有玩家
     initMagicStone()--初始化魔法石
@@ -378,6 +378,7 @@ function gameRoundInit()
     clearTreasureBox() --清理上局的箱子
     dorpItems = {}
     GameRules.checkWinTeam = nil
+    GameRules.gameRound = gameRound
 end    
 
 --初始化英雄局内数据
@@ -393,7 +394,7 @@ function initPlayerHero()
     end
 end
 
-function refreshShopList(initLockFlag)
+function refreshShopList(initLockFlag,gameRound)
     --刷新商店列表
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -415,9 +416,9 @@ function roundPowerUp(gameRound)
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             keys.caster = hHero
-            setPlayerPower(playerID, "player_health", true, healthArray[gameRound])
+            setPlayerPower(playerID, "talent_health", true, healthArray[gameRound])
             setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
-            setPlayerPower(playerID, "player_vision", true, visionArray[gameRound])
+            setPlayerPower(playerID, "talent_vision", true, visionArray[gameRound])
             setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
         end
     end

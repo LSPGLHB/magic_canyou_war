@@ -78,11 +78,13 @@ function refreshShopJSTOLUA(index,keys)
 end
 
 
-
+--刷新商店商品
 function refreshShopListByPlayerID(playerID)
-    local itemNameList = GameRules.itemNameList
+    local gameRound = GameRules.gameRound
+    local itemNameList = shopProbabilityItemByRound[gameRound]--GameRules.itemNameList
     local count = #itemNameList
-    --print("itemNameList=====================",count)
+    
+    print("itemNameList=====================",count)
     --print("================================================================refreshShopListByPlayerID:"..playerShopLock[playerID])
     playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
 
@@ -115,6 +117,7 @@ function getRandomGoldJSTOLUA(index,keys)
     local randomGold = string.format("%.1f", math.random()) * (max-min) + min
     local playerGold = PlayerResource:GetGold(myPlayerID) + randomGold
     PlayerResource:SetGold(myPlayerID,playerGold,true)
+    showGoldWorthParticle(myPlayerID,randomGold)
     --添加获取金币声音
     
 end

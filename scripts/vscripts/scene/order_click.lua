@@ -1,4 +1,5 @@
 require('shop')
+require('game_init')
 function treasureBoxInit(keys)
     local caster = keys.caster
 	local position = caster:GetAbsOrigin()
@@ -16,9 +17,9 @@ function getGoldCoin(keys)
     local worth = keys.worth
     --print('getGoldCoin=========='..playerID.."="..worth)
     local playerGold = PlayerResource:GetGold(playerID) + worth
-    --caster:ModifyGold(worth, true, 11)
+    --caster:ModifyGold(worth, true, 11) 
     PlayerResource:SetGold(playerID,playerGold,true)
-    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+    showGoldWorthParticle(playerID,worth)
 end
 
 function initHeroOrder(keys)

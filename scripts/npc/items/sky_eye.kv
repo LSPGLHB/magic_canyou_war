@@ -11,8 +11,6 @@
 
         "ItemType"               "equip"     //equip类型才会在商店出现
         "IconSrc"                "file://{images}/custom_game/shop_item/blood_grenade_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_sky_eye"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_sky_eye_Description" 
         "ItemCost"               "42"
 
 
@@ -39,7 +37,6 @@
 
         "OnSpellStart"
 		{
-			
 			"RunScript"
 			{
 				"ScriptFile"	"items/sky_eye.lua"
@@ -54,20 +51,15 @@
         {
             "modifier_item_sky_eye_datadriven"
             {
-                "TextureName"   "ability_bao" 
-                //"Passive"			"1"
-                "States"
-                {
-                //    "MODIFIER_STATE_FLYING"             "MODIFIER_STATE_VALUE_ENABLED"
-                 //     "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"	
-                }   
-
+                "TextureName"   "items_sky_eye"
             }
             "modifier_item_sky_eye_unit_datadriven"
             {   
                 "States"
                 {
-                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FLYING"             "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"	
+                    "MODIFIER_STATE_NO_HEALTH_BAR"      "MODIFIER_STATE_VALUE_ENABLED"
                 }
             }
 
@@ -86,8 +78,6 @@
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
         "IconSrc"                "file://{images}/custom_game/shop_item/gem_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_sky_eye_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_sky_eye_2_Description" 
         "ItemCost"               "0"
 
 
@@ -130,18 +120,15 @@
         {
             "modifier_item_sky_eye_2_datadriven"
             {
-                "TextureName"   "ability_bao"
-                "Properties"
-                {
-                //    "MODIFIER_PROPERTY_DISABLE_TURNING"    "1"
-                //      "MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"  "-99"
-                }
+                "TextureName"   "items_sky_eye_2"
             }
             "modifier_item_sky_eye_2_unit_datadriven"
             {
                "States"
                 {
-                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_FLYING"             "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_HEALTH_BAR"      "MODIFIER_STATE_VALUE_ENABLED"
                 }
             }
 

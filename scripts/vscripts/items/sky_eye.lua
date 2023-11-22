@@ -61,17 +61,16 @@ end
 function setClassBuff(keys,buffName,baseValue,unit)
     local hero = keys.caster
     local playerID = hero:GetPlayerID()
-    local modifierName = "player_"..buffName
+
     local abilityName = "ability_"..buffName.."_control"
     local modifierNameBuff = "modifier_"..buffName.."_buff"  
     local modifierNameDebuff = "modifier_"..buffName.."_debuff"
-    local modifierNameFlag =  PlayerPower[playerID]["player_"..buffName.."_flag"]
-    local modifierStackCount = getFinalValueOperation(playerID,baseValue,buffName,nil,"buffStack")-- getPlayerPowerValueByName(hero, modifierName, baseValue)
+    local modifierStackCount = getFinalValueOperation(playerID,baseValue,buffName,nil,nil)-- getPlayerPowerValueByName(hero, modifierName, baseValue)
     local modifierNameAdd
     local modifierNameRemove
     print("modifierNameCount=",modifierStackCount)
     --removePlayerBuffByAbilityAndModifier(unit, abilityName, modifierNameBuff,modifierNameDebuff)
-    if ( modifierStackCount > 0 and modifierNameFlag == 1 or modifierStackCount < 0 ) then --增幅且没被禁止，或减幅
+    if modifierStackCount ~= 0 then
         if (modifierStackCount > 0) then   
             modifierNameAdd = modifierNameBuff
             modifierNameRemove = modifierNameDebuff
@@ -86,7 +85,7 @@ function setClassBuff(keys,buffName,baseValue,unit)
         unit:SetModifierStackCount(modifierNameAdd, unit, modifierStackCount)
         unit:RemoveAbility(abilityName)
 
-       --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
+        --卡bug过关(OnDestory层数减少时，需要再执行一次，否则不能正常运作)
         unit:AddAbility(abilityName):SetLevel(1)
         unit:RemoveModifierByName(modifierNameRemove)
         unit:SetModifierStackCount(modifierNameAdd, unit, modifierStackCount)

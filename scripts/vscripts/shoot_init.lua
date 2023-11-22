@@ -570,13 +570,6 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	end
 	
 	--已处理
-	--蓝耗
-	local manaCost = ability:GetManaCost(1)
-	local manaCostBuffName = 'mana_cost'
-	shoot.mana_cost_bonus = getFinalValueOperation(playerID,manaCost,manaCostBuffName,AbilityLevel,owner) - manaCost
-	--caster:ReduceMana(50.0)--(shoot.mana_cost_bonus)-- 此方法23.4.21更新后不能使用
-	caster:SpendMana(shoot.mana_cost_bonus, caster)
-
 	--法魂
 	local abilityEnergy = shoot:GetMaxHealth()
 	local energyBuffName = 'energy'
@@ -619,7 +612,20 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 end
 
 --施放技能时buff加强(目前存在重大bug，弃用，待重构)
+--现在用于每个技能必走一次的杂物房
 function initDurationBuff(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local playerID = caster:GetPlayerID()
+	local AbilityLevel = keys.AbilityLevel
+
+	--蓝耗
+	local manaCost = ability:GetManaCost(1)
+	local manaCostBuffName = 'mana_cost'
+	local mana_cost_bonus = getFinalValueOperation(playerID,manaCost,manaCostBuffName,AbilityLevel,nil) - manaCost
+	print("============manaCost======="..mana_cost_bonus)
+	--caster:ReduceMana(shoot.mana_cost_bonus)--(shoot.mana_cost_bonus)-- 此方法23.4.21更新后不能使用
+	caster:SpendMana(mana_cost_bonus, caster)
 	--[[
 	setPlayerDurationBuffByName(keys,"vision",GameRules.playerBaseVision)
 	setPlayerDurationBuffByName(keys,"speed",GameRules.playerBaseSpeed)

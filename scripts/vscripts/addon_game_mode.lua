@@ -324,7 +324,9 @@ function magicCanyouWar:InitGameMode()
 	--初始化玩家数据
 	if init_flag == 0 then
 		initMapStatus() -- 初始化地图数据
+
 		initItemList() -- 初始化物品信息
+		
 		initPlayerPower() --初始化契约容器
 		initTempPlayerPower()--初始化回合临时能力提升容器
 		initContractList() --初始化契约信息
@@ -343,8 +345,6 @@ function magicCanyouWar:On_ed_open_my_shop(keys)
 end
 
 function magicCanyouWar:OnEntityKilled (keys)
-	
-	--DeepPrintTable(keys)
 	local unit = EntIndexToHScript(keys.entindex_killed) --受害者
 	local killer = EntIndexToHScript(keys.entindex_attacker) --凶手
     local name = unit:GetContext("name")
@@ -385,20 +385,17 @@ function magicCanyouWar:OnEntityKilled (keys)
 			return 1
 		end)
 
-		local killerBonus = 4  --击杀者获得金币数
-		local teamBonus = 4 --击杀者全队获得金币数
+		local killerBonus = 8  --击杀者获得金币数
+		local teamBonus = 4 --击杀者队友获得金币数
 		PlayerResource:SetGold(killerID, killer:GetGold()+killerBonus, true)
-
+		showGoldWorthParticle(killerID,killerBonus)
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
 				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
 				local hHeroTeam = hHero:GetTeam()
-				if hHeroTeam == killerTeam then
+				if hHeroTeam == killerTeam and killerID ~= playerID then
 					PlayerResource:SetGold(playerID, hHero:GetGold()+teamBonus, true)
-					local particlesGold =  "particles/shiqujinbi.vpcf"
-					local particleGoldID = ParticleManager:CreateParticle(particlesGold, PATTACH_OVERHEAD_FOLLOW, hHero)
-					ParticleManager:SetParticleControl(particleGoldID, 0, position)
-					EmitSoundOn("scene_voice_coin_get_small",hHero)
+					showGoldWorthParticle(playerID,teamBonus)
 				end
 			end
 		end
@@ -431,28 +428,6 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			end
 		end)
 	end
---[[
-	if state == DOTA_GAMERULES_STATE_INIT then
-		print("DOTA_GAMERULES_STATE_INIT")
-	end
-
-	if state == DOTA_GAMERULES_STATE_LAST then
-		print("DOTA_GAMERULES_STATE_LAST")
-	end
-
-	if state == DOTA_GAMERULES_STATE_POST_GAME then
-		print("DOTA_GAMERULES_STATE_POST_GAME")
-	end
-
-	if state == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
-		print("DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD")
-	end
-	
-	if state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		print("DOTA_GAMERULES_STATE_GAME_IN_PROGRESS")
-	end
-
-]]
 
 	--时间结束没有选的话，随机英雄
 	if state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
@@ -491,7 +466,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
 				--测试流程面板
-				--CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+				CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
 
 				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 				--showPlayerStatusPanel( playerID ) 
@@ -507,25 +482,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 			gameProgress()--此处打开游戏流程的进程
 		end)
 	
---[[--开启游戏进程
-		local countPreTime = GameRules.PreTime
-		local sec = 1
-		--local gameTime = getNowTime()
-		Timers:CreateTimer(sec,function ()
-			for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-				if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-					OnGetTimeCount(-1,nil,countPreTime,nil,playerID)
 
-				end
-			end	
-			countPreTime = countPreTime - 1
-			if countPreTime == 0 then
-				gameProgress()
-				return nil
-			end		
-			return sec
-		end)
-]]
 	end
 end
 
@@ -543,16 +500,4 @@ function magicCanyouWar:OnItemPickup (keys)
 end
 
 
--- Evaluate the state of the game
---GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )配合使用
---[[
-function magicCanyouWar:OnThink()
-	
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
-	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-		return nil
-	end
-	return 1
-end]]
 
