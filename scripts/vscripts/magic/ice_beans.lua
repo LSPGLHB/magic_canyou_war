@@ -1,5 +1,6 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function stageOne (keys)
     local caster	= keys.caster
 	local ability	= keys.ability

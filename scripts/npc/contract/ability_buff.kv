@@ -152,6 +152,37 @@
                 }
         }
 
+        "ability_cooldown_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_cooldown_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "0"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE" "1" 
+                                }
+                        }
+                        "modifier_cooldown_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "0"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE" "-1" 
+                                }
+                        }
+                }
+        }
+
         "ability_defense_control"
         {
                 "BaseClass"                     "ability_datadriven"
@@ -214,4 +245,5 @@
                 }
         }
 
+        
 }

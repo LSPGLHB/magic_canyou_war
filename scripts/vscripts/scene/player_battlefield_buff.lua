@@ -1,12 +1,12 @@
 require('player_power')
 require('game_init')
 function modifier_battlefield_vision_buff_on_created(keys)
-    print("onCreated")
+    --print("onCreated")
     refreshVisionBuff(keys,true)
 end
 
 function modifier_battlefield_vision_buff_on_destroy(keys)
-    print("onDestroy")
+    --print("onDestroy")
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
@@ -31,8 +31,8 @@ function refreshVisionBuff(keys,flag)
         vision_init_val = playerBattlefieldBuff[playerID][buffName]
         playerBattlefieldBuff[playerID][buffName] = 0
     end
-    print("BattlefieldBuffLvl:"..BattlefieldBuffLvl)
-    print("vision_init_val:"..vision_init_val)
+    --print("BattlefieldBuffLvl:"..BattlefieldBuffLvl)
+    --print("vision_init_val:"..vision_init_val)
     setPlayerPower(playerID, powerName, flag, vision_init_val)
     setPlayerBuffByNameAndBValue(keys,buffName,GameRules.playerBaseVision)
 end
@@ -40,12 +40,12 @@ end
 
 
 function modifier_battlefield_speed_buff_on_created(keys)
-    print("onCreated")
+    --print("onCreated")
     refreshSpeedBuff(keys,true)
 end
 
 function modifier_battlefield_speed_buff_on_destroy(keys)
-    print("onDestroy")
+    --print("onDestroy")
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
@@ -71,8 +71,8 @@ function refreshSpeedBuff(keys,flag)
         speed_init_val = playerBattlefieldBuff[playerID][buffName]
         playerBattlefieldBuff[playerID][buffName] = 0
     end
-    print("BattlefieldBuffLvl:"..BattlefieldBuffLvl)
-    print("speed_init_val:"..speed_init_val)
+    --print("BattlefieldBuffLvl:"..BattlefieldBuffLvl)
+    --print("speed_init_val:"..speed_init_val)
     setPlayerPower(playerID, powerName, flag, speed_init_val)
     setPlayerBuffByNameAndBValue(keys,buffName,GameRules.playerBaseSpeed)
 end
@@ -81,12 +81,12 @@ end
 
 
 function modifier_battlefield_mana_regen_buff_on_created(keys)
-    print("onCreated")
+    --print("onCreated")
     refreshManaRegenBuff(keys,true)
 end
 
 function modifier_battlefield_mana_regen_buff_on_destroy(keys)
-    print("onDestroy")
+    --print("onDestroy")
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
@@ -111,8 +111,8 @@ function refreshManaRegenBuff(keys,flag)
         mana_regen_init_val = playerBattlefieldBuff[playerID][buffName]
         playerBattlefieldBuff[playerID][buffName] = 0
     end
-    print("BattlefieldBuffLvl:"..BattlefieldBuffLvl)
-    print("mana_regen_init_val:"..mana_regen_init_val)
+    --print("BattlefieldBuffLvl:"..BattlefieldBuffLvl)
+    --print("mana_regen_init_val:"..mana_regen_init_val)
     setPlayerPower(playerID, powerName, flag, mana_regen_init_val)
     setPlayerBuffByNameAndBValue(keys, buffName,GameRules.playerBaseManaRegen)
 end

@@ -144,6 +144,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.studyTime = 21   --学习阶段时间
 	GameRules.prepareTime = 21 --策略阶段时间
 	GameRules.battleTime = 300 --战斗阶段时间
+	GameRules.decisiveBattleTime = 280 --剩余时间决战阶段
 	GameRules.battlefieldTimer = 30 --法阵激活间隔
 	GameRules.freeTime = 5 --战后自由活动时间
 	GameRules.remainsBoxAliveTime = 15 --遗物箱消失时间
@@ -352,6 +353,11 @@ function magicCanyouWar:OnEntityKilled (keys)
 	local position = unit:GetAbsOrigin()
 	local killerTeam = killer:GetTeam()
 	local killerID = killer:GetPlayerID()
+
+	if name == "testdog" then
+		--测试流程面板
+		CustomUI:DynamicHud_Create(killerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+	end
 	
 	--物品掉落测试(金币箱子打开)
 	if label == GameRules.boxLabel then
@@ -465,9 +471,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 				--天赋面板
 				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
-				--测试流程面板
-				CustomUI:DynamicHud_Create(playerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
-
+				
 				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
 				--showPlayerStatusPanel( playerID ) 
 				--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)

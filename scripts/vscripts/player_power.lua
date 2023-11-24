@@ -74,17 +74,17 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
         abilityBuffName = buffName.."_"..abilityLevel
     end
 	--print("getFinalValueOperation"..playerID..abilityBuffName)
-    --铭文专用
+    --固定增加能力专用（铭文与其他）
     local talentPrecentBase = PlayerPower[playerID]['talent_'..abilityBuffName..'_precent_base'] / 100
 	local talentBonusValue = PlayerPower[playerID]['talent_'..abilityBuffName]
 	local talentPrecentFinal = PlayerPower[playerID]['talent_'..abilityBuffName..'_precent_final'] / 100
 
-    --契约专用
+    --契约专用（固定能力）（有正负）
 	local contractPrecentBase = PlayerPower[playerID]['contract_'..abilityBuffName..'_precent_base'] / 100
 	local contractBonusValue = PlayerPower[playerID]['contract_'..abilityBuffName]
 	local contractPrecentFinal = PlayerPower[playerID]['contract_'..abilityBuffName..'_precent_final'] / 100
 
-    --装备专用
+    --装备专用（非固定能力）
 	local equipPrecentBase = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_base'] / 100
 	local equipBonusValue = PlayerPower[playerID]['player_'..abilityBuffName]
 	local equipPrecentFinal = PlayerPower[playerID]['player_'..abilityBuffName..'_precent_final'] / 100
@@ -94,7 +94,7 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
 	local tempBonusValue = PlayerPower[playerID]['temp_'..abilityBuffName]
 	local tempPrecentFinal = PlayerPower[playerID]['temp_'..abilityBuffName..'_precent_final'] / 100
     
-    --法阵神符专用
+    --法阵神符专用（专用）
 	local battlefieldPrecentBase = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_base'] / 100
 	local battlefieldBonusValue = PlayerPower[playerID]['battlefield_'..abilityBuffName]
 	local battlefieldPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100
@@ -133,7 +133,7 @@ function initPlayerPower()
     PlayerPower={}
     for playerID = 0, 9 do --10个玩家的数据包
         PlayerPower[playerID] = {} 
-        local talentType = "talent" --铭文
+        local talentType = "talent" --铭文和其他局内能力
         local playerType = "player" --装备
         local contractType = "contract" --契约
         --Modifiers能力
@@ -170,6 +170,17 @@ function initTempPlayerPower()
             removeTempBuff(hero)
         end
     end
+end
+
+--获取冷却缩减后的充能时间
+function getCooldownChargeReplenish(playerID,charge_replenish_time)
+    local cooldown = getFinalValueOperation(playerID,0,'cooldown',nil,nil)
+    print("cooldown:"..cooldown)
+	if cooldown >= 100 then
+		cooldown = 95
+	end
+	charge_replenish_time = charge_replenish_time * (1 - cooldown / 100)
+    return charge_replenish_time
 end
 
 

@@ -706,5 +706,54 @@
         }
     }
 
+    "decisive_battle_buff_datadriven"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "AbilityType"               "scene"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "mana_regen"			 "12"
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "cooldown"			    "25"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_decisive_battle_buff_datadriven"
+            {
+                "Passive"			"1"
+                "EffectName"		"particles/items_fx/healing_clarity.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/decisive_battle_buff.lua"
+                        "Function"			"modifier_decisive_battle_buff_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/decisive_battle_buff.lua"
+                        "Function"			"modifier_decisive_battle_buff_on_destroy"
+                    }
+                }
+            }
+        }
+    }     
 
 }

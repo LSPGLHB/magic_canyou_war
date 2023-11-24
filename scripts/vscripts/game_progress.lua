@@ -131,6 +131,7 @@ function battleStep(gameRound)
     local battleTime = GameRules.battleTime --战斗时间
     local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
     local freeTime = GameRules.freeTime --自由活动时间
+    local decisiveBattleTime = GameRules.decisiveBattleTime --剩余时间决战阶段
 
     initHeroStatus()
     initTreasureBox()--宝箱创建
@@ -142,7 +143,9 @@ function battleStep(gameRound)
         if battleTime % battlefieldTimer == 0 and battleTime / battlefieldTimer > 0 then
             --法阵激活,每30秒一次
             battlefieldLaunchTimer()
-            
+        end
+        if battleTime == decisiveBattleTime then
+            decisiveBattlePowerUp()
         end
 
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
@@ -275,7 +278,6 @@ function getUpGradeListByRound(gameRound)
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local heroHiddenStatusAbility = hHero:GetAbilityByIndex(12)
             heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = -1}) 
-            
             if gameRound == 1 then
                 openMagicListPreC(playerID)
             end
@@ -411,6 +413,7 @@ function roundPowerUp(gameRound)
     print("roundPowerUp")
     local healthArray = {0,10,10,10,10,10,10,10,10,10,10,10}
     local visionArray = {0,50,50,50,50,0,0,0,0,0,0,0}
+    local cooldownArray = {90,2,2,2,2,2,2,2,2,2,2,2}
     local keys = {}
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -420,6 +423,20 @@ function roundPowerUp(gameRound)
             setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
             setPlayerPower(playerID, "talent_vision", true, visionArray[gameRound])
             setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
+            setPlayerPower(playerID, "talent_cooldown", true, cooldownArray[gameRound])
+            setPlayerBuffByNameAndBValue(keys,"cooldown",0)
+        end
+    end
+end
+
+
+--每回合决战阶段提升
+function decisiveBattlePowerUp()
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            --keys.caster = hHero
+            --hHero:AddAbility("decisive_battle_buff_datadriven"):SetLevel(1)
         end
     end
 end

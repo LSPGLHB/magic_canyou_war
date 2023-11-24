@@ -20,6 +20,4 @@ function refreshItemBuff(keys,flag)
     setPlayerPower(playerID, "player_ability_speed_a", flag, item_ability_speed_a)
     setPlayerPower(playerID, "player_ability_speed_a_precent_base", flag, item_ability_speed_a_precent_base)
 
-
-
 end

@@ -215,10 +215,13 @@ function creatShop()
     unit2:GetAbilityByIndex(0):SetLevel(1)
     unit2:SetContext("name", "shop", 0)
 
+    local testunit =Entities:FindByName(nil,"testdog") 
 
-    --local testdog = CreateUnitByName("shopUnit", Vector(-6618.95,1543.69,384), true, nil, nil, DOTA_TEAM_GOODGUYS)
+
+    local testdog = CreateUnitByName("testdog", Vector(-7638.04,2018.02,136), true, nil, nil, DOTA_TEAM_NEUTRALS)
     --testdog:GetAbilityByIndex(0):SetLevel(1)
-    --unit2:SetContext("name", "testdog", 0)
+    testdog:SetContext("name", "testdog", 0)
+
 end
 
 

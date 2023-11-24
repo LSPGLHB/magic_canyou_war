@@ -1,11 +1,13 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function shootStartCharge(keys)
 	--每次升级调用
 	local caster = keys.caster
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
 	local max_charges = ability:GetSpecialValueFor("max_charges") 
+
 	local charge_replenish_time = ability:GetSpecialValueFor("charge_replenish_time")
 	
 	caster.ice_ball_max_charges = max_charges
@@ -34,7 +36,7 @@ function createCharges(keys)
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
 	local playerID = caster:GetPlayerID()
-	local charge_replenish_time = getFinalValueOperation(playerID,caster.ice_ball_charge_replenish_time,'cooldown',nil,nil)
+	local charge_replenish_time = getCooldownChargeReplenish(playerID,caster.ice_ball_charge_replenish_time)
 
 
 	Timers:CreateTimer(function()
@@ -91,8 +93,9 @@ function createShoot(keys)
 
     local counterModifierName = keys.modifierCountName
     local max_charges = caster.ice_ball_max_charges
-    local playerID = caster:GetPlayerID()
-	local charge_replenish_time = getFinalValueOperation(playerID,caster.ice_ball_charge_replenish_time,'cooldown',nil,nil)
+
+	local playerID = caster:GetPlayerID()
+	local charge_replenish_time = getCooldownChargeReplenish(playerID,caster.ice_ball_charge_replenish_time)
 
     local next_charge = caster.ice_ball_charges - 1
 

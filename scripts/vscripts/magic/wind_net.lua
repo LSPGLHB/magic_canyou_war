@@ -1,13 +1,15 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function shootStartCharge(keys)
 	--每次升级调用
 	local caster = keys.caster
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
 	local max_charges = ability:GetSpecialValueFor("max_charges") 
+
 	local charge_replenish_time = ability:GetSpecialValueFor("charge_replenish_time")
-	
+
 	caster.wind_net_max_charges = max_charges
 	caster.wind_net_charge_replenish_time = charge_replenish_time
 
@@ -34,7 +36,7 @@ function createCharges(keys)
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
 	local playerID = caster:GetPlayerID()
-	local charge_replenish_time = getFinalValueOperation(playerID,caster.wind_net_charge_replenish_time,'cooldown',nil,nil)
+	local charge_replenish_time =  getCooldownChargeReplenish(playerID,caster.wind_net_charge_replenish_time)
 	
 	Timers:CreateTimer(function()
 		-- Restore charge
@@ -89,8 +91,8 @@ function createShoot(keys)
 
     local counterModifierName = keys.modifierCountName
     local max_charges = caster.wind_net_max_charges
-    local playerID = caster:GetPlayerID()
-	local charge_replenish_time = getFinalValueOperation(playerID,caster.wind_net_charge_replenish_time,'cooldown',nil,nil)
+	local playerID = caster:GetPlayerID()
+	local charge_replenish_time =  getCooldownChargeReplenish(playerID,caster.wind_net_charge_replenish_time)
     local next_charge = caster.wind_net_charges - 1
 
     --满弹情况下开枪启动充能

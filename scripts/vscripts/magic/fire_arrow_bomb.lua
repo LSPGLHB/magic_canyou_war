@@ -1,13 +1,15 @@
 require('shoot_init')
 require('skill_operation')
+require('player_power')
 function shootStartCharge(keys)
 	--每次升级调用
 	local caster = keys.caster
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
 	local max_charges = ability:GetSpecialValueFor("max_charges") 
-	local charge_replenish_time = ability:GetSpecialValueFor("charge_replenish_time")
 	
+	local charge_replenish_time = ability:GetSpecialValueFor("charge_replenish_time")
+
 	caster.fire_arrow_bomb_max_charges = max_charges
 	caster.fire_arrow_bomb_charge_replenish_time = charge_replenish_time
 
@@ -34,7 +36,7 @@ function createCharges(keys)
 	local ability = keys.ability
 	local counterModifierName = keys.modifierCountName
 	local playerID = caster:GetPlayerID()
-	local charge_replenish_time = getFinalValueOperation(playerID,caster.fire_arrow_bomb_charge_replenish_time,'cooldown',nil,nil)
+	local charge_replenish_time = getCooldownChargeReplenish(playerID,caster.fire_arrow_bomb_charge_replenish_time)
 
 	Timers:CreateTimer(function()
 		-- Restore charge
@@ -67,14 +69,14 @@ end
 function shoot_start_cooldown(caster, charge_replenish_time)
 	caster.fire_arrow_bomb_cooldown = charge_replenish_time
 	Timers:CreateTimer(function()
-			local current_cooldown = caster.fire_arrow_bomb_cooldown - 0.1
-			if current_cooldown > 0.1 then
-				caster.fire_arrow_bomb_cooldown = current_cooldown
-				return 0.1
-			else
-				return nil
-			end
-		end)
+		local current_cooldown = caster.fire_arrow_bomb_cooldown - 0.1
+		if current_cooldown > 0.1 then
+			caster.fire_arrow_bomb_cooldown = current_cooldown
+			return 0.1
+		else
+			return nil
+		end
+	end)
 end
 
 
@@ -87,8 +89,8 @@ function createShoot(keys)
     local direction = (skillPoint - casterPoint):Normalized()
     local counterModifierName = keys.modifierCountName
     local max_charges = caster.fire_arrow_bomb_max_charges
-	local playerID = caster:GetPlayerID()
-    local charge_replenish_time = getFinalValueOperation(playerID,caster.fire_arrow_bomb_charge_replenish_time,'cooldown',nil,nil)
+    local playerID = caster:GetPlayerID()
+	local charge_replenish_time = getCooldownChargeReplenish(playerID,caster.fire_arrow_bomb_charge_replenish_time)
     local next_charge = caster.fire_arrow_bomb_charges - 1
 
     --满弹情况下开枪启动充能

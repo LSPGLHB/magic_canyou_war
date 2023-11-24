@@ -1,5 +1,5 @@
 require('player_power')
-
+--弃用了？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
 function initVision(keys)
     print("onCreated_player_temp_buff_vision")
     local caster = keys.caster

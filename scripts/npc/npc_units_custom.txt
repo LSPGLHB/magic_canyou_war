@@ -1088,7 +1088,8 @@
 
 
 //测试用
-"testdog"
+
+	"testdog"
 	{
 		"BaseClass"	"npc_dota_creature"
 		"Model"	"models/heroes/invoker/forge_spirit.vmdl"//"models/props_gameplay/divine_sentinel/divine_sentinel.vmdl"
@@ -1098,7 +1099,7 @@
 		"UnitLabel"	"summonLabel"
 		//"UnitFlag"                  "MKF"
 		// 技能 1.
-		"Ability1"	"shop_datadriven"
+		"Ability1"	""
 		// 技能 2.
 		"Ability2"	""
 		// 技能 3.
@@ -1204,7 +1205,7 @@
 		// 白天视野范围
 		"VisionDaytimeRange"	"1200"
 		// 夜晚视野范围
-		"VisionNighttimeRange"	"800"
+		"VisionNighttimeRange"	"1200"
 
 		 "HasInventory"              "1"   //物品栏
 	}
