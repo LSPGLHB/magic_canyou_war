@@ -34,6 +34,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"5.5"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "10"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -90,16 +92,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/wind_net.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_wind_net_pre_datadriven"
-			}
-		}
-
 		"OnSpellStart"
 		{		
 			"RunScript"
@@ -130,7 +122,6 @@
                 "particles_boom" 	"particles/35fengzhiwang_mingzhong.vpcf"
 				"soundBoom"			"magic_wind_net_boom"
 
-                "modifierCountName" "modifier_counter_wind_net_pre_datadriven"
                 "hitTargetDebuff"   "modifier_wind_net_debuff_datadriven"
 				
 			}
@@ -138,13 +129,6 @@
 
 		"Modifiers"
 		{
-            "modifier_counter_wind_net_pre_datadriven"
-			{
-				"Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-			}
 
 			"modifier_wind_net_debuff_datadriven"
 			{

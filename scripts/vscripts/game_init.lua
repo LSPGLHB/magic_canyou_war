@@ -1,6 +1,7 @@
 --require('scene/battlefield')
 --require('scene/player_battlefield_buff')
 require('myMaths')
+LinkLuaModifier( "modifier_power_up", "scene/modifier_power_up.lua" , LUA_MODIFIER_MOTION_NONE)
 function initMapStatus()
 
     --真随机设定
@@ -261,7 +262,7 @@ function initHeroByPlayerID(playerID)
     end
     local commonAttack 
     if heroTeam == DOTA_TEAM_GOODGUYS then
-        commonAttack = "common_attack_good_datadriven"
+        commonAttack = "common_attack_good"
     end
     if heroTeam == DOTA_TEAM_BADGUYS then
         commonAttack = "common_attack_bad_datadriven"
@@ -289,6 +290,10 @@ function initHeroByPlayerID(playerID)
     --hHero:GetAbilityByIndex(10):SetLevel(1)
 
 	hHero:SetTimeUntilRespawn(1) --重新设置复活时间
+
+    
+    --local ab1 = hHero:GetAbilityByIndex(3)
+    --hHero:AddNewModifier( hHero, ab1, "modifier_power_up", { duration = -1 } )
     
     PlayerResource:SetGold(playerID,60,true)
 end

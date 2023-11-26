@@ -34,6 +34,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"4"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "10"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -85,16 +87,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/twine_soil_ball.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_twine_soil_ball_datadriven"
-			}
-		}
-
 		"OnSpellStart"
 		{		
 			"RunScript"
@@ -125,7 +117,6 @@
                 "particles_boom" 	"particles/02tuqiushu_mingzhong.vpcf"
 				"soundBoom"			"magic_twine_soil_ball_hit"
 
-                "modifierCountName" "modifier_counter_twine_soil_ball_datadriven"
                 "hitTargetDebuff"   "modifier_twine_soil_ball_debuff_datadriven"
 				
 			}
@@ -133,13 +124,6 @@
 
 		"Modifiers"
 		{
-            "modifier_counter_twine_soil_ball_datadriven"
-			{
-				"Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-			}
 
 			"modifier_twine_soil_ball_debuff_datadriven"
 			{

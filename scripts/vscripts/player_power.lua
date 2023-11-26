@@ -172,7 +172,7 @@ function initTempPlayerPower()
     end
 end
 
---获取冷却缩减后的充能时间
+--获取冷却缩减后的充能时间(弃用！)
 function getCooldownChargeReplenish(playerID,charge_replenish_time)
     local cooldown = getFinalValueOperation(playerID,0,'cooldown',nil,nil)
     print("cooldown:"..cooldown)

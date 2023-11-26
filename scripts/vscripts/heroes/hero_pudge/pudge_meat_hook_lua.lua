@@ -3,7 +3,15 @@ LinkLuaModifier( "modifier_meat_hook_followthrough_lua", "heroes/hero_pudge/modi
 LinkLuaModifier( "modifier_meat_hook_lua", "heroes/hero_pudge/modifiers/modifier_meat_hook_lua.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
 --设置技能模型动作
+
 --------------------------------------------------------------------------------
+
+
+
+
+function pudge_meat_hook_lua:GetCastRange(t,v)
+	return 2000
+end
 
 function pudge_meat_hook_lua:OnAbilityPhaseStart()
 	self:GetCaster():StartGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
@@ -30,7 +38,7 @@ end
 
 
 function pudge_meat_hook_lua:OnSpellStart()
-
+	print("hookkkkk")
 	self.bChainAttached = false
 	if self.hVictim ~= nil then
 		self.hVictim:InterruptMotionControllers( true )

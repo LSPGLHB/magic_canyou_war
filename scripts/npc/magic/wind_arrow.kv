@@ -33,7 +33,9 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
+		"AbilityCooldown"				"3"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "11.3"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -100,16 +102,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/wind_arrow.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_wind_arrow_counter_datadriven"
-			}
-		}
-
 		"OnSpellStart"
 		{		
 			"RunScript"
@@ -144,21 +136,10 @@
 				
                 "particles_boom" 	"particles/05fengjian_mingzhong.vpcf"
 				"soundBoom"			"magic_wind_arrow_boom"
-
-                "modifierCountName" "modifier_wind_arrow_counter_datadriven"
           
 				
 			}
 		}
 
-		"Modifiers"
-		{
-            "modifier_wind_arrow_counter_datadriven"
-			{
-				"Passive"				"1"
-			}
-
-
-		}
     }
 }

@@ -267,6 +267,22 @@ function initHeroStatus()
             if hHero:HasModifier(modifierNameA) then
                 hHero:RemoveModifierByName(modifierNameA)
             end
+
+            --初始化决战阶段buff
+            if hHero:HasAbility("decisive_battle_buff_datadriven") then
+                hHero:RemoveAbility("decisive_battle_buff_datadriven")
+            end
+            if hHero:HasModifier("modifier_decisive_battle_buff_datadriven") then
+                hHero:RemoveModifierByName("modifier_decisive_battle_buff_datadriven")
+            end
+
+            --充能补满
+            local abilityArry = {0,1,2,3,6,7,8} --技能位置
+            for i = 1 , #abilityArry, 1 do
+                local abilityTemp = hHero:GetAbilityByIndex(abilityArry[i])
+                abilityTemp:SetCurrentAbilityCharges(abilityTemp:GetMaxAbilityCharges(1))
+            end
+
         end
     end
 end
@@ -413,7 +429,8 @@ function roundPowerUp(gameRound)
     print("roundPowerUp")
     local healthArray = {0,10,10,10,10,10,10,10,10,10,10,10}
     local visionArray = {0,50,50,50,50,0,0,0,0,0,0,0}
-    local cooldownArray = {90,2,2,2,2,2,2,2,2,2,2,2}
+    local cooldownArray = {0,2,2,2,2,2,2,2,2,2,2,2}
+    local manaRegenArray = {0,1,1,1,1,1,1,1,1,1,1,1,1}
     local keys = {}
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -425,6 +442,8 @@ function roundPowerUp(gameRound)
             setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
             setPlayerPower(playerID, "talent_cooldown", true, cooldownArray[gameRound])
             setPlayerBuffByNameAndBValue(keys,"cooldown",0)
+            setPlayerPower(playerID, "talent_mana_regen", true, manaRegenArray[gameRound])
+            setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
         end
     end
 end
@@ -436,7 +455,7 @@ function decisiveBattlePowerUp()
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             --keys.caster = hHero
-            --hHero:AddAbility("decisive_battle_buff_datadriven"):SetLevel(1)
+            hHero:AddAbility("decisive_battle_buff_datadriven"):SetLevel(1)
         end
     end
 end

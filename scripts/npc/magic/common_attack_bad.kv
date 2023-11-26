@@ -31,10 +31,15 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0.1"
+		"AbilityCharges"                "3"
+        "AbilityChargeRestoreTime"      "3"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"12"
+
+		//test
+		"AbilityDamage"				"999"
 
 
         "AbilitySpecial"
@@ -60,7 +65,6 @@
 				"damage"		    "8"
 			}
 
-
             "06"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -78,15 +82,7 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/common_attack_bad.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_common_attack_bad_datadriven"
-			}
-		}
+
 
 		"OnSpellStart"
 		{		
@@ -121,13 +117,6 @@
 			}
 		}
 
-		"Modifiers"
-		{
-            "modifier_counter_common_attack_bad_datadriven"
-			{
-				"Passive"				"1"
-			}
-
-		}
+		
     }
 }

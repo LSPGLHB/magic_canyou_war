@@ -1301,11 +1301,12 @@ function learnMagicByNum(playerID, num)
 	end
 	local tempMagic = hHero:GetAbilityByIndex(abilityIndex):GetAbilityName()
 	hHero:RemoveAbility(tempMagic)
-	local modifiersName = "modifier_counter_"..tempMagic
+	--升级不在用这个counter计数
+	--local modifiersName = "modifier_counter_"..tempMagic
 	--print("modifierCounter=============="..modifiersName)
-	if hHero:HasModifier(modifiersName) then
-		hHero:RemoveModifierByName(modifiersName)
-	end
+	--if hHero:HasModifier(modifiersName) then
+		--hHero:RemoveModifierByName(modifiersName)
+	--end
 	hHero:AddAbility(magicName)
 	hHero:FindAbilityByName(magicName):SetLevel(1)
 

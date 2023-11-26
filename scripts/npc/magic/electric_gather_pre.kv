@@ -35,6 +35,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"2"
         "AbilityChannelTime"			"0.5"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "11.2"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -103,16 +105,6 @@
 
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/electric_gather.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_electric_gather_pre_datadriven"
-			}
-		}
-
         "OnSpellStart"
 		{		
 			"RunScript"
@@ -147,7 +139,7 @@
 
 
 
-                "modifierCountName" "modifier_counter_electric_gather_pre_datadriven"
+              
                 //"modifier_caster_channel_name" "modifier_electric_gather_channel_datadriven"
 
 			}
@@ -216,15 +208,6 @@
                 }
             }
 
-            "modifier_counter_electric_gather_pre_datadriven"
-            {
-                "Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-
-
-            }
         }
 
     }

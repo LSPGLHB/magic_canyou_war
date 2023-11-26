@@ -38,6 +38,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1"
+		"AbilityCharges"                "3"
+        "AbilityChargeRestoreTime"      "4.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -110,15 +112,7 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/blind_fire_ball.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_blind_fire_ball_datadriven"
-			}
-		}
+    
 
         "OnSpellStart"
 		{		
@@ -170,15 +164,7 @@
                     "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
 				} 
 			}
-            
 
-            "modifier_counter_blind_fire_ball_datadriven"
-            {
-                "Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-            }
         }
     }
 }

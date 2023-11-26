@@ -33,6 +33,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1"
+		"AbilityCharges"                "3"
+        "AbilityChargeRestoreTime"      "4.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -93,16 +95,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/ice_ball.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_ice_ball_datadriven"
-			}
-		}
-
 		"OnSpellStart"
 		{		
 			"RunScript"
@@ -133,7 +125,6 @@
                 "particles_boom" 	"particles/04bingqiu_mingzhong.vpcf"
 				"soundBoom"			"magic_ice_ball_boom"
 
-                "modifierCountName" "modifier_counter_ice_ball_datadriven"
                 "hitTargetDebuff"   "modifier_ice_ball_debuff_datadriven"
 				
 			}
@@ -141,13 +132,6 @@
 
 		"Modifiers"
 		{
-            "modifier_counter_ice_ball_datadriven"
-			{
-				"Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-			}
 
 			"modifier_ice_ball_debuff_datadriven"
 			{

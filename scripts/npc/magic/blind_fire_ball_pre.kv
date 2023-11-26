@@ -33,6 +33,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1"
+		"AbilityCharges"                "3"
+        "AbilityChargeRestoreTime"      "4.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -85,8 +87,6 @@
 				"face_angle"					"90"
 			}
 
-
-
 			"10"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -105,15 +105,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/blind_fire_ball.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_blind_fire_ball_pre_datadriven"
-			}
-		}
 
         "OnSpellStart"
 		{		
@@ -164,11 +155,6 @@
 				} 
 			}
             
-
-            "modifier_counter_blind_fire_ball_pre_datadriven"
-            {
-                "Passive"				"1"
-            }
         }
     }
 }

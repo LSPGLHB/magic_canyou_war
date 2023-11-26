@@ -34,6 +34,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"2"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "11.2"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -101,16 +103,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/wind_dart.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_wind_dart_datadriven"
-			}
-		}
-
 		"OnSpellStart"
 		{		
 			"RunScript"
@@ -148,8 +140,6 @@
 				"soundSpeedUp"		"magic_wind_dart_speed_up"
 				"soundSpeedDown"	"magic_wind_dart_speed_down"
 
-
-                "modifierCountName" "modifier_counter_wind_dart_datadriven"
 				"modifierLockDebuff"	"modifier_wind_dart_lock"
 				
 				
@@ -158,10 +148,6 @@
 
 		"Modifiers"
 		{
-            "modifier_counter_wind_dart_datadriven"
-			{
-				"Passive"				"1"
-			}
 
 			"modifier_wind_dart_lock"
 			{

@@ -33,6 +33,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"3"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "11"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -95,16 +97,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/trace_stone_ball.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_trace_stone_ball_datadriven"
-			}
-		}
-
 		"OnSpellStart"
 		{		
 			"RunScript"
@@ -139,20 +131,8 @@
 
 				"soundTrace"		"magic_trace_stone_ball_trace"
 
-                "modifierCountName" "modifier_counter_trace_stone_ball_datadriven"
-              
-				
 			}
 		}
 
-		"Modifiers"
-		{
-            "modifier_counter_trace_stone_ball_datadriven"
-			{
-				"Passive"				"1"
-			}
-
-			
-		}
     }
 }
