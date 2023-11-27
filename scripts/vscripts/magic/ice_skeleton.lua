@@ -96,9 +96,7 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
 			end
 			return nil
 		end)
-
     end
-
 end
 
 --技能追踪
@@ -127,11 +125,10 @@ function iceSkeletonIntervalCallBack(shoot)
 				shoot.trackUnit = unit
 				--shoot.speed = shoot.speed * 1.35
 				shoot.traveled_distance = 0.5 * shoot.max_distance
+				shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
 			end
 		end
 	end
 
-	if shoot.trackUnit ~= nil then
-		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
-	end
+
 end

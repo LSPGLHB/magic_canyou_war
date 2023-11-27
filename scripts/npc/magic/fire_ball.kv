@@ -83,6 +83,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"energy"					"40"
 			}
+			"39"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"disable_turning_time"		"2"
+			}
         }
 
         "OnSpellStart"
@@ -112,6 +117,7 @@
                 "hitTargetDebuff"   "modifier_beat_back"
 
 				"soundBeat"			"magic_beat_hit"
+				"hitDisableTurning"	"modifier_disable_turning"
 			}
 		}
 
@@ -126,6 +132,16 @@
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}	
+			}
+			"modifier_disable_turning"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/jiangzhi_debuff_bone.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_TURNING"		"1"
+				}
 			}
         }
     }

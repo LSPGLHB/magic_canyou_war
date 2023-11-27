@@ -1,6 +1,6 @@
 "DOTAAbilities"
 {
-	"space_collapse_datadriven"
+	"big_tornado_pre_datadriven"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -10,30 +10,31 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
-		"AbilityTextureName"			"dark_seer_vacuum"
+
+		"AOERadius"                     "450"
+		"AbilityTextureName"			"invoker_tornado"
         "MaxLevel"                      "1"
-		"AOERadius"                     "225"
 		"UnitType"         				"feng"
 		"AbilityLevel"					"a"
-		"PreAbility"					"big_tornado_pre_datadriven"
+		"PreAbility"					"null"
 		"StageAbility"					"null"
-
-		"IconSrc" 					"file://{images}/custom_game/ability_button/dark_seer_vacuum.png"  //选择框图标
+		
+		"IconSrc" 					"file://{images}/custom_game/ability_button/invoker_tornado.png"  //选择框图标
 
 	
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1300"   //施法距离
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"1500"   //施法距离
+		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"12"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"38.5"
+		"AbilityManaCost"				"28"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -42,45 +43,45 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"speed"						"450"
-			}
+				"speed"						"610"
+			}			
+
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aoe_radius"		        "225"
-			}			
+				"aoe_radius"		        "450"
+			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"max_distance"				"1300"
+				"max_distance"				"1500"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"13"
+				"damage"					"18"
 			}
 			"20"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hit_range"					"85"
 			}
+
+			"37"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"G_speed"				    "80"
+			}
 			"38"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aoe_duration"				"0.3"
-			}
-			"83"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"G_speed"				    "1200"
+				"aoe_duration"				"6"
 			}
             "12"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"energy"			"80"
+				"energy"			"40"
 			}
-
 		
 		}
 		
@@ -88,30 +89,32 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"magic/space_collapse.lua"
+				"ScriptFile"		"magic/big_tornado.lua"
 				"Function"			"createShoot"
 				"Target"			"POINT"
-				"unitModel"			"shootUnit-L"
+				"unitModel"			"shootUnit-M"
 				"AbilityLevel"		"a"
 				"unitType"          "feng"
-				"hitType" 			"1"   //3不触碰，2穿透弹，1触碰结束
+				"hitType" 			"3"   //3不触碰，2穿透弹，1触碰结束
 				"isAOE"				"1"
-                "cp"				"3"
-                "particles_hit_dur" "0.7"
+				"cp"				"3"
+				"particles_hit_dur" "0.7"
 				"shootHight"		"5"
 
-				"particles_nm"      "particles/15kongjiantansuo_shengcheng.vpcf"
-				"soundCast" 		"magic_space_collapse_cast"
+				"particles_nm"      "particles/30dalongjuanfeng_shengcheng.vpcf"
+				"soundCast" 		"magic_big_tornado_cast"
 				
-				"particles_power" 	"particles/15kongjiantansuo_jiaqiang.vpcf"
+				"particles_power" 	"particles/30dalongjuanfeng_jiaqiang.vpcf"
 				"soundWeak"			"magic_wind_power_up"
-				"particles_weak" 	"particles/15kongjiantansuo_xueruo.vpcf"	
+				"particles_weak" 	"particles/30dalongjuanfeng_xueruo.vpcf"	
 				"soundWeak"			"magic_wind_power_down"
-
-				"particles_boom" 	"particles/15kongjiantansuo_baozha.vpcf"
-				"soundBoom"		    "magic_space_collapse_boom"
-
-				"hitTargetDebuff"	"modifier_space_collapse_aoe_debuff"
+				"particles_duration" 	"particles/30dalongjuanfeng_baozha.vpcf"
+				"soundBoom"			"magic_wind_boom"
+				"soundDurationDelay" "0.25"
+				"soundDuration"		"magic_big_tornado_duration"
+				
+		
+				"aoeTargetDebuff"	"modifier_big_tornado_aoe_debuff"
 				
 			}
 		}
@@ -119,11 +122,11 @@
 		"Modifiers"
 		{
 
-			"modifier_space_collapse_aoe_debuff"
+			"modifier_big_tornado_aoe_debuff"
 			{
-				"IsDebuff"			"1"
-				"EffectName"		"particles/jituiyangchenbuff.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"IsDebuff"				"1"
+				"EffectName"		"particles/mohu_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
 			}
 		}
 	}

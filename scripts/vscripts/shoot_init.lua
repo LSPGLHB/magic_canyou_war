@@ -703,10 +703,11 @@ end
 
 
 --击退单位
-function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBackDirection,transferBeatFlag)
+function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBackDirection,AbilityLevel,transferBeatFlag)
 	local caster = keys.caster
 	local ability = keys.ability
 	local hitTargetDebuff = keys.hitTargetDebuff
+	local AbilityLevel = shoot.abilityLevel
 	--local powerLv = shoot.power_lv
 	--hitTarget.power_lv = powerLv
 	--击退距离受加强削弱影响(此处如果是带走的就有问题了)
@@ -765,16 +766,20 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 						end
 						traveled_distance = traveled_distance + speedmod
 						--print("traveled_distance:"..speedmod.."="..traveled_distance)
+						--是否传递碰撞（开关）
 						if transferBeatFlag then
 							local remainDistance = beatBackDistance - traveled_distance
-							hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection)
+							hitFlag = checkSecondHit(keys,shoot,hitTarget,beatBackSpeed,remainDistance,beatBackDirection,AbilityLevel)
+							--是否碰撞到
 							if hitFlag then --速度传给撞击的单位，该单位停止
 								traveled_distance = beatBackDistance
+								disableTurning(keys,shoot,hitTarget,AbilityLevel)
 							end
 						end
 					else
 						traveled_distance = beatBackDistance
 						print("===hit wall===")
+						disableTurning(keys,shoot,hitTarget,AbilityLevel)
 					end
 
 				else
@@ -782,6 +787,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 					hitTarget.FloatingAirLevel = nil
 					hitTarget:RemoveModifierByName(hitTargetDebuff)	
 					--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
+					disableTurning(keys,shoot,hitTarget,AbilityLevel)
 					return nil
 				end
 				return interval
@@ -789,8 +795,22 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 	end
 end
 
+--僵直单位
+function disableTurning(keys,shoot,hitTarget,AbilityLevel)
+	local caster = keys.caster
+	local playerID = caster:GetPlayerID()
+	if keys.hitDisableTurning ~= nil then
+		local disableTurningDebuff = keys.hitDisableTurning	
+		local ability = keys.ability
+		local hitDisableTurningTime = ability:GetSpecialValueFor("disable_turning_time")
+		hitDisableTurningTime = getFinalValueOperation(playerID,hitDisableTurningTime,'control',AbilityLevel,nil)--装备数值加强
+		hitDisableTurningTime = getApplyControlValue(shoot, hitDisableTurningTime)--相生加强
+		ability:ApplyDataDrivenModifier(caster, hitTarget, disableTurningDebuff, {Duration = hitDisableTurningTime})
+	end
+end
+
 --击退的单位二次击退其他单位  (存在全角度搜索BUG，应该将搜索角度限制在90度内，待优化)
-function checkSecondHit(keys,shoot_sp1,shoot,beatBackSpeed,remainDistance,beatBackDirection)
+function checkSecondHit(keys,shoot_sp1,shoot,beatBackSpeed,remainDistance,beatBackDirection,AbilityLevel)
 	local caster = keys.caster
 	local ability = keys.ability
 	local position = shoot:GetAbsOrigin()
@@ -814,7 +834,7 @@ function checkSecondHit(keys,shoot_sp1,shoot,beatBackSpeed,remainDistance,beatBa
 		local isSceneLabel = checkIsSceneLabel(unit)
 		if(not isSceneLabel and shoot_sp1 ~= unit  and shoot ~= unit and unit.isBeatFlag ~= 1 ) then --碰到的不是子弹,不是自己,不是发射技能的队伍,没被该技能碰撞过
 			--unit.isBeatFlag = 1 --碰撞中，变成不可再碰撞状态
-			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,beatBackDirection,true)
+			beatBackUnit(keys,shoot,unit,beatBackSpeed,remainDistance,beatBackDirection,AbilityLevel,true)
 			hitFlag = true
 			return hitFlag
 		end

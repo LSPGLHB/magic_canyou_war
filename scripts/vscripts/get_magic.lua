@@ -50,6 +50,7 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	local debuffDurationList_34 = {}
 	local aoeDurationList_35 = {}
 	local debuffDurationList_36 = {}
+	local disableTurningTimeList_39 = {}
 	local GSpeedList_37 = {}
 	local aoeDurationList_38 = {}
 	local boomDelayList_50 = {}
@@ -134,6 +135,7 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 			table.insert(debuffDurationList_36,magicList['debuffDurationList_36'][i])
 			table.insert(GSpeedList_37,magicList['GSpeedList_37'][i])
 			table.insert(aoeDurationList_38,magicList['aoeDurationList_38'][i])
+			table.insert(disableTurningTimeList_39,magicList['disableTurningTimeList_39'][i])
 			table.insert(boomDelayList_50,magicList['boomDelayList_50'][i])
 			table.insert(visionRadiusList_51,magicList['visionRadiusList_51'][i])
 			table.insert(aoeDurationList_52,magicList['aoeDurationList_52'][i])
@@ -212,6 +214,7 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	local randomDebuffDurationList_36 = getRandomArrayList(debuffDurationList_36, randomNumList)
 	local randomGSpeedList_37 = getRandomArrayList(GSpeedList_37, randomNumList)
 	local randomAoeDurationList_38 = getRandomArrayList(aoeDurationList_38, randomNumList)
+	local randomDisableTurningTimeList_39 = getRandomArrayList(disableTurningTimeList_39,randomNumList)
 	local randomBoomDelayList_50 = getRandomArrayList(boomDelayList_50, randomNumList)
 	local randomVisionRadiusList_51 = getRandomArrayList(visionRadiusList_51, randomNumList)
 	local randomAoeDurationList_52 = getRandomArrayList(aoeDurationList_52, randomNumList)
@@ -313,6 +316,7 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 		debuffDurationList_36 = randomDebuffDurationList_36,
 		GSpeedList_37 = randomGSpeedList_37,
 		aoeDurationList_38 = randomAoeDurationList_38,
+		disableTurningTimeList_39 = randomDisableTurningTimeList_39,
 		boomDelayList_50 = randomBoomDelayList_50,
 		visionRadiusList_51 = randomVisionRadiusList_51,
 		aoeDurationList_52 = randomAoeDurationList_52,
@@ -519,6 +523,7 @@ function initMagicList()
 	magicList['debuffDurationList_36'] = {}
 	magicList['GSpeedList_37'] = {}
 	magicList['aoeDurationList_38'] = {}
+	magicList['disableTurningTimeList_39'] = {}
 	magicList['boomDelayList_50'] = {}
 	magicList['visionRadiusList_51'] = {}
 	magicList['aoeDurationList_52'] = {}
@@ -599,6 +604,7 @@ function initMagicList()
 		local debuffDuration_36 = 'null'
 		local GSpeed_37 = 'null'
 		local aoeDuration_38 = 'null'
+		local disableTurningTime_39 = 'null'
 		local boomDelay_50 = 'null'
 		local visionRadius_51 = 'null'
 		local aoeDuration_52 = 'null'
@@ -910,6 +916,13 @@ function initMagicList()
 							end
 						end
 					end
+					if x == "39" then
+						for i,j_val in pairs(y_table) do
+							if i == 'disable_turning_time' then
+								disableTurningTime_39 = string.format("%.2f", j_val)
+							end
+						end
+					end
 					
 					if x == "50" then
 						for i,j_val in pairs(y_table) do
@@ -1186,6 +1199,7 @@ function initMagicList()
 				table.insert(magicList['debuffDurationList_36'],debuffDuration_36)
 				table.insert(magicList['GSpeedList_37'],GSpeed_37)
 				table.insert(magicList['aoeDurationList_38'],aoeDuration_38)
+				table.insert(magicList['disableTurningTimeList_39'],disableTurningTime_39)
 				table.insert(magicList['boomDelayList_50'],boomDelay_50)
 				table.insert(magicList['visionRadiusList_51'],visionRadius_51)
 				table.insert(magicList['aoeDurationList_52'],aoeDuration_52)

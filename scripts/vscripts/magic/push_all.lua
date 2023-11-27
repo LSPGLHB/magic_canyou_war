@@ -29,7 +29,7 @@ function getPush(keys)
         local direction = (skillPoint - unitPosition):Normalized()
 
         if GameRules.stoneLabel == label or unit:IsHero() and unit ~= caster then
-            beatBackUnit(keys,caster,unit,pushSpeed,max_distance,direction,true)
+            beatBackUnit(keys,caster,unit,pushSpeed,max_distance,direction,AbilityLevel,true)
             local particleName = "particles/shenluotianzheng.vpcf"
             local particleID = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
             ParticleManager:SetParticleControl(particleID, 0, caster:GetAbsOrigin())

@@ -63,10 +63,13 @@ function clayBallIntervalCallBack(shoot)
     local AbilityLevel = shoot.abilityLevel
     local traveledDistance = shoot.traveled_distance
     local maxDistance = ability:GetSpecialValueFor("max_distance")
-    local speedBase = getFinalValueOperation(playerID,ability:GetSpecialValueFor("speed") ,'ability_speed',AbilityLevel,nil) * GameRules.speedConstant * 0.02
-    
-    local speedMax = speedBase * 2
-    local speedStep = (speedMax - speedBase) * (traveledDistance / maxDistance)
+    local speedMax = getFinalValueOperation(playerID,ability:GetSpecialValueFor("speed") ,'ability_speed',AbilityLevel,nil) * GameRules.speedConstant * 0.02
+
+    local speedBase = speedMax / 5
+    local speedStep = (speedMax - speedBase) * (traveledDistance / maxDistance * 2) * (traveledDistance / maxDistance * 2)
+
     shoot.speed = speedBase + speedStep
- 
+    if shoot.speed > speedMax then
+        shoot.speed = speedMax
+    end
 end

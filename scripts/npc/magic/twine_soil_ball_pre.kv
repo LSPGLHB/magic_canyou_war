@@ -34,6 +34,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "10"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -85,15 +87,6 @@
 			}
         }
 
-        "OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"magic/twine_soil_ball.lua"
-				"Function"				"shootStartCharge"
-				"modifierCountName"		"modifier_counter_twine_soil_ball_pre_datadriven"
-			}
-		}
 
 		"OnSpellStart"
 		{		
@@ -133,14 +126,6 @@
 
 		"Modifiers"
 		{
-            "modifier_counter_twine_soil_ball_pre_datadriven"
-			{
-				"Passive"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsDebuff"				"0"
-			}
-
 			"modifier_twine_soil_ball_debuff_datadriven"
 			{
 				"IsDebuff"			"1"
@@ -160,8 +145,6 @@
 					//"MODIFIER_STATE_MUTED"	  "MODIFIER_STATE_VALUE_ENABLED"
 					//"MODIFIER_STATE_NIGHTMARED" "MODIFIER_STATE_VALUE_ENABLED"
 				}
-
-				
 			}
 		}
     }
