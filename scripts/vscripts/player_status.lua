@@ -7,7 +7,7 @@ function OnMyUIPlayerStatusClose(playerID)
 	CustomUI:DynamicHud_Destroy(playerID,"UIPlayerStatusPanelBG")
 end
 
-function  showPlayerStatusPanel( myPlayerID )
+function showPlayerStatusPanel( myPlayerID )
     --print("showPlayerStatusPanel")
     playerStatusHeroList = {}
     playerStatusAbilityList = {}
@@ -24,7 +24,7 @@ function  showPlayerStatusPanel( myPlayerID )
         end
     end
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             --playerStatusAbilityList[playerID] = {}
             local abilityNameList = {}
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -60,13 +60,11 @@ function  showPlayerStatusPanel( myPlayerID )
         playerStatusAbilityList = playerStatusAbilityList,
         playerStatusItemList = playerStatusItemList
     })
-
 end
 
 function getAbilityIconListByNameList(nameList)
     local abilityList = GameRules.customAbilities
     local abilityIconList = {}
-
     for i = 0 , #nameList , 1 do
         for key, value in pairs(abilityList) do         
             if( key == nameList[i] ) then
@@ -122,7 +120,6 @@ end
 
 function getContractDetailByNumJSTOLUA(index,keys)
     local num  = keys.num
-   
     local playerContractName =  playerContractNameList[num]
     print("getContractDetailByNumJSTOLUA:"..playerContractName)
 end
@@ -131,9 +128,7 @@ function getMagicDetailByNumJSTOLUA(index,keys)
     local num  = keys.num
     local grid = keys.grid
     print("num:"..num.."---grid:"..grid)
-    local playerStatusAbilityName=  playerStatusAbilityList[num][grid]
-    
-    
+    local playerStatusAbilityName=  playerStatusAbilityList[num][grid] 
     print("getMagicDetailByNumJSTOLUA:"..playerStatusAbilityName)
 end
 
@@ -142,8 +137,6 @@ function getItemDetailByNumJSTOLUA(index,keys)
     local num  = keys.num
     local grid = keys.grid
     print("num:"..num.."---grid:"..grid)
-    local playerStatusItemName=  playerStatusItemList[num][grid]
-    
+    local playerStatusItemName=  playerStatusItemList[num][grid]   
     print("getMagicDetailByNumJSTOLUA:"..playerStatusItemName)
-
 end

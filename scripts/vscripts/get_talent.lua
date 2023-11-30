@@ -208,7 +208,7 @@ function randomLearnTalent(gameRound)
 	local learnNum = math.random(1,3)
 
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 			if playerRoundLearn[playerID] == 0 or playerRoundLearn[playerID] == nil then
 				learnTalentByNum(playerID, learnNum, talentType)
 			end
@@ -234,6 +234,11 @@ function learnTalentByNum(playerID, num, talentType)
     --local talentDescribe = RandomTalentDescribeList[playerID][talentType][num]
 
     if playerTalentLearn[playerID][talentType] ~= 'nil' then
+        print("==================playerTalentLearn===================")
+        print(playerID)
+        print(talentType)
+        print(playerTalentLearn[playerID][talentType])
+        
         local modifierName = "modifier_talent_"..playerTalentLearn[playerID][talentType].."_datadriven"
         hHero:RemoveModifierByName(modifierName)
         hHero:RemoveAbility(playerTalentLearn[playerID][talentType])

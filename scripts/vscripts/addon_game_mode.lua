@@ -124,9 +124,7 @@ end
 
 function magicCanyouWar:InitGameMode()
 	print( "============Init Game Mode============" )
-	local init_flag = 0
-
-	
+	--GameRules:AddBotPlayerWithEntityScript("npc_dota_hero_lina","bot",DOTA_TEAM_GOODGUYS,nil,false) --开启机器人电脑
 	--GameRules:SetHeroSelectionTime(20)--选英雄时间(可用)
 	GameRules:SetStrategyTime(0) --选英雄了后选装备时间（可用）
 	--GameRules:SetShowcaseTime(20)
@@ -134,7 +132,6 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0) --物品交换冷却
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(16) --英雄最高等级
 	GameRules:SetCustomGameEndDelay(1)--设置游戏结束等待时间
-
 	--GameRules:SetCustomGameSetupTimeout(1) --0后无法选英雄？？？设置设置(赛前)阶段的超时。 0 = 立即开始, -1 = 永远 (直到FinishCustomGameSetup 被调用) 
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
@@ -149,6 +146,11 @@ function magicCanyouWar:InitGameMode()
 	GameRules.freeTime = 5 --战后自由活动时间
 	GameRules.remainsBoxAliveTime = 15 --遗物箱消失时间
 
+	GameRules.winBaseReward = 7 --基础胜方奖励
+	GameRules.loseBaseReward = 21 --基础败方奖励
+	GameRules.seriesWinReward = {7,21} -- 2,3+连胜额外奖励
+	GameRules.endSeriesWinReward = {14,28} --终结2,3+连胜奖励
+
 	GameRules.magicStoneLabel = "magicStoneLabel"
 	GameRules.skillLabel = "skillLabel"
 	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
@@ -161,6 +163,9 @@ function magicCanyouWar:InitGameMode()
 	GameRules.battlefieldLabel = "battlefieldLabel"
 	GameRules.samsaraStoneLabel = "samsaraStoneLabel"
 	GameRules.remainsLabel ="remainsLabel" --遗物
+
+	GameRules.checkWinTeam = nil
+	GameRules.testMode = false
 
 	--场景标签，一般不与子弹互动
 	GameRules.SceneLabel = {}
@@ -304,6 +309,7 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "buttonkJSTOLUA", buttonkJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonlJSTOLUA", buttonlJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonmJSTOLUA", buttonmJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonnJSTOLUA", buttonnJSTOLUA )
 
 	--测试快捷键
 	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)
@@ -322,27 +328,13 @@ function magicCanyouWar:InitGameMode()
 	return false
    end,self)
 
-	--初始化玩家数据
-	if init_flag == 0 then
-		initMapStatus() -- 初始化地图数据
-
-		initItemList() -- 初始化物品信息
-		
-		initPlayerPower() --初始化契约容器
-		initTempPlayerPower()--初始化回合临时能力提升容器
-		initContractList() --初始化契约信息
-		initTalentList() --初始化天赋信息
-		initMagicList()--初始化技能信息
-		--initGoldCoin() --初始化金币
-		--print("DOTA_MAX_TEAM_PLAYERS:"..DOTA_MAX_TEAM_PLAYERS)
-		init_flag = 1
-	end
+   
 end
 
 
 function magicCanyouWar:On_ed_open_my_shop(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	print("On_ed_open_my_shop"..keys.PlayerID)
+	--print("On_ed_open_my_shop"..keys.PlayerID)
 end
 
 function magicCanyouWar:OnEntityKilled (keys)
@@ -357,6 +349,7 @@ function magicCanyouWar:OnEntityKilled (keys)
 	if name == "testdog" then
 		--测试流程面板
 		CustomUI:DynamicHud_Create(killerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
+		GameRules.testMode = true
 	end
 	
 	--物品掉落测试(金币箱子打开)
@@ -393,10 +386,21 @@ function magicCanyouWar:OnEntityKilled (keys)
 
 		local killerBonus = 8  --击杀者获得金币数
 		local teamBonus = 4 --击杀者队友获得金币数
+		local unitID = unit:GetPlayerID()
+		local endPlayerSeriesKill = playerSeriesKill[unitID]
+		--print('playerDie--alreadyKill:'..endPlayerSeriesKill)
+		if endPlayerSeriesKill >= 3 then
+			killerBonus = killerBonus + 4 * 3
+		end
+		--被击杀玩家连续击杀数清0
+		playerSeriesKill[unitID] = 0
+		--击杀者连续击杀数+1
+		playerSeriesKill[killerID] = playerSeriesKill[killerID] + 1
+		--击杀者金币增加
 		PlayerResource:SetGold(killerID, killer:GetGold()+killerBonus, true)
 		showGoldWorthParticle(killerID,killerBonus)
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+			if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
 				local hHeroTeam = hHero:GetTeam()
 				if hHeroTeam == killerTeam and killerID ~= playerID then
@@ -421,11 +425,13 @@ end
 --导入页面文件
 function magicCanyouWar:OnGameRulesStateChange( keys )
 	local state = GameRules:State_Get()
+
+
 	if state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		print("DOTA_GAMERULES_STATE_HERO_SELECTION")
+		--print("DOTA_GAMERULES_STATE_HERO_SELECTION")
 		Timers:CreateTimer(60,function()
 			for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-				if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+				if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 					--print(PlayerResource:GetSelectedHeroID(playerID))
 					if PlayerResource:GetSelectedHeroID(playerID) == -1 then
 							PlayerResource:GetPlayer(playerID):MakeRandomHeroSelection()
@@ -439,7 +445,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 	if state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
         for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			--if PlayerResource:GetPlayer(playerID) ~= nil and PlayerResource:IsValidPlayer(playerID) then
-			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+			if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 					--print(PlayerResource:GetSelectedHeroID(playerID))
 					if PlayerResource:GetSelectedHeroID(playerID) == -1 then
 							PlayerResource:GetPlayer(playerID):MakeRandomHeroSelection()
@@ -448,41 +454,21 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
         end
 	end
 
-	if state == DOTA_GAMERULES_STATE_PRE_GAME then		
-		--print("DOTA_GAMERULES_STATE_PRE_GAME"..getNowTime())
-		--运行检查商店进程
-		initShopStats()
+	--进入游戏地图
+	if state == DOTA_GAMERULES_STATE_PRE_GAME then
 		
-		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-			if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-				local player = PlayerResource:GetPlayer(playerID)
-				--PlayerResource:SetGold(playerID,50,true)	--所有玩家金钱增量
-				--getRandomItem(playerID) 商店打开测试
-				--print("============initbutton============")
-				--CustomUI:DynamicHud_Destroy(-1,"UIButtonBox")
-				--右下按钮显示
-				CustomUI:DynamicHud_Create(playerID,"UIButtonBox","file://{resources}/layout/custom_game/UI_button.xml",nil)
-				Timers:CreateTimer(2,function ()
-					CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "initJS", {})
-				end)
-				--契约板面
-				CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
-				
-				--天赋面板
-				CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
-
-				
-				--CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
-				--showPlayerStatusPanel( playerID ) 
-				--CustomUI:DynamicHud_Create(playerID,"initIcon","file://{resources}/layout/custom_game/icon_init.xml",nil)
-				initHeroByPlayerID(playerID)
-				
-				local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-				local heroHiddenStatusAbility = hHero:GetAbilityByIndex(12)
-				heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = 2}) 
-			end
-		end
-		Timers:CreateTimer(2,function ()
+		--运行检查商店进程
+		initHero()--初始化英雄
+		initMapStatus() -- 初始化地图数据
+		initItemList() -- 初始化物品信息
+		initPlayerPower() --初始化契约容器
+		initTempPlayerPower()--初始化回合临时能力提升容器
+		initContractList() --初始化契约信息
+		initTalentList() --初始化天赋信息
+		initMagicList()--初始化技能信息
+		initShopStats()--初始化商店
+		initSamsaraStone() --初始化轮回石
+		Timers:CreateTimer(0,function ()
 			gameProgress()--此处打开游戏流程的进程
 		end)
 	

@@ -1,5 +1,23 @@
 "DOTAAbilities"
 {
+    "nothing_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+        "Modifiers"
+        {
+            "modifier_nothing_status_datadriven"
+            {
+               "Passive"				"1"
+               "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+    }
     //魔法石
     "magic_stone_good"
     {
@@ -310,6 +328,7 @@
 
         "Modifiers"
         {
+            //学习技能时定身
             "modifier_hero_study_datadriven"
             {
                 "OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
@@ -318,6 +337,14 @@
                     "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
                 }   
             }
+            //学习技能特效
+            "modifier_ability_get_vpcf"
+            {
+                "IsHidden"          "1"
+                "EffectName"		"particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/cm_arcana_pup_lvlup_godray.vpcf"
+                "EffectAttachType"	"follow_origin"       
+            }
+         
         }
     }
 
@@ -357,15 +384,18 @@
             {
                 "Passive"				"1"
                 "IsHidden"              "1"
-                "OnCreated"
-                {			
-        
+                     		
+                "ThinkInterval"		"0.05"
+                "OnIntervalThink"
+                {
                     "RunScript"
                     {
                         "ScriptFile"		    "scene/order_click.lua"
                         "Function"			    "initHeroSearchTarget"
                     }
                 }
+                
+                
             }
         }
     }
@@ -549,9 +579,7 @@
         "BaseClass"	                "ability_datadriven"
         "AbilityTextureName"        "tinker_defense_matrix" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
         "AbilityType"               "scene"
-
         "AbilitySpecial"
         {
             "01"
@@ -565,14 +593,13 @@
         {
             "modifier_samsara_stone_idle_datadriven"
             {
-                "Passive"			"1"
-                "IsHidden"			"1"
+                "IsHidden"			"0"
                 "OverrideAnimation"     "ACT_DOTA_IDLE"   
             }
 
             "modifier_samsara_stone_ability_datadriven"
             {
-                "IsHidden"			"1"
+                "IsHidden"			"0"
                 "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"   
             }
         }
@@ -607,6 +634,7 @@
                     {
                         "ScriptFile"		"scene/player_battlefield_buff.lua"
                         "Function"			"modifier_battlefield_vision_buff_on_created"
+                        "particleName"      "particles/mofazhen_zengjiashiye.vpcf"
                     }
                 }
                 
@@ -649,6 +677,7 @@
                     {
                         "ScriptFile"		"scene/player_battlefield_buff.lua"
                         "Function"			"modifier_battlefield_speed_buff_on_created"
+                        "particleName"      "particles/mofazhen_yidongsudu.vpcf"
                     }
                 }
                 
@@ -691,6 +720,7 @@
                     {
                         "ScriptFile"		"scene/player_battlefield_buff.lua"
                         "Function"			"modifier_battlefield_mana_regen_buff_on_created"
+                        "particleName"      "particles/mofazhen_huilan.vpcf"
                     }
                 }
                 
@@ -757,5 +787,4 @@
             }
         }
     }     
-
 }

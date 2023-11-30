@@ -37,16 +37,18 @@ function initHeroOrder(keys)
     if caster:HasModifier('modifier_channel_act_datadriven') then
         caster:RemoveModifierByName('modifier_channel_act_datadriven')
     end
-    
-    playerOrderTimer[playerID] = nil
+    --local delayTime = 0.03
+    --playerOrderTimer[playerID] = nil --跳出搜索循环
     local target = keys.target
     if target ~= nil  then
         local targetLabel = target:GetUnitLabel()
         --print('targetLabel:'..targetLabel)
-        --如果是则开启打开进程(宝箱/商人/法阵)
-        if targetLabel == GameRules.boxLabel or targetLabel == GameRules.shopLabel or targetLabel == GameRules.battlefieldLabel or targetLabel == GameRules.remainsLabel then
+        --如果是则开启打开进程(宝箱/商人/法阵/遗物/轮回石)
+        if targetLabel == GameRules.boxLabel or targetLabel == GameRules.shopLabel or targetLabel == GameRules.battlefieldLabel or targetLabel == GameRules.remainsLabel or targetLabel == GameRules.samsaraStoneLabel then
             playerOrderTarget[playerID] = target
-            caster:AddAbility('hero_search_target_timer_datadriven'):SetLevel(1)
+            --Timers:CreateTimer(delayTime,function()
+                caster:AddAbility('hero_search_target_timer_datadriven'):SetLevel(1) --挂搜索
+            --end)
         end  
     end
 end
@@ -189,7 +191,7 @@ function battlefieldInit(caster)
 end
 
 function initHeroSearchTarget(keys)
-    print("==========initHeroSearchTarget========")
+    --print("==========initHeroSearchTarget========")
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -197,63 +199,67 @@ function initHeroSearchTarget(keys)
     local target = playerOrderTarget[playerID]
     local targetTeam = target:GetTeam()
     local ability = caster:GetAbilityByIndex(9) --keys.ability--打开箱子的技能
-    playerOrderTimer[playerID] = 0.1
-    Timers:CreateTimer(function()
-        if target:IsAlive() then
-            local casterLocation = caster:GetAbsOrigin()
-            local targetLocation = target:GetAbsOrigin()
-            local distance = (casterLocation - targetLocation ):Length2D()
-            --  print(distance)
-             --如果是箱子则启动打开进程
-            if distance < 150 then
-                if caster:HasAbility('hero_search_target_timer_datadriven') then
-                    caster:RemoveAbility('hero_search_target_timer_datadriven')
-                end
-            
-                if caster:HasModifier('modifiers_hero_search_target_timer_datadriven') then
-                    caster:RemoveModifierByName('modifiers_hero_search_target_timer_datadriven')
-                end
-                playerOrderTimer[playerID] = nil
-                local targetLabel = target:GetUnitLabel()
-                --打开箱子
-                if targetLabel == GameRules.boxLabel then
-                    print(targetLabel)
-                    caster:CastAbilityNoTarget(caster:GetAbilityByIndex(10),playerID)
-                end
-                --打开商店
-                if targetLabel == GameRules.shopLabel then
-                    print(targetLabel)
-                    CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "shopDoorOperationLUATOJS", {})
-                end
 
-                --抢夺法阵
-                if targetLabel == GameRules.battlefieldLabel and casterTeam ~= targetTeam then
-                    print(targetLabel)
-                    if target:HasModifier("modifier_battlefield_idle_datadriven") then
-                        caster:CastAbilityNoTarget(caster:GetAbilityByIndex(11),playerID)
-                        caster.battlefieldTarget = target
-                    end
-                end
-
-                --拾取遗物
-                if targetLabel == GameRules.remainsLabel then
-                    local itemCount = caster:GetNumItemsInInventory()
-                    if itemCount <= 9 and casterTeam == targetTeam then
-                        local ownerItem = CreateItem("item_remains_box", hHero, hHero)
-                        caster:AddItem(ownerItem)
-                        target:SetModelScale(0.01)
-                        target:ForceKill(true)
-                        target.alive = 0
-                    else
-                        print("物品栏已满或不是你队伍的")
-                    end
-                end
-
-                return nil
+    if target:IsAlive() then
+        local casterLocation = caster:GetAbsOrigin()
+        local targetLocation = target:GetAbsOrigin()
+        local distance = (casterLocation - targetLocation ):Length2D()
+        --  print(distance)
+            --如果是箱子则启动打开进程
+        if distance < 200 then
+            local targetLabel = target:GetUnitLabel()
+            --print(targetLabel)
+            --打开箱子
+            if targetLabel == GameRules.boxLabel then
+                caster:CastAbilityNoTarget(caster:GetAbilityByIndex(10),playerID)
             end
-            return playerOrderTimer[playerID]
+            --打开商店
+            if targetLabel == GameRules.shopLabel then
+                CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "shopDoorOperationLUATOJS", {})
+            end
+
+            --抢夺法阵
+            if targetLabel == GameRules.battlefieldLabel and casterTeam ~= targetTeam then
+                if target:HasModifier("modifier_battlefield_idle_datadriven") then
+                    caster:CastAbilityNoTarget(caster:GetAbilityByIndex(11),playerID)
+                    caster.battlefieldTarget = target
+                end
+            end
+
+            --拾取遗物
+            if targetLabel == GameRules.remainsLabel then
+                local itemCount = caster:GetNumItemsInInventory()
+                if itemCount <= 9 and casterTeam == targetTeam then
+                    local ownerItem = CreateItem("item_remains_box", hHero, hHero)
+                    caster:AddItem(ownerItem)
+                    target:SetModelScale(0.01)
+                    target:ForceKill(true)
+                    target.alive = 0
+                else
+                    print("物品栏已满或不是你队伍的")
+                end
+            end
+
+            --轮回石
+            if targetLabel == GameRules.samsaraStoneLabel then
+                samsaraStoneGet(target)
+            end
+            breakSearchThinkInterval(caster)
         end
-    end)
+    else
+        breakSearchThinkInterval(caster)
+    end
+
+end
+
+function breakSearchThinkInterval(caster)
+    if caster:HasAbility('hero_search_target_timer_datadriven') then
+        caster:RemoveAbility('hero_search_target_timer_datadriven')
+    end
+
+    if caster:HasModifier('modifiers_hero_search_target_timer_datadriven') then
+        caster:RemoveModifierByName('modifiers_hero_search_target_timer_datadriven')
+    end
 end
 
 

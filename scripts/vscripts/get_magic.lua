@@ -9,7 +9,6 @@ function closeUIMagicList(playerID)
 end
 
 function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUATOJS)
-
 	local magicNameList ={}
 	local abilityCooldownList = {}
 	local abilityManaCostList = {}
@@ -1261,7 +1260,7 @@ function randomLearnMagic(gameRound)
 	local learnNum = math.random(1,roundCount)
 
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 			if playerRoundLearn[playerID] == 0 or playerRoundLearn[playerID] == nil then
 				learnMagicByNum(playerID, learnNum)
 			end
@@ -1402,7 +1401,7 @@ end
 
 function closeMagicListTimeUp()
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 			if playerRoundLearn[playerID] == 0 then
 				closeUIMagicList(playerID)
 			end

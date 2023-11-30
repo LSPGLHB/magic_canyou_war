@@ -123,7 +123,7 @@ function iceSkeletonIntervalCallBack(shoot)
 			--local shootEnergy = shoot.energy_point
 			if checkIsEnemyHeroNoMagicStone(shoot,unit) then
 				shoot.trackUnit = unit
-				--shoot.speed = shoot.speed * 1.35
+				shoot.speed = shoot.speed * 1.5
 				shoot.traveled_distance = 0.5 * shoot.max_distance
 				shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
 			end

@@ -2,6 +2,7 @@ require('player_power')
 require('game_init')
 function modifier_battlefield_vision_buff_on_created(keys)
     --print("onCreated")
+    particleShow(keys)
     refreshVisionBuff(keys,true)
 end
 
@@ -41,6 +42,7 @@ end
 
 function modifier_battlefield_speed_buff_on_created(keys)
     --print("onCreated")
+    particleShow(keys)
     refreshSpeedBuff(keys,true)
 end
 
@@ -78,10 +80,9 @@ function refreshSpeedBuff(keys,flag)
 end
 
 
-
-
 function modifier_battlefield_mana_regen_buff_on_created(keys)
     --print("onCreated")
+    particleShow(keys)
     refreshManaRegenBuff(keys,true)
 end
 
@@ -119,7 +120,16 @@ end
 
 
 
-
+function particleShow(keys,particlesFile)
+    local caster = keys.caster
+    local particlesFile = keys.particleName
+    local particleID = ParticleManager:CreateParticle(particlesFile, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(particleID, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particleID, 12, Vector(BattlefieldBuffLvl, 0, 0))
+    Timers:CreateTimer(3,function()
+        ParticleManager:DestroyParticle(particleID, true)
+    end)
+end
 
 
 

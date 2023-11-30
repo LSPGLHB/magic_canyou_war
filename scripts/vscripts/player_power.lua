@@ -158,7 +158,7 @@ end
 --用于回合重置能力
 function initTempPlayerPower()
     for playerID = 0, 9 do --10个玩家的数据包   
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then 
              --用于记录正负电击的两个电极子弹
             PlayerPower[playerID]["electric_shock_a"] = nil
             PlayerPower[playerID]["electric_shock_b"] = nil

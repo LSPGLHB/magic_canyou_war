@@ -10,7 +10,6 @@ function createShoot(keys)
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
 
-   
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     shoot.catch_radius = catch_radius
@@ -27,8 +26,6 @@ function windNetBoomCallBack(shoot)
     boomAOEOperation(shoot, windNetAOEOperationCallback)
 end
 
-
-
 function windNetAOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
     local caster = keys.caster
@@ -38,7 +35,6 @@ function windNetAOEOperationCallback(shoot,unit)
     local damage = getApplyDamageValue(shoot) 
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
-	local catch_radius = shoot.catch_radius
 	local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
 	local playerID = caster:GetPlayerID()
@@ -51,6 +47,7 @@ function windNetAOEOperationCallback(shoot,unit)
 end
 
 function windNetAOERenderParticles(shoot, unit, debuffDuration)
+    local catch_radius = shoot.catch_radius
 	local particlesName = shoot.particles_boom
 	local newParticlesID = ParticleManager:CreateParticle(particlesName, PATTACH_ABSORIGIN_FOLLOW , unit)
 	ParticleManager:SetParticleControlEnt(newParticlesID, 0 , unit, PATTACH_POINT_FOLLOW, nil, unit:GetAbsOrigin(), true)

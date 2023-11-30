@@ -26,7 +26,7 @@ function common_attack_good:OnSpellStart()
     keys.caster = caster
 	keys.ability = self
     keys.unitModel = "shootUnit-XS"--self:GetSpecialValueFor("unitModel")
-    print("keys.unitModel:"..self:GetSpecialValueFor("unitModel"))
+    --print("keys.unitModel:"..self:GetSpecialValueFor("unitModel"))
     keys.AbilityLevel = "d"--self:GetSpecialValueFor("AbilityLevel")
     keys.unitType = "base"--self:GetSpecialValueFor("unitType")
     keys.hitType = 1--self:GetSpecialValueFor("hitType")

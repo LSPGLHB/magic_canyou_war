@@ -8,40 +8,19 @@ function initMapStatus()
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','') 
     math.randomseed(tonumber(timeTxt))
 
-
-    --用于记录玩家是否学习，用于启动随机学习
-    playerRoundLearn = {}
-
     TreasureBoxGold = "treasureBoxGold"
- 
-    --初始化所有玩家的天赋
-    playerOrderTimer = {}
-    playerContractLearn = {}
-    playerTalentLearn = {}
-    playerOrderTarget = {}
-    playerRandomItemNumList = {}
-    playerOrderTimer = {}
-    playerShopLock = {}
-    playerRefreshCost = {}
-    dorpItems = {}
-    playerBattlefieldBuff = {}
+    playerBattlefieldBuff = {}--6个法阵初始化(10个是备用而已)
     for i = 0, 9 do
-        playerContractLearn[i]={}
-        playerContractLearn[i]['contractName'] = 'nil'
-        playerTalentLearn[i]={}
-        playerTalentLearn[i]['talentNameC'] = 'nil'
-        playerTalentLearn[i]['talentNameB'] = 'nil'
-        playerTalentLearn[i]['talentNameA'] = 'nil'
-
-        playerOrderTarget[i] = 'nil'
-        playerOrderTimer[i] = 1
-        playerRandomItemNumList[i] = {}
-
-        playerShopLock[i] = 0
-        playerRefreshCost[i] = GameRules.refreshCost
-
-        playerBattlefieldBuff[i] = {}
+        playerBattlefieldBuff[i] = {} 
     end
+
+    --掉落物品
+    dorpItems = {} 
+
+    --初始化连胜局计算
+    seriesWinRound = {}
+    seriesWinRound[DOTA_TEAM_GOODGUYS] = 0
+    seriesWinRound[DOTA_TEAM_BADGUYS] = 0
 
     --各种箱子
     centerTreasureBox = {}
@@ -140,17 +119,44 @@ end
 function initSamsaraStone()
     local goodSamsaraStoneEntities = Entities:FindByName(nil,"goodSamsaraStone") 
     local goodSamsaraStoneLocation = goodSamsaraStoneEntities:GetAbsOrigin()
-    local goodSamsaraStone = CreateUnitByName("samsaraStone", goodSamsaraStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    goodSamsaraStone = CreateUnitByName("samsaraStone", goodSamsaraStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
     goodSamsaraStone:SetSkin(0)
     goodSamsaraStone:SetAngles(0, 270, 10)
     goodSamsaraStone:GetAbilityByIndex(0):SetLevel(1)
+
+    local badSamsaraStoneEntities = Entities:FindByName(nil,"badSamsaraStone") 
+    local badSamsaraStoneLocation = badSamsaraStoneEntities:GetAbsOrigin()
+    badSamsaraStone = CreateUnitByName("samsaraStone", badSamsaraStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    badSamsaraStone:SetSkin(1)
+    badSamsaraStone:SetAngles(0, 270, 10)
+    badSamsaraStone:GetAbilityByIndex(0):SetLevel(1)
+end
+
+--轮回石碎片获取
+function samsaraStoneGet(samsaraStone)
+    local rewardUnit =  samsaraStone.rewardUnit
+    local teamBonus = GameRules.loseBaseReward
+    local stoneTeam = samsaraStone:GetTeam()
+    if rewardUnit ~= nil then
+        rewardUnit:SetModelScale(0.01)
+        rewardUnit:ForceKill(true)
+        samsaraStone.rewardUnit = nil
+        for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+            if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+                local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+                if hHero:GetTeam() == stoneTeam then
+                    PlayerResource:SetGold(playerID, hHero:GetGold()+teamBonus, true)
+                    showGoldWorthParticle(playerID,teamBonus)
+                end
+            end
+        end
+    end
 end
 
 
 --魔法石初始化
 function initMagicStone()
     print("=========initMagicStone============")
-    
     if goodMagicStone ~= nil then
         if goodMagicStone.alive == 1 then
             goodMagicStone:ForceKill(true)
@@ -226,76 +232,93 @@ function creatShop()
 end
 
 
-function createUnit(unitName,team)
-    --初始化刷怪
-    local temp_zuoshang=Entities:FindByName(nil,"zuoshang") --找到左上的实体
-    zuoshang_zuobiao=temp_zuoshang:GetAbsOrigin()
-
-    local temp_youxia=Entities:FindByName(nil,"youxia") --找到左上的实体
-    youxia_zuobiao=temp_youxia:GetAbsOrigin()
-
-    local temp_x =math.random(youxia_zuobiao.x - zuoshang_zuobiao.x) + zuoshang_zuobiao.x
-    local temp_y =math.random(youxia_zuobiao.y - zuoshang_zuobiao.y) + zuoshang_zuobiao.y
-    local location = Vector(temp_x, temp_y ,0)
-
-    --[[
-    print("team=3"..DOTA_TEAM_BADGUYS)
-    print("team=2"..DOTA_TEAM_GOODGUYS)
-    print("team=5"..DOTA_TEAM_NOTEAM)
-    print("team=4"..DOTA_TEAM_NEUTRALS)]]
-    local unit = CreateUnitByName(unitName, location, true, nil, nil, team)
-    unit:SetContext("name", unitName, 0)
-end
-
-
-
 --玩家英雄初始化
-function initHeroByPlayerID(playerID)
-    --print("initHeroByPlayerID:"..playerID)
-    local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-    local heroTeam = hHero:GetTeam()
-    for i = 0 , hHero:GetAbilityCount() do
-        local tempAbility = hHero:GetAbilityByIndex(i)
-        if tempAbility ~= nil then
-            hHero:RemoveAbility(tempAbility:GetAbilityName())
+function initHero()
+    --初始化所有玩家的数据
+    
+    playerRoundLearn = {}--用于记录玩家是否学习，用于启动随机学习
+
+    playerOrderTarget = {} --玩家点击单位
+    playerContractLearn = {} --玩家天赋
+    playerTalentLearn = {} --玩家铭文
+    playerRandomItemNumList = {} --玩家商店物品随机数
+    playerShopLock = {} --玩家商店锁定标记
+    playerRefreshCost = {} --玩家商店刷新金钱
+    playerSeriesKill = {} --玩家累计连续击杀（死亡清0）
+
+    
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        --print("======GetConnectionState=========")
+        --print(PlayerResource:GetConnectionState(playerID))
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local heroTeam = hHero:GetTeam()
+            for i = 0 , hHero:GetAbilityCount() do
+                local tempAbility = hHero:GetAbilityByIndex(i)
+                if tempAbility ~= nil then
+                    hHero:RemoveAbility(tempAbility:GetAbilityName())
+                end
+            end
+            local commonAttack 
+            if heroTeam == DOTA_TEAM_GOODGUYS then
+                commonAttack = "common_attack_good"
+            end
+            if heroTeam == DOTA_TEAM_BADGUYS then
+                commonAttack = "common_attack_bad_datadriven"
+            end
+            --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
+            --hHero:RemoveAbility(tempAbility) 
+            hHero:AddAbility("nothing_c"):SetLevel(1) --0
+            hHero:AddAbility("nothing_b"):SetLevel(1) --1
+            hHero:AddAbility("nothing_a"):SetLevel(1) --2
+            
+            hHero:AddAbility(commonAttack):SetLevel(1)  --3
+            hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --4
+            hHero:AddAbility("push_all_datadriven"):SetLevel(1) --5   --  make_friend_datadriven
+
+            hHero:AddAbility("nothing_c_stage"):SetLevel(1) --6
+            hHero:AddAbility("nothing_b_stage"):SetLevel(1) --7
+            hHero:AddAbility("nothing_a_stage"):SetLevel(1) --8
+            hHero:AddAbility("hero_order_datadriven"):SetLevel(1) --9
+            hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1) --10
+            hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1) --11
+            hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --12
+
+            hHero:SetTimeUntilRespawn(1) --重新设置复活时间
+
+            PlayerResource:SetGold(playerID,60,true)
+
+            --玩家数据初始化
+            playerContractLearn[playerID]={}
+            playerContractLearn[playerID]['contractName'] = 'nil'
+            playerTalentLearn[playerID]={}
+            playerTalentLearn[playerID]['talentNameC'] = 'nil'
+            playerTalentLearn[playerID]['talentNameB'] = 'nil'
+            playerTalentLearn[playerID]['talentNameA'] = 'nil'
+            playerOrderTarget[playerID] = 'nil'
+            playerRandomItemNumList[playerID] = {}
+            playerShopLock[playerID] = 0
+            playerRefreshCost[playerID] = GameRules.refreshCost
+            playerSeriesKill[playerID] = 0
+
+            local player = PlayerResource:GetPlayer(playerID)
+            --右下按钮显示
+            CustomUI:DynamicHud_Create(playerID,"UIButtonBox","file://{resources}/layout/custom_game/UI_button.xml",nil)
+            Timers:CreateTimer(2,function ()
+                CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "initJS", {})
+            end)
+            --契约板面
+            CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
+            
+            --天赋面板
+            CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
+
+            
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local heroHiddenStatusAbility = hHero:GetAbilityByIndex(12)
+            heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = 2}) 
         end
     end
-    local commonAttack 
-    if heroTeam == DOTA_TEAM_GOODGUYS then
-        commonAttack = "common_attack_good"
-    end
-    if heroTeam == DOTA_TEAM_BADGUYS then
-        commonAttack = "common_attack_bad_datadriven"
-    end
-    --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
-    --hHero:RemoveAbility(tempAbility) 
-    
-    hHero:AddAbility("nothing_c"):SetLevel(1) --0
-    hHero:AddAbility("nothing_b"):SetLevel(1) --1
-    hHero:AddAbility("nothing_a"):SetLevel(1) --2
-    
-    hHero:AddAbility(commonAttack):SetLevel(1)  --3
-    hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --4
-    hHero:AddAbility("push_all_datadriven"):SetLevel(1) --5   --  make_friend_datadriven
-
-    hHero:AddAbility("nothing_c_stage"):SetLevel(1) --6
-    hHero:AddAbility("nothing_b_stage"):SetLevel(1) --7
-    hHero:AddAbility("nothing_a_stage"):SetLevel(1) --8
-    hHero:AddAbility("hero_order_datadriven"):SetLevel(1) --9
-    hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1) --10
-    hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1) --11
-    hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --12
-    
-    --hHero:GetAbilityByIndex(9):SetHidden(true)--也不行
-    --hHero:GetAbilityByIndex(10):SetLevel(1)
-
-	hHero:SetTimeUntilRespawn(1) --重新设置复活时间
-
-    
-    --local ab1 = hHero:GetAbilityByIndex(3)
-    --hHero:AddNewModifier( hHero, ab1, "modifier_power_up", { duration = -1 } )
-    
-    PlayerResource:SetGold(playerID,60,true)
 end
 
 
@@ -377,7 +400,6 @@ function initDropInfo(unitName)
                     dropInfoSort[j]['chance'] = inputChance
                     --print("j="..j..",name="..item_name.."="..chance)
                 end
-
             end  
             i = i + 1
         end
@@ -390,6 +412,7 @@ function heroStudyFinish(playerID)
     if hHero:HasModifier("modifier_hero_study_datadriven") then
 		hHero:RemoveModifierByName("modifier_hero_study_datadriven")
 	end
+    EmitAnnouncerSoundForPlayer("scene_voice_round_ability_get",playerID)
 end
 
 
@@ -432,9 +455,9 @@ function showGoldWorthParticle(playerID,worth)
     ParticleManager:SetParticleControl(particleID, 2, Vector(worthValue["type"][1],worthValue["type"][2],worthValue["type"][3]))
     ParticleManager:SetParticleControl(particleID, 3, Vector(worth+5,0,0))
     if worth >= 17 then
-        EmitSoundOn("scene_voice_coin_get_big", caster)
+        EmitSoundOn("scene_voice_coin_get_big", hHero)
     else
-        EmitSoundOn("scene_voice_coin_get_small", caster)
+        EmitSoundOn("scene_voice_coin_get_small", hHero)
     end
 end
 
@@ -449,4 +472,25 @@ function initTreasureBoxTest()
     local treasureBox = CreateUnitByName("treasureBoxGold", treasureBox1Location, true, nil, nil, DOTA_TEAM_NOTEAM)
     treasureBox:GetAbilityByIndex(0):SetLevel(1)
     treasureBox:GetAbilityByIndex(1):SetLevel(1)
+end
+
+function createUnit(unitName,team)
+    --初始化刷怪
+    local temp_zuoshang=Entities:FindByName(nil,"zuoshang") --找到左上的实体
+    zuoshang_zuobiao=temp_zuoshang:GetAbsOrigin()
+
+    local temp_youxia=Entities:FindByName(nil,"youxia") --找到左上的实体
+    youxia_zuobiao=temp_youxia:GetAbsOrigin()
+
+    local temp_x =math.random(youxia_zuobiao.x - zuoshang_zuobiao.x) + zuoshang_zuobiao.x
+    local temp_y =math.random(youxia_zuobiao.y - zuoshang_zuobiao.y) + zuoshang_zuobiao.y
+    local location = Vector(temp_x, temp_y ,0)
+
+    --[[
+    print("team=3"..DOTA_TEAM_BADGUYS)
+    print("team=2"..DOTA_TEAM_GOODGUYS)
+    print("team=5"..DOTA_TEAM_NOTEAM)
+    print("team=4"..DOTA_TEAM_NEUTRALS)]]
+    local unit = CreateUnitByName(unitName, location, true, nil, nil, team)
+    unit:SetContext("name", unitName, 0)
 end

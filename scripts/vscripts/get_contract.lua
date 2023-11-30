@@ -124,7 +124,7 @@ function randomLearnContract()
     local learnNum = math.random(1,3)
 
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 			if playerRoundLearn[playerID] == 0 then
 				learnContractByNum(playerID, learnNum)
 			end
@@ -177,7 +177,7 @@ end
 
 function closeKillCam()
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 			CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "closeKillCamLUATOJS", {
 
                 

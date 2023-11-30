@@ -223,3 +223,10 @@ function heroRespawn(myPlayerID)
     end
 end
 
+function buttonnJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    local hHero = PlayerResource:GetSelectedHeroEntity(myPlayerID)
+    hHero:ForceKill(false)
+end
+
+

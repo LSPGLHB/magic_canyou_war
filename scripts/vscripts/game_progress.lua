@@ -5,11 +5,12 @@ require('get_talent')
 require('game_init')
 require('scene/battlefield')
 require('button')
+require('scene/power_up_vpcf')
 --发送到前端显示信息
 function sendMsgOnScreenToAll(topTips,bottomTips)
     --print("======sendMsgOnScreenToAll======")
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             CustomUI:DynamicHud_Destroy(playerID,"UIBannerMsgBox")
 	        CustomUI:DynamicHud_Create(playerID,"UIBannerMsgBox","file://{resources}/layout/custom_game/UI_banner_msg.xml",nil)
             CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getTimeCountLUATOJS", {
@@ -34,17 +35,18 @@ function studyStep(gameRound)
     --每次轮回初始化地图与数据
     gameRoundInit(gameRound)
     
-    
     local step0 = "魔法学习阶段倒数："
     local studyTime = GameRules.studyTime
     local interval = 1 --运算间隔
     local loadingTime = 2 --延迟时间 
+    
 
     initHeroStatus()   
-    getUpGradeListByRound(gameRound)
-
     roundPowerUp(gameRound)
     refreshShopList(true,gameRound)
+
+    getUpGradeListByRound(gameRound)
+
     
 
     Timers:CreateTimer(0 ,function ()
@@ -52,7 +54,15 @@ function studyStep(gameRound)
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step0 .. studyTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
-
+        if studyTime <= 5 then
+            for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+                if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+                    if playerRoundLearn[playerID] ~= 1 then
+                        EmitAnnouncerSoundForPlayer("scene_voice_round_study_counter",playerID)
+                    end
+                end
+            end
+        end
         if studyTime < 1 then
             --为未学习技能的玩家启动随机学习
             if gameRound ~= 4 and gameRound < 8 then
@@ -64,7 +74,7 @@ function studyStep(gameRound)
             if gameRound == 8 then
                 closeMagicListTimeUp()
                 for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-                    if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+                    if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
                         heroStudyFinish(playerID)
                     end
                 end
@@ -75,7 +85,6 @@ function studyStep(gameRound)
             prepareStep(gameRound)
             return nil
         end
-
         return interval
     end)
 end
@@ -100,12 +109,14 @@ function prepareStep(gameRound)
         if prepareTime < 1  then
             --输出准备结束信息
             prepareOverMsgSend()
+            --轮回石清理
+            samsaraStoneClear()
              --所有玩家不能控制
             allPlayerStop()
             --预备阶段结束后启动战斗阶段
             --英雄位置初始化到战斗阶段
-            playerPositionTransfer(battlePointsTeam1,playersTeam1)
-            playerPositionTransfer(battlePointsTeam2,playersTeam2)
+            playerPositionTransfer(battlePointsTeam1,playersTeam1,loadingTime)
+            playerPositionTransfer(battlePointsTeam2,playersTeam2,loadingTime)
             Timers:CreateTimer(loadingTime,function ()
                 print("onStepLoop1========over",gameRound)
                 --进入战斗阶段倒计时
@@ -116,9 +127,6 @@ function prepareStep(gameRound)
         end
         return interval
     end)
-
-    
-  
 end
 
 --战斗阶段
@@ -127,7 +135,7 @@ function battleStep(gameRound)
     local step2 = "战斗时间还有："
     --扫描进程
     local interval = 1
-    local loadingTime = 3
+    local loadingTime = 4
     local battleTime = GameRules.battleTime --战斗时间
     local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
     local freeTime = GameRules.freeTime --自由活动时间
@@ -151,14 +159,15 @@ function battleStep(gameRound)
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step2 .. battleTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
-
-        
         --此处两队人数判断，死光就结束
         checkWinTeam()
         if battleTime == 0 or GameRules.checkWinTeam ~= nil then -- 时间等于0结束
+            --print("===checkWin===:"..GameRules.checkWinTeam)
             --print("onStepLoop2========over")
             --时间结束，双方都-1
-            winTeamParticle(GameRules.checkWinTeam)
+            winRewardFunc(GameRules.checkWinTeam) --胜方奖励
+
+            loseRewardFunc(GameRules.checkWinTeam, freeTime+loadingTime)--败方奖励
             local delayTime = 0 
             local winWay = false
             if battleTime == 0 then
@@ -179,26 +188,18 @@ function battleStep(gameRound)
             if GoodStoneHP > 0 and BadStoneHP > 0 then  
                 --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏
                 --结算数据
-                
                 --输出回合结束信息
                 roundOverMsgSend(winWay)
-
                 Timers:CreateTimer(delayTime,function ()
                     --所有玩家不能控制
                     allPlayerStop()
-                    
                     --进行下一轮战斗
                     --英雄位置初始化到预备阶段
-                    playerPositionTransfer(preparePointsTeam1,playersTeam1)
-                    playerPositionTransfer(preparePointsTeam2,playersTeam2)
-
-                    --initMagicStone()
+                    playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime)
+                    playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime)
 
                     Timers:CreateTimer(loadingTime,function ()
-                        
-                        GameRules.checkWinTeam = nil
                         gameRound = gameRound + 1
-                        
                         studyStep(gameRound) 
                         return nil
                     end)
@@ -215,16 +216,8 @@ function battleStep(gameRound)
                     finalWinTeam = DOTA_TEAM_GOODGUYS
                 end
 
-                if GoodStoneHP + BadStoneHP <= 11 then
-                    if GoodStoneHP > BadStoneHP then
-                        finalWinTeam = DOTA_TEAM_GOODGUYS
-                    else
-                        finalWinTeam = DOTA_TEAM_BADGUYS
-                    end
-                end
                 GameRules:SetGameWinner(finalWinTeam)
             end
-                
             return nil
         end
         return interval
@@ -235,7 +228,7 @@ end
 function initHeroStatus()
     print("============initHeroStatus================")
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             if not hHero:IsAlive() then
                 --hHero:RespawnUnit()
@@ -287,46 +280,193 @@ function initHeroStatus()
     end
 end
 
---预备阶段执行学习项目
-function getUpGradeListByRound(gameRound)
+--败方奖励兑现
+function loseRewardFunc(winTeam, reversalTime)
+    local loseTeam
+    local samsaraStone
+    local delayTime = 5
+    local stoneCamTime = reversalTime - 5
+    --print("loseReward:"..winTeam)
+    if winTeam == DOTA_TEAM_GOODGUYS then
+        loseTeam = DOTA_TEAM_BADGUYS
+        samsaraStone = badSamsaraStone
+    end
+    if winTeam == DOTA_TEAM_BADGUYS then
+        loseTeam = DOTA_TEAM_GOODGUYS
+        samsaraStone = goodSamsaraStone
+    end
+    Timers:CreateTimer(delayTime,function()
+        if loseTeam ~= nil then
+            loseRewardOperation(samsaraStone,loseTeam,stoneCamTime)
+        else
+            loseRewardOperation(goodSamsaraStone,DOTA_TEAM_GOODGUYS,stoneCamTime)
+            loseRewardOperation(badSamsaraStone,DOTA_TEAM_BADGUYS,stoneCamTime)
+        end
+    end)
+end
+
+function loseRewardOperation(samsaraStone,loseTeam,stoneCamTime)
+    local ability = samsaraStone:GetAbilityByIndex(0)
+    local position = samsaraStone:GetAbsOrigin()
+    local readyTime = 0.5
+    local holdTime = 1
+    local duration = stoneCamTime - holdTime - readyTime
+    local loseSamsaraStoneHP = samsaraStone:GetHealth() - 1
+    local unitModel
+    if loseTeam == DOTA_TEAM_GOODGUYS then
+        unitModel = "samsaraStoneDropUnitGood"
+    end
+    if loseTeam == DOTA_TEAM_BADGUYS then
+        unitModel = "samsaraStoneDropUnitBad"
+    end
+
+    Timers:CreateTimer(readyTime,function()
+        EmitSoundOn("scene_voice_samsara_stone_running", samsaraStone)
+        ability:ApplyDataDrivenModifier(samsaraStone, samsaraStone, "modifier_samsara_stone_ability_datadriven", {Duration = duration}) 
+    end)
+    
+    Timers:CreateTimer(duration,function()
+        samsaraStone:SetHealth(loseSamsaraStoneHP)
+        EmitSoundOn("scene_voice_samsara_stone_break", samsaraStone)
+        local samsaraStoneDorpUnit = CreateUnitByName(unitModel, position, true, nil, nil, loseTeam)
+        samsaraStoneDorpUnit:GetAbilityByIndex(0):SetLevel(1)
+        samsaraStone.rewardUnit = samsaraStoneDorpUnit
+    end)
+
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local hHeroTeam = hHero:GetTeam()
+            if hHeroTeam == loseTeam then
+                --PlayerResource:SetCameraTarget(playerID,samsaraStone)
+                camFollowUnit(playerID,samsaraStone,stoneCamTime)
+            end
+        end
+    end
+end
+
+--胜方奖励兑现
+function winRewardFunc(winTeam)
+    if winTeam == DOTA_TEAM_GOODGUYS then
+        roundRewardOperation(DOTA_TEAM_GOODGUYS,DOTA_TEAM_BADGUYS,true)
+    end
+    if winTeam == DOTA_TEAM_BADGUYS then
+        roundRewardOperation(DOTA_TEAM_BADGUYS,DOTA_TEAM_GOODGUYS,true)
+    end
+    if winTeam == nil then
+        roundRewardOperation(DOTA_TEAM_GOODGUYS,DOTA_TEAM_BADGUYS,false)
+    end
+    winTeamParticle(winTeam) -- 胜利特效
+end
+
+function roundRewardOperation(winTeam,loseTeam,winFlag)--flag:平局标签 false为平局
+    local winReward = GameRules.winBaseReward --基础回合奖励
+    local loseReward = 0
+    local endReward = 0 --终结连胜奖励
+    if winFlag then
+        local endSeriesWin = seriesWinRound[loseTeam]
+        if endSeriesWin >= 2 then 
+            endReward = GameRules.endSeriesWinReward[1] --终结2连胜奖励
+            if endSeriesWin >= 3 then
+                endReward = GameRules.endSeriesWinReward[2] --终结3连胜以上奖励
+            end
+        end
+        seriesWinRound[winTeam] = seriesWinRound[winTeam] + 1 --胜方连胜+1
+        seriesWinRound[loseTeam] = 0  --败方清0
+        --连胜2场以上
+        local seriesWinRound = seriesWinRound[winTeam]
+        if seriesWinRound >= 2 then
+            winReward = GameRules.seriesWinReward[1]--获得2连胜奖励
+            if seriesWinRound >= 3 then
+                winReward = GameRules.seriesWinReward[2] --获得3连胜以上奖励
+            end
+        end
+    else --平局
+        local endGoodSeriesWin = seriesWinRound[DOTA_TEAM_GOODGUYS]
+        local endBadSeriesWin = seriesWinRound[DOTA_TEAM_BADGUYS]
+
+        --如果触发终结连胜，重新定义胜负队伍，否则都一样
+        if endGoodSeriesWin >= 2 or endBadSeriesWin >= 2 then
+            if endGoodSeriesWin >= 2 then
+                winTeam = DOTA_TEAM_BADGUYS
+                loseTeam = DOTA_TEAM_GOODGUYS
+            end
+            if endBadSeriesWin >= 2 then
+                winTeam = DOTA_TEAM_GOODGUYS
+                loseTeam = DOTA_TEAM_BADGUYS
+            end
+            endReward = GameRules.endSeriesWinReward[1] --终结2连胜奖励
+            if endGoodSeriesWin >= 3 or endBadSeriesWin >= 3 then
+                endReward = GameRules.endSeriesWinReward[2] --终结3连胜以上奖励
+            end
+        end
+        seriesWinRound[DOTA_TEAM_GOODGUYS] = 0
+        seriesWinRound[DOTA_TEAM_BADGUYS] = 0
+    end
+
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local hHeroTeam = hHero:GetTeam()
+            local roundReward = 0
+            if hHeroTeam == winTeam then
+                roundReward = winReward + endReward
+                print("胜利+连胜金币："..winReward.."，终结奖励："..endReward)
+            end
+            if hHeroTeam == loseTeam then
+                roundReward = loseReward
+                print("失败金币："..loseReward)
+            end
+            PlayerResource:SetGold(playerID, hHero:GetGold()+roundReward, true)
+			showGoldWorthParticle(playerID,roundReward)
+        end
+    end
+end
+
+--预备阶段执行学习项目
+function getUpGradeListByRound(gameRound)
+    local showStatusUpTime = 2 --展示能力提升时间
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local heroHiddenStatusAbility = hHero:GetAbilityByIndex(12)
             heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = -1}) 
-            if gameRound == 1 then
-                openMagicListPreC(playerID)
-            end
-            if gameRound == 2 then
-                openMagicListPreB(playerID)
-            end
-            if gameRound == 3 then
-                openMagicListPreA(playerID)
-            end
-            if gameRound == 4 then
-               openRandomContractList(playerID)
-            end
-            if gameRound == 5 then
-                openMagicListC(playerID)
-            end
-            if gameRound == 6 then
-                openMagicListB(playerID)
-            end
-            if gameRound == 7 then
-                openMagicListA(playerID)
-            end
-            if gameRound == 8 then
-                openRebuildMagicList(playerID)
-            end
-            if gameRound == 9 then
-                openRandomTalentCList(playerID)
-            end
-            if gameRound == 10 then
-                openRandomTalentBList(playerID)
-            end
-            if gameRound == 11 then
-                openRandomTalentAList(playerID)
-            end
+            Timers:CreateTimer(showStatusUpTime ,function ()
+                EmitAnnouncerSound("scene_voice_round_study")
+                if gameRound == 1 then
+                    openMagicListPreC(playerID)
+                end
+                if gameRound == 2 then
+                    openMagicListPreB(playerID)
+                end
+                if gameRound == 3 then
+                    openMagicListPreA(playerID)
+                end
+                if gameRound == 4 then
+                openRandomContractList(playerID)
+                end
+                if gameRound == 5 then
+                    openMagicListC(playerID)
+                end
+                if gameRound == 6 then
+                    openMagicListB(playerID)
+                end
+                if gameRound == 7 then
+                    openMagicListA(playerID)
+                end
+                if gameRound == 8 then
+                    openRebuildMagicList(playerID)
+                end
+                if gameRound == 9 then
+                    openRandomTalentCList(playerID)
+                end
+                if gameRound == 10 then
+                    openRandomTalentBList(playerID)
+                end
+                if gameRound == 11 then
+                    openRandomTalentAList(playerID)
+                end
+            end)
         end
     end   
 end
@@ -336,7 +476,7 @@ function checkWinTeam()
     local goodAlive = 0
     local badAlive = 0
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             if hHero:IsAlive() then
                 local heroTeam = hHero:GetTeam()
@@ -353,8 +493,8 @@ function checkWinTeam()
     if goodAlive == 0 and GameRules.checkWinTeam == nil then
         GameRules.checkWinTeam = DOTA_TEAM_BADGUYS
     end
-    if badAlive == 0 and GameRules.checkWinTeam == nil then--调试关闭,最终需要打开
-        --GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
+    if badAlive == 0 and GameRules.checkWinTeam == nil and not GameRules.testMode then
+        GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
 
     if goodMagicStone.alive == 0 or not goodMagicStone:IsAlive() then
@@ -371,7 +511,7 @@ end
 function winTeamParticle(winTeam)
     local winTeamParticle = "particles/units/heroes/hero_legion_commander/legion_commander_duel_victory.vpcf"
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local heroTeam = hHero:GetTeam()
             if heroTeam == winTeam then
@@ -383,16 +523,13 @@ function winTeamParticle(winTeam)
     end
 end
 
-
-
-
 --每次轮回地图与玩家数据初始化
 function gameRoundInit(gameRound)
     print("===================================gameRoundInit===================================")   
     initPlayerHero()--初始化所有玩家
     initMagicStone()--初始化魔法石
     initBattlefield()--初始化法阵   
-    --initSamsaraStone()--轮回石初始化（未完成）
+   
     clearTreasureBox() --清理上局的箱子
     dorpItems = {}
     GameRules.checkWinTeam = nil
@@ -402,7 +539,7 @@ end
 --初始化英雄局内数据
 function initPlayerHero()  
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             --初始化是否学习技能,初始化刷新第一次装备金币
             playerRoundLearn[playerID] = 0
             playerRefreshCost[playerID] = GameRules.refreshCost
@@ -412,10 +549,18 @@ function initPlayerHero()
     end
 end
 
+--轮回石初始化
+function samsaraStoneClear()
+    samsaraStoneGet(goodSamsaraStone)
+    samsaraStoneGet(badSamsaraStone)
+end
+
+
+
 function refreshShopList(initLockFlag,gameRound)
     --刷新商店列表
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             if playerShopLock[playerID] == 0 then
                 refreshShopListByPlayerID(playerID)
             end
@@ -431,19 +576,42 @@ function roundPowerUp(gameRound)
     local visionArray = {0,50,50,50,50,0,0,0,0,0,0,0}
     local cooldownArray = {0,2,2,2,2,2,2,2,2,2,2,2}
     local manaRegenArray = {0,1,1,1,1,1,1,1,1,1,1,1,1}
+    local cooldownVpcf = "particles/lunhui_cdjiakuai.vpcf"
+    local healthVpcf = "particles/lunhui_xueliangzengjia.vpcf"
+    local manaRegenVpcf = "particles/lunhui_huilan.vpcf"
+    local damageVpcf = "particles/lunhui_gongjili.vpcf"
+    local visionVpcf =  "particles/lunhui_shiyezengjia.vpcf"
+    local baseVpcf = "particles/lunhuirenwutexiao_good.vpcf"
     local keys = {}
-    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
-            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
-            keys.caster = hHero
-            setPlayerPower(playerID, "talent_health", true, healthArray[gameRound])
-            setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
-            setPlayerPower(playerID, "talent_vision", true, visionArray[gameRound])
-            setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
-            setPlayerPower(playerID, "talent_cooldown", true, cooldownArray[gameRound])
-            setPlayerBuffByNameAndBValue(keys,"cooldown",0)
-            setPlayerPower(playerID, "talent_mana_regen", true, manaRegenArray[gameRound])
-            setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
+    if gameRound > 1 then
+        EmitAnnouncerSound("scene_voice_round_up")
+        for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+            if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+                local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+                keys.caster = hHero
+                setPlayerPower(playerID, "talent_health", true, healthArray[gameRound])
+                setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
+                setPlayerPower(playerID, "talent_vision", true, visionArray[gameRound])
+                setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
+                setPlayerPower(playerID, "talent_cooldown", true, cooldownArray[gameRound])
+                setPlayerBuffByNameAndBValue(keys,"cooldown",0)
+                setPlayerPower(playerID, "talent_mana_regen", true, manaRegenArray[gameRound])
+                setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
+
+                Timers:CreateTimer(0,function()
+                    OnPowerUp(hHero,cooldownVpcf,cooldownArray[gameRound],"cooldown")
+                    OnPowerUpSharp(hHero,baseVpcf) --轮回升级闪光特效
+                end)
+                Timers:CreateTimer(0.2,function()
+                    OnPowerUp(hHero,healthVpcf,healthArray[gameRound],"health")
+                end)
+                Timers:CreateTimer(0.4,function()
+                    OnPowerUp(hHero,manaRegenVpcf,manaRegenArray[gameRound],"mana_regen")
+                end)
+                Timers:CreateTimer(0.6,function()
+                    OnPowerUp(hHero,visionVpcf,visionArray[gameRound],"vision")
+                end)
+            end
         end
     end
 end
@@ -452,7 +620,7 @@ end
 --每回合决战阶段提升
 function decisiveBattlePowerUp()
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             --keys.caster = hHero
             hHero:AddAbility("decisive_battle_buff_datadriven"):SetLevel(1)
@@ -461,9 +629,8 @@ function decisiveBattlePowerUp()
 end
 
 --指定玩家传送到指定地点
-function playerPositionTransfer(points,playersID)
+function playerPositionTransfer(points,playersID,loadingTime)
     print("playerPositionTransfer")
-    local loadingTime = 3
     for i = 1, #playersID do
         local point = points[i]
         local position = point:GetAbsOrigin()
@@ -483,9 +650,8 @@ function playerPositionTransfer(points,playersID)
             --移除玩家不能控制
             allPlayerStopRemove()
             --镜头跟随英雄
-            PlayerResource:SetCameraTarget(playerID,hero)           
+            camFollowUnit(playerID, hero, 0.5)    
             Timers:CreateTimer(0.5,function ()
-                PlayerResource:SetCameraTarget(playerID,nil)
                 ParticleManager:DestroyParticle(landParticlesID, true)
                 return nil
             end)
@@ -494,12 +660,21 @@ function playerPositionTransfer(points,playersID)
     end
 end
 
+--镜头跟随英雄
+function camFollowUnit(playerID,unit,duration)
+    PlayerResource:SetCameraTarget(playerID,unit)           
+    Timers:CreateTimer(duration,function ()
+        PlayerResource:SetCameraTarget(playerID,nil)
+        return nil
+    end)
+end
+
 --定身
 function allPlayerStop(flag)
     local playersID = playersAll
     for i = 1, #playersID do
         local playerID = playersID[i]
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then 
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then 
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             hHero:AddAbility("ability_init_stop"):SetLevel(1)
             EmitSoundOn("scene_voice_player_fly",hHero)
@@ -512,7 +687,7 @@ function allPlayerStopRemove()
     local playersID = playersAll
     for i = 1, #playersID do
         local playerID = playersID[i]
-        if PlayerResource:GetConnectionState(playerID) == DOTA_CONNECTION_STATE_CONNECTED then
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             --解除不可控制状态
             if (hHero:HasAbility("ability_init_stop")) then
@@ -541,6 +716,9 @@ function roundOverMsgSend(winWay)
     end
     if GameRules.checkWinTeam == DOTA_TEAM_BADGUYS then
         winTeamStr =  "夜魇胜利！"
+    end
+    if GameRules.checkWinTeam == nil then
+        winTeamStr = "平局"
     end
     --print("比分："..GoodStoneHP..":"..BadStoneHP)
     local topTips = winTeamStr
@@ -665,8 +843,7 @@ function gameInit()
     end
 
     finalWinTeam = DOTA_TEAM_GOODGUYS
-    GoodStoneHP = 11
-    BadStoneHP = 11
+    GoodStoneHP = 6
+    BadStoneHP = 6
     NumberStr ={"一","二","三","四","五","六","七","八","九","十","十一","十二","十三"} 
-    GameRules.checkWinTeam = nil
 end
