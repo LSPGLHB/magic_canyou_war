@@ -18,18 +18,72 @@
             }
         }
     }
+    
+        //轮回石
+    "samsara_stone_datadriven"
+    {
+        "BaseClass"	                "ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityType"               "scene"
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "init_val"			    "0"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_samsara_stone_idle_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_IDLE"   
+            }
+
+            "modifier_samsara_stone_ability_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"   
+            }
+        }
+    }
+    //轮回石碎片
+    "samsara_piece_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "Modifiers"
+        {
+            "modifier_samsara_piece_status_datadriven"
+            {
+                "Passive"				"1"
+                "States"
+                {
+                    "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+        }
+    }
+
     //魔法石
     "magic_stone_status_datadriven"
     {
         "BaseClass"				"ability_datadriven"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
         "Modifiers"
         {
             "modifier_magic_stone_status_datadriven"
             {
-               "Passive"				"1"
-               "States"
+                "Passive"			"1"
+                "IsHidden"			"1"
+                "States"
                 {
                     "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
                 }                
@@ -37,6 +91,7 @@
             "modifier_magic_stone_protect_datadriven"
             {
                 "Passive"				"1"
+                "IsHidden"			"1"
                 "EffectName"		"particles/mofashi_hudun.vpcf"
 				"EffectAttachType"	"follow_origin"
                 "Properties"
@@ -102,7 +157,6 @@
                         "ScriptFile"		"scene/order_click.lua"
                         "Function"			"treasureBoxInit"
                     }
-
                 }
             }
         }
@@ -118,6 +172,7 @@
             "modifier_treasure_box_status_datadriven"
             {
                "Passive"				"1"
+               "IsHidden"			"1"
                "States"
                 {
                     "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
@@ -137,6 +192,7 @@
             "modifier_treasure_box_status_datadriven"
             {
                "Passive"				"1"
+               "IsHidden"			"1"
                "States"
                 {
                     "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
@@ -150,6 +206,7 @@
     "battlefield_status_datadriven"
     {
         "BaseClass"				"ability_datadriven"
+        "AbilityTextureName"        "tinker_defense_matrix" //图标
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "precache" 
         {
@@ -161,6 +218,7 @@
             "modifier_battlefield_status_datadriven"
             {
                "Passive"				"1"
+               "IsHidden"			"1"
                "States"
                 {
                     "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
@@ -172,6 +230,7 @@
             //法阵沉睡
             "modifier_battlefield_flatl_datadriven"
             {
+                "IsHidden"			"1"
                 "OverrideAnimation"     "ACT_DOTA_FLAIL"
                 "OnCreated"
                 {
@@ -206,6 +265,7 @@
             //法阵激活动作与算法
             "modifier_battlefield_ability2_datadriven"
             {
+                "IsHidden"			"1"
                 "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_2"
                 "OnCreated"
                 {
@@ -219,6 +279,7 @@
             //法阵被抢夺动作
             "modifier_battlefield_ability1_datadriven"
             {
+                "IsHidden"			"1"
                 "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"
             }
 
@@ -226,6 +287,7 @@
             "modifier_battlefield_vision_datadriven"
 			{
 				"IsBuff"			"1"
+                "IsHidden"			"1"
 				"EffectName"		"particles/mofazhen_buff_shiye.vpcf"
 				"EffectAttachType"	"follow_overhead"
 			}
@@ -233,6 +295,7 @@
             "modifier_battlefield_speed_datadriven"
 			{
 				"IsBuff"			"1"
+                "IsHidden"			"1"
 				"EffectName"		"particles/mofazhen_buff_yisu.vpcf"
 				"EffectAttachType"	"follow_overhead"
 			}
@@ -240,6 +303,7 @@
             "modifier_battlefield_mana_regan_datadriven"
 			{
 				"IsBuff"			"1"
+                "IsHidden"			"1"
 				"EffectName"		"particles/mofazhen_buff_huilan.vpcf"
 				"EffectAttachType"	"follow_overhead"
 			}
@@ -258,6 +322,7 @@
             //学习技能时定身
             "modifier_hero_study_datadriven"
             {
+                "IsHidden"			"1"
                 "OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
                 "States"
                 {
@@ -321,8 +386,6 @@
                         "Function"			    "initHeroSearchTarget"
                     }
                 }
-                
-                
             }
         }
     }
@@ -499,38 +562,6 @@
 
 
 
-
-    //轮回石
-    "samsara_stone_datadriven"
-    {
-        "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "tinker_defense_matrix" //图标
-        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        "AbilityType"               "scene"
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"				"FIELD_INTEGER"
-                "init_val"			    "0"
-            }
-        }
-
-        "Modifiers"
-        {
-            "modifier_samsara_stone_idle_datadriven"
-            {
-                "IsHidden"			"1"
-                "OverrideAnimation"     "ACT_DOTA_IDLE"   
-            }
-
-            "modifier_samsara_stone_ability_datadriven"
-            {
-                "IsHidden"			"1"
-                "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"   
-            }
-        }
-    }
 
 
     //法阵加强用神符

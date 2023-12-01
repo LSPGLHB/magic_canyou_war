@@ -141,7 +141,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.studyTime = 21   --学习阶段时间
 	GameRules.prepareTime = 21 --策略阶段时间
 	GameRules.battleTime = 300 --战斗阶段时间
-	GameRules.decisiveBattleTime = 280 --剩余时间决战阶段
+	GameRules.decisiveBattleTime = 150 --剩余时间决战阶段
 	GameRules.battlefieldTimer = 30 --法阵激活间隔
 	GameRules.freeTime = 5 --战后自由活动时间
 	GameRules.remainsBoxAliveTime = 15 --遗物箱消失时间
@@ -469,7 +469,7 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		initShopStats()--初始化商店
 		initSamsaraStone() --初始化轮回石
 		Timers:CreateTimer(0,function ()
-			gameProgress()--此处打开游戏流程的进程
+			gameProgress()--打开游戏流程的进程
 		end)
 	
 

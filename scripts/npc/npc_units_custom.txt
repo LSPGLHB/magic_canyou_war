@@ -1053,7 +1053,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"nothing_status_datadriven"			// Ability 1
+		"Ability1"					"samsara_piece_status_datadriven"			// Ability 1
 		"Ability2"					""			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
@@ -1114,7 +1114,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"nothing_status_datadriven"			// Ability 1
+		"Ability1"					"samsara_piece_status_datadriven"			// Ability 1
 		"Ability2"					""			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4

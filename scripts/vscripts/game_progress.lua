@@ -322,10 +322,11 @@ function loseRewardOperation(samsaraStone,loseTeam,stoneCamTime)
     end)
     
     Timers:CreateTimer(duration,function()
-        samsaraStone:SetHealth(loseSamsaraStoneHP)
-        EmitSoundOn("scene_voice_samsara_stone_break", samsaraStone)
+        samsaraStone:SetHealth(loseSamsaraStoneHP) 
         local samsaraStoneDorpUnit = CreateUnitByName(unitModel, position, true, nil, nil, loseTeam)
+        samsaraStoneDorpUnit.name = unitModel
         samsaraStoneDorpUnit:GetAbilityByIndex(0):SetLevel(1)
+        samsaraStonePiece(samsaraStoneDorpUnit)
         samsaraStone.rewardUnit = samsaraStoneDorpUnit
     end)
 
@@ -730,12 +731,12 @@ function roundOverMsgSend(winWay)
             bottomTips = "此轮战斗结束，时间宝石启动，新的战斗秒"..timeCount.."后开始"
             sendMsgOnScreenToAll(topTips,bottomTips)
             timeCount = timeCount - 1
-            timeUpCounterSound()
             if timeCount < 0 then
                 bottomTips = "此轮战斗结束，时间宝石启动，新的战斗即将开始"
                 sendMsgOnScreenToAll(topTips,bottomTips)
                 return nil
             end
+            timeUpCounterSound()
             return 1
         end)
     end

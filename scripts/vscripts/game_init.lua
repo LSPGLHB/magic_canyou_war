@@ -139,7 +139,8 @@ function samsaraStoneGet(samsaraStone)
     local stoneTeam = samsaraStone:GetTeam()
     if rewardUnit ~= nil then
         rewardUnit:SetModelScale(0.01)
-        rewardUnit:ForceKill(true)
+        rewardUnit:ForceKill(true)      
+        ParticleManager:DestroyParticle(rewardUnit.particleID, true)
         samsaraStone.rewardUnit = nil
         for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
             if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
@@ -183,7 +184,7 @@ function initMagicStone()
     goodMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStonePan:SetSkin(0)
     goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
-    goodMagicStone:AddAbility("magic_stone_good")
+    --goodMagicStone:AddAbility("magic_stone_good")
     goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStone:SetSkin(0)
     goodMagicStone.alive = 1
@@ -197,7 +198,7 @@ function initMagicStone()
     badMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
     badMagicStonePan:SetSkin(1)
     badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
-    badMagicStone:AddAbility("magic_stone_bad")
+    --badMagicStone:AddAbility("magic_stone_bad")
     badMagicStone:GetAbilityByIndex(0):SetLevel(1)
     badMagicStone:SetSkin(1)
     badMagicStone.alive = 1

@@ -1,7 +1,7 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-require('scene/magic_stone')
+require('scene/game_stone')
 
 function createShoot(keys)
     local caster = keys.caster

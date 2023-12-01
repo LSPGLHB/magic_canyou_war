@@ -3,7 +3,7 @@ common_attack_good_datadriven = class({})
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-require('scene/magic_stone')
+require('scene/game_stone')
 
 function common_attack_good_datadriven:GetCastRange(t,v)
     --print("======GetCastRange========")

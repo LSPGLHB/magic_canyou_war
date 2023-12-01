@@ -771,7 +771,7 @@ function initMagicList()
 					if x == "11" then
 						for i,j_val in pairs(y_table) do
 							if i == 'charge_replenish_time' then
-								chargeReplenishTime_11 = j_val
+								chargeReplenishTime_11 = string.format("%.2f",j_val)
 							end
 						end
 					end

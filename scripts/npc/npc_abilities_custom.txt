@@ -6,8 +6,6 @@
 //#base abilities/shoot_speed_up_down_stack.kv
 //#base abilities/unit_speed_up_down_stack.kv
 //#base abilities/multi_stage_skills_a_b_datadriven.kv
-#base abilities/make_friend.kv
-#base abilities/shoot.kv
 //#base abilities/shoot2.kv
 //#base abilities/shoot3.kv
 //#base abilities/shoot_pro.kv
@@ -15,25 +13,26 @@
 //#base abilities/cannon.kv
 //#base abilities/running_fire.kv
 //#base abilities/windrunner_powershot.kv
-
 //#base abilities/stone_ball.kv
 //#base abilities/water_ball.kv
 //#base abilities/stone_spirit.kv
 //#base abilities/thunder_ball.kv
 //#base abilities/stone_double_twine.kv
-
 //#base abilities/small_tornado.kv
 //#base abilities/stone_spear.kv
 //#base abilities/ice_arrow.kv
+//#base abilities/shoot.kv
+//测试用
+#base abilities/make_friend.kv
 
 //下面才是正文
-#base magic/nothing.kv
 #base scene/scene_buff.kv
 #base contract/contract_all.kv
+#base contract/ability_buff.kv
 #base talent/talent_c.kv
 #base talent/talent_b.kv
 #base talent/talent_a.kv
-#base contract/ability_buff.kv
+#base magic/nothing.kv
 #base magic/pull_all.kv
 #base magic/push_all.kv
 #base magic/common_attack_good.kv
