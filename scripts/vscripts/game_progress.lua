@@ -91,7 +91,7 @@ function prepareStep(gameRound)
     print("onStepLoopPrepare========start"..gameRound)
     local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
-    local loadingTime = 2.5 --延迟时间 
+    local loadingTime = 3 --延迟时间 
     local prepareTime = GameRules.prepareTime --策略阶段时长 
  
     --信息发送到前端

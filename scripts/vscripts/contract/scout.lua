@@ -24,7 +24,12 @@ function refreshContractBuff(keys,flag)
     local contract_control_flag = ability:GetSpecialValueFor( "contract_control_flag")
     local contract_energy_flag = ability:GetSpecialValueFor( "contract_energy_flag")
 
-
+    if not flag then
+        contract_ability_speed_flag = 1
+        contract_damage_flag = 1
+        contract_control_flag = 1
+        contract_energy_flag = 1
+    end
 
     setPlayerPower(playerID, "contract_health_precent_final", flag, contract_health_precent_final)
     setPlayerPower(playerID, "contract_vision", flag, contract_vision)

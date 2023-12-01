@@ -99,9 +99,7 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
 	local battlefieldBonusValue = PlayerPower[playerID]['battlefield_'..abilityBuffName]
 	local battlefieldPrecentFinal = PlayerPower[playerID]['battlefield_'..abilityBuffName..'_precent_final'] / 100
 
-	--print("getFinalValueOperation")
-	--print(precentBase..","..bonusValue..","..precentFinal)
-	--print(equipPrecentBase..","..equipBonusValue..","..equipPrecentFinal)
+	
 	local flag = PlayerPower[playerID]['contract_'..buffName..'_flag']
     --print(flag)
     --装备不受加强的契约使用
@@ -124,6 +122,9 @@ function getFinalValueOperation(playerID,baseValue,buffName,abilityLevel,type)
     if type == 'buffStack' then
         operationValue  =  operationValue - baseValue
     end
+    --print("getFinalValueOperation:"..buffName)
+	--print(equipPrecentBase..","..equipBonusValue..","..equipPrecentFinal)
+    --print(operationValue)
 
 	return operationValue
 end
