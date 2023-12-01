@@ -44,17 +44,14 @@ function studyStep(gameRound)
     initHeroStatus()   
     roundPowerUp(gameRound)
     refreshShopList(true,gameRound)
-
     getUpGradeListByRound(gameRound)
-
-    
 
     Timers:CreateTimer(0 ,function ()
         studyTime = studyTime -1
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step0 .. studyTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
-        if studyTime <= 5 then
+        if studyTime <= 3 then
             for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
                 if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
                     if playerRoundLearn[playerID] ~= 1 then
@@ -89,12 +86,12 @@ function studyStep(gameRound)
     end)
 end
 
---预备阶段
+--策略阶段
 function prepareStep(gameRound)
     print("onStepLoopPrepare========start"..gameRound)
     local step1 = "策略阶段倒数："
     local interval = 1 --运算间隔
-    local loadingTime = 3 --延迟时间 
+    local loadingTime = 2.5 --延迟时间 
     local prepareTime = GameRules.prepareTime --策略阶段时长 
  
     --信息发送到前端
@@ -104,7 +101,9 @@ function prepareStep(gameRound)
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step1 .. prepareTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
-
+        if prepareTime <= 3 then
+            timeUpCounterSound()
+        end
         --时间结束则跳出计时循环进行下一阶段
         if prepareTime < 1  then
             --输出准备结束信息
@@ -135,19 +134,17 @@ function battleStep(gameRound)
     local step2 = "战斗时间还有："
     --扫描进程
     local interval = 1
-    local loadingTime = 4
+    local loadingTime = 3.5
     local battleTime = GameRules.battleTime --战斗时间
     local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
     local freeTime = GameRules.freeTime --自由活动时间
     local decisiveBattleTime = GameRules.decisiveBattleTime --剩余时间决战阶段
-
+    EmitAnnouncerSound("scene_voice_round_battle_start")
     initHeroStatus()
     initTreasureBox()--宝箱创建
     Timers:CreateTimer(0,function ()
         --print("onStepLoop2========check")
-        --local gameTime = getNowTime()
         battleTime = battleTime - 1
-
         if battleTime % battlefieldTimer == 0 and battleTime / battlefieldTimer > 0 then
             --法阵激活,每30秒一次
             battlefieldLaunchTimer()
@@ -155,7 +152,9 @@ function battleStep(gameRound)
         if battleTime == decisiveBattleTime then
             decisiveBattlePowerUp()
         end
-
+        if battleTime <= 5 then 
+            timeUpCounterSound()
+        end
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step2 .. battleTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
@@ -166,9 +165,8 @@ function battleStep(gameRound)
             --print("onStepLoop2========over")
             --时间结束，双方都-1
             winRewardFunc(GameRules.checkWinTeam) --胜方奖励
-
             loseRewardFunc(GameRules.checkWinTeam, freeTime+loadingTime)--败方奖励
-            local delayTime = 0 
+            local delayTime = 0 --如果时间用完不需要5秒捡东西
             local winWay = false
             if battleTime == 0 then
                 GoodStoneHP = GoodStoneHP - 1
@@ -184,7 +182,6 @@ function battleStep(gameRound)
                 delayTime = freeTime --战斗决胜负后准备跳转空余时间
                 winWay = true
             end
-
             if GoodStoneHP > 0 and BadStoneHP > 0 then  
                 --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏
                 --结算数据
@@ -197,7 +194,7 @@ function battleStep(gameRound)
                     --英雄位置初始化到预备阶段
                     playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime)
                     playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime)
-
+                    --传送时间间隔
                     Timers:CreateTimer(loadingTime,function ()
                         gameRound = gameRound + 1
                         studyStep(gameRound) 
@@ -215,7 +212,6 @@ function battleStep(gameRound)
                 if BadStoneHP == 0 then
                     finalWinTeam = DOTA_TEAM_GOODGUYS
                 end
-
                 GameRules:SetGameWinner(finalWinTeam)
             end
             return nil
@@ -411,14 +407,15 @@ function roundRewardOperation(winTeam,loseTeam,winFlag)--flag:平局标签 false
             local roundReward = 0
             if hHeroTeam == winTeam then
                 roundReward = winReward + endReward
-                print("胜利+连胜金币："..winReward.."，终结奖励："..endReward)
+                --print("胜利+连胜金币："..winReward.."，终结奖励："..endReward)
+                PlayerResource:SetGold(playerID, hHero:GetGold()+roundReward, true)
+			    showGoldWorthParticle(playerID,roundReward,"team")
             end
+            --[[
             if hHeroTeam == loseTeam then
                 roundReward = loseReward
                 print("失败金币："..loseReward)
-            end
-            PlayerResource:SetGold(playerID, hHero:GetGold()+roundReward, true)
-			showGoldWorthParticle(playerID,roundReward)
+            end]]
         end
     end
 end
@@ -517,7 +514,7 @@ function winTeamParticle(winTeam)
             if heroTeam == winTeam then
                 local particleID = ParticleManager:CreateParticle(winTeamParticle, PATTACH_ABSORIGIN_FOLLOW , hHero)
                 ParticleManager:SetParticleControl(particleID, 0, hHero:GetAbsOrigin())
-                EmitSoundOn("scene_voice_player_win",hHero)
+                EmitAnnouncerSoundForPlayer("scene_voice_player_win",playerID)
             end
         end
     end
@@ -619,6 +616,8 @@ end
 
 --每回合决战阶段提升
 function decisiveBattlePowerUp()
+    EmitAnnouncerSound("scene_voice_round_battle_fight")
+    EmitAnnouncerSound("scene_voice_round_battle_buff_get")
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -644,7 +643,7 @@ function playerPositionTransfer(points,playersID,loadingTime)
 
         Timers:CreateTimer(loadingTime,function ()
             --传送到指定地点
-            FindClearSpaceForUnit( hero, position, false )
+            FindClearSpaceForUnit(hero, position, false )
             --过滤之前移动操作
             hero:MoveToPosition(position)
             --移除玩家不能控制
@@ -731,6 +730,7 @@ function roundOverMsgSend(winWay)
             bottomTips = "此轮战斗结束，时间宝石启动，新的战斗秒"..timeCount.."后开始"
             sendMsgOnScreenToAll(topTips,bottomTips)
             timeCount = timeCount - 1
+            timeUpCounterSound()
             if timeCount < 0 then
                 bottomTips = "此轮战斗结束，时间宝石启动，新的战斗即将开始"
                 sendMsgOnScreenToAll(topTips,bottomTips)
@@ -757,7 +757,13 @@ function getNowTime()
     return timeStr
 end
 
-
+function timeUpCounterSound()
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+            EmitAnnouncerSoundForPlayer("scene_voice_round_study_counter",playerID)
+        end
+    end
+ end
 
 
 

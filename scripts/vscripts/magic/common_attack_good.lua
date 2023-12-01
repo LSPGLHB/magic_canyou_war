@@ -1,10 +1,11 @@
-common_attack_good = class({})
+common_attack_good_datadriven = class({})
 
 require('shoot_init')
 require('skill_operation')
 require('player_power')
+require('scene/magic_stone')
 
-function common_attack_good:GetCastRange(t,v)
+function common_attack_good_datadriven:GetCastRange(t,v)
     --print("======GetCastRange========")
     local caster = self:GetCaster()
     --local ability = caster:GetAbilityByIndex(3)
@@ -14,13 +15,11 @@ function common_attack_good:GetCastRange(t,v)
 	return range
 end
 
-function common_attack_good:OnSpellStart()
+function common_attack_good_datadriven:OnSpellStart()
     local caster = self:GetCaster()
     local skillPoint = self:GetCursorPosition()
     local speed = self:GetSpecialValueFor("speed")
     local max_distance = self:GetSpecialValueFor("max_distance")
-
-   
 
     local keys = {}
     keys.caster = caster
@@ -101,6 +100,7 @@ function commonAttackSp1AOEOperationCallback(shoot,unit)
 		ApplyDamage({victim = unit, attacker = caster, damage = 1, damage_type = DAMAGE_TYPE_PURE})
 		if not unit:IsAlive() then
 			unit.alive = 0
+            magicStoneBroken(unit)
 		end
 	end
 end

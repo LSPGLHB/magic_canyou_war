@@ -19,7 +19,7 @@ function getGoldCoin(keys)
     local playerGold = PlayerResource:GetGold(playerID) + worth
     --caster:ModifyGold(worth, true, 11) 
     PlayerResource:SetGold(playerID,playerGold,true)
-    showGoldWorthParticle(playerID,worth)
+    showGoldWorthParticle(playerID,worth,nil)
 end
 
 function initHeroOrder(keys)

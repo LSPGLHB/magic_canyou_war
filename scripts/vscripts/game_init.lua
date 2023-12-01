@@ -146,7 +146,7 @@ function samsaraStoneGet(samsaraStone)
                 local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
                 if hHero:GetTeam() == stoneTeam then
                     PlayerResource:SetGold(playerID, hHero:GetGold()+teamBonus, true)
-                    showGoldWorthParticle(playerID,teamBonus)
+                    showGoldWorthParticle(playerID,teamBonus,"team")
                 end
             end
         end
@@ -179,7 +179,7 @@ function initMagicStone()
 
     local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
     local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
-    local goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
+    goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
     goodMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStonePan:SetSkin(0)
     goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
@@ -187,12 +187,13 @@ function initMagicStone()
     goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
     goodMagicStone:SetSkin(0)
     goodMagicStone.alive = 1
+    goodMagicStone.name = "goodMagicStone"
     --GameRules.goodMagicStone = goodMagicStone
     --goodMagicStone:SetContext("name", "magicStone", 0)
     
     local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone")
     local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
-    local badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
+    badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
     badMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
     badMagicStonePan:SetSkin(1)
     badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
@@ -200,6 +201,7 @@ function initMagicStone()
     badMagicStone:GetAbilityByIndex(0):SetLevel(1)
     badMagicStone:SetSkin(1)
     badMagicStone.alive = 1
+    badMagicStone.name = "badMagicStone"
     --GameRules.badMagicStone = badMagicStone
     --badMagicStone:SetContext("name", "magicStone", 0)
 end
@@ -261,7 +263,7 @@ function initHero()
             end
             local commonAttack 
             if heroTeam == DOTA_TEAM_GOODGUYS then
-                commonAttack = "common_attack_good"
+                commonAttack = "common_attack_good_datadriven"
             end
             if heroTeam == DOTA_TEAM_BADGUYS then
                 commonAttack = "common_attack_bad_datadriven"
@@ -445,19 +447,25 @@ function getGoldWorthOperation(worth)
     return worthValue
 end
 
-function showGoldWorthParticle(playerID,worth)
+function showGoldWorthParticle(playerID,worth,type)
     local worthValue = getGoldWorthOperation(worth)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
     local particleName = "particles/jinbihuoqu.vpcf"
+    local soundStr
     local particleID = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, hHero)
     ParticleManager:SetParticleControl(particleID, 0, hHero:GetAbsOrigin())
     ParticleManager:SetParticleControl(particleID, 1, Vector(worthValue["value"][1],worthValue["value"][2],worthValue["value"][3]))
     ParticleManager:SetParticleControl(particleID, 2, Vector(worthValue["type"][1],worthValue["type"][2],worthValue["type"][3]))
     ParticleManager:SetParticleControl(particleID, 3, Vector(worth+5,0,0))
     if worth >= 17 then
-        EmitSoundOn("scene_voice_coin_get_big", hHero)
+        soundStr = "scene_voice_coin_get_big"
     else
-        EmitSoundOn("scene_voice_coin_get_small", hHero)
+        soundStr = "scene_voice_coin_get_small" 
+    end
+    if type == "team" then
+        EmitAnnouncerSoundForPlayer(soundStr, playerID)
+    else  
+        EmitSoundOn(soundStr, hHero)  
     end
 end
 

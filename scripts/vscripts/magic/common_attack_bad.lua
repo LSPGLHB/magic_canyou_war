@@ -1,6 +1,7 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
+require('scene/magic_stone')
 
 function createShoot(keys)
     local caster = keys.caster
@@ -47,6 +48,7 @@ function commonAttackSp2AOEOperationCallback(shoot,unit)
 		ApplyDamage({victim = unit, attacker = caster, damage = 1, damage_type = DAMAGE_TYPE_PURE})
 		if not unit:IsAlive() then
 			unit.alive = 0
+            magicStoneBroken(unit)
 		end
 	end
 end	

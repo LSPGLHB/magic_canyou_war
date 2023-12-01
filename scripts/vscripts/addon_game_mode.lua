@@ -398,14 +398,14 @@ function magicCanyouWar:OnEntityKilled (keys)
 		playerSeriesKill[killerID] = playerSeriesKill[killerID] + 1
 		--击杀者金币增加
 		PlayerResource:SetGold(killerID, killer:GetGold()+killerBonus, true)
-		showGoldWorthParticle(killerID,killerBonus)
+		showGoldWorthParticle(killerID,killerBonus,"team")
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
 				local hHeroTeam = hHero:GetTeam()
 				if hHeroTeam == killerTeam and killerID ~= playerID then
 					PlayerResource:SetGold(playerID, hHero:GetGold()+teamBonus, true)
-					showGoldWorthParticle(playerID,teamBonus)
+					showGoldWorthParticle(playerID,teamBonus,"team")
 				end
 			end
 		end
