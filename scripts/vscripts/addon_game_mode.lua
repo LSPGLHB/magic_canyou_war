@@ -181,7 +181,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.playerBaseHealth = 50 --基础血量
 	GameRules.playerBaseMana = 100  --基础蓝量
 	GameRules.playerBaseSpeed = 250 --基础移速
-	GameRules.playerBaseVision = 1200 --基础视野
+	GameRules.playerBaseVision = 1100 --基础视野
 	GameRules.playerBaseManaRegen = 5 --基础回蓝
 	GameRules.playerBaseDefense = 0   -- 基础防御
 

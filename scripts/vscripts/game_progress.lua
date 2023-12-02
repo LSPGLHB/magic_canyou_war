@@ -114,8 +114,8 @@ function prepareStep(gameRound)
             allPlayerStop()
             --预备阶段结束后启动战斗阶段
             --英雄位置初始化到战斗阶段
-            playerPositionTransfer(battlePointsTeam1,playersTeam1,loadingTime)
-            playerPositionTransfer(battlePointsTeam2,playersTeam2,loadingTime)
+            playerPositionTransfer(battlePointsTeam1,playersTeam1,loadingTime,true)
+            playerPositionTransfer(battlePointsTeam2,playersTeam2,loadingTime,true)
             Timers:CreateTimer(loadingTime,function ()
                 print("onStepLoop1========over",gameRound)
                 --进入战斗阶段倒计时
@@ -193,8 +193,19 @@ function battleStep(gameRound)
                     allPlayerStop()
                     --进行下一轮战斗
                     --英雄位置初始化到预备阶段
-                    playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime)
-                    playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime)
+                    local goodCamFlag = true
+                    local badCamFlag = true
+                    if GameRules.checkWinTeam == playersTeam1 then
+                        goodCamFlag = true
+                        print("goodCamFlag")
+                    end
+                    if  GameRules.checkWinTeam == playersTeam2 then
+                        badCamFlag = true
+                        print("badCamFlag")
+                    end
+
+                    playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime,goodCamFlag)
+                    playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime,badCamFlag)
                     --传送时间间隔
                     Timers:CreateTimer(loadingTime,function ()
                         gameRound = gameRound + 1
@@ -570,10 +581,10 @@ end
 
 --每回合提升
 function roundPowerUp(gameRound)
-    print("roundPowerUp")
+    --print("roundPowerUp")
     local healthArray = {0,10,10,10,10,10,10,10,10,10,10,10}
     local visionArray = {0,50,50,50,50,0,0,0,0,0,0,0}
-    local cooldownArray = {0,2,2,2,2,2,2,2,2,2,2,2}
+    local cooldownArray = {0,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5}
     local manaRegenArray = {0,1,1,1,1,1,1,1,1,1,1,1,1}
     local cooldownVpcf = "particles/lunhui_cdjiakuai.vpcf"
     local healthVpcf = "particles/lunhui_xueliangzengjia.vpcf"
@@ -630,7 +641,7 @@ function decisiveBattlePowerUp()
 end
 
 --指定玩家传送到指定地点
-function playerPositionTransfer(points,playersID,loadingTime)
+function playerPositionTransfer(points,playersID,loadingTime,camFlag)
     print("playerPositionTransfer")
     for i = 1, #playersID do
         local point = points[i]
@@ -651,7 +662,9 @@ function playerPositionTransfer(points,playersID,loadingTime)
             --移除玩家不能控制
             allPlayerStopRemove()
             --镜头跟随英雄
-            camFollowUnit(playerID, hero, 0.5)    
+            if camFlag then
+                camFollowUnit(playerID, hero, 0.5)
+            end
             Timers:CreateTimer(0.5,function ()
                 ParticleManager:DestroyParticle(landParticlesID, true)
                 return nil

@@ -20,9 +20,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -73,9 +73,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -130,9 +130,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -183,9 +183,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -235,9 +235,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -287,9 +287,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -339,9 +339,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -391,9 +391,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -443,9 +443,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -495,9 +495,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -547,9 +547,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -599,9 +599,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -651,9 +651,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -703,9 +703,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -755,9 +755,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -807,9 +807,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1200"
+		"VisionDaytimeRange"	"1100"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1200"
+		"VisionNighttimeRange"	"1100"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量

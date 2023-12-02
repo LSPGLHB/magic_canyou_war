@@ -147,14 +147,14 @@ function battlefieldLaunch(keys)
     local getBuffTime = 3.0
     local buffStayTime = 10
     local timerFlag = false
-    print("=================battlefieldLaunch==ininin==================team:"..casterTeam)
+    --print("=================battlefieldLaunch==ininin==================team:"..casterTeam)
 
     --倒计时关闭激活
     Timers:CreateTimer(buffStayTime,function()
         timerFlag = true
     end)
     --扫描是否有人来拿buff
-    Timers:CreateTimer(function()
+    Timers:CreateTimer(0.05, function()
         local aroundUnits = FindUnitsInRadius(casterTeam, 
                                                     position,
                                                     nil,
