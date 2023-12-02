@@ -134,11 +134,12 @@ function battleStep(gameRound)
     local step2 = "战斗时间还有："
     --扫描进程
     local interval = 1
-    local loadingTime = 3.5
+    local loadingTime = GameRules.roundEndLoadingTime--传送时间
     local battleTime = GameRules.battleTime --战斗时间
     local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
     local freeTime = GameRules.freeTime --自由活动时间
     local decisiveBattleTime = GameRules.decisiveBattleTime --剩余时间决战阶段
+    local centerTreasureBoxTime =GameRules.centerTreasureBoxTime
     EmitAnnouncerSound("scene_voice_round_battle_start")
     initHeroStatus()
     initTreasureBox()--宝箱创建
@@ -146,15 +147,18 @@ function battleStep(gameRound)
         --print("onStepLoop2========check")
         battleTime = battleTime - 1
         if battleTime % battlefieldTimer == 0 and battleTime / battlefieldTimer > 0 then
-            --法阵激活,每30秒一次
-            battlefieldLaunchTimer()
+            battlefieldLaunchTimer() --法阵激活,每30秒一次
+        end
+        if battleTime == centerTreasureBoxTime then
+            initCenterTreasureBox() --中央宝箱创建
         end
         if battleTime == decisiveBattleTime then
-            decisiveBattlePowerUp()
+            decisiveBattlePowerUp() --决战时刻
         end
         if battleTime <= 5 then 
-            timeUpCounterSound()
+            timeUpCounterSound() --倒数声效
         end
+        
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
         local bottomTips = step2 .. battleTime .. "秒"
         sendMsgOnScreenToAll(topTips,bottomTips)
@@ -193,19 +197,9 @@ function battleStep(gameRound)
                     allPlayerStop()
                     --进行下一轮战斗
                     --英雄位置初始化到预备阶段
-                    local goodCamFlag = true
-                    local badCamFlag = true
-                    if GameRules.checkWinTeam == playersTeam1 then
-                        goodCamFlag = true
-                        print("goodCamFlag")
-                    end
-                    if  GameRules.checkWinTeam == playersTeam2 then
-                        badCamFlag = true
-                        print("badCamFlag")
-                    end
 
-                    playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime,goodCamFlag)
-                    playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime,badCamFlag)
+                    playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime,true)
+                    playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime,true)
                     --传送时间间隔
                     Timers:CreateTimer(loadingTime,function ()
                         gameRound = gameRound + 1
@@ -292,8 +286,8 @@ end
 function loseRewardFunc(winTeam, reversalTime)
     local loseTeam
     local samsaraStone
-    local delayTime = 5
-    local stoneCamTime = reversalTime - 5
+    local loadingTime = GameRules.roundEndLoadingTime --传送时间
+    local delayTime = reversalTime - loadingTime
     --print("loseReward:"..winTeam)
     if winTeam == DOTA_TEAM_GOODGUYS then
         loseTeam = DOTA_TEAM_BADGUYS
@@ -305,10 +299,10 @@ function loseRewardFunc(winTeam, reversalTime)
     end
     Timers:CreateTimer(delayTime,function()
         if loseTeam ~= nil then
-            loseRewardOperation(samsaraStone,loseTeam,stoneCamTime)
+            loseRewardOperation(samsaraStone,loseTeam,loadingTime)
         else
-            loseRewardOperation(goodSamsaraStone,DOTA_TEAM_GOODGUYS,stoneCamTime)
-            loseRewardOperation(badSamsaraStone,DOTA_TEAM_BADGUYS,stoneCamTime)
+            loseRewardOperation(goodSamsaraStone,DOTA_TEAM_GOODGUYS,loadingTime)
+            loseRewardOperation(badSamsaraStone,DOTA_TEAM_BADGUYS,loadingTime)
         end
     end)
 end
@@ -347,7 +341,6 @@ function loseRewardOperation(samsaraStone,loseTeam,stoneCamTime)
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local hHeroTeam = hHero:GetTeam()
             if hHeroTeam == loseTeam then
-                --PlayerResource:SetCameraTarget(playerID,samsaraStone)
                 camFollowUnit(playerID,samsaraStone,stoneCamTime)
             end
         end
@@ -642,7 +635,7 @@ end
 
 --指定玩家传送到指定地点
 function playerPositionTransfer(points,playersID,loadingTime,camFlag)
-    print("playerPositionTransfer")
+    --print("playerPositionTransfer")
     for i = 1, #playersID do
         local point = points[i]
         local position = point:GetAbsOrigin()
@@ -693,9 +686,9 @@ function allPlayerStop(flag)
             hHero:AddAbility("ability_init_stop"):SetLevel(1)
             EmitSoundOn("scene_voice_player_fly",hHero)
         end
-        
     end
 end
+
 --移除定身
 function allPlayerStopRemove()
     local playersID = playersAll

@@ -84,7 +84,7 @@ function refreshShopListByPlayerID(playerID)
     local itemNameList = shopProbabilityItemByRound[gameRound]--GameRules.itemNameList
     local count = #itemNameList
     
-    print("itemNameList=====================",count)
+    --print("itemNameList=====================",count)
     --print("================================================================refreshShopListByPlayerID:"..playerShopLock[playerID])
     playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
 

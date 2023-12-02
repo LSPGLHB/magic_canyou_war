@@ -141,10 +141,13 @@ function magicCanyouWar:InitGameMode()
 	GameRules.studyTime = 21   --学习阶段时间
 	GameRules.prepareTime = 21 --策略阶段时间
 	GameRules.battleTime = 300 --战斗阶段时间
+	GameRules.centerTreasureBoxTime = GameRules.battleTime - 45 --中央宝箱出现时间
 	GameRules.decisiveBattleTime = 150 --剩余时间决战阶段
 	GameRules.battlefieldTimer = 30 --法阵激活间隔
 	GameRules.freeTime = 5 --战后自由活动时间
 	GameRules.remainsBoxAliveTime = 15 --遗物箱消失时间
+	GameRules.roundEndLoadingTime = 3.5 --轮回石运转时间
+	
 
 	GameRules.winBaseReward = 7 --基础胜方奖励
 	GameRules.loseBaseReward = 21 --基础败方奖励

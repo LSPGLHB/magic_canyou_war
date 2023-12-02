@@ -23,7 +23,7 @@ function getGoldCoin(keys)
 end
 
 function initHeroOrder(keys)
-    print("===initHeroOrder===")
+    --print("===initHeroOrder===")
     local caster = keys.caster
     local casterTeam = caster:GetTeam()
     local playerID = caster:GetPlayerID()

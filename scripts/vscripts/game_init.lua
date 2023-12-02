@@ -70,29 +70,29 @@ function clearTreasureBox()
     remainsBox = {}
 end
 
+--中央宝箱
+function initCenterTreasureBox()
+    print("=====================initCenterTreasureBox==========================")
+    local centerBox = "centerbox"
+    local centerRandonNumList = getRandomNumList(1, 3, 2)
+    for i = 1, 2 ,1 do
+        local centerBoxName = "centerbox"..centerRandonNumList[i]
+        local centerBoxEntities = Entities:FindByName(nil,centerBoxName) 
+        local centerBox = CreateUnitByName("treasureBoxGold", centerBoxEntities:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_NEUTRALS)
+        centerBox:GetAbilityByIndex(0):SetLevel(1)
+        centerBox:GetAbilityByIndex(1):SetLevel(1)
+        centerBox.alive = 1
+        table.insert(centerTreasureBox,centerBox)
+    end
+end
+
+--野区宝箱
 function initTreasureBox()
     print("=====================initTreasureBox==========================")
-    local centerBox = "centerbox"
     local goodBox = "goodbox"
     local badBox = "badbox"
-    local centerRandonNumList = getRandomNumList(1, 3, 2)
     local goodRandonNumList = getRandomNumList(1, 6, 3)
     local badRandonNumList = getRandomNumList(1, 6, 3)
-    local delayTime = 45
-   
-    Timers:CreateTimer(delayTime,function ()
-        for i = 1, 2 ,1 do
-            local centerBoxName = "centerbox"..centerRandonNumList[i]
-            local centerBoxEntities = Entities:FindByName(nil,centerBoxName) 
-            local centerBox = CreateUnitByName("treasureBoxGold", centerBoxEntities:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_NEUTRALS)
-            centerBox:GetAbilityByIndex(0):SetLevel(1)
-            centerBox:GetAbilityByIndex(1):SetLevel(1)
-            centerBox.alive = 1
-            table.insert(centerTreasureBox,centerBox)
-        end
-        return nil
-    end)
-
     for i = 1, 3 ,1 do
         local goodBoxName = "goodbox"..goodRandonNumList[i]
         local goodBoxEntities = Entities:FindByName(nil,goodBoxName) 
@@ -102,7 +102,6 @@ function initTreasureBox()
         goodBox.alive = 1
         table.insert(otherTreasureBox,goodBox)
     end
-
     for i = 1, 3 ,1 do
         local badBoxName = "badbox"..badRandonNumList[i]
         local badBoxEntities = Entities:FindByName(nil,badBoxName) 
@@ -112,7 +111,6 @@ function initTreasureBox()
         badBox.alive = 1
         table.insert(otherTreasureBox,badBox)
     end
-
 end
 
 --轮回石初始化
@@ -332,10 +330,10 @@ function RollDrops(unit)
     for k = 0 , #dropInfoSort do
         local item_name = dropInfoSort[k]['name']
         local chance = dropInfoSort[k]['chance']
-        print("Creating "..item_name.."="..chance)
+        --print("Creating "..item_name.."="..chance)
         if RollPercentage(chance) then
             -- 创建对应的物品
-            print("item_name:==========================="..item_name)
+            --print("item_name:==========================="..item_name)
             local item = CreateItem(item_name, nil, nil)	--handle CreateItem(string item_name, handle owner, handle owner)
             local pos = unit:GetAbsOrigin()
             -- 用LaunchLoot函数可以有一个掉落动画，当然，也可以用CreateItemOnPositionSync来直接掉落。
@@ -376,13 +374,13 @@ function initDropInfo(unitName)
     -- 读取上面读取的掉落KV文件，然后读取到对应的单位的定义文件
     local dropInfo = GameRules.DropTable[unitName]
     local dropInfoSort = {}
-    print("initDropInfo")
+    --print("initDropInfo")
     if dropInfo then
         local i = 0
         for item_name,chance in pairs(dropInfo) do
             local tempName = item_name
             local tempChance = chance
-            print("start:"..tempName.."="..tempChance)
+            --print("start:"..tempName.."="..tempChance)
             for j = 0 , i do  
                 if j == i then
                     dropInfoSort[i] = {}

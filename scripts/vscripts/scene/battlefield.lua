@@ -81,7 +81,7 @@ function battlefieldIdle(keys)
     local ability = caster:GetAbilityByIndex(0)
     --local refreshInterval = 20
     local casterTeam = caster:GetTeam()
-    print("=-=-=-particlesLaunch-=-=-=")
+    --print("=-=-=-particlesLaunch-=-=-=")
     Timers:CreateTimer(0.05,function()    
         EmitSoundOn("scene_voice_battlefield_idle", caster)
         local goodTeamParticlesLaunch = "particles/mofazhen_dizuo_1.vpcf"
@@ -178,7 +178,7 @@ function battlefieldLaunch(keys)
         --workingFlag:法阵处于有友军状态
         --loadingFlag:已经判断
         if workingFlag == true and loadingFlag == false then
-            print("==================================battlefieldLaunch===========workingFlagtrue==============")
+            --print("==================================battlefieldLaunch===========workingFlagtrue==============")
             EmitSoundOn("scene_voice_battlefield_buff_collect", caster)
             loadingFlag = true
             local goodTeamParticlesGetBuff = "particles/mofahen_huoqu_yang.vpcf"
