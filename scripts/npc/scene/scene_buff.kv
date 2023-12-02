@@ -19,7 +19,7 @@
         }
     }
     
-        //轮回石
+    //轮回石
     "samsara_stone_datadriven"
     {
         "BaseClass"	                "ability_datadriven"
@@ -206,7 +206,7 @@
     "battlefield_status_datadriven"
     {
         "BaseClass"				"ability_datadriven"
-        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityTextureName"        "obsidian_destroyer_astral_imprisonment" //图标
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "precache" 
         {
@@ -396,6 +396,7 @@
     "treasure_box_open_datadriven"
     {
         "BaseClass"				"ability_datadriven"
+        "AbilityTextureName"        "kunkka_x_marks_the_spot" //图标
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NO_TARGET| DOTA_ABILITY_BEHAVIOR_CHANNELLED"
         "MaxLevel"                      "1"
 
@@ -457,10 +458,11 @@
         }
     }
 
-    //玩家抢夺法阵
+    //玩家抢夺法阵(这个不能隐藏，否则不起效)
     "battlefield_capture_datadriven"
     {
         "BaseClass"				"ability_datadriven"
+        "AbilityTextureName"    "templar_assassin_psionic_trap" //图标
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NO_TARGET| DOTA_ABILITY_BEHAVIOR_CHANNELLED"
         "MaxLevel"                      "1"
 
@@ -568,7 +570,7 @@
     "battlefield_vision_buff_datadriven"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityTextureName"        "templar_assassin_psionic_trap" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
         "AbilityType"               "scene"
 
@@ -611,7 +613,7 @@
     "battlefield_speed_buff_datadriven"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityTextureName"        "templar_assassin_psionic_trap" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
         "AbilityType"               "scene"
 
@@ -654,7 +656,7 @@
     "battlefield_mana_regen_buff_datadriven"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityTextureName"        "templar_assassin_psionic_trap" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
         "AbilityType"               "scene"
 
@@ -699,7 +701,7 @@
     "decisive_battle_buff_datadriven"
     {
         "BaseClass"	                "ability_datadriven"
-        "AbilityTextureName"        "tinker_defense_matrix" //图标
+        "AbilityTextureName"        "nevermore_requiem" //图标
         "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
         "AbilityType"               "scene"
 
@@ -748,6 +750,7 @@
             {
                 "Duration"      "2.5"
                 "Passive"		"1"
+                "IsHidden"      "1"
                 "EffectName"		"particles/juezhanshike.vpcf"
 				"EffectAttachType"	"follow_origin"
             }

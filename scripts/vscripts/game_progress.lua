@@ -164,8 +164,7 @@ function battleStep(gameRound)
             --print("===checkWin===:"..GameRules.checkWinTeam)
             --print("onStepLoop2========over")
             --时间结束，双方都-1
-            winRewardFunc(GameRules.checkWinTeam) --胜方奖励
-            loseRewardFunc(GameRules.checkWinTeam, freeTime+loadingTime)--败方奖励
+           
             local delayTime = 0 --如果时间用完不需要5秒捡东西
             local winWay = false
             if battleTime == 0 then
@@ -182,6 +181,8 @@ function battleStep(gameRound)
                 delayTime = freeTime --战斗决胜负后准备跳转空余时间
                 winWay = true
             end
+            winRewardFunc(GameRules.checkWinTeam) --胜方奖励
+            loseRewardFunc(GameRules.checkWinTeam, delayTime+loadingTime)--败方奖励
             if GoodStoneHP > 0 and BadStoneHP > 0 then  
                 --如果双方的时间宝石都未使用完，则跳出循环进行下一轮游戏
                 --结算数据
