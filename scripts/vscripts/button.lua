@@ -48,6 +48,7 @@ end
 
 function closeShopJSTOLUA(index,keys)
     local playerID = keys.PlayerID
+    --print("closeShopJSTOLUA")
     OnMyUIShopClose(playerID)
 end
 
@@ -61,8 +62,7 @@ function refreshShopJSTOLUA(index,keys)
         --playerShopLock[playerID] = 0
         PlayerResource:SpendGold(playerID, refreshCost,0)
         currentGold = PlayerResource:GetGold(playerID)
-       
-	    EmitSoundOn("scene_voice_shop_refresh", hHero)
+        EmitAnnouncerSoundForPlayer("scene_voice_shop_refresh",playerID)
         CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
             playerGold = currentGold
         })
@@ -72,7 +72,7 @@ function refreshShopJSTOLUA(index,keys)
         OnMyUIShopOpen(playerID)
         getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
     else
-        EmitSoundOn("scene_voice_player_disable", hHero)
+        EmitAnnouncerSoundForPlayer("scene_voice_player_disable",playerID)
         print("金币不足")
     end
 end
@@ -83,11 +83,9 @@ function refreshShopListByPlayerID(playerID)
     local gameRound = GameRules.gameRound
     local itemNameList = shopProbabilityItemByRound[gameRound]--GameRules.itemNameList
     local count = #itemNameList
-    
     --print("itemNameList=====================",count)
     --print("================================================================refreshShopListByPlayerID:"..playerShopLock[playerID])
     playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
-
 end
 
 

@@ -1,16 +1,16 @@
 require('myMaths')
 --打开商店界面
-function OnMyUIShopOpen( PlayerID )
+function OnMyUIShopOpen( playerID )
 	--CustomUI:DynamicHud_Destroy(PlayerID,"UIShopBox")
-	local hHero = PlayerResource:GetSelectedHeroEntity(PlayerID)
-	EmitSoundOn("scene_voice_shop_open", hHero)
-	CustomUI:DynamicHud_Create(PlayerID,"UIShopBox","file://{resources}/layout/custom_game/UI_shop.xml",nil)
+	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+	EmitAnnouncerSoundForPlayer("scene_voice_shop_open",playerID)
+	CustomUI:DynamicHud_Create(playerID,"UIShopBox","file://{resources}/layout/custom_game/UI_shop.xml",nil)
 end
 
-function OnMyUIShopClose(PlayerID)
-	local hHero = PlayerResource:GetSelectedHeroEntity(PlayerID)
-	EmitSoundOn("scene_voice_shop_close", hHero)
-	CustomUI:DynamicHud_Destroy(PlayerID,"UIShopBox")
+function OnMyUIShopClose(playerID)
+	local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+	EmitAnnouncerSoundForPlayer("scene_voice_shop_close",playerID)
+	CustomUI:DynamicHud_Destroy(playerID,"UIShopBox")
 end
 
 function initItemList()
@@ -90,7 +90,7 @@ function getPlayerShopListByRandomList(playerID, randomNumList)
 	for i = 1, #itemNameList,1 do
 		for j = 1, #shopProbabilityItemByRound[gameRound],1 do	
 			if shopProbabilityItemByRound[gameRound][j] == itemNameList[i] then
-				print(shopProbabilityItemByRound[gameRound][j].."======"..itemNameList[i])
+				--print(shopProbabilityItemByRound[gameRound][j].."======"..itemNameList[i])
 				table.insert(roundItemNameList[playerID],itemNameList[i])
 				table.insert(roundItemCostList[playerID],itemCostList[i])
 				table.insert(roundItemTextureNameList[playerID],itemTextureNameList[i])
@@ -144,17 +144,19 @@ function buyShopJSTOLUA(index,keys)
 				--hHero:AddItemByName(itemName)
 				PlayerResource:SpendGold(playerID,itemCost,0)
 				currentGold = PlayerResource:GetGold(playerID)
-				EmitSoundOn("scene_voice_shop_buy", hHero)
+				EmitAnnouncerSoundForPlayer("scene_voice_shop_buy",playerID)
 				CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "checkGoldLUATOJS", {
 					playerGold = currentGold
 				})
 				playerRandomItemNumList[playerID][num] = -1
+				OnMyUIShopClose(playerID)
+				getPlayerShopListByRandomList(playerID, playerRandomItemNumList[playerID])
 			else
-				EmitSoundOn("scene_voice_player_disable", hHero)
+				EmitAnnouncerSoundForPlayer("scene_voice_player_disable",playerID)
 				print("物品栏已满")
 			end
 		else
-			EmitSoundOn("scene_voice_player_disable", hHero)
+			EmitAnnouncerSoundForPlayer("scene_voice_player_disable",playerID)
 			print("金币不足")
 		end
 end

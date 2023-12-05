@@ -10,10 +10,12 @@ end
 function showPlayerStatusPanel( myPlayerID )
     --print("showPlayerStatusPanel")
     playerStatusHeroList = {}
+    playerStatusTeamList = {}
     playerStatusAbilityList = {}
     playerStatusItemList = {}
     for i=0,9,1  do
         playerStatusHeroList[i] = "nil"
+        playerStatusTeamList[i] = 0
         playerStatusAbilityList[i]={}
         playerStatusItemList[i] ={}
         for j=0,3,1 do
@@ -28,13 +30,14 @@ function showPlayerStatusPanel( myPlayerID )
             --playerStatusAbilityList[playerID] = {}
             local abilityNameList = {}
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local heroTeam = hHero:GetTeam()
             local heroName = PlayerResource:GetSelectedHeroName(playerID)     
             --local player = PlayerResource:GetPlayer(playerID)
-            local hAbilityC = hHero:GetAbilityByIndex(3)
+            local hAbilityC = hHero:GetAbilityByIndex(0)
             local abilityNameC = hAbilityC:GetAbilityName()
-            local hAbilityB = hHero:GetAbilityByIndex(4)
+            local hAbilityB = hHero:GetAbilityByIndex(1)
             local abilityNameB = hAbilityB:GetAbilityName()
-            local hAbilityA = hHero:GetAbilityByIndex(5)
+            local hAbilityA = hHero:GetAbilityByIndex(2)
             local abilityNameA = hAbilityA:GetAbilityName()
             table.insert(abilityNameList,abilityNameC)
             table.insert(abilityNameList,abilityNameB)
@@ -42,6 +45,7 @@ function showPlayerStatusPanel( myPlayerID )
             local abilityIconList = getAbilityIconListByNameList(abilityNameList)
             local itemIconList =  getItemIconListByHero(hHero)
             playerStatusHeroList[playerID] = heroName
+            playerStatusTeamList[playerID] = heroTeam
 
             for i=0, #abilityIconList, 1 do
                 playerStatusAbilityList[playerID][i] = abilityIconList[i+1]
@@ -56,6 +60,7 @@ function showPlayerStatusPanel( myPlayerID )
     --print("playerStatusHeroList",playerStatusHeroList[0])
     CustomGameEventManager:Send_ServerToPlayer( myPlayer , "openPlayerStatusLUATOJS", {  
         playerStatusHeroList = playerStatusHeroList,
+        playerStatusTeamList = playerStatusTeamList,
         playerContractLearn = playerContractLearn, --公共参数
         playerStatusAbilityList = playerStatusAbilityList,
         playerStatusItemList = playerStatusItemList

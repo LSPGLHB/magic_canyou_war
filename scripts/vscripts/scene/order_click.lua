@@ -13,13 +13,23 @@ end
 
 function getGoldCoin(keys)
     local caster = keys.caster
-    local playerID = caster:GetPlayerID()
+    --local playerID = caster:GetPlayerID()
+    local team = caster:GetTeam()
     local worth = keys.worth
-    --print('getGoldCoin=========='..playerID.."="..worth)
-    local playerGold = PlayerResource:GetGold(playerID) + worth
-    --caster:ModifyGold(worth, true, 11) 
-    PlayerResource:SetGold(playerID,playerGold,true)
-    showGoldWorthParticle(playerID,worth,nil)
+    
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+        if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
+            local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            local heroTeam = hHero:GetTeam()
+            if team == heroTeam then
+                --print('getGoldCoin=========='..playerID.."="..worth)
+                local playerGold = PlayerResource:GetGold(playerID) + worth
+                --caster:ModifyGold(worth, true, 11) 
+                PlayerResource:SetGold(playerID,playerGold,true)
+                showGoldWorthParticle(playerID,worth,nil)
+            end
+        end
+    end
 end
 
 function initHeroOrder(keys)
@@ -54,14 +64,14 @@ function initHeroOrder(keys)
 end
  
 function initHeroOpenBoxChannelSucceeded(keys)
-    print("==========initHeroOpenBoxChannelSucceeded========")
+    --print("==========initHeroOpenBoxChannelSucceeded========")
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
     local target = playerOrderTarget[playerID]
     local targetName = target:GetUnitName()
     --print(target:GetUnitName())
-    --如果目标是金币箱子，打开掉落金币
-    if targetName == TreasureBoxGold then
+    --如果目标是金币箱子，打开掉落金币，且箱子未被打开
+    if targetName == TreasureBoxGold and target.alive == 1 then
         local position = target:GetAbsOrigin()
         RollDrops(target)
         --openUnit:AddAbility('get_gold_passive'):SetLevel(1)
@@ -77,7 +87,7 @@ end
 
 
 function initHeroCaptureChannelSucceeded(keys)
-    print("==========initHeroCaptureChannelSucceeded========")
+    --print("==========initHeroCaptureChannelSucceeded========")
     local caster = keys.caster
     if caster.battlefieldTarget ~= nil then
         local casterTeam = caster:GetTeam()
@@ -93,7 +103,7 @@ function initHeroCaptureChannelSucceeded(keys)
         --刷新占领方本身前线法阵成为关闭状态
         local lastCasterFrontFieldNum = #Battlefields[casterTeam]
         local lastCasterFrontField = Battlefields[casterTeam][lastCasterFrontFieldNum]
-        if lastCasterFrontField~= nil then
+        if lastCasterFrontField ~= nil then
             battlefieldInit(lastCasterFrontField)
         end
 
@@ -117,7 +127,7 @@ function initHeroCaptureChannelSucceeded(keys)
             if goodMagicStone:HasModifier("modifier_magic_stone_protect_datadriven") then
                 goodMagicStone:RemoveModifierByName("modifier_magic_stone_protect_datadriven")
             end
-            print("goodFieldOver")
+            --print("goodFieldOver")
         end
 
         local badFieldCount = #Battlefields[3]
@@ -134,7 +144,7 @@ function initHeroCaptureChannelSucceeded(keys)
             if badMagicStone:HasModifier("modifier_magic_stone_protect_datadriven") then
                 badMagicStone:RemoveModifierByName("modifier_magic_stone_protect_datadriven")
             end
-            print("badFieldOver")
+            --print("badFieldOver")
         end 
         --print("------------------------------initHeroCaptureChannelSucceeded----------------------------")
         --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
@@ -151,17 +161,20 @@ end
 --刷新为最前线法阵
 function updateFrontBattlefield(battlefield)
     if battlefield ~= nil then
-        print("updateFrontBattlefield:"..battlefield.fieldName)
+        --print("updateFrontBattlefield:"..battlefield.fieldName)
         local battlefieldAbility = battlefield:GetAbilityByIndex(0)
         battlefield:RemoveModifierByName("modifier_battlefield_flatl_datadriven")
         battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_idle_datadriven", {Duration = -1}) 
         battlefieldAbility:ApplyDataDrivenModifier(battlefield, battlefield, "modifier_battlefield_idle_ACT_datadriven", {Duration = -1})  
+        if battlefieldAbility.loadingParticleID ~= nil then
+            ParticleManager:DestroyParticle(battlefieldAbility.loadingParticleID, true)
+        end
     end
 end
 
 --法阵初始化
 function battlefieldInit(caster)
-    print("battlefieldInit:"..caster.fieldName)
+    --print("battlefieldInit:"..caster.fieldName)
     local ability = caster:GetAbilityByIndex(0)
     if caster:HasModifier("modifier_battlefield_idle_datadriven") then
         caster:RemoveModifierByName("modifier_battlefield_idle_datadriven")

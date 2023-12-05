@@ -57,7 +57,7 @@ function powerLevelOperation(shoot, abilityName, powerLv, value)
 		value = matchHelperValue * 1.25
 	end
 	if powerLv < 0 then
-		value = matchHelperValue * 0.75 
+		value = matchHelperValue * 0.75
 	end
 	--print("powerLevelOperationval:",value)
 	return value

@@ -32,20 +32,12 @@ end
 --学习阶段
 function studyStep(gameRound)
     print("onStepLoopStudy========start"..gameRound)
-    --每次轮回初始化地图与数据
-    gameRoundInit(gameRound)
-    
     local step0 = "魔法学习阶段倒数："
     local studyTime = GameRules.studyTime
     local interval = 1 --运算间隔
     local loadingTime = 2 --延迟时间 
+    gameRoundInit(gameRound) --每次轮回初始化地图与数据
     
-
-    initHeroStatus()   
-    roundPowerUp(gameRound)
-    refreshShopList(true,gameRound)
-    getUpGradeListByRound(gameRound)
-
     Timers:CreateTimer(0 ,function ()
         studyTime = studyTime -1
         local topTips = "第"..NumberStr[gameRound].."轮战斗"
@@ -140,9 +132,7 @@ function battleStep(gameRound)
     local freeTime = GameRules.freeTime --自由活动时间
     local decisiveBattleTime = GameRules.decisiveBattleTime --剩余时间决战阶段
     local centerTreasureBoxTime =GameRules.centerTreasureBoxTime
-    EmitAnnouncerSound("scene_voice_round_battle_start")
-    initHeroStatus()
-    initTreasureBox()--宝箱创建
+    gameBattleInit() --初始化战斗阶段数据
     Timers:CreateTimer(0,function ()
         --print("onStepLoop2========check")
         battleTime = battleTime - 1
@@ -529,15 +519,25 @@ end
 --每次轮回地图与玩家数据初始化
 function gameRoundInit(gameRound)
     print("===================================gameRoundInit===================================")   
-    initPlayerHero()--初始化所有玩家
-    initMagicStone()--初始化魔法石
-    initBattlefield()--初始化法阵   
-   
-    clearTreasureBox() --清理上局的箱子
     dorpItems = {}
     GameRules.checkWinTeam = nil
     GameRules.gameRound = gameRound
+    initPlayerHero()--初始化所有玩家
+    initMagicStone()--初始化魔法石
+    initBattlefield()--初始化法阵   
+    initHeroStatus()   --初始化英雄状态
+    roundPowerUp(gameRound) --回合能力提升
+    refreshShopList(true,gameRound) --更新商店列表
+    getUpGradeListByRound(gameRound) --打开学习能力提升界面
+    clearTreasureBox() --清理上局的箱子 
 end    
+
+--战斗阶段需要初始化的数据
+function gameBattleInit()
+    EmitAnnouncerSound("scene_voice_round_battle_start")
+    initHeroStatus() --英初始化雄状态
+    initTreasureBox()--宝箱创建
+end
 
 --初始化英雄局内数据
 function initPlayerHero()  

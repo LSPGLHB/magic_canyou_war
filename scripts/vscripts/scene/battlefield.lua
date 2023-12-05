@@ -29,7 +29,6 @@ function initBattlefield()
         --Battlefields[DOTA_TEAM_BADGUYS] = BattlefieldsStatic[DOTA_TEAM_BADGUYS]
     end
 
-
     Battlefields = {}
     --BattlefieldsStatic = {}
     Battlefields[DOTA_TEAM_GOODGUYS] = {}
@@ -61,7 +60,6 @@ function initBattlefield()
         badBattlefieldAbility:SetLevel(1)
         battlefieldParticleSet(badBattlefield,DOTA_TEAM_BADGUYS,i)
     end
- 
 end
 
 
@@ -148,7 +146,6 @@ function battlefieldLaunch(keys)
     local buffStayTime = 10
     local timerFlag = false
     --print("=================battlefieldLaunch==ininin==================team:"..casterTeam)
-
     --倒计时关闭激活
     Timers:CreateTimer(buffStayTime,function()
         timerFlag = true
@@ -169,7 +166,6 @@ function battlefieldLaunch(keys)
             workingFlag = false
             local unitTeam = unit:GetTeam()
             local unitLabel = unit:GetUnitLabel()
-
             if  casterTeam == unitTeam and unit ~= caster and unitLabel ~= GameRules.battlefieldLabel then
                 workingFlag = true
                 break;
@@ -195,7 +191,6 @@ function battlefieldLaunch(keys)
                 local particleID = ParticleManager:CreateParticle(particlesGetBuff, PATTACH_ABSORIGIN_FOLLOW, caster)
                 ParticleManager:SetParticleControl(particleID, 1, position)
                 caster.loadingParticleID = particleID
-
             end)
         end
        
