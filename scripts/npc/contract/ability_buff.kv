@@ -1,5 +1,5 @@
 "DOTAAbilities"
-{
+{       
         "ability_health_control"
         {
                 "BaseClass"                     "ability_datadriven"
@@ -214,6 +214,52 @@
                 }
         }
 
+        "ability_range_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_range_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+                        }
+
+                        "modifier_range_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"                             
+                                
+                        }
+                }
+        }
+
+        "ability_radius_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_radius_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+                        }
+
+                        "modifier_radius_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"                             
+                                
+                        }
+                }
+        }
+
 
         "ability_init_stop"
         {
@@ -246,6 +292,7 @@
 
                 }
         }
+
 
         
 }

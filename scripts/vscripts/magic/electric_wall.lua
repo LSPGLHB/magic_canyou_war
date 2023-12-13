@@ -159,7 +159,7 @@ function electricWallAOEHitRange(shoot)
     local newArray = {}
     newArray = shoot.tempHitRangeUnits
     --print("hitRangeUnits:",#oldArray,"-",#newArray)
-    local hitTargetStun = keys.hitTargetStun
+    local hitTargetDebuff = keys.hitTargetDebuff
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
@@ -171,7 +171,7 @@ function electricWallAOEHitRange(shoot)
             end
         end
         if flagSp1 then
-            ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetStun, {Duration = debuffDuration})  
+            ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetDebuff, {Duration = debuffDuration})  
         end
     end
     for x = 1,#newArray do
@@ -182,7 +182,7 @@ function electricWallAOEHitRange(shoot)
             end
         end
         if flagSp2 then
-            ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetStun, {Duration = debuffDuration})  
+            ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetDebuff, {Duration = debuffDuration})  
         end
     end
 end

@@ -19,7 +19,10 @@
 
 		"IconSrc" 					"file://{images}/custom_game/ability_button/skywrath_mage_mystic_flare.png"  //选择框图标
 
-	
+		"unitModel"			"shootUnit-M"
+		"hitType" 			"2"   //3不触碰，2穿透弹，1触碰结束
+		"isAOE"				"1"
+		"isMisfire"			"0"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -94,8 +97,10 @@
 				"AbilityLevel"		"b"
 				"unitType"          "feng"
 				"hitType" 			"2"   //3不触碰，2穿透弹，1触碰结束
-				"isMultipleHit"		"1"  //子弹可多次击中同一单位
 				"isAOE"				"1"
+
+
+				"isMultipleHit"		"1"  //子弹可多次击中同一单位
 				"particles_nm"      "particles/40xiaojufeng_shengcheng.vpcf"
 				"soundCast" 		"magic_small_hurricane_cast"
 				"particles_hit_dur" "0.7"

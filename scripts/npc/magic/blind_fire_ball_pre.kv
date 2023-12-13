@@ -4,7 +4,7 @@
 	{
     // General萤火球
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -12,10 +12,18 @@
 
 		"AbilityTextureName"			"keeper_of_the_light_illuminate"
 		"MaxLevel"                      "1"
+
+		"ScriptFile"					"magic/blind_fire_ball.lua"	
+
 		"UnitType"         				"huo"
 		"AbilityLevel"					"c"
 		"PreAbility"					"null"
 		"StageAbility"					"null"
+
+		"unitModel"			"shootUnit-XS"
+		"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+		"isMisfire"			"1"
+		"isAOE"				"0"
 
 		"IconSrc" "file://{images}/custom_game/ability_button/keeper_of_the_light_illuminate.png"  //选择框图标
 
@@ -136,7 +144,6 @@
                 "particles_defense" "particles/duobizhimangbuff2.vpcf"
                 "soundDefense"      "magic_defence"
 
-                "modifierCountName" "modifier_counter_blind_fire_ball_pre_datadriven"
                 "hitTargetDebuff"   "modifier_blind_fire_ball_debuff"
 			}
 		}
@@ -152,7 +159,7 @@
 				{
 					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%vision_radius"
                     "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%vision_radius"
-				} 
+				}
 			}
             
         }

@@ -197,7 +197,10 @@ function magicCanyouWar:InitGameMode()
 	GameRules:SetUseBaseGoldBountyOnHeroes(true)
 	--GameRules:SetHideKillMessageHeaders(true)--隐藏击杀提示
 	GameRules:SetHeroRespawnEnabled(false)  --复活规则
-	
+
+	local GameMode = GameRules:GetGameModeEntity()
+	GameMode:SetDaynightCycleDisabled(true)
+	GameMode:SetCameraDistanceOverride(1134) -- 默认1134
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
 --[[用了启动会跳出
 	GameRules:GetGameModeEntity():SetCustomBackpackSwapCooldown(0)

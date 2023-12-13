@@ -38,7 +38,6 @@ end
 
 
 function pudge_meat_hook_lua:OnSpellStart()
-	print("hookkkkk")
 	self.bChainAttached = false
 	if self.hVictim ~= nil then
 		self.hVictim:InterruptMotionControllers( true )

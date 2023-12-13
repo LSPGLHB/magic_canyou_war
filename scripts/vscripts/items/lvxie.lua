@@ -15,6 +15,21 @@ function refreshItemBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
+
+
+
+    local range = ability:GetSpecialValueFor( "item_range") 
+    local radius = ability:GetSpecialValueFor( "item_radius") 
+
+
+
+    setPlayerPower(playerID, "talent_range", flag, range)
+    setPlayerPower(playerID, "talent_radius", flag, radius)
+
+    setPlayerBuffByNameAndBValue(keys,"range",0)
+    setPlayerBuffByNameAndBValue(keys,"radius",0)
+
+    --[[
     local item_health = ability:GetSpecialValueFor( "item_health")
     local item_speed = ability:GetSpecialValueFor( "item_speed")
     local item_speed_precent_final = ability:GetSpecialValueFor( "item_speed_precent_final")
@@ -43,8 +58,8 @@ function refreshItemBuff(keys,flag)
     local item_vision_duration = ability:GetSpecialValueFor( "item_vision_duration") 
     local duration_health = ability:GetSpecialValueFor( "duration_health") 
     local item_health_duration = ability:GetSpecialValueFor( "item_health_duration") 
-    local duration_mana = ability:GetSpecialValueFor( "duration_mana") 
-    local item_mana_duration = ability:GetSpecialValueFor( "item_mana_duration") 
+    local range_bonus = ability:GetSpecialValueFor( "range_bonus") 
+    local aoe_radius_bonus = ability:GetSpecialValueFor( "aoe_radius_bonus") 
     local duration_mana_regen = ability:GetSpecialValueFor( "duration_mana_regen") 
     local item_mana_regen_duration = ability:GetSpecialValueFor( "item_mana_regen_duration") 
 
@@ -59,8 +74,7 @@ function refreshItemBuff(keys,flag)
     
     setPlayerPower(playerID, "player_ability_speed_C", flag, item_ability_speed_C)
     setPlayerPower(playerID, "player_ability_speed_C_precent_base", flag, item_ability_speed_C_precent_base)
-    setPlayerPower(playerID, "player_range_C", flag, item_range_C)
-    setPlayerPower(playerID, "player_range_C_precent_base", flag, item_range_C_precent_base)
+
     setPlayerPower(playerID, "player_damage_C", flag, item_damage_C)
     setPlayerPower(playerID, "player_damage_C_precent_base", flag, item_damage_C_precent_base)
     setPlayerPower(playerID, "player_control_C_precent_base", flag, item_control_C_precent_base)
@@ -77,8 +91,8 @@ function refreshItemBuff(keys,flag)
     setPlayerPower(playerID, "player_vision_duration", flag, item_vision_duration)
     setPlayerPower(playerID, "duration_health", flag, duration_health)
     setPlayerPower(playerID, "player_health_duration", flag, item_health_duration)
-    setPlayerPower(playerID, "duration_mana", flag, duration_mana)
-    setPlayerPower(playerID, "player_mana_duration", flag, item_mana_duration)
+    setPlayerPower(playerID, "range_bonus", flag, range_bonus)
+    setPlayerPower(playerID, "aoe_radius_bonus", flag, aoe_radius_bonus)
     setPlayerPower(playerID, "duration_mana_regen", flag, duration_mana_regen)
     setPlayerPower(playerID, "player_mana_regen_duration", flag, item_mana_regen_duration)
 
@@ -87,12 +101,7 @@ function refreshItemBuff(keys,flag)
     setPlayerBuffByNameAndBValue(caster,"speed",GameRules.playerBaseSpeed)
     setPlayerBuffByNameAndBValue(caster,"mana",GameRules.playerBaseMana)
     setPlayerBuffByNameAndBValue(caster,"mana_regen",GameRules.playerBaseManaRegen)
-
-
-
-
-
-
+]]
 
 
 

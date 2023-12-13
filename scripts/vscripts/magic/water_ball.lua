@@ -1,8 +1,56 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+water_ball_pre_datadriven = class({})
+water_ball_datadriven = class({})
+LinkLuaModifier( "water_ball_datadriven_modifier_debuff", "magic/modifiers/water_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "water_ball_pre_datadriven_modifier_debuff", "magic/modifiers/water_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function water_ball_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function water_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function water_ball_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'water_ball_pre_datadriven')
+	return aoe_radius
+end
+function water_ball_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'water_ball_datadriven')
+	return aoe_radius
+end
+
+function water_ball_pre_datadriven:OnSpellStart()
+    createShoot(self,'water_ball_pre_datadriven')
+end
+
+function water_ball_datadriven:OnSpellStart()
+    createShoot(self,'water_ball_datadriven')
+end
+
+
+
+function createShoot(ability,magicName)
+    local caster = ability:GetCaster()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm = "particles/19shuiqiushu_shengcheng.vpcf"
+    keys.soundCast = "magic_water_ball_cast"
+	keys.particles_power = "particles/19shuiqiushu_jiaqiang.vpcf"
+	keys.soundPower = "magic_water_power_up"
+	keys.particles_weak = "particles/19shuiqiushu_xueruo.vpcf"
+	keys.soundWeak = "magic_water_power_down"
+
+    keys.particles_boom = "particles/19shuiqiushu_baozha.vpcf"
+    keys.soundBoom = "magic_water_ball_boom"
+
+	keys.hitTargetDebuff = magicName.."_modifier_debuff"
+
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -50,6 +98,7 @@ function waterBallAOEOperationCallback(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration} )
 end
 

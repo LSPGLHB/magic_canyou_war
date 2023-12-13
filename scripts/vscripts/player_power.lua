@@ -236,6 +236,14 @@ function initPlayerPowerOPeration(playerID,powerType)
     PlayerPower[playerID][powerType .. '_cooldown_precent_base'] = 0
     PlayerPower[playerID][powerType .. '_cooldown_precent_final'] = 0
 
+    PlayerPower[playerID][powerType .. '_range'] = 0
+    PlayerPower[playerID][powerType .. '_range_precent_base'] = 0
+    PlayerPower[playerID][powerType .. '_range_precent_final'] = 0
+
+    PlayerPower[playerID][powerType .. '_radius'] = 0
+    PlayerPower[playerID][powerType .. '_radius_precent_base'] = 0
+    PlayerPower[playerID][powerType .. '_radius_precent_final'] = 0
+
     --技能能力
     PlayerPower[playerID][powerType .. '_ability_speed_d'] = 0
     PlayerPower[playerID][powerType .. '_ability_speed_d_precent_base'] = 0

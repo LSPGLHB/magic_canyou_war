@@ -4,12 +4,13 @@
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
+		"ScriptFile"					"magic/wind_net.lua"
 		
 		"AbilityTextureName"			"meepo_earthbind"
 		"MaxLevel"                      "1"
@@ -17,6 +18,13 @@
 		"AbilityLevel"					"c"
 		"PreAbility"					"null"
 		"StageAbility"					"null"
+
+		"unitModel"			"shootUnit-S"		
+		"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+		"isAOE"           	"0"
+		"isMisfire"			"1"
+
+
 		
 		"IconSrc" "file://{images}/custom_game/ability_button/meepo_earthbind.png"  //选择框图标
 

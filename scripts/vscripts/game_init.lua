@@ -246,6 +246,8 @@ function initHero()
     playerShopLock = {} --玩家商店锁定标记
     playerRefreshCost = {} --玩家商店刷新金钱
     playerSeriesKill = {} --玩家累计连续击杀（死亡清0）
+    playerIDByHero = {}
+    
 
     
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
@@ -284,6 +286,8 @@ function initHero()
             hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1) --10
             hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1) --11
             hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --12
+            --hHero:AddAbility("hero_hidden_ability_datadriven"):SetLevel(1) --13
+            
 
             hHero:SetTimeUntilRespawn(1) --重新设置复活时间
 
@@ -301,6 +305,8 @@ function initHero()
             playerShopLock[playerID] = 0
             playerRefreshCost[playerID] = GameRules.refreshCost
             playerSeriesKill[playerID] = 0
+
+            
 
             local player = PlayerResource:GetPlayer(playerID)
             --右下按钮显示
@@ -320,6 +326,7 @@ function initHero()
             heroHiddenStatusAbility:ApplyDataDrivenModifier(hHero, hHero, "modifier_hero_study_datadriven", {Duration = 2}) 
         end
     end
+
 end
 
 

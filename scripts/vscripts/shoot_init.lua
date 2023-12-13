@@ -506,7 +506,14 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 		keys.shootHight = 100
 	end
 	shoot.shootHight = keys.shootHight --子弹高度
-	
+	if keys.particles_hit_dur == nil then
+		keys.particles_hit_dur = 0.7
+	end
+	shoot.particles_hit_dur = keys.particles_hit_dur
+	if keys.cp == nil then
+		keys.cp = 3
+	end
+	shoot.cp = keys.cp
 
 	shoot.keysTable = keys
 	shoot.soundCast = keys.soundCast
@@ -542,7 +549,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 
 	shoot.owner = owner
 	shoot:SetOwner(owner)
-	shoot.unit_type = keys.unitType --用于计算克制和加强
+	shoot.unit_type = keys.UnitType --用于计算克制和加强
 	--print("unit_type"..shoot.unit_type)
 	shoot.power_lv = 0 --用于实现克制和加强
 	shoot.power_flag = 0 --用于实现克制和加强，标记粒子效果使用
@@ -586,18 +593,18 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	local damageBase = ability:GetSpecialValueFor("damage")
 	local damageBuffName = 'damage'
 	--local damageMatchBuffName = 'damage_match'
-	shoot.damage = getFinalValueOperation(playerID,damageBase,damageBuffName,AbilityLevel,owner)
+	shoot.damage = getFinalValueOperation(playerID,damageBase,damageBuffName,AbilityLevel,nil)
 	
 	--print("damage",shoot.damage)
 	--弹道速度
 	local speedBase = ability:GetSpecialValueFor("speed")
 	local speedBuffName = 'ability_speed'
-	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,owner) * GameRules.speedConstant * 0.02
+	shoot.speed = getFinalValueOperation(playerID,speedBase,speedBuffName,AbilityLevel,nil) * GameRules.speedConstant * 0.02
 	
 	--射程
 	local rangeBase = max_distance
 	local rangeBuffName = 'range'
-	shoot.max_distance_operation = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
+	shoot.max_distance_operation = getFinalValueOperation(playerID,rangeBase,rangeBuffName,nil,nil)
 
 	--范围
 	shoot.aoe_radius = ability:GetSpecialValueFor("aoe_radius")
@@ -606,7 +613,7 @@ function creatSkillShootInit(keys,shoot,owner,max_distance,direction)
 	else
 		local rangeBase = shoot.aoe_radius
 		local rangeBuffName = 'radius'
-		shoot.aoe_radius = getFinalValueOperation(playerID,rangeBase,rangeBuffName,AbilityLevel,owner)
+		shoot.aoe_radius = getFinalValueOperation(playerID,rangeBase,rangeBuffName,nil,nil)
 	end
 	--控制时间(在其他地方执行)
 end
@@ -693,7 +700,7 @@ function shootKill(shoot)
 	--命中后动画持续时间
 	shoot:ForceKill(true)
 	shoot.energy_point = 0
-	Timers:CreateTimer(keys.particles_hit_dur,function ()
+	Timers:CreateTimer(shoot.particles_hit_dur,function ()
 		--消除子弹以及中弹粒子效果
 		shoot:AddNoDraw()
 	end)
@@ -743,7 +750,8 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 	end
 
 	if targetLabel ~= GameRules.magicStoneLabel and GameRules.shopLabel ~= targetLabel and GameRules.skillLabel ~= targetLabel then
-		ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
+		--ability:ApplyDataDrivenModifier(caster, hitTarget, hitTargetDebuff, {Duration = -1})
+		hitTarget:AddNewModifier( caster, ability, hitTargetDebuff, {Duration = -1} )
 		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("1"),
 			function ()
 				if traveled_distance < beatBackDistance and beatTime == hitTarget.lastBeatBackTime and hitTarget.FloatingAirLevel == 0 then --如果击退时间没被更改继续执行（被其他技能击退则执行新的，旧的不再运行）
@@ -787,7 +795,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 					hitTarget.FloatingAirLevel = nil
 					hitTarget:RemoveModifierByName(hitTargetDebuff)	
 					--EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
-					disableTurning(keys,shoot,hitTarget,AbilityLevel)
+					--disableTurning(keys,shoot,hitTarget,AbilityLevel)
 					return nil
 				end
 				return interval
@@ -797,15 +805,16 @@ end
 
 --僵直单位
 function disableTurning(keys,shoot,hitTarget,AbilityLevel)
-	local caster = keys.caster
-	local playerID = caster:GetPlayerID()
 	if keys.hitDisableTurning ~= nil then
+		local caster = keys.caster
+		local playerID = caster:GetPlayerID()
 		local disableTurningDebuff = keys.hitDisableTurning	
 		local ability = keys.ability
 		local hitDisableTurningTime = ability:GetSpecialValueFor("disable_turning_time")
 		hitDisableTurningTime = getFinalValueOperation(playerID,hitDisableTurningTime,'control',AbilityLevel,nil)--装备数值加强
 		hitDisableTurningTime = getApplyControlValue(shoot, hitDisableTurningTime)--相生加强
-		ability:ApplyDataDrivenModifier(caster, hitTarget, disableTurningDebuff, {Duration = hitDisableTurningTime})
+		--ability:ApplyDataDrivenModifier(caster, hitTarget, disableTurningDebuff, {Duration = hitDisableTurningTime})
+		hitTarget:AddNewModifier( caster, ability, disableTurningDebuff, {Duration = hitDisableTurningTime} )
 	end
 end
 
@@ -866,7 +875,8 @@ function takeAwayUnit(shoot,hitTarget)
 		if hitTarget.FloatingAirLevel == 1 and hitTarget.lastTakeAwayTime == shoot.castTime then
 			--print("debuffTable:", debuffTable)
 			if debuffTable == nil then		
-				ability:ApplyDataDrivenModifier(caster, hitTarget, shootAoeDebuff, {Duration = -1})
+				--ability:ApplyDataDrivenModifier(caster, hitTarget, shootAoeDebuff, {Duration = -1})
+				hitTarget:AddNewModifier( caster, ability, shootAoeDebuff, {Duration = -1} )
 			end
 			local newPosition = hitTarget:GetAbsOrigin() +  direction * speed 
 			local groundPos = GetGroundPosition(newPosition, hitTarget)
@@ -982,7 +992,11 @@ function modifierHole(shoot)
 				local newFlag = checkHitUnitToMark(shoot, unit)--用于技能结束时清理debuff	
 				if newFlag then  --新加入的加上buff	
 					EmitSoundOn(keys.soundDebuff, shoot)
-					ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
+					--ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = -1})
+					unit:AddNewModifier( caster, ability, aoeTargetDebuff, {Duration = -1} )
+--[[
+					local particleAOE = ParticleManager:CreateParticle("particles/mohu_debuff.vpcf", PATTACH_WORLDORIGIN, unit)
+					ParticleManager:SetParticleControl(particleAOE, 0, unit:GetAbsOrigin())]]
 				end
 				table.insert(shoot.tempHitUnits, unit)
 			end
@@ -1232,7 +1246,7 @@ function boomAOEOperation(shoot, AOEOperationCallback)
 	shootSoundAndParticle(shoot, "boom")
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
-	--print("boomAOEOperation:",radius)
+	print("boomAOEOperation:",radius)
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -1379,4 +1393,40 @@ function catchAOEOperationCallback(shoot, unit, debuffDuration, hitTargetDebuff)
         tieIsOver = 1
         return nil
     end)
+end
+
+function getMagicKeys(ability,magicName)
+	local keys = {}
+	local caster = ability:GetCaster()
+    keys.caster = caster
+	keys.ability = ability
+	keys.AbilityLevel = magicListByName[magicName]['magicLvList']
+	keys.UnitType = magicListByName[magicName]['unitTypeList']
+	keys.unitModel = magicListByName[magicName]['unitModel']  
+    keys.hitType = magicListByName[magicName]['hitType']
+	keys.isAOE = magicListByName[magicName]['isAOE']
+	keys.isMisfire = magicListByName[magicName]['isMisfire']
+	return keys
+end
+
+function getAOERadiusByName(ability,magicLevel)
+	local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
+	local caster = ability:GetCaster()
+	local modifierName = "modifier_radius_buff"
+	if caster:HasModifier(modifierName) then
+		local aoeBonus = caster:GetModifierStackCount(modifierName,caster)
+		aoe_radius = aoe_radius + aoeBonus
+	end
+	return aoe_radius
+end
+
+function getRangeByName(ability,magicLevel)
+	local max_distance = ability:GetSpecialValueFor("max_distance")
+	local caster = ability:GetCaster() 
+	local modifierName = "modifier_range_buff"
+	if caster:HasModifier(modifierName) then
+		local rangeBonus = caster:GetModifierStackCount(modifierName,caster)
+		max_distance = max_distance + rangeBonus
+	end
+	return max_distance
 end

@@ -23,6 +23,10 @@
 
 		"IconSrc"                       "file://{images}/custom_game/ability_button/keeper_of_the_light_illuminate.png"  //选择框图标
 
+		"unitModel"			"shootUnit-XS"
+		"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+		"isMisfire"			"1"
+		"isAOE"				"0"
 		
 		"precache"						
 		{
@@ -126,6 +130,7 @@
 				"unitType"          "huo"
 				"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
                 "isMisfire"			"1"
+
                 "cp"				"3"
 				"particles_nm"      "particles/31yinghuoqiu_shengcheng.vpcf"
 				"soundCast"			"magic_blind_fire_ball_cast"
@@ -145,7 +150,6 @@
                 "particles_defense" "particles/duobizhimangbuff2.vpcf"
                 "soundDefense"      "magic_defence"
 
-                "modifierCountName" "modifier_counter_blind_fire_ball_datadriven"
 				
                 "hitTargetDebuff"   "modifier_blind_fire_ball_debuff"
 			}

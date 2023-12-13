@@ -5,13 +5,9 @@ require('skill_operation')
 require('player_power')
 require('scene/game_stone')
 
+
 function common_attack_good_datadriven:GetCastRange(t,v)
-    --print("======GetCastRange========")
-    local caster = self:GetCaster()
-    --local ability = caster:GetAbilityByIndex(3)
-    local range = self:GetSpecialValueFor("max_distance")
-    --print("common_attack_good:"..range)
-    --range = range + 500
+    local range = getRangeByName(self,'d')
 	return range
 end
 
@@ -24,14 +20,14 @@ function common_attack_good_datadriven:OnSpellStart()
     local keys = {}
     keys.caster = caster
 	keys.ability = self
-    keys.unitModel = "shootUnit-XS"--self:GetSpecialValueFor("unitModel")
-    --print("keys.unitModel:"..self:GetSpecialValueFor("unitModel"))
-    keys.AbilityLevel = "d"--self:GetSpecialValueFor("AbilityLevel")
-    keys.unitType = "base"--self:GetSpecialValueFor("unitType")
-    keys.hitType = 1--self:GetSpecialValueFor("hitType")
-    keys.isMisfire = 1--self:GetSpecialValueFor("isMisfire")
-    keys.particles_hit_dur = 0.7--self:GetSpecialValueFor("particles_hit_dur")
-    keys.cp = 3--self:GetSpecialValueFor("cp")
+    keys.unitModel = "shootUnit-XS"
+    keys.AbilityLevel = "d"
+    keys.UnitType = "base"
+    keys.hitType = 1
+    keys.isMisfire = 1
+
+    --keys.particles_hit_dur = 0.7
+    --keys.cp = 3
     keys.particles_nm = "particles/yanggongji.vpcf"--self:GetSpecialValueFor("particles_nm")
     keys.soundCast = "magic_common_attack_good_cast"--self:GetSpecialValueFor("soundCast")
     keys.particles_misfire = "particles/yanggongji_jiluo.vpcf"--self:GetSpecialValueFor("particles_misfire")
@@ -55,7 +51,7 @@ function common_attack_good_datadriven:OnSpellStart()
 end
 
 
-
+--[[
 function createShoot(keys)
     local caster = keys.caster
     local ability = keys.ability
@@ -74,7 +70,7 @@ function createShoot(keys)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, commonAttackSp1BoomCallBack, nil)
-end
+end]]
 
 --技能爆炸,单次伤害
 function commonAttackSp1BoomCallBack(shoot)

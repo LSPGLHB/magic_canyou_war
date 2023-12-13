@@ -4,12 +4,13 @@
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
+		"ScriptFile"					"magic/twine_soil_ball.lua"
 
 		"AbilityTextureName"			"viper_poison_attack"
 		"MaxLevel"                      "1"
@@ -17,6 +18,11 @@
 		"AbilityLevel"					"c"
 		"PreAbility"					"null"
 		"StageAbility"					"null"
+
+		"unitModel"			"shootUnit-S"
+		"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+		"isAOE"           	"0"
+		"isMisfire"			"1"
 
 		"IconSrc" "file://{images}/custom_game/ability_button/viper_poison_attack.png"  //选择框图标
 
@@ -118,7 +124,6 @@
                 "particles_boom" 	"particles/02tuqiushu_mingzhong.vpcf"
 				"soundBoom"			"magic_twine_soil_ball_hit"
 
-                "modifierCountName" "modifier_counter_twine_soil_ball_pre_datadriven"
                 "hitTargetDebuff"   "modifier_twine_soil_ball_debuff_datadriven"
 				
 			}

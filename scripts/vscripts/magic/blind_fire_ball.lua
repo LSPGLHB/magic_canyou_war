@@ -1,10 +1,46 @@
+
 require('shoot_init')
 require('skill_operation')
 require('player_power')
+require('get_magic')
+blind_fire_ball_pre_datadriven = class({})
+blind_fire_ball_datadriven = class({})
+LinkLuaModifier( "blind_fire_ball_datadriven_modifier_debuff", "magic/modifiers/blind_fire_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "blind_fire_ball_pre_datadriven_modifier_debuff", "magic/modifiers/blind_fire_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+function blind_fire_ball_datadriven:OnSpellStart()
+	creatShoot(self,'c')
+end
+function blind_fire_ball_pre_datadriven:OnSpellStart()
+	creatShoot(self,'c')
+end
+function creatShoot(ability,magicName)
+	local caster = ability:GetCaster()
 
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+    local keys = getMagicKeys(ability,magicName)
+	magicListByName[magicName]['vision_radius'] = ability:GetSpecialValueFor("vision_radius")
+
+	keys.particles_nm = "particles/31yinghuoqiu_shengcheng.vpcf"
+    keys.soundCast = "magic_blind_fire_ball_cast"
+	keys.particles_power = "particles/31yinghuoqiu_jiaqiang.vpcf"
+	keys.soundPower = "magic_fire_power_up"
+	keys.particles_weak ="particles/31yinghuoqiu_xueruo.vpcf"
+	keys.soundWeak = "magic_fire_power_down"
+
+    keys.particles_boom =  "particles/31yinghuoqiu_baozha.vpcf"
+    keys.soundBoom = "magic_blind_fire_ball_boom"
+
+	keys.particles_misfire = "particles/31yinghuoqiu_jiluo.vpcf"
+	keys.soundMisfire =	"magic_fire_mis_fire"
+	keys.particles_miss = "particles/31yinghuoqiu_xiaoshi.vpcf"
+	keys.soundMiss = "magic_fire_miss"	
+
+	keys.particles_defense = "particles/duobizhimangbuff2.vpcf"
+	keys.soundDefense =      "magic_defence"
+	keys.hitTargetDebuff = magicName.."_modifier_debuff"
+
+
+	
+
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
 
@@ -48,7 +84,8 @@ function blindFireBallAOEOperationCallback(shoot,unit)
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
 		debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     	debuffDuration = getApplyControlValue(shoot, debuffDuration)
-        ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+        --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+		unit:AddNewModifier( caster, ability, hitTargetDebuff, {Duration = debuffDuration} )
     else
         local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
         ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -85,12 +122,8 @@ function blindFireBallIntervalCallBack(shoot)
 			--local shootEnergy = shoot.energy_point
 			if checkIsEnemyHeroNoMagicStone(shoot,unit) then
 				shoot.trackUnit = unit
-
-				
 				shoot.position = shoot:GetAbsOrigin()
 				--shoot.traveled_distance =  0.5 * shoot.max_distance
-				
-				
 			end
 		end
 	end

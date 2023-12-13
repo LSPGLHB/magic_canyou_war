@@ -6,17 +6,24 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				        "ability_lua"
 		"AbilityTextureName"			"spectre_dispersion"
+		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"ScriptFile"					"magic/common_attack_good.lua"	
-
 		
 		"MaxLevel"                      "1"
+
+		// myset
 		"UnitType"         				"base"
 		"AbilityLevel"					"d"
 		"IconSrc" "file://{images}/custom_game/ability_button/spectre_dispersion.png"  //选择框图标
+
+		"unitModel"			"shootUnit-XS"
+		"hitType" 			"1"   //3直达不触碰,2穿透弹,1触碰爆炸
+		"isAOE"             "0"
+		"isMisfire"			"1"
 
 		
 		"precache"						
@@ -39,6 +46,10 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"12"
+
+
+
+
 
 
         "AbilitySpecial"

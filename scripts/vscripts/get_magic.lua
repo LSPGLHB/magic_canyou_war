@@ -9,6 +9,7 @@ function closeUIMagicList(playerID)
 end
 
 function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUATOJS)
+--[[
 	local magicNameList ={}
 	local abilityCooldownList = {}
 	local abilityManaCostList = {}
@@ -84,35 +85,48 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	local boundsDamageCountList_81 = {}
 	local shootCountList_82 = {}
 	local GSpeedList_83 = {}
+	]]
+	--print("magicList:"..#magicList)
+	local magicListByCondition = {}
+	for i = 1, #magicList, 1 do
+		if magicList[i]['magicLvList'] == MagicLevel and  magicList[i]['preMagicList'] == preMagic then
+			--print("lv:"..magicList[i]['magicLvList'])
+			--print("name:"..magicList[i]['magicNameList'])
+			table.insert(magicListByCondition,magicList[i])
+		end
+	end
+	--print("magicListByCondition:"..#magicListByCondition)
 
 	--print("MagicLevel:",MagicLevel,"preMagic:",preMagic,"==")
+--[[
 	for i = 1 , #magicList['magicNameList'] do
-		--print("tempPreMagicList:",tempPreMagicList[i],"===","tempMagicLvList:",tempMagicLvList[i])
+		--print("tempPreMagicList:",tempPreMagicList[i],"===","tempAbilityLevelList:",tempAbilityLevelList[i])
 		--导入1-3回合技能表
+
 		if magicList['magicLvList'][i] == MagicLevel and  magicList['preMagicList'][i] == preMagic then
-			--print("tempPreMagicList:",tempPreMagicList[i],"=======================","tempMagicLvList:",tempMagicLvList[i])
+			--print("tempPreMagicList:",tempPreMagicList[i],"=======================","tempAbilityLevelList:",tempAbilityLevelList[i])
 			--print("tempMagicNameList:",tempMagicNameList[i],"=======================","tempIconSrcList:",tempIconSrcList[i])
-			table.insert(magicNameList,magicList['magicNameList'][i])
+			magicNameList,magicList['magicNameList'][i])
 			table.insert(abilityCooldownList,magicList['abilityCooldownList'][i])
 			table.insert(abilityManaCostList,magicList['abilityManaCostList'][i])
 			table.insert(iconSrcList,magicList['magicIconSrcList'][i])
 			table.insert(preMagicList,magicList['preMagicList'][i])
-			table.insert(magicLvList,magicList['magicLvList'][i])
+			magicLvList,magicList['magicLvList'][i])
 			table.insert(stageAbilityList,magicList['stageAbilityList'][i])
 			table.insert(unitTypeList,magicList['unitTypeList'][i])
 
 			table.insert(speedList_01,magicList['speedList_01'][i])
 			table.insert(speedList_02,magicList['speedList_02'][i])
 			table.insert(speedList_14,magicList['speedList_14'][i])
-			table.insert(maxDistanceList_03,magicList['maxDistanceList_03'][i])
+			maxDistanceList_03,magicList['maxDistanceList_03'][i])
 			table.insert(aoeRadiusList_04,magicList['aoeRadiusList_04'][i])
 			table.insert(aoeRadiusList_05,magicList['aoeRadiusList_05'][i])
-			table.insert(maxDistanceList_06,magicList['maxDistanceList_06'][i])
-			table.insert(maxDistanceList_15,magicList['maxDistanceList_15'][i])
+			maxDistanceList_06,magicList['maxDistanceList_06'][i])
+			maxDistanceList_15,magicList['maxDistanceList_15'][i])
 			table.insert(damageList_07,magicList['damageList_07'][i])
 			table.insert(damageList_08,magicList['damageList_08'][i])
 			table.insert(damageList_09,magicList['damageList_09'][i])
-			table.insert(maxChargesList_10,magicList['maxChargesList_10'][i])
+			maxChargesList_10,magicList['maxChargesList_10'][i])
 			table.insert(chargeReplenishTimeList_11,magicList['chargeReplenishTimeList_11'][i])
 			table.insert(energyList_12,magicList['energyList_12'][i])
 			table.insert(energyList_13,magicList['energyList_13'][i])
@@ -168,11 +182,13 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 			table.insert(shootCountList_82,magicList['shootCountList_82'][i])
 			table.insert(GSpeedList_83,magicList['GSpeedList_83'][i])
 		end
-	end
+	end]]
 
 	--随机数字数组
-	local randomNumList= getRandomNumList(1,#magicNameList,listCount)
+	local randomNumList = getRandomNumList(1,#magicListByCondition,listCount)
 	--根据随机数字数组得出随机技能详细数组
+	local randomMagicList = getRandomArrayList(magicListByCondition, randomNumList)
+	--[[
     local randomNameList = getRandomArrayList(magicNameList, randomNumList)
 	local randomAbilityCooldownList = getRandomArrayList(abilityCooldownList, randomNumList)
 	local randomAbilityManaCostList = getRandomArrayList(abilityManaCostList, randomNumList)
@@ -246,10 +262,10 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	local randomBoundsDamageCountList_81 = getRandomArrayList(boundsDamageCountList_81, randomNumList)
 	local randomShootCountList_82 = getRandomArrayList(shootCountList_82, randomNumList)
 	local randomGSpeedList_83 = getRandomArrayList(GSpeedList_83, randomNumList)
+]]
+	RandomMagicNameList[playerID] = randomMagicList--randomNameList
 
-	RandomMagicNameList[playerID] = randomNameList
-
-	local listLength = #randomNameList
+	local listLength = #randomMagicList--#randomNameList
 
 	local titleLvl
 	local titleType
@@ -272,13 +288,17 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 	end
 	titleValue = "选择"..titleType.."一个"..titleLvl.."技能"
 	--print("titleValue:"..titleValue)
+	--print("randomMagicList:"..#randomMagicList)
+	--print(randomMagicList[1]['magicNameList'])
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), functionForLUATOJS, {
         listLength=listLength, 
 		titleValue = titleValue,
+		randomMagicList = randomMagicList
+		--[[
         magicNameList = randomNameList,
 		abilityCooldownList = randomAbilityCooldownList,
 		abilityManaCostList = randomAbilityManaCostList,
-        magicIconList = randomIconList,
+        magicIconSrcList = randomIconList,
 		preMagicList = randompreMagicList,
 		magicLvList = randomMagicLvList,
 		unitTypeList = randomUnitTypeList,
@@ -348,6 +368,7 @@ function getMagicListFunc(playerID,MagicLevel,preMagic,listCount,functionForLUAT
 		boundsDamageCountList_81 = randomBoundsDamageCountList_81,
 		shootCountList_82 = randomShootCountList_82,
 		GSpeedList_83 = randomGSpeedList_83
+		]]
     })
 end
 
@@ -479,7 +500,7 @@ function initMagicList()
 	--重新组装数组
 	local magicTempList = GameRules.customAbilities
 	magicList = {}
-
+	--[[
 	magicList['magicNameList'] = {}
 	magicList['abilityCooldownList'] = {}
 	magicList['abilityManaCostList'] = {}
@@ -488,7 +509,6 @@ function initMagicList()
 	magicList['magicLvList'] = {}
 	magicList['stageAbilityList'] = {}
 	magicList['unitTypeList'] = {}
-
 	magicList['speedList_01'] = {}
 	magicList['speedList_02'] = {}
 	magicList['speedList_14'] = {}
@@ -555,20 +575,30 @@ function initMagicList()
 	magicList['boundsDamageCountList_81'] = {}
 	magicList['shootCountList_82'] = {}
 	magicList['GSpeedList_83'] = {}
-
-	
+	]]
 	--local flag = false
+	local icount = 1
+	
 	for key, value in pairs(magicTempList) do
 		--print("GetAbilityKV-----: ", key, value)
 
-		local tempMagicLv = 'null'
 		local tempMagicName = 'null'
+		
 		local tempAbilityCooldown = 'null'
 		local tempAbilityManaCost = 'null'
-		local tempIconSrc = 'null'
 		local tempPreMagic = 'null'
 		local tempStageAbility = 'null'
 		local tempUnitType = 'null'
+		local tempAbilityLevel = 'null'
+		local tempIconSrc = 'null'
+
+		local unitModel = 'null'
+		local hitType = 'null'
+		local isAOE = 'null'
+		local isMisfire = 'null'
+		--local cp = 'null'
+		--local particles_hit_dur = 'null'
+
 
 		local speed_01 = 'null'
 		local speed_02 = 'null'
@@ -638,10 +668,11 @@ function initMagicList()
 		local GSpeed_83 = 'null'
 
 		local c = 0
+		
 		for k,v in pairs(value) do
 
 			if k == "AbilityLevel" then			
-				tempMagicLv = v
+				tempAbilityLevel = v
 				tempMagicName = key
 				--print("idName:"..key)
 				c= c+1
@@ -659,16 +690,32 @@ function initMagicList()
 				--print("icon:"..v)
 				c = c+1
 			end
-			--[[
-			if k == "AbilityShowName"  then
-				tempShowName = v
-				--print("showName:"..v)
+			if k == "unitModel" then
+				unitModel = v
 				c = c+1
-			end	
-            if k == "AbilityDescribe" then
-                tempDescribe = v
-                c= c+1
-            end]]
+			end
+			if k == "hitType" then
+				hitType = v
+				c = c+1
+			end
+			if k == "isAOE" then
+				isAOE = v
+				c = c+1
+			end
+			if k == "isMisfire" then
+				isMisfire = v
+				c = c+1
+			end
+			--[[
+			if k == "cp" then
+				cp = v
+				c = c+1
+			end
+			if k == "particles_hit_dur" then
+				particles_hit_dur = v
+				c = c+1
+			end]]
+
 			if k == "PreAbility" then
 				tempPreMagic = v
 				c= c+1
@@ -1152,89 +1199,114 @@ function initMagicList()
 				end
 				c=c+1
 			end
-
-			if c == 8 then
+			--print("=======cc========"..c)
+			if c == 12 then
                 --print("===============idName:"..tempMagicName.."speed:"..tempSpeed)
-				table.insert(magicList['magicNameList'],tempMagicName)
-				table.insert(magicList['abilityCooldownList'],tempAbilityCooldown)
-				table.insert(magicList['abilityManaCostList'],tempAbilityManaCost)
+				magicList[icount] = {}
+				magicList[icount]['magicNameList'] = tempMagicName
+				magicList[icount]['abilityCooldownList'] = tempAbilityCooldown
+				magicList[icount]['abilityManaCostList'] = tempAbilityManaCost
+				magicList[icount]['magicIconSrcList'] = tempIconSrc
+				magicList[icount]['preMagicList'] = tempPreMagic
+				magicList[icount]['magicLvList'] = tempAbilityLevel
+				magicList[icount]['stageAbilityList'] = tempStageAbility
+				magicList[icount]['unitTypeList'] = tempUnitType
 
-				table.insert(magicList['magicIconSrcList'],tempIconSrc)
-				table.insert(magicList['preMagicList'],tempPreMagic)
-				table.insert(magicList['magicLvList'],tempMagicLv)
-				table.insert(magicList['stageAbilityList'],tempStageAbility)
-				table.insert(magicList['unitTypeList'],tempUnitType)
+				magicList[icount]['unitModel'] = unitModel
+				magicList[icount]['hitType'] = hitType
+				magicList[icount]['isAOE'] = isAOE
+				magicList[icount]['isMisfire'] = isMisfire
+				--magicList[icount]['cp'] = cp
+				--magicList[icount]['particles_hit_dur'] = particles_hit_dur
 
-				table.insert(magicList['speedList_01'],speed_01)
-				table.insert(magicList['speedList_02'],speed_02)
-				table.insert(magicList['speedList_14'],speed_14)
-				table.insert(magicList['maxDistanceList_03'],maxDistance_03)
-				table.insert(magicList['aoeRadiusList_04'],aoeRadius_04)
-				table.insert(magicList['aoeRadiusList_05'],aoeRadius_05)
-				table.insert(magicList['maxDistanceList_06'],maxDistance_06)
-				table.insert(magicList['maxDistanceList_15'],maxDistance_15)
-				table.insert(magicList['damageList_07'],damage_07)
-				table.insert(magicList['damageList_08'],damage_08)
-				table.insert(magicList['damageList_09'],damage_09)
-				table.insert(magicList['maxChargesList_10'],maxCharges_10)
-				table.insert(magicList['chargeReplenishTimeList_11'],chargeReplenishTime_11)
-				table.insert(magicList['energyList_12'],energy_12)
-				table.insert(magicList['energyList_13'],energy_13)
-				table.insert(magicList['debuffDurationList_21'],debuffDuration_21)
-				table.insert(magicList['beatBackDistanceList_22'],beatBackDistance_22)
-				table.insert(magicList['debuffDurationList_23'],debuffDuration_23)
-				table.insert(magicList['aoeDurationList_24'],aoeDuration_24)
-				table.insert(magicList['debuffDurationList_25'],debuffDuration_25)
-				table.insert(magicList['debuffDurationList_26'],debuffDuration_26)
-				table.insert(magicList['stunDebuffDurationList_27'],stunDebuffDuration_27)
-				table.insert(magicList['sleepDebuffDurationList_28'],sleepDebuffDuration_28)
-				table.insert(magicList['aoeDurationList_29'],aoeDuration_29)
-				table.insert(magicList['debuffDurationList_30'],debuffDuration_30)
-				table.insert(magicList['aoeDurationList_31'],aoeDuration_31)
-				table.insert(magicList['debuffDurationList_32'],debuffDuration_32)
-				table.insert(magicList['debuffDurationList_33'],debuffDuration_33)
-				table.insert(magicList['debuffDurationList_34'],debuffDuration_34)
-				table.insert(magicList['aoeDurationList_35'],aoeDuration_35)
-				table.insert(magicList['debuffDurationList_36'],debuffDuration_36)
-				table.insert(magicList['GSpeedList_37'],GSpeed_37)
-				table.insert(magicList['aoeDurationList_38'],aoeDuration_38)
-				table.insert(magicList['disableTurningTimeList_39'],disableTurningTime_39)
-				table.insert(magicList['boomDelayList_50'],boomDelay_50)
-				table.insert(magicList['visionRadiusList_51'],visionRadius_51)
-				table.insert(magicList['aoeDurationList_52'],aoeDuration_52)
-				table.insert(magicList['debuffDurationList_53'],debuffDuration_53)
-				table.insert(magicList['aoeDurationList_54'],aoeDuration_54)
-				table.insert(magicList['visionTimeList_55'],visionTime_55)
-				table.insert(magicList['debuffDelayList_56'],debuffDelay_56)
-				table.insert(magicList['debuffDurationList_57'],debuffDuration_57)
-				table.insert(magicList['searchRangeList_58'],searchRange_58)
-				table.insert(magicList['doubleDamagePercentageList_59'],doubleDamagePercentage_59)
-				table.insert(magicList['bounsDamagePercentageList_60'],bounsDamagePercentage_60)
-				table.insert(magicList['sendDelayList_61'],sendDelay_61)
-				table.insert(magicList['chargeTimeList_62'],chargeTime_62)
-				table.insert(magicList['turnRatePercentList_63'],turnRatePercent_63)
-				table.insert(magicList['speedPercentList_64'],speedPercent_64)
-				table.insert(magicList['channelTimeList_65'],channelTime_65)
-				table.insert(magicList['stageDurationList_66'],stageDuration_66)
-				table.insert(magicList['debuffSpeedPercentList_67'],debuffSpeedPercent_67)
-				table.insert(magicList['bounsDamagePercentageList_68'],bounsDamagePercentage_68)
-				table.insert(magicList['debuffDurationList_69'],debuffDuration_69)
-				table.insert(magicList['aoeRadiusList_70'],aoeRadius_70)
-				table.insert(magicList['damageByDistanceList_71'],damageByDistance_71)
-				table.insert(magicList['diffuseSpeedList_72'],diffuseSpeed_72)
-				table.insert(magicList['catchRadiusList_75'],catchRadius_75)
-				table.insert(magicList['windSpeedList_76'],windSpeed_76)
-				table.insert(magicList['windDamagePercentList_77'],windDamagePercent_77)
-				table.insert(magicList['boundsDamagePercentList_78'],boundsDamagePercent_78)
-				table.insert(magicList['windSpeedList_79'],windSpeed_79)
-				table.insert(magicList['boundsDamageList_80'],boundsDamage_80)
-				table.insert(magicList['boundsDamageCountList_81'],boundsDamageCount_81)
-				table.insert(magicList['shootCountList_82'],shootCount_82)
-				table.insert(magicList['GSpeedList_83'],GSpeed_83)
+				magicList[icount]['speedList_01'] = speed_01
+				magicList[icount]['speedList_02'] = speed_02
+				magicList[icount]['speedList_14'] = speed_14
+				magicList[icount]['maxDistanceList_03'] = maxDistance_03
+				magicList[icount]['aoeRadiusList_04'] = aoeRadius_04
+				magicList[icount]['aoeRadiusList_05'] = aoeRadius_05
+				magicList[icount]['maxDistanceList_06'] = maxDistance_06
+				magicList[icount]['maxDistanceList_15'] = maxDistance_15
+				magicList[icount]['damageList_07'] = damage_07
+				magicList[icount]['damageList_08'] = damage_08
+				magicList[icount]['damageList_09'] = damage_09
+				magicList[icount]['maxChargesList_10'] = maxCharges_10
+				magicList[icount]['chargeReplenishTimeList_11'] = chargeReplenishTime_11
+				magicList[icount]['energyList_12'] = energy_12
+				magicList[icount]['energyList_13'] = energy_13
+				magicList[icount]['debuffDurationList_21'] = debuffDuration_21
+				magicList[icount]['beatBackDistanceList_22'] = beatBackDistance_22
+				magicList[icount]['debuffDurationList_23'] = debuffDuration_23
+				magicList[icount]['aoeDurationList_24'] = aoeDuration_24
+				magicList[icount]['debuffDurationList_25'] = debuffDuration_25
+				magicList[icount]['debuffDurationList_26'] = debuffDuration_26
+				magicList[icount]['stunDebuffDurationList_27'] = stunDebuffDuration_27
+				magicList[icount]['sleepDebuffDurationList_28'] = sleepDebuffDuration_28
+				magicList[icount]['aoeDurationList_29'] = aoeDuration_29
+				magicList[icount]['debuffDurationList_30'] = debuffDuration_30
+				magicList[icount]['aoeDurationList_31'] = aoeDuration_31
+				magicList[icount]['debuffDurationList_32'] = debuffDuration_32
+				magicList[icount]['debuffDurationList_33'] = debuffDuration_33
+				magicList[icount]['debuffDurationList_34'] = debuffDuration_34
+				magicList[icount]['aoeDurationList_35'] = aoeDuration_35
+				magicList[icount]['debuffDurationList_36'] = debuffDuration_36
+				magicList[icount]['GSpeedList_37'] = GSpeed_37
+				magicList[icount]['aoeDurationList_38'] = aoeDuration_38
+				magicList[icount]['disableTurningTimeList_39'] = disableTurningTime_39
+				magicList[icount]['boomDelayList_50'] = boomDelay_50
+				magicList[icount]['visionRadiusList_51'] = visionRadius_51
+				magicList[icount]['aoeDurationList_52'] = aoeDuration_52
+				magicList[icount]['debuffDurationList_53'] = debuffDuration_53
+				magicList[icount]['aoeDurationList_54'] = aoeDuration_54
+				magicList[icount]['visionTimeList_55'] = visionTime_55
+				magicList[icount]['debuffDelayList_56'] = debuffDelay_56
+				magicList[icount]['debuffDurationList_57'] = debuffDuration_57
+				magicList[icount]['searchRangeList_58'] = searchRange_58
+				magicList[icount]['doubleDamagePercentageList_59'] = doubleDamagePercentage_59
+				magicList[icount]['bounsDamagePercentageList_60'] = bounsDamagePercentage_60
+				magicList[icount]['sendDelayList_61'] = sendDelay_61
+				magicList[icount]['chargeTimeList_62'] = chargeTime_62
+				magicList[icount]['turnRatePercentList_63'] = turnRatePercent_63
+				magicList[icount]['speedPercentList_64'] = speedPercent_64
+				magicList[icount]['channelTimeList_65'] = channelTime_65
+				magicList[icount]['stageDurationList_66'] = stageDuration_66
+				magicList[icount]['debuffSpeedPercentList_67'] = debuffSpeedPercent_67
+				magicList[icount]['bounsDamagePercentageList_68'] = bounsDamagePercentage_68
+				magicList[icount]['debuffDurationList_69'] = debuffDuration_69
+				magicList[icount]['aoeRadiusList_70'] = aoeRadius_70
+				magicList[icount]['damageByDistanceList_71'] = damageByDistance_71
+				magicList[icount]['diffuseSpeedList_72'] = diffuseSpeed_72
+				magicList[icount]['catchRadiusList_75'] = catchRadius_75
+				magicList[icount]['windSpeedList_76'] = windSpeed_76
+				magicList[icount]['windDamagePercentList_77'] = windDamagePercent_77
+				magicList[icount]['boundsDamagePercentList_78'] = boundsDamagePercent_78
+				magicList[icount]['windSpeedList_79'] = windSpeed_79
+				magicList[icount]['boundsDamageList_80'] = boundsDamage_80
+				magicList[icount]['boundsDamageCountList_81'] = boundsDamageCount_81
+				magicList[icount]['shootCountList_82'] = shootCount_82
+				magicList[icount]['GSpeedList_83'] = GSpeed_83
+				icount = icount + 1
+				--print("magicList++:"..tempMagicName)
 				break
 			end
 		end
 	end
+
+	magicListByName = {}
+
+	for i = 1, #magicList ,1 do
+		local magicName = magicList[i]['magicNameList']
+		magicListByName[magicName] = {}
+		magicListByName[magicName] = magicList[i]
+	end
+	--print("magicListByName:"..#magicList)
+	--print("magicListByName:"..#magicListByName)
+	--[[
+	for key, value in pairs(magicListByName) do
+		print("===magicListByName===")
+		print(key)
+		print(value['magicNameList'])
+	end]]
     --print("listOVER",#magicNameList)
 end
 
@@ -1272,17 +1344,18 @@ function learnMagicByNum(playerID, num)
 	local player = PlayerResource:GetPlayer(playerID)
     local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-    local magicName = RandomMagicNameList[playerID][num]
-	local magicNameAllList = magicList['magicNameList']
+    local magicName = RandomMagicNameList[playerID][num]['magicNameList']
+	--local magicNameAllList = magicList['magicNameList']
 	--local preMagicList = GameRules.preMagicList
-	local magicLvList = magicList['magicLvList']
-	local stageAbilityList = magicList['stageAbilityList']
+	--local magicLvList = magicList['magicLvList']
+	--local stageAbilityList = magicList['stageAbilityList']
 	local magicLv
+	local stageAbility
 	local abilityIndex
-	for i = 1 , #magicNameAllList do
-		if magicName == magicNameAllList[i] then
-			magicLv = magicLvList[i]
-			stageAbility = stageAbilityList[i]
+	for i = 1 , #magicList do
+		if magicName == magicList[i]['magicNameList'] then
+			magicLv = magicList[i]['magicLvList']
+			stageAbility = magicList[i]['stageAbilityList']
 		end
 	end
 
@@ -1305,10 +1378,10 @@ function learnMagicByNum(playerID, num)
 		--print("stageAbility",stageAbility)
 		hHero:RemoveAbility(tempStageMagic) 
 
-		local stageModifiersName = "modifier_counter_"..tempStageMagic
-		if hHero:HasModifier(stageModifiersName) then
-			hHero:RemoveModifierByName(stageModifiersName)
-		end
+		--local stageModifiersName = "modifier_counter_"..tempStageMagic
+		--if hHero:HasModifier(stageModifiersName) then
+		--	hHero:RemoveModifierByName(stageModifiersName)
+		--end
 		hHero:AddAbility(stageAbility)	
 		--hHero:FindAbilityByName(stageAbility):SetLevel(1)
 	end
@@ -1341,29 +1414,31 @@ function getRebuildMagicList(playerID)
 	local rebuildNameList = {}
 	local rebuildIconList = {}
 
-	for i = 1 , #magicList['magicNameList'] do
+	for i = 1 , #magicList, 1 do
 		local listNum = 0
-		if magicList['magicNameList'][i] == magic_c then
+		if magicList[i]['magicNameList'] == magic_c then
 			listNum = 1
 		end
-		if magicList['magicNameList'][i] == magic_b then
+		if magicList[i]['magicNameList'] == magic_b then
 			listNum = 2
 		end
-		if magicList['magicNameList'][i] == magic_a then
+		if magicList[i]['magicNameList'] == magic_a then
 			listNum = 3
 		end
 
 		if listNum ~= 0 then
-			rebuildNameList[listNum] = magicList['magicNameList'][i]
-			rebuildIconList[listNum] = magicList['magicIconSrcList'][i]
+			rebuildNameList[listNum] = magicList[i]['magicNameList']
+			rebuildIconList[listNum] = magicList[i]['magicIconSrcList']
 		end
 	end
 	local listLength = #rebuildNameList
-
+	--print("===getRebuildMagicList====")
+	--DeepPrintTable(rebuildNameList)
+	--DeepPrintTable(rebuildIconList)
 	CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "getRebuildMagicListToForgetLUATOJS", {
 		listLength=listLength, 
         magicNameList = rebuildNameList,
-        magicIconList = rebuildIconList
+        magicIconSrcList = rebuildIconList
     })
 	
 end
@@ -1383,13 +1458,13 @@ function getRebuildMagicListByNameJSTOLUA( index,keys )
 	local num  = keys.num
 	local magicName = RandomMagicNameList[playerID][num]
 	local preMagic = magicName
-	local magicNameAllList = magicList['magicNameList']
+	--local magicNameAllList = magicList['magicNameList']
 	--local preMagicList = GameRules.preMagicList 
-	local magicLvList = magicList['magicLvList']
+	--local magicLvList = magicList['magicLvList']
 	local MagicLevel
-	for i = 1, #magicNameAllList do
-		if magicNameAllList[i] == magicName then
-			MagicLevel = magicLvList[i]
+	for i = 1, #magicList do
+		if magicList[i]['magicNameList'] == magicName then
+			MagicLevel = magicList[i]['magicLvList']
 		end
 	end
 

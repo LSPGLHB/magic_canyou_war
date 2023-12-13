@@ -19,6 +19,11 @@
 
 		"IconSrc" 						"file://{images}/custom_game/ability_button/earthshaker_fissure.png"  //选择框图标
 
+		"unitModel"			"shootUnit-M"
+		"hitType" 			"1"   //3直达施法点，2穿透弹，1为不穿透
+		"isAOE"             "0"
+		"isMisfire"         "1"
+
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -81,9 +86,11 @@
 				"AbilityLevel"		"b"
 				"unitType"          "tu"
 				"hitType" 			"1"   //3直达施法点，2穿透弹，1为不穿透
-				"isControl"			"1"
+				"cp"				"3"
                 "isMisfire"         "1"
                 "particles_hit_dur" "0.7"
+
+				"isControl"			"1"
 				"particles_nm"      "particles/37yinianyanji_shengcheng.vpcf"
 				"soundCast" 		"magic_control_rock_cast"
                 "particles_boom"    "particles/37yinianyanji_mingzhong.vpcf" 
@@ -96,7 +103,7 @@
 				"soundPower"		"magic_stone_power_up"
 				"particles_weak" 	"particles/37yinianyanji_xueruo.vpcf"
 				"soundWeak"			"magic_stone_power_down"
-				"cp"				"3"
+				
 				"modifier_caster_syn_name"	   "modifier_control_rock_under_control"
 				"ability_a_name"		   "control_rock_pre_datadriven"
 				"ability_b_name"		   "control_rock_pre_stage_b_datadriven"

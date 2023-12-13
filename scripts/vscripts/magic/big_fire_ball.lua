@@ -1,8 +1,67 @@
 require('shoot_init')
 require('skill_operation')
-function createBigFireBall(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+
+big_fire_ball_pre_datadriven = class({})
+big_fire_ball_datadriven = class({})
+LinkLuaModifier( "modifier_beat_back", "magic/modifiers/modifier_beat_back.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_disable_turning", "magic/modifiers/modifier_disable_turning.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "big_fire_ball_pre_datadriven_modifier_debuff", "magic/modifiers/big_fire_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "big_fire_ball_datadriven_modifier_debuff", "magic/modifiers/big_fire_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function big_fire_ball_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function big_fire_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function big_fire_ball_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+function big_fire_ball_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function big_fire_ball_pre_datadriven:OnSpellStart()
+    createShoot(self,'big_fire_ball_pre_datadriven')
+end
+
+function big_fire_ball_datadriven:OnSpellStart()
+    createShoot(self,'big_fire_ball_datadriven')
+end
+
+function createShoot(ability,magicName)
+    local caster = ability:GetCaster()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm = "particles/26dahuoqiushu_shengcheng.vpcf"
+    keys.soundCast = "magic_big_fire_ball_cast"
+	keys.particles_power = "particles/26dahuoqiushu_jiaqiang.vpcf"
+	keys.soundPower = "magic_fire_power_up"
+	keys.particles_weak = "particles/26dahuoqiushu_xueruo.vpcf"
+	keys.soundWeak = "magic_water_power_down"
+
+    keys.particles_boom = "particles/26dahuoqiushu_baozha.vpcf"
+    keys.soundBoom = "magic_big_fire_ball_boom"
+
+	keys.particles_defense = "particles/duobizhimangbuff_1.vpcf"
+	keys.soundDefense =      "magic_defence"
+				
+	keys.soundBeat =	"magic_beat_hit"
+
+	keys.hitTargetDebuff = "modifier_beat_back"
+
+	keys.hitDisableTurning =	"modifier_disable_turning"
+	keys.modifierDebuffName =  magicName.."_modifier_debuff"
+
+
+
+
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
     --local angleRate = ability:GetSpecialValueFor("angle_rate") * math.pi
@@ -60,7 +119,7 @@ function AOEOperationCallback(shoot,unit)
 	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)
 	local beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
 	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,beatBackDirection,AbilityLevel,true)
-	
+	disableTurning(keys,shoot,unit,AbilityLevel)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
@@ -69,7 +128,8 @@ function AOEOperationCallback(shoot,unit)
 	local faceAngle = ability:GetSpecialValueFor("face_angle")
 	local flag = isFaceByFaceAngle(shoot, unit, faceAngle)
 	if flag then
-		ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+		--ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+		unit:AddNewModifier( unit, ability, debuffName, {Duration = debuffDuration} )
 	else
         local defenceParticlesID = ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
         ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -79,6 +139,7 @@ function AOEOperationCallback(shoot,unit)
                 return nil
         end)
 	end
+
 end
 
 

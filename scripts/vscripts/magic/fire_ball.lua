@@ -1,15 +1,54 @@
+fire_ball_datadriven = class({})
+LinkLuaModifier( "modifier_beat_back", "magic/modifiers/modifier_beat_back.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_disable_turning", "magic/modifiers/modifier_disable_turning.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    local skillPoint = ability:GetCursorPosition()
-	local casterPoint = caster:GetAbsOrigin()
-	
-    --local speed = ability:GetSpecialValueFor("speed")
-	--local aoe_radius = ability:GetSpecialValueFor("aoe_radius") 
+function fire_ball_datadriven:GetAOERadius(v,t)
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+
+function fire_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+
+function fire_ball_datadriven:OnSpellStart()
+    local caster = self:GetCaster()
     
+    local skillPoint = self:GetCursorPosition()
+	local casterPoint = caster:GetAbsOrigin()
+
+	local keys = {}
+    keys.caster = caster
+	keys.ability = self
+	keys.unitModel = "shootUnit-M"
+    keys.AbilityLevel = "b"
+    keys.UnitType = "huo"
+    keys.hitType = 3
+	keys.isAOE = 1
+    --keys.particles_hit_dur = 0.7
+    --keys.cp = 3
+
+	keys.particles_nm = "particles/06huoqiushu_shengcheng.vpcf"
+    keys.soundCast = "magic_fire_ball_cast"
+	keys.particles_power = "particles/06huoqiushu_jiaqiang.vpcf"
+	keys.soundPower = "magic_fire_power_up"
+	keys.particles_weak ="particles/06huoqiushu_xueruo.vpcf"
+	keys.soundWeak = "magic_fire_power_down"
+
+    keys.particles_boom =  "particles/06huoqiushu_baozha.vpcf"
+    keys.soundBoom = "magic_fire_ball_boom"
+
+	keys.hitTargetDebuff = "fire_ball_modifier_beat_back"
+	keys.soundBeat = "magic_beat_hit"
+	keys.hitDisableTurning = "modifier_disable_turning"
+
+		
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
@@ -30,8 +69,11 @@ function createShoot(keys)
     moveShoot(keys, shoot, fireBallBoomCallBack, nil)
 end
 
+
+
 --技能爆炸,单次伤害
 function fireBallBoomCallBack(shoot)
+	--print("fireBallBoomCallBack")
     --ParticleManager:DestroyParticle(shoot.particleID, true) --子弹特效消失
     fireBallRenderParticles(shoot) --爆炸粒子效果生成		  
 	boomAOEOperation(shoot, fireBallAOEOperationCallback)
@@ -49,6 +91,7 @@ function fireBallRenderParticles(shoot)
 end
 
 function fireBallAOEOperationCallback(shoot,unit)
+	--print("fireBallAOEOperationCallback")
 	local keys = shoot.keysTable
 	local caster = keys.caster
 	local ability = keys.ability
@@ -64,7 +107,11 @@ function fireBallAOEOperationCallback(shoot,unit)
 	local tempTargetPos = Vector(targetPos.x ,targetPos.y ,0)
 	local beatBackDirection =  (tempTargetPos - tempShootPos):Normalized()
 	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,beatBackDirection,AbilityLevel,true)
+	disableTurning(keys,shoot,unit,AbilityLevel)
 	local damage = getApplyDamageValue(shoot)
 	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
+
+
+
 
