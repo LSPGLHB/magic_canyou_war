@@ -3,12 +3,35 @@ require('skill_operation')
 require('player_power')
 require('scene/game_stone')
 
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    local skillPoint = ability:GetCursorPosition()
-    local speed = ability:GetSpecialValueFor("speed")
-    local max_distance = ability:GetSpecialValueFor("max_distance")
+function common_attack_bad_datadriven:GetCastRange(t,v)
+    local range = getRangeByName(self,'d')
+	return range
+end
+
+function common_attack_bad_datadriven:OnSpellStart()
+    local caster = self:GetCaster()
+    local skillPoint = self:GetCursorPosition()
+    local speed = self:GetSpecialValueFor("speed")
+    local max_distance = self:GetSpecialValueFor("max_distance")
+
+    local keys = {}
+    keys.caster = caster
+	keys.ability = self
+    keys.unitModel = "shootUnit-XS"
+    keys.AbilityLevel = "d"
+    keys.UnitType = "base"
+    keys.hitType = 1
+    keys.isMisfire = 1
+
+    keys.particles_nm = "particles/yingongji.vpcf"
+    keys.soundCast = "magic_common_attack_bad_cast"
+    keys.particles_misfire = "particles/yingongji_jiluo.vpcf"
+    keys.soundMisfire = "magic_common_attack_bad_mis_fire"
+    keys.particles_miss = "particles/yingongji_xiaoshi.vpcf"
+    keys.soundMiss = "magic_common_attack_bad_miss"
+    keys.particles_boom =  "particles/yingongji_mingzhong.vpcf"
+    keys.soundBoom = "magic_common_attack_bad_boom"
+
 
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()

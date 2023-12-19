@@ -1,16 +1,46 @@
 require('shoot_init')
 require('skill_operation')
-function createFireBottle(keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    local skillPoint = ability:GetCursorPosition()
 
+fire_bottle_datadriven = class({})
+function fire_bottle_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+function fire_bottle_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'c')
+	return aoe_radius
+end
+function fire_bottle_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+	local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =     "particles/11huoyaoping_shengcheng.vpcf"
+    keys.soundCast =		"magic_fire_bottle_cast"
     
+    keys.particles_power = 	"particles/11huoyaoping_jiaqiang.vpcf"
+    keys.soundPower =		"magic_fire_power_up"
+
+    keys.particles_weak = 	"particles/11huoyaoping_xueruo.vpcf"
+    keys.soundWeak =		"magic_fire_power_down"
+    
+    keys.particles_boom = 	"particles/11huoyaopingbaozha.vpcf"
+    keys.soundBoom =		"magic_fire_bottle_boom"
+    
+    keys.soundDuration =		"magic_fire_bottle_duration"
+    keys.soundDurationDelay =   0.3
+
+    local skillPoint = ability:GetCursorPosition()    
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
+
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)

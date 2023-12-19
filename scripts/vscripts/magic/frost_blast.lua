@@ -1,8 +1,54 @@
 require('shoot_init')
 require('skill_operation')
-function createFrostBlast(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+frost_blast_pre_datadriven = ({})
+frost_blast_datadriven = ({})
+
+LinkLuaModifier( "frost_blast_datadriven_modifier_debuff", "magic/modifiers/frost_blast_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+function frost_blast_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function frost_blast_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function frost_blast_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function frost_blast_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function frost_blast_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function frost_blast_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/44bingshuangchongji_shengcheng.vpcf"
+    keys.soundCast =			"magic_frost_blast_cast"
+    keys.particles_power = 	"particles/44bingshuangchongji_jiaqiang.vpcf"
+    keys.soundPower =		"magic_water_power_up"
+    keys.particles_weak = 	"particles/44bingshuangchongji_xueruo.vpcf"
+    keys.soundWeak =			"magic_water_power_down"
+    keys.particles_boom = 	"particles/44bingshuangchongji_baozha.vpcf"
+    keys.soundBoom =			"magic_frost_blast_boom"
+    keys.soundHit =			"magic_frost_blast_hit"
+    keys.aoeTargetDebuff =   "frost_blast_datadriven_modifier_debuff"
+
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -58,7 +104,8 @@ function frostBlastAOECallback(shoot,unit)
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
         debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--数值加强
         debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强
-        ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = debuffDuration})
+        --ability:ApplyDataDrivenModifier(caster, unit, aoeTargetDebuff, {Duration = debuffDuration})
+        unit:AddNewModifier(caster,ability,aoeTargetDebuff, {Duration = debuffDuration})
     end
 
 end

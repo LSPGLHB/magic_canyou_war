@@ -316,6 +316,7 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "buttonlJSTOLUA", buttonlJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonmJSTOLUA", buttonmJSTOLUA )
 	CustomGameEventManager:RegisterListener( "buttonnJSTOLUA", buttonnJSTOLUA )
+	CustomGameEventManager:RegisterListener( "buttonoJSTOLUA", buttonoJSTOLUA )
 
 	--测试快捷键
 	CustomGameEventManager:RegisterListener("ed_open_my_shop", function(_, keys)

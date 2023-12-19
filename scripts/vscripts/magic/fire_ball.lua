@@ -18,21 +18,10 @@ end
 
 
 function fire_ball_datadriven:OnSpellStart()
-    local caster = self:GetCaster()
-    
-    local skillPoint = self:GetCursorPosition()
-	local casterPoint = caster:GetAbsOrigin()
 
-	local keys = {}
-    keys.caster = caster
-	keys.ability = self
-	keys.unitModel = "shootUnit-M"
-    keys.AbilityLevel = "b"
-    keys.UnitType = "huo"
-    keys.hitType = 3
-	keys.isAOE = 1
-    --keys.particles_hit_dur = 0.7
-    --keys.cp = 3
+	local caster = ability:GetCaster()
+	local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
 
 	keys.particles_nm = "particles/06huoqiushu_shengcheng.vpcf"
     keys.soundCast = "magic_fire_ball_cast"
@@ -48,7 +37,8 @@ function fire_ball_datadriven:OnSpellStart()
 	keys.soundBeat = "magic_beat_hit"
 	keys.hitDisableTurning = "modifier_disable_turning"
 
-		
+	local skillPoint = self:GetCursorPosition()
+	local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())

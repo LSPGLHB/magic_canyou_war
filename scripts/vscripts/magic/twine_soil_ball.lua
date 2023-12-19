@@ -18,24 +18,25 @@ function twine_soil_ball_datadriven:GetCastRange(v,t)
 end
 
 function twine_soil_ball_pre_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'twine_soil_ball_pre_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 function twine_soil_ball_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'twine_soil_ball_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 
 function twine_soil_ball_pre_datadriven:OnSpellStart()
-    createTwineSoilBall(self,'twine_soil_ball_pre_datadriven')
+    createTwineSoilBall(self)
 end
 
 function twine_soil_ball_datadriven:OnSpellStart()
-    createTwineSoilBall(self,'twine_soil_ball_datadriven')
+    createTwineSoilBall(self)
 end
-function createTwineSoilBall(ability,magicName)
+function createTwineSoilBall(ability)
 
     local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 
     keys.particles_nm = "particles/02tuqiushu_shengcheng.vpcf"

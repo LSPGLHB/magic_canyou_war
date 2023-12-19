@@ -5,7 +5,6 @@ require('skill_operation')
 require('player_power')
 require('scene/game_stone')
 
-
 function common_attack_good_datadriven:GetCastRange(t,v)
     local range = getRangeByName(self,'d')
 	return range
@@ -26,8 +25,6 @@ function common_attack_good_datadriven:OnSpellStart()
     keys.hitType = 1
     keys.isMisfire = 1
 
-    --keys.particles_hit_dur = 0.7
-    --keys.cp = 3
     keys.particles_nm = "particles/yanggongji.vpcf"--self:GetSpecialValueFor("particles_nm")
     keys.soundCast = "magic_common_attack_good_cast"--self:GetSpecialValueFor("soundCast")
     keys.particles_misfire = "particles/yanggongji_jiluo.vpcf"--self:GetSpecialValueFor("particles_misfire")

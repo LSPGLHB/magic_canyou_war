@@ -227,4 +227,14 @@ function buttonnJSTOLUA(index,keys)
     hHero:ForceKill(false)
 end
 
+function buttonoJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    local hHero = PlayerResource:GetSelectedHeroEntity(myPlayerID)
+    --print(hHero:GetAbilityPoints())
+    --hHero:SetAbilityPoints(1) --原设计只能定义是否大招（6级一升）默认2级一升。想1级一升需要自己做
+    hHero:HeroLevelUp( true )
+    --print(hHero:GetAbilityPoints())
+end
+
+
 

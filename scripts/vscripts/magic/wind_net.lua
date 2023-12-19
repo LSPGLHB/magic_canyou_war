@@ -19,25 +19,26 @@ function wind_net_datadriven:GetCastRange(v,t)
 end
 
 function wind_net_pre_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'wind_net_pre_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 function wind_net_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'wind_net_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 
 function wind_net_pre_datadriven:OnSpellStart()
-    createShoot(self,'wind_net_pre_datadriven')
+    createShoot(self)
 end
 
 function wind_net_datadriven:OnSpellStart()
-    createShoot(self,'wind_net_datadriven')
+    createShoot(self)
 end
 
-function createShoot(ability,magicName)
+function createShoot(ability)
 
     local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 
     keys.particles_nm = "particles/35fengzhiwang_shengcheng.vpcf"

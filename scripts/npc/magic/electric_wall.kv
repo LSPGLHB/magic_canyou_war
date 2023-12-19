@@ -4,11 +4,13 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/electric_wall.lua"	
 
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"disruptor_kinetic_field"
@@ -144,7 +146,7 @@
 		{
 			"modifier_electric_wall_stun"
 			{
-				"IsHidden"			"1"
+				"IsDebuff"			"1"
                 "EffectName"		"particles/econ/items/earthshaker/earthshaker_arcana/earthshaker_arcana_stunned_symbol.vpcf"
 				"EffectAttachType"	"follow_overhead"
                 "OverrideAnimation"     "ACT_DOTA_DISABLED"

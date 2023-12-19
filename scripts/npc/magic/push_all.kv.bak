@@ -6,13 +6,16 @@
 	//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		//"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
+
 		"AbilityTextureName"			"marci_grapple"
 		"MaxLevel"                      "1"
-		
+
+		"AOERadius"                     "250"
+		"MaxLevel"                      "1"
 		"UnitType"         				"base"
 		"AbilityLevel"					"d"
 		"IconSrc" 						"file://{images}/custom_game/ability_button/marci_grapple.png"  //选择框图标
@@ -26,12 +29,12 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"   //施法距离
+		//"AbilityCastRange"				"700"   //施法距离
 		"AbilityCastPoint"				"0.1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"120"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -39,7 +42,21 @@
 
         "AbilitySpecial"
 		{
-
+            "01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"push_speed"				"1800"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"700"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"search_radius"				"250"
+			}
 
         }
 
@@ -48,15 +65,38 @@
 			"RunScript"
 			{
 				"ScriptFile"		"magic/push_all.lua"
-				"Function"			"blink"
-
+				"Function"			"getPush"
+				"Target"			"POINT"
 		
 				"AbilityLevel"		"d"
 				"unitType"          "base"
+
+				"soundPushStaff"	"magic_pull_push_staff"
+
+				"soundPush"			"magic_push_all"
+
+				"soundBeat"			"magic_beat_hit"
+
+                "hitTargetDebuff"   "modifier_push_all_target_buff"
 			
 			}
 		}
 
-       
+        "Modifiers"
+		{
+			"modifier_push_all_target_buff"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/jituiyangchenbuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"OverrideAnimation"     "ACT_DOTA_FLAIL"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+
+		
+        }
     }
 }

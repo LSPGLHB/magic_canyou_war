@@ -1,8 +1,65 @@
 require('shoot_init')
 require('skill_operation')
-function stepOne(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+
+electric_shock_datadriven = class({})
+electric_shock_datadriven_stage_b = class({})
+LinkLuaModifier( "electric_shock_datadriven_modifier_debuff", "magic/modifiers/electric_shock_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_electric_shock_stun", "magic/modifiers/electric_shock_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_sleep_debuff_datadriven", "magic/modifiers/modifier_sleep_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+
+function electric_shock_datadriven:OnUpgrade()
+	LevelUpAbility(self)
+end
+
+function electric_shock_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function electric_shock_datadriven:OnSpellStart()
+    stepOne(self)
+end
+
+function electric_shock_datadriven_stage_b:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function electric_shock_datadriven_stage_b:OnSpellStart()
+    stepTwo(self)
+end
+
+function stepOne(ability)
+
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/23_2zhengfudianji_shengcheng.vpcf"
+    keys.soundCast =			"magic_electric_shock_cast"
+    
+    keys.particles_power = 	"particles/23_2zhengfudianji_jiaqiang.vpcf"
+    keys.soundPower =		"magic_electric_power_up"
+    keys.particles_weak = 	"particles/23_2zhengfudianji_xueruo.vpcf"
+    keys.soundWeak =			"magic_electric_power_down"
+    keys.particles_misfire = "particles/23_2zhengfudianji_jiluo.vpcf"
+    keys.soundMisfire =		"magic_electric_mis_fire"
+    keys.particles_miss =    "particles/23_2zhengfudianji_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_electric_miss"
+
+    keys.particles_hit = 	"particles/23_2zhengfudianji_mingzhong.vpcf"
+    keys.soundHit =			"magic_electric_shock_hit"
+    keys.particles_boom = 	"particles/zhengfudianjibaozha.vpcf"
+    keys.soundBoom =			"magic_electric_shock_boom"
+
+    keys.stunDebuff =        "modifier_electric_shock_stun"
+
+    keys.modifier_caster_syn_name =	   "electric_shock_datadriven_modifier_debuff"
+
+    keys.ability_a_name =		   'electric_shock_datadriven'
+    keys.ability_b_name =		   "electric_shock_datadriven_stage_b"
+
     local skillPoint = ability:GetCursorPosition()  
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -27,7 +84,10 @@ function stepOne(keys)
 
 
     local casterBuff = keys.modifier_caster_syn_name
-    ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
+    --ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
+    caster:AddNewModifier(caster,ability,casterBuff, {Duration = 5} )
+    
+
     shoot.launchElectricShock = 0
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
@@ -38,6 +98,7 @@ function stepOne(keys)
         if shoot.energy_point == 0 then
             if caster:HasModifier(casterBuff) then
                 caster:RemoveModifierByName(casterBuff) 
+                initStage(caster)
             end
             return nil
         end
@@ -55,17 +116,46 @@ function stepOne(keys)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
 
-    PlayerPower[playerID]["electric_shock_a"] = shoot
+    --PlayerPower[playerID]["electric_shock_a"] = shoot
+    caster.electric_shock_a = shoot
     shoot.playerID = playerID
     --moveShoot(keys, shoot, electricBallBoomCallBack, nil)
 end
 
-function stepTwo(keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
+function stepTwo(ability)
 
+    local caster = ability:GetCaster()
+    --local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,'electric_shock_datadriven')
+
+    keys.particles_nm =      "particles/23_1zhengfudianji_shengcheng.vpcf"
+    keys.soundCast =			"magic_electric_shock_cast"
+    
+    keys.particles_power = 	"particles/23_1zhengfudianji_jiaqiang.vpcf"
+    keys.soundPower =		"magic_electric_power_up"
+    keys.particles_weak = 	"particles/23_1zhengfudianji_xueruo.vpcf"
+    keys.soundWeak =			"magic_electric_power_down"
+    keys.particles_misfire = "particles/23_1zhengfudianji_jiluo.vpcf"
+    keys.soundMisfire =		"magic_electric_mis_fire"
+    keys.particles_miss =    "particles/23_1zhengfudianji_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_electric_miss"
+
+    keys.particles_hit = 	"particles/23_1zhengfudianji_mingzhong.vpcf"
+    keys.soundHit =			"magic_electric_shock_hit_2"
+    keys.particles_boom = 	"particles/zhengfudianjibaozha.vpcf"
+    keys.soundBoom =			"magic_electric_shock_boom"
+
+
+    keys.sleepDebuff =   "modifier_sleep_debuff_datadriven"
+    keys.stunDebuff =    "modifier_electric_shock_stun"
+
+
+    keys.modifier_caster_syn_name =	   "modifier_electric_shock_datadriven_buff"
+    keys.ability_a_name =		   "electric_shock_datadriven"
+    keys.ability_b_name =		   "electric_shock_datadriven_stage_b"
+
+    
+    local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local playerID = caster:GetPlayerID()
@@ -91,13 +181,16 @@ function stepTwo(keys)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
 
-    PlayerPower[playerID]["electric_shock_b"] = shoot
+    --PlayerPower[playerID]["electric_shock_b"] = shoot
+    caster.electric_shock_b = shoot
     shoot.playerID = playerID
-    local shoot_a =  PlayerPower[playerID]["electric_shock_a"] 
+    local shoot_a =  caster.electric_shock_a --PlayerPower[playerID]["electric_shock_a"] 
     shoot_a.launchElectricShock = 1
     local casterBuff = keys.modifier_caster_syn_name
     if caster:HasModifier(casterBuff) then
+        print("hasmo")
         caster:RemoveModifierByName(casterBuff) 
+        initStage(caster)
     end
     Timers:CreateTimer(0.5,function()
         launchElectricShock(keys)
@@ -109,8 +202,8 @@ function launchElectricShock(keys)
     local caster = keys.caster
     local playerID = caster:GetPlayerID()
 
-    local shoot_a = PlayerPower[playerID]["electric_shock_a"]
-    local shoot_b = PlayerPower[playerID]["electric_shock_b"]
+    local shoot_a = caster.electric_shock_a --PlayerPower[playerID]["electric_shock_a"]
+    local shoot_b = caster.electric_shock_b --PlayerPower[playerID]["electric_shock_b"]
 
     local a_point = shoot_a:GetAbsOrigin()
     local b_point = shoot_b:GetAbsOrigin()
@@ -148,7 +241,8 @@ function electricShockAHitCallback(shoot,unit)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     debuffDuration = debuffDuration * (shoot.speed -200 * 0.02) / (800 * 0.02)
     --print("AdebuffDuration:",debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    unit:AddNewModifier(unit,ability,debuffName, {Duration = debuffDuration})
 end
 
 function electricShockBHitCallback(shoot,unit)
@@ -166,7 +260,8 @@ function electricShockBHitCallback(shoot,unit)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     debuffDuration = debuffDuration * (shoot.speed - 200 * 0.02) / (800 * 0.02)
     --print("BdebuffDuration:",debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    unit:AddNewModifier(unit,ability,debuffName, {Duration = debuffDuration} )
 end
 
 
@@ -175,8 +270,8 @@ function electricShockIntervalCallBack(shoot)
 	local caster = keys.caster
     local playerID = caster:GetPlayerID()
     local interval = 0.02
-    local shoot_a = PlayerPower[playerID]["electric_shock_a"]
-    local shoot_b = PlayerPower[playerID]["electric_shock_b"]
+    local shoot_a = caster.electric_shock_a --PlayerPower[playerID]["electric_shock_a"]
+    local shoot_b = caster.electric_shock_b --PlayerPower[playerID]["electric_shock_b"]
     local energy_point_a = shoot_a.energy_point
     local energy_point_b = shoot_b.energy_point
     --print("electricShockIntervalCallBack-a",energy_point_a,"b:",energy_point_b)
@@ -259,39 +354,41 @@ function electricShockAOEOperationCallback(shoot,unit)
     sleepDebuffDuration = getApplyControlValue(shoot, sleepDebuffDuration)
     sleepDebuffDuration = sleepDebuffDuration * (shoot.speed -200 * 0.02) / (800 * 0.02)
 
-    ability:ApplyDataDrivenModifier(caster, unit, stunDebuff,  {Duration = stunDebuffDuration})
-    ability:ApplyDataDrivenModifier(caster, unit, sleepDebuff, {Duration = sleepDebuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, stunDebuff,  {Duration = stunDebuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, sleepDebuff, {Duration = sleepDebuffDuration})
+
+    unit:AddNewModifier(unit,ability,stunDebuff, {Duration = stunDebuffDuration} )
+    unit:AddNewModifier(unit,ability,sleepDebuff, {Duration = sleepDebuffDuration} )
      
 end
 
 
-function LevelUpAbility(keys)
-    local caster = keys.caster
-	local this_ability = keys.ability
-	local this_abilityName = this_ability:GetAbilityName()
-	local this_abilityLevel = this_ability:GetLevel()
+function LevelUpAbility(self)
+    local caster = self:GetCaster()
+
+	local ability = self
+	local abilityName = ability:GetAbilityName()
+	local abilityLevel = ability:GetLevel()
 	-- The ability to level up
-	local ability_b_name = keys.ability_b_name
+	local ability_b_name = abilityName.."_stage_b"
 	local ability_handle = caster:FindAbilityByName(ability_b_name)
 	local ability_level = ability_handle:GetLevel()
 	-- Check to not enter a level up loop
-	if ability_level ~= this_abilityLevel then
-		ability_handle:SetLevel(this_abilityLevel)
+	if ability_level ~= abilityLevel then
+		ability_handle:SetLevel(abilityLevel)
 	end
 end
 
-function initStage(keys)
-    local caster	= keys.caster
-	local ability	= keys.ability
+function initStage(caster)
+    --local caster	= keys.caster
+	--local ability	= keys.ability
     local playerID = caster:GetPlayerID()
---[[local pfx = caster.fire_spirits_pfx
-	ParticleManager:DestroyParticle( pfx, false )
-]]-- Swap main ability
-    local ability_a_name	= keys.ability_a_name
-    local ability_b_name	= keys.ability_b_name
+    -- Swap main ability
+    local ability_a_name	= "electric_shock_datadriven"
+    local ability_b_name	= "electric_shock_datadriven_stage_b"
     caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
 
-    local shoot_a = PlayerPower[playerID]["electric_shock_a"]
+    local shoot_a = caster.electric_shock_a--PlayerPower[playerID]["electric_shock_a"]
 
     if shoot_a.launchElectricShock == 0 then
         shootSoundAndParticle(shoot_a, 'miss')
@@ -300,13 +397,4 @@ function initStage(keys)
     
 end
 
---[[
-function initStageA(keys)
-    local caster	= keys.caster
-    local playerID = caster:GetPlayerID()
-	local ability	= keys.ability
-    local ability_b_name	= keys.ability_b_name
-    local ability_a_name	= keys.ability_a_name
-    caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
 
-end]]

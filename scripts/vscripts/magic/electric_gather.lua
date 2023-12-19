@@ -1,9 +1,79 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+LinkLuaModifier( "modifier_electric_gather_channel_datadriven", "magic/modifiers/electric_gather_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+electric_gather_pre_datadriven = class({})
+electric_gather_datadriven = class({})
+
+function electric_gather_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function electric_gather_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function electric_gather_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function electric_gather_pre_datadriven:OnChannelInterrupted()
+	electricGatherSend(self)
+end
+
+function electric_gather_pre_datadriven:OnChannelFinish()
+	electricGatherSend(self)
+end
+
+function electric_gather_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function electric_gather_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function electric_gather_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function electric_gather_datadriven:OnChannelInterrupted()
+	electricGatherSend(self)
+end
+
+function electric_gather_datadriven:OnChannelFinish()
+	electricGatherSend(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+	--local ability = self:GetAbility()
+	local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+	keys.particles_nm =      "particles/08xulishandian_shengcheng.vpcf"
+	keys.soundCastSp1 =		"magic_electric_gather_cast_sp1"
+	keys.soundCastSp2 =		"magic_electric_gather_cast_sp2"
+	
+	keys.particles_power = 	"particles/08xulishandian_jiaqiang.vpcf"
+	keys.soundPower =	"magic_electric_power_up"
+	keys.particles_weak = 	"particles/08xulishandian_xueruo.vpcf"
+	keys.soundWeak =	"magic_electric_power_down"
+	
+	keys.particles_boom = 	"particles/08xulishandian_mingzhong.vpcf"
+	keys.soundBoom =			"magic_electric_gather_boom"
+
+	keys.particles_misfire = "particles/08xulishandian_jiluo.vpcf"
+	keys.soundMisfire =		"magic_electric_mis_fire"
+	keys.particles_miss =    "particles/08xulishandian_xiaoshi.vpcf"
+	keys.soundMiss =		"magic_electric_miss"
+
+	keys.modifier_caster_channel_name = "modifier_electric_gather_channel_datadriven"
+
     local skillPoint = ability:GetCursorPosition()
     local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -27,8 +97,24 @@ function createShoot(keys)
     local shootPos3 = casterPoint + direction3 * 60
     table.insert(shootPosTable,shootPos3)
 
-
     initDurationBuff(keys)
+
+	caster:AddNewModifier( caster, ability, keys.modifier_caster_channel_name, {Duration = -1})
+
+	caster.electric_gather_send = 0
+    ability.electric_gather_damage_bouns = 0.0
+    local charge_time = ability:GetSpecialValueFor("charge_time")
+    local charge_damage_per_interval = ability:GetSpecialValueFor("charge_damage_per_interval")
+    local charge_interval = 0.1
+    Timers:CreateTimer(function()
+        if caster.electric_gather_send == 0 then
+            ability.electric_gather_damage_bouns = ability.electric_gather_damage_bouns + charge_damage_per_interval
+            --print("ga:"..ability.electric_gather_damage_bouns)
+            return charge_interval
+        else
+            return nil
+        end
+    end)
 
     for i = 1, 2, 1 do
         local shootPos = shootPosTable[i]
@@ -61,7 +147,7 @@ function moveElectricGatherSp1(keys,shoot)
 	local speedBase = ability:GetSpecialValueFor("speed")
 
 	local timeCount = 0
-	caster.electric_gather_send = 0
+	
 	shoot.traveled_back_distance = 0
 	Timers:CreateTimer(function()
 
@@ -93,26 +179,29 @@ function moveElectricGatherSp1(keys,shoot)
 	moveShoot(keys, shoot, electricGatherBoomCallBack, nil)
 end
 
-function electricGatherSend(keys)
-	local caster = keys.caster
+function electricGatherSend(self)
+	--print("electricGatherSendelectricGatherSendelectricGatherSend")
+	local caster = self:GetCaster()
 	caster.electric_gather_send = 1
+	caster:RemoveModifierByName("modifier_electric_gather_channel_datadriven")
 end
 
-function electricGatherChargeInit(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	local charge_damage_per_interval = ability:GetSpecialValueFor("charge_damage_per_interval")
+--[[
+function electricGatherChargeInit(self)
+	--local caster = keys.caster
+	local ability = self:GetAbility()
+	--local charge_damage_per_interval = ability:GetSpecialValueFor("charge_damage_per_interval")
 	ability.electric_gather_damage_bouns = 0.0
-	ability.electric_gather_damage_bouns = ability.electric_gather_damage_bouns + charge_damage_per_interval
+	--ability.electric_gather_damage_bouns = ability.electric_gather_damage_bouns + charge_damage_per_interval
 
 end
 
-function electricGatherCharge(keys)
-	local caster = keys.caster
-	local ability = keys.ability
+function electricGatherCharge(self)
+	--local caster = keys.caster
+	local ability = self:GetAbility()
 	local charge_damage_per_interval = ability:GetSpecialValueFor("charge_damage_per_interval")
 	ability.electric_gather_damage_bouns = ability.electric_gather_damage_bouns + charge_damage_per_interval
-end
+end]]
 
 
 
@@ -132,7 +221,7 @@ function electricGatherAOEOperationCallback(shoot,unit)
 	local ability = keys.ability
 	--print("electricGatherAOEOperationCallback:",ability.electric_gather_damage_bouns)
     local damage = (getApplyDamageValue(shoot)  + ability.electric_gather_damage_bouns) / 2
-
+	--print("damage:"..damage)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

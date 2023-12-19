@@ -1,8 +1,42 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+clay_ball_datadriven = class({})
+
+LinkLuaModifier( "clay_ball_datadriven_modifier_debuff", "magic/modifiers/clay_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function clay_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+
+function clay_ball_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'c')
+	return aoe_radius
+end
+
+
+function clay_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm = "particles/32niantudan_shengcheng.vpcf"
+    keys.soundCast = "magic_clay_ball_cast"
+	keys.particles_power = "particles/32niantudan_jiaqiang.vpcf"
+	keys.soundPower = "magic_soil_power_up"
+	keys.particles_weak = "particles/32niantudan_xueruo.vpcf"
+	keys.soundWeak = "magic_soil_power_down"
+
+    keys.particles_boom = "particles/32niantudan_baozha.vpcf"
+    keys.soundBoom = "magic_clay_ball_boom"
+
+	keys.hitTargetDebuff = magicName.."_modifier_debuff"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -52,7 +86,8 @@ function clayBallAOEOperationCallback(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
+    unit:AddNewModifier( caster, ability, hitTargetDebuff, {Duration = debuffDuration} )
 end
 
 function clayBallIntervalCallBack(shoot)

@@ -1,8 +1,45 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+
+electric_arrow_datadriven = class({})
+
+function electric_arrow_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function electric_arrow_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'c')
+	return aoe_radius
+end
+
+function electric_arrow_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+
+    keys.particles_nm=      "particles/38dianjian_shengcheng.vpcf"
+    keys.soundCastSp1=		"magic_electric_arrow_cast_sp1"
+    keys.soundCastSp2=		"magic_electric_arrow_cast_sp2"
+    
+    keys.particles_power= 	"particles/38dianjian_jiaqiang.vpcf"
+    keys.soundPower=		"magic_electric_power_up"
+    keys.particles_weak= 	"particles/38dianjian_xueruo.vpcf"
+    keys.soundWeak=			"magic_electric_power_down"
+
+    keys.particles_misfire= "particles/38dianjian_jiluo.vpcf"
+    keys.soundMisfire=		"magic_electric_mis_fire"
+    keys.particles_miss=    "particles/38dianjian_xiaoshi.vpcf"
+    keys.soundMiss=			"magic_electric_miss"
+    
+    keys.particles_boom= 	"particles/38dianjian_mingzhong.vpcf"
+    keys.soundBoom =		"magic_electric_arrow_boom"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance") -- (skillPoint - casterPoint ):Length2D()

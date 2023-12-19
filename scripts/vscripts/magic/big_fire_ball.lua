@@ -28,15 +28,16 @@ function big_fire_ball_datadriven:GetAOERadius()
 end
 
 function big_fire_ball_pre_datadriven:OnSpellStart()
-    createShoot(self,'big_fire_ball_pre_datadriven')
+    createShoot(self)
 end
 
 function big_fire_ball_datadriven:OnSpellStart()
-    createShoot(self,'big_fire_ball_datadriven')
+    createShoot(self)
 end
 
-function createShoot(ability,magicName)
+function createShoot(ability)
     local caster = ability:GetCaster()
+	local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 
     keys.particles_nm = "particles/26dahuoqiushu_shengcheng.vpcf"

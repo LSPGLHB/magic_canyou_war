@@ -4,18 +4,20 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/control_rock.lua"	
 
 		"AbilityTextureName"			"earthshaker_fissure"
         "MaxLevel"                      "1"
 		"UnitType"         				"tu"
 		"AbilityLevel"					"b"
 		"PreAbility"					"control_rock_pre_datadriven"
-		"StageAbility"					"control_rock_stage_b_datadriven"
+		"StageAbility"					"control_rock_datadriven_stage_b"
 
 		"IconSrc" 						"file://{images}/custom_game/ability_button/earthshaker_fissure.png"  //选择框图标
 
@@ -121,57 +123,10 @@
 		}
 
 
-		"Modifiers"
-		{
-			"modifier_control_rock_under_control"
-			{
-				"IsBuff"				"1"
-				"EffectName"		"particles/37yinianyanji_buff.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
-				"States"
-				{
-                    "MODIFIER_STATE_ROOTED"         "MODIFIER_STATE_VALUE_ENABLED"
-				}	
-
-				
-				"OnStateChanged"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"magic/control_rock.lua"
-						"Function"			"CheckToInterrupt"
-						"ability_a_name"	"control_rock_datadriven"
-						"ability_b_name"	"control_rock_stage_b_datadriven"
-						"modifier_caster_syn_name"	"modifier_control_rock_under_control"
-					}
-				}
-
-                "OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"magic/control_rock.lua"
-						"Function"			"initMagicStage"
-						"ability_a_name"	"control_rock_datadriven"
-						"ability_b_name"	"control_rock_stage_b_datadriven"
-					}
-
-				}
-
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"magic/control_rock.lua"
-						"Function"			"OnOrder"
-					}
-				}
-			}
-		}
+		
 	}
 
-	"control_rock_stage_b_datadriven"
+	"control_rock_datadriven_stage_b"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -209,8 +164,44 @@
 				"Function"			"EndControl"
 				"ability_a_name"		   "control_rock_datadriven"
 				"ability_b_name"		   "control_rock_stage_b_datadriven"
-				"modifier_caster_syn_name" 		"modifier_control_rock_under_control"
+				"modifier_caster_syn_name" 		"control_rock_modifier_under_control"
+				"modifier_caster_syn_name_b" 		"control_rock_modifier_under_control_b"
 			}
-		}	
+		}
+
+		"Modifiers"
+		{
+			"control_rock_modifier_under_control_b"
+			{
+				"IsHidden"			"1"
+				//"EffectName"		"particles/37yinianyanji_buff.vpcf"
+				//"EffectAttachType"	"follow_origin"
+				//"OverrideAnimation"     "ACT_DOTA_GENERIC_CHANNEL_1"
+				"States"
+				{
+                    "MODIFIER_STATE_ROOTED"         "MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			
+                "OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/control_rock.lua"
+						"Function"			"initMagicStage"
+						"ability_a_name"	"control_rock_datadriven"
+						"ability_b_name"	"control_rock_datadriven_stage_b"
+					}
+				}
+
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"magic/control_rock.lua"
+						"Function"			"OnOrder"
+					}
+				}
+			}
+		}
 	}
 }

@@ -1,11 +1,63 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    local skillPoint = ability:GetCursorPosition()
+electric_wall_pre_datadriven = ({})
+electric_wall_datadriven = ({})
+LinkLuaModifier( "electric_wall_datadriven_modifier_debuff", "magic/modifiers/electric_wall_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
+function electric_wall_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function electric_wall_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function electric_wall_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function electric_wall_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function electric_wall_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function electric_wall_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.isDelay =			1
+    keys.particles_nm =     "particles/13dianliqiang_shengcheng.vpcf"
+    keys.soundCast =		"magic_electric_wall_cast"
     
+    keys.particles_power = 	"particles/13dianliqiang_jiaqiang.vpcf"
+    keys.soundPower =		"magic_electric_power_up"
+    keys.particles_weak = 	"particles/13dianliqiang_xueruo.vpcf"
+    keys.soundWeak =		"magic_electric_power_down"
+
+    keys.particles_misfire = "particles/13dianliqiang_jiluo.vpcf"
+    keys.soundMisfire =		 "magic_electric_mis_fire"
+    
+    keys.particles_duration = 	"particles/13dianliqiang_baozha.vpcf"
+    keys.soundDurationSp1 =		"magic_electric_wall_duration"
+
+    keys.soundStun =		 "magic_electric_wall_stun"
+    keys.hitTargetDebuff =   "electric_wall_datadriven_modifier_debuff"
+
+
+    local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()
@@ -171,7 +223,8 @@ function electricWallAOEHitRange(shoot)
             end
         end
         if flagSp1 then
-            ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetDebuff, {Duration = debuffDuration})  
+            --ability:ApplyDataDrivenModifier(caster, oldArray[i], hitTargetDebuff, {Duration = debuffDuration}) 
+            oldArray[i]:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
         end
     end
     for x = 1,#newArray do
@@ -182,7 +235,8 @@ function electricWallAOEHitRange(shoot)
             end
         end
         if flagSp2 then
-            ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetDebuff, {Duration = debuffDuration})  
+            --ability:ApplyDataDrivenModifier(caster, newArray[x], hitTargetDebuff, {Duration = debuffDuration})  
+            newArray[x]:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
         end
     end
 end

@@ -9,7 +9,7 @@ function modifier_beat_back:GetEffectName()
 end
 
 function modifier_beat_back:GetEffectAttachType()
-	return "follow_origin"
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function modifier_beat_back:CheckState()

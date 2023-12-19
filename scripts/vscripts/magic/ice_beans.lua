@@ -1,6 +1,78 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
+
+ice_beans_datadriven_stage_b = class({})
+LinkLuaModifier("ice_beans_datadriven_modifier_debuff", "magic/modifiers/ice_beans_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function ice_beans_datadriven_stage_b:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function ice_beans_datadriven_stage_b:OnSpellStart()
+    LaunchFire(self)
+end
+
+
+function LaunchFire(ability)
+
+    local caster = ability:GetCaster()
+    local magicName = 'ice_beans_datadriven'
+    local keys = getMagicKeys(ability,magicName)
+
+	keys.particles_nm =      "particles/39bingdou_shengcheng.vpcf"
+	keys.soundCast = 		"magic_ice_beans_cast"
+	keys.particles_boom =    "particles/39bingdou_mingzhong.vpcf" 
+	keys.soundBoom =			"magic_ice_beans_hit"
+	keys.particles_misfire = "particles/39bingdou_jiluo.vpcf"
+	keys.soundMisfire =		"magic_ice_mis_fire"
+	keys.particles_miss =    "particles/39bingdou_xiaoshi.vpcf"
+	keys.soundMiss =			"magic_ice_miss"
+	keys.particles_power = 	"particles/39bingdou_jiaqiang.vpcf"
+	keys.soundPower =		"magic_ice_power_up"
+	keys.particles_weak = 	"particles/39bingdou_xueruo.vpcf"
+	keys.soundWeak =			"magic_ice_power_down"
+	keys.hitTargetDebuff =  		"ice_beans_datadriven_modifier_debuff"
+	keys.ability_a_name =			"ice_beans_datadriven"
+	keys.modifier_stage_a_name =	"modifier_ice_beans_datadriven_buff"
+
+	local modifierName	= keys.modifier_stage_a_name
+	local skillPoint = ability:GetCursorPosition()
+	local casterPoint = caster:GetAbsOrigin()
+
+	local shootCount =  ability:GetSpecialValueFor("shoot_count")
+	local max_distance = ability:GetSpecialValueFor("max_distance")
+	local direction = (skillPoint - casterPoint ):Normalized() 
+	local ability_a_name = caster:FindAbilityByName(keys.ability_a_name)
+
+	local currentStack	= caster:GetModifierStackCount( modifierName, ability_a_name )
+	currentStack = currentStack - 1
+	
+	caster:SetModifierStackCount( modifierName, ability_a_name, currentStack )
+	local tempCount = 0
+
+	Timers:CreateTimer(0,function ()
+		local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+		creatSkillShootInit(keys,shoot,caster,max_distance,direction)
+		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
+		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
+		shoot.particleID = particleID
+		EmitSoundOn(keys.soundCast, shoot)
+		moveShoot(keys, shoot, iceBeansBoomCallBack, nil)
+		tempCount = tempCount+1
+		if tempCount == shootCount then
+			return nil
+		end
+		return 0.2
+	end)
+
+	if currentStack == 0 then
+		caster:RemoveModifierByName( modifierName )
+	end
+  
+end
+
 function stageOne (keys)
     local caster	= keys.caster
 	local ability	= keys.ability
@@ -43,45 +115,6 @@ function initStage(keys)
 end
 
 
-function LaunchFire(keys)
-    local caster	= keys.caster
-	local ability	= keys.ability
-	local modifierName	= keys.modifier_stage_a_name
-	local skillPoint = ability:GetCursorPosition()
-	local casterPoint = caster:GetAbsOrigin()
-	--local casterDirection = caster:GetForwardVector()
-	--local speed = ability:GetSpecialValueFor("speed")
-	local shootCount =  ability:GetSpecialValueFor("shoot_count")
-	local max_distance = ability:GetSpecialValueFor("max_distance")
-	local direction = (skillPoint - casterPoint ):Normalized() 
-	local ability_a_name = caster:FindAbilityByName(keys.ability_a_name)
-
-	local currentStack	= caster:GetModifierStackCount( modifierName, ability_a_name )
-	currentStack = currentStack - 1
-	
-	caster:SetModifierStackCount( modifierName, ability_a_name, currentStack )
-	local tempCount = 0
-
-	Timers:CreateTimer(0,function ()
-		local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
-		creatSkillShootInit(keys,shoot,caster,max_distance,direction)
-		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
-		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
-		shoot.particleID = particleID
-		EmitSoundOn(keys.soundCast, shoot)
-		moveShoot(keys, shoot, iceBeansBoomCallBack, nil)
-		tempCount = tempCount+1
-		if tempCount == shootCount then
-			return nil
-		end
-		return 0.2
-	end)
-
-	if currentStack == 0 then
-		caster:RemoveModifierByName( modifierName )
-	end
-  
-end
 
 
 --技能爆炸,单次伤害
@@ -101,7 +134,7 @@ function AOEOperationCallback(shoot,unit)
 	local keys = shoot.keysTable
     local caster = keys.caster
 	local ability = keys.ability
-	local playerID = caster:GetPlayerID()	
+	local playerID = caster:GetPlayerID()
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot) / ability:GetSpecialValueFor("charge_count") / ability:GetSpecialValueFor("shoot_count")
@@ -113,7 +146,8 @@ function AOEOperationCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 	debuffDuration = debuffDuration * currentStack
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+	unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
 	unit:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
 end
 

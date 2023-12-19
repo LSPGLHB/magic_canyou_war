@@ -4,12 +4,13 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
+		"ScriptFile"					"magic/fire_spirit.lua"
 
 		"AbilityTextureName"			"invoker_forge_spirit"
 		"MaxLevel"                      "1"
@@ -31,7 +32,6 @@
 			"soundfile"			"soundevents/voscripts/game_sounds_vo_magic.vsndevts"
 		}
 	
-		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1650"   //施法距离

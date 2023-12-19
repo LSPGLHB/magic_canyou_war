@@ -1,8 +1,57 @@
 require('shoot_init')
 require('skill_operation')
-function createFireSpirit(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+fire_spirit_pre_datadriven = ({})
+fire_spirit_datadriven = ({})
+
+function fire_spirit_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function fire_spirit_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function fire_spirit_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function fire_spirit_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function fire_spirit_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function fire_spirit_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.isDelay =			"1"
+    keys.particles_nm =      "particles/21huojingling_shengcheng.vpcf"
+    keys.soundCastSp1 =		"magic_fire_spirit_cast_sp1"
+    keys.soundCastSp2 =		"magic_fire_spirit_cast_sp2"
+
+    keys.particles_power = 	"particles/21huojingling_jiaqiang.vpcf"
+    keys.soundPower =		"magic_fire_power_up"
+    keys.particles_weak = 	"particles/21huojingling_xueruo.vpcf"
+    keys.soundWeak =			"magic_fire_power_down"
+
+    keys.particles_misfire = "particles/21huojingling_jiluo.vpcf"
+    keys.soundMisfire =		"magic_fire_mis_fire"
+    
+    keys.particles_boom = 	"particles/21huojingling_baozha.vpcf"
+    keys.soundBoom =			"magic_fire_spirit_boom"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()

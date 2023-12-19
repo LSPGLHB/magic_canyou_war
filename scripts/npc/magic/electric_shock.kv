@@ -4,18 +4,20 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/electric_shock.lua"	
 
 		"AbilityTextureName"			"storm_spirit_electric_vortex"
 		"MaxLevel"                      "1"
 		"UnitType"         				"lei"
 		"AbilityLevel"					"b"
 		"PreAbility"					"electric_gather_pre_datadriven"
-		"StageAbility"					"electric_shock_stage_b_datadriven"
+		"StageAbility"					"electric_shock_datadriven_stage_b"
 
 		"IconSrc"                       "file://{images}/custom_game/ability_button/storm_spirit_electric_vortex.png"  //选择框图标
 
@@ -96,7 +98,7 @@
 				"ScriptFile"	"magic/electric_shock.lua"
 				"Function"		"LevelUpAbility"
 				"ability_a_name"		   "electric_shock_datadriven"
-				"ability_b_name"	"electric_shock_stage_b_datadriven"
+				"ability_b_name"	"electric_shock_datadriven_stage_b"
 			}
 		}
 		
@@ -137,10 +139,9 @@
 
                 "stunDebuff"        "modifier_electric_shock_stun"
 
-
                 "modifier_caster_syn_name"	   "modifier_electric_shock_datadriven_buff"
 				"ability_a_name"		   "electric_shock_datadriven"
-				"ability_b_name"		   "electric_shock_stage_b_datadriven"
+				"ability_b_name"		   "electric_shock_datadriven_stage_b"
 
 
 				
@@ -173,25 +174,27 @@
 					{
 						"ScriptFile"		"magic/electric_shock.lua"
 						"Function"			"initStage"
-						"ability_a_name"		   "electric_shock_datadriven"
-						"ability_b_name"	"electric_shock_stage_b_datadriven"
+						"ability_a_name"	"electric_shock_datadriven"
+						"ability_b_name"	"electric_shock_datadriven_stage_b"
 					}
 				}
 			}
         }
-        
-
     }
 
-    "electric_shock_stage_b_datadriven"
+
+
+    "electric_shock_datadriven_stage_b"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/electric_shock.lua"	
 
 		"AbilityTextureName"			"invoker_alacrity"
 		"MaxLevel"                      "1"
@@ -200,7 +203,11 @@
 		"UnitType"         				"lei"
 		"AbilityLevel"					"b"
 		"IconSrc"                       "file://{images}/custom_game/ability_button/invoker_alacrity.png"  //选择框图标
-		"AbilityShowName"               "#UIButton4"
+		
+		"unitModel"			"shootUnit-S"
+		"hitType" 			"2"   //3直达不触碰,2穿透弹,1触碰爆炸
+		"isMisfire"			"1"
+		"isAOE"             "1"
 		
 		"precache"						
 		{
@@ -305,7 +312,7 @@
 
                 "modifier_caster_syn_name"	   "modifier_electric_shock_datadriven_buff"
 				"ability_a_name"		   "electric_shock_datadriven"
-				"ability_b_name"		   "electric_shock_stage_b_datadriven"
+				"ability_b_name"		   "electric_shock_datadriven_stage_b"
 			}
 		}
 

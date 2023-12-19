@@ -50,7 +50,7 @@ end
 
 function modifier_sleep_debuff_datadriven:OnDestroy()
     local caster = self.caster
-    local ability = self.abilit
+    local ability = self.ability
     if self.ability then
         if IsServer() then
             EmitSoundOn("magic_wake_up",caster)

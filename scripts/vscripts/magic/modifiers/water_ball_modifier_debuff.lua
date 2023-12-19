@@ -9,7 +9,7 @@ function water_ball_datadriven_modifier_debuff:GetEffectName()
 end
 
 function water_ball_datadriven_modifier_debuff:GetEffectAttachType()
-	return PATTACH_ABSORIGIN
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function water_ball_datadriven_modifier_debuff:DeclareFunctions()
@@ -40,7 +40,7 @@ function water_ball_pre_datadriven_modifier_debuff:GetEffectName()
 end
 
 function water_ball_pre_datadriven_modifier_debuff:GetEffectAttachType()
-	return PATTACH_ABSORIGIN
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function water_ball_pre_datadriven_modifier_debuff:DeclareFunctions()

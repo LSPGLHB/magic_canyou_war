@@ -1,16 +1,46 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
-    local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
-    local max_distance = ability:GetSpecialValueFor("max_distance")
 
+ice_skeleton_datadriven =({})
+LinkLuaModifier("ice_skeleton_datadriven_modifier_debuff", "magic/modifiers/ice_skeleton_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function ice_skeleton_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function ice_skeleton_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+	keys.particles_nm =      "particles/29bingkulou_shengcheng.vpcf"
+	keys.soundCast = 		"magic_ice_skeleton_cast"
+	keys.particles_misfire = "particles/29bingkulou_jiluo.vpcf"
+	keys.soundMisfire =		"magic_ice_mis_fire"
+	keys.particles_miss =    "particles/29bingkulou_xiaoshi.vpcf"
+	keys.soundMiss =			"magic_ice_miss"
+	keys.particles_power = 	"particles/29bingkulou_jiaqiang.vpcf"
+	keys.soundPower =		"magic_ice_power_up"
+	keys.particles_weak = 	"particles/29bingkulou_xueruo.vpcf"
+	keys.soundWeak =			"magic_ice_power_down"	
+	keys.particles_boom = 	"particles/29bingkulou_mingzhong.vpcf"
+	keys.soundBoom =			"magic_ice_skeleton_boom"
+	keys.particles_boom_sp2 =	"particles/29bingkulou_mingzhong_beibu.vpcf"
+	keys.hitTargetDebuff =   "ice_skeleton_datadriven_modifier_debuff"
+	keys.particles_defense = "particles/guihunmingzhongzhengmian.vpcf"
+	keys.soundDefense =      "magic_ice_skeleton_target_defense"
+
+    local skillPoint = ability:GetCursorPosition()
+    local max_distance = ability:GetSpecialValueFor("max_distance")
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()
-
     local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     --shoot.aoe_radius = aoe_radius
@@ -20,14 +50,12 @@ function createShoot(keys)
     EmitSoundOn(keys.soundCast, shoot)
     shoot.intervalCallBack = iceSkeletonIntervalCallBack
     moveShoot(keys, shoot, iceSkeletonBoomCallback, nil)
-
 end
 
 
 
 --技能爆炸,单次伤害
-function iceSkeletonBoomCallback(shoot)
-		  
+function iceSkeletonBoomCallback(shoot)  
 	boomAOEOperation(shoot, iceSkeletonAOEOperationCallback)
 end
 
@@ -67,13 +95,15 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
 		
     else
 		iceSkeletonHitRenderParticles(shoot) --爆炸粒子效果生成	
+		EmitSoundOn("magic_ice_skeleton_target_hit",unit)
 		local hitTargetDebuff = keys.hitTargetDebuff
 		local playerID = caster:GetPlayerID()	
 		local AbilityLevel = shoot.abilityLevel
 		local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
 		--debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
 		--debuffDuration = getApplyControlValue(shoot, debuffDuration)
-		ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+		--ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+		unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
 
 		local unitPos = unit:GetAbsOrigin()
 		local temp_x =math.random(-100,100) + unitPos.x

@@ -5,18 +5,30 @@ scatter_thunder_ball_datadriven = class({})
 
 LinkLuaModifier( "modifier_sleep_debuff_datadriven", "magic/modifiers/modifier_sleep_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
+
+function scatter_thunder_ball_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function scatter_thunder_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
 function scatter_thunder_ball_pre_datadriven:OnSpellStart()
-    creatShoot(self,'c')
+    creatShoot(self)
 end
 
 function scatter_thunder_ball_datadriven:OnSpellStart()
-    creatShoot(self,'c')
+    creatShoot(self)
 end
 
 
 
-function creatShoot(ability,magicName)
+function creatShoot(ability)
     local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 
     keys.particles_nm = "particles/03dianqiu_shengcheng.vpcf"

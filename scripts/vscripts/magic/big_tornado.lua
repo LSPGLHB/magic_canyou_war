@@ -17,26 +17,27 @@ function big_tornado_datadriven:GetCastRange(v,t)
 end
 
 function big_tornado_pre_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'big_tornado_pre_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 function big_tornado_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'big_tornado_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 
 function big_tornado_pre_datadriven:OnSpellStart()
-    createShoot(self,'big_tornado_pre_datadriven')
+    createShoot(self)
 end
 
 function big_tornado_datadriven:OnSpellStart()
-    createShoot(self,'big_tornado_datadriven')
+    createShoot(self)
 end
 
 
 
 function createShoot(ability,magicName)
     local caster = ability:GetCaster()
+	local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 
     keys.particles_nm = "particles/30dalongjuanfeng_shengcheng.vpcf"

@@ -46,6 +46,24 @@ function getPush(keys)
         local particleID = ParticleManager:CreateParticle(particleName, PATTACH_WORLDORIGIN, caster)
         ParticleManager:SetParticleControl(particleID, 0, caster:GetAbsOrigin())
     end
+end
+
+function blink(keys)
+    local caster = keys.caster
+    local ability = keys.ability
+    local skillPoint = ability:GetCursorPosition()
+    local casterPosition = caster:GetAbsOrigin()
+
+    local fromParticle = "particles/items_fx/blink_dagger_start.vpcf"
+    local toParticle = "particles/items_fx/blink_dagger_end.vpcf"
+
+    local particleFrom = ParticleManager:CreateParticle(fromParticle, PATTACH_WORLDORIGIN, caster)
+    ParticleManager:SetParticleControl(particleFrom, 0, caster:GetAbsOrigin())
+
+	caster:SetAbsOrigin(skillPoint)
+
+    local particleTo = ParticleManager:CreateParticle(toParticle, PATTACH_WORLDORIGIN, caster)
+    ParticleManager:SetParticleControl(particleTo, 0, caster:GetAbsOrigin())
 
 end
 

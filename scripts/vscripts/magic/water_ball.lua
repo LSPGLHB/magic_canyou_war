@@ -16,26 +16,26 @@ function water_ball_datadriven:GetCastRange(v,t)
 end
 
 function water_ball_pre_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'water_ball_pre_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 function water_ball_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'water_ball_datadriven')
+	local aoe_radius = getAOERadiusByName(self,'c')
 	return aoe_radius
 end
 
 function water_ball_pre_datadriven:OnSpellStart()
-    createShoot(self,'water_ball_pre_datadriven')
+    createShoot(self)
 end
 
 function water_ball_datadriven:OnSpellStart()
-    createShoot(self,'water_ball_datadriven')
+    createShoot(self)
 end
 
 
-
-function createShoot(ability,magicName)
+function createShoot(ability)
     local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 
     keys.particles_nm = "particles/19shuiqiushu_shengcheng.vpcf"
@@ -99,6 +99,6 @@ function waterBallAOEOperationCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
-    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration} )
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
 end
 

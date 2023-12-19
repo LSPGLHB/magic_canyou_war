@@ -7,15 +7,26 @@ blind_fire_ball_pre_datadriven = class({})
 blind_fire_ball_datadriven = class({})
 LinkLuaModifier( "blind_fire_ball_datadriven_modifier_debuff", "magic/modifiers/blind_fire_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 LinkLuaModifier( "blind_fire_ball_pre_datadriven_modifier_debuff", "magic/modifiers/blind_fire_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function blind_fire_ball_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function blind_fire_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
 function blind_fire_ball_datadriven:OnSpellStart()
-	creatShoot(self,'c')
+	creatShoot(self)
 end
 function blind_fire_ball_pre_datadriven:OnSpellStart()
-	creatShoot(self,'c')
+	creatShoot(self)
 end
 function creatShoot(ability,magicName)
 	local caster = ability:GetCaster()
-
+	local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
 	magicListByName[magicName]['vision_radius'] = ability:GetSpecialValueFor("vision_radius")
 

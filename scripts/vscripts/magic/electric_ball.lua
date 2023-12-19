@@ -1,8 +1,48 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+electric_ball_datadriven = class({})
+LinkLuaModifier( "electric_ball_datadriven_modifier_debuff", "magic/modifiers/electric_ball_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_electric_ball_stun", "magic/modifiers/electric_ball_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function electric_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function electric_ball_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'c')
+	return aoe_radius
+end
+
+function electric_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/18sansheleiqiu_shengcheng.vpcf"
+    keys.soundCast =			"magic_electric_ball_cast"
+    
+    keys.particles_power = 	"particles/18sansheleiqiu_jiaqiang.vpcf"
+    keys.soundPower =	"magic_electric_power_up"
+    keys.particles_weak = 	"particles/18sansheleiqiu_xueruo.vpcf"
+    keys.soundWeak =			"magic_electric_power_down"
+    keys.particles_misfire = "particles/18sansheleiqiu_jiluo.vpcf"
+    keys.soundMisfire =		"magic_electric_mis_fire"
+    keys.particles_miss =    "particles/18sansheleiqiu_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_electric_miss"
+    keys.particles_boom = 	"particles/18sansheleiqiu_mingzhong.vpcf"
+    keys.soundBoom =			"magic_electric_ball_boom"
+
+    keys.hitTargetDebuff =   magicName.."_modifier_debuff"
+    keys.stunDebuff =        "modifier_electric_ball_stun"
+
+
+
+
     local skillPoint = ability:GetCursorPosition()
 
     local casterPoint = caster:GetAbsOrigin()
@@ -47,12 +87,14 @@ function electricBallAOEOperationCallback(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
+    unit:AddNewModifier( caster, ability, hitTargetDebuff, {Duration = debuffDuration} )
     local interval = 2
     local timeCount = 0
     Timers:CreateTimer(function()
         ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-        ability:ApplyDataDrivenModifier(caster, unit, stunDebuff, {Duration = 1})
+        --ability:ApplyDataDrivenModifier(caster, unit, stunDebuff, {Duration = 1})
+        unit:AddNewModifier( caster, ability, stunDebuff, {Duration = 1} )
         EmitSoundOn(keys.soundBoom, shoot)
         timeCount = timeCount + interval
         if timeCount < debuffDuration then
