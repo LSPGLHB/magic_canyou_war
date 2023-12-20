@@ -1,8 +1,58 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+
+ice_water_ball_datadriven =({})
+LinkLuaModifier("ice_water_ball_datadriven_modifier_debuff_sp1", "magic/modifiers/ice_water_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("ice_water_ball_datadriven_modifier_debuff_sp2", "magic/modifiers/ice_water_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function ice_water_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function ice_water_ball_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function ice_water_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm_sp1 =      "particles/24_1bingshuishuangdan_shengcheng.vpcf"
+    keys.particles_nm_sp2 =      "particles/24_2bingshuishuangdan_shengcheng.vpcf"
+    keys.soundCast = 		"magic_ice_water_ball_cast"
+    
+    keys.particles_power_sp1 = 	"particles/24_1bingshuishuangdan_jiaqiang.vpcf"
+    keys.particles_power_sp2 = 	"particles/24_2bingshuishuangdan_jiaqiang.vpcf"
+    keys.soundPower =		"magic_ice_power_up"
+
+    keys.particles_weak_sp1 = 	"particles/24_1bingshuishuangdan_xueruo.vpcf"
+    keys.particles_weak_sp2 = 	"particles/24_2bingshuishuangdan_xueruo.vpcf"
+    keys.soundWeak =			"magic_ice_power_down"
+    
+    keys.particles_misfire_sp1 = "particles/24_1bingshuishuangdan_jiluo.vpcf"
+    keys.particles_misfire_sp2 = "particles/24_2bingshuishuangdan_jiluo.vpcf"
+    keys.soundMisfire =		"magic_ice_mis_fire"
+
+    keys.particles_miss_sp1 =    "particles/24_1bingshuishuangdan_xiaoshi.vpcf"
+    keys.particles_miss_sp2 =    "particles/24_2bingshuishuangdan_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_ice_miss"
+
+    keys.particles_boom_sp1 = 	"particles/24_1bingshuishuangdan_mingzhong.vpcf"
+    keys.particles_boom_sp2 = 	"particles/24_2bingshuishuangdan_mingzhong.vpcf"
+    keys.soundBoom =			"magic_ice_water_ball_boom"
+
+    keys.hitTargetDebuffSp1 =  "ice_water_ball_datadriven_modifier_debuff_sp1"
+    keys.hitTargetDebuffSp2 =  "ice_water_ball_datadriven_modifier_debuff_sp2"
+
+
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -86,7 +136,8 @@ function iceWaterBallAOEOperationCallbackSp1(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration}) 
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration}) 
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
 end
 
 function iceWaterBallBoomCallBackSp2(shoot)
@@ -112,7 +163,8 @@ function iceWaterBallAOEOperationCallbackSp2(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration}) 
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration}) 
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
 end
 
 function intervalCallBackSp1(shoot)

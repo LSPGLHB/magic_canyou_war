@@ -4,11 +4,13 @@
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/o_boomerang.lua"
 
 		"AOERadius"                     "250"
 		"AbilityTextureName"			"hoodwink_hunters_boomerang"
@@ -118,9 +120,6 @@
 				"soundBoom"			"magic_o_boomerang_hit"
 
                 "particles_catch" 	"particles/20huixuanbiao_debuff.vpcf"
-
-
-
                 "hitTargetDebuff"   "modifier_o_boomerang_debuff_datadriven"
 				
 			}

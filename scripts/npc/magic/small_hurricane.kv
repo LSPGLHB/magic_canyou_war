@@ -4,11 +4,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/small_hurricane.lua"
 
 		"AbilityTextureName"			"skywrath_mage_mystic_flare"
         "MaxLevel"                      "1"
@@ -98,12 +100,13 @@
 				"unitType"          "feng"
 				"hitType" 			"2"   //3不触碰，2穿透弹，1触碰结束
 				"isAOE"				"1"
-
-
+				"cp"				"3"
+				"particles_hit_dur" "0.7"
+				
 				"isMultipleHit"		"1"  //子弹可多次击中同一单位
 				"particles_nm"      "particles/40xiaojufeng_shengcheng.vpcf"
 				"soundCast" 		"magic_small_hurricane_cast"
-				"particles_hit_dur" "0.7"
+				
 				"particles_power" 	"particles/40xiaojufeng_jiaqiang.vpcf"
 				"soundWeak"			"magic_wind_power_up"
 				"particles_weak" 	"particles/40xiaojufeng_xueruo.vpcf"	
@@ -115,7 +118,7 @@
 				
 				"shootAoeDebuff"	"modifier_small_hurricane_shoot_debuff"	
 				"aoeTargetDebuff"	"modifier_small_hurricane_aoe_debuff"
-				"cp"				"3"
+				
 			}
 		}
 

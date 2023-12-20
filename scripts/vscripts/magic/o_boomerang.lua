@@ -1,8 +1,42 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+o_boomerang_datadriven =({})
+LinkLuaModifier("o_boomerang_datadriven_modifier_debuff", "magic/modifiers/o_boomerang_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function o_boomerang_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function o_boomerang_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/20huixuanbiao_shengcheng.vpcf"
+    keys.soundCast = 		"magic_o_boomerang_cast"
+    keys.particles_misfire = "particles/20huixuanbiao_jiluo.vpcf"
+    keys.soundMisfire =		"magic_wind_mis_fire"
+    keys.particles_miss =    "particles/20huixuanbiao_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_wind_miss"
+    
+    keys.particles_power = 	"particles/20huixuanbiao_jiaqiang.vpcf"
+    keys.soundPower =		"magic_wind_power_up"
+    keys.particles_weak = 	"particles/20huixuanbiao_xueruo.vpcf"
+    keys.soundWeak =			"magic_wind_power_down"	
+    
+    keys.particles_boom = 	"particles/20huixuanbiao_mingzhong.vpcf"
+    keys.soundBoom =			"magic_o_boomerang_hit"
+
+    keys.particles_catch = 	"particles/20huixuanbiao_debuff.vpcf"
+    keys.hitTargetDebuff =   "o_boomerang_datadriven_modifier_debuff"
+
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
 
@@ -54,14 +88,14 @@ function oBoomerangAOEOperationCallback(shoot,unit)
     local damage = getApplyDamageValue(shoot) 
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
-
 	local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
 	local playerID = caster:GetPlayerID()
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
     oBoomerangCatchRenderParticles(shoot, unit, debuffDuration)
     catchAOEOperationCallback(shoot, unit, debuffDuration)
 end

@@ -1,9 +1,36 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createLightBall(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+light_ball_datadriven =({})
+LinkLuaModifier("light_ball_datadriven_modifier_debuff", "magic/modifiers/light_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function light_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function light_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/01yaoyanguangqiu_shengcheng.vpcf"
+    keys.soundCast = 		"magic_light_ball_cast"
+    keys.particles_power = 	"particles/01yaoyanguangqiu_jiaqiang.vpcf"
+    keys.soundPower =		"magic_light_power_up"
+    keys.particles_weak = 	"particles/01yaoyanguangqiu_xueruo.vpcf"
+    keys.soundWeak =			"magic_light_power_down"
+    keys.particles_boom = 	"particles/yaoyanguangqiubaozha.vpcf"
+    keys.soundBoom =			"magic_light_ball_boom"
+    keys.modifierDebuffName =  "light_ball_datadriven_modifier_debuff"
+    keys.particles_defense = "particles/duobizhimangbuff_1.vpcf"
+    keys.soundDefense =      "magic_defence"
+
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate")
@@ -68,7 +95,8 @@ function lightBallAOEOperationCallback(shoot,unit)
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
         debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
         debuffDuration = getApplyControlValue(shoot, debuffDuration)
-        ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+        --ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+        unit:AddNewModifier(caster,ability,debuffName, {Duration = debuffDuration})
     else
         local defenceParticlesID =ParticleManager:CreateParticle(keys.particles_defense, PATTACH_OVERHEAD_FOLLOW , unit)
         ParticleManager:SetParticleControlEnt(defenceParticlesID, 3 , unit, PATTACH_OVERHEAD_FOLLOW, nil, shoot:GetAbsOrigin(), true)

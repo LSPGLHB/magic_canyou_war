@@ -4,11 +4,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/space_collapse.lua"
 
 		"AbilityTextureName"			"dark_seer_vacuum"
         "MaxLevel"                      "1"
@@ -99,7 +101,6 @@
 				"unitType"          "feng"
 				"hitType" 			"1"   //3不触碰，2穿透弹，1触碰结束
 				"isAOE"				"1"
-
 
                 "cp"				"3"
                 "particles_hit_dur" "0.7"

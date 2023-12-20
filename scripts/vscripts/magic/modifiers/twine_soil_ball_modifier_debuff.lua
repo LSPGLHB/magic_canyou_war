@@ -9,7 +9,7 @@ function twine_soil_ball_datadriven_modifier_debuff:GetEffectName()
 end
 
 function twine_soil_ball_datadriven_modifier_debuff:GetEffectAttachType()
-	return PATTACH_ABSORIGIN
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function twine_soil_ball_datadriven_modifier_debuff:CheckState()
@@ -34,7 +34,7 @@ function twine_soil_ball_pre_datadriven_modifier_debuff:GetEffectName()
 end
 
 function twine_soil_ball_pre_datadriven_modifier_debuff:GetEffectAttachType()
-	return PATTACH_ABSORIGIN
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function twine_soil_ball_pre_datadriven_modifier_debuff:CheckState()

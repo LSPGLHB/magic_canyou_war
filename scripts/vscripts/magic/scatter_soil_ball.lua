@@ -1,8 +1,37 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+scatter_soil_ball_datadriven =({})
+LinkLuaModifier("scatter_soil_ball_datadriven_modifier_debuff", "magic/modifiers/scatter_soil_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function scatter_soil_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function scatter_soil_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/42sandantuqiu_shengcheng.vpcf"
+    keys.soundCast = 		"magic_scatter_soil_ball_cast"
+    keys.particles_misfire = "particles/42sandantuqiu_jiluo.vpcf"
+    keys.soundMisfire =		"magic_soil_mis_fire"
+    keys.particles_miss =    "particles/42sandantuqiu_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_soil_miss"
+    keys.particles_power = 	"particles/42sandantuqiu_jiaqiang.vpcf"
+    keys.soundPower =		"magic_soil_power_up"
+    keys.particles_weak = 	"particles/42sandantuqiu_xueruo.vpcf"
+    keys.soundWeak =			"magic_soil_power_down"	
+    keys.particles_hit = 	"particles/42sandantuqiu_mingzhong.vpcf"
+    keys.soundHit =			"magic_scatter_soil_ball_hit"
+    keys.hitTargetDebuff =   "modifier_scatter_soil_ball_debuff_datadriven"
+
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate")
@@ -44,7 +73,7 @@ function scatterSoilBallAOEOperationCallback(shoot,unit)
 	local playerID = caster:GetPlayerID()
 	local ability = keys.ability
     local AbilityLevel = shoot.abilityLevel
-    local debuffName = keys.hitTargetDebuff
+    local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot) / 3
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
@@ -52,7 +81,8 @@ function scatterSoilBallAOEOperationCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel, nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 
-    ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
+    unit:AddNewModifier( unit, ability, hitTargetDebuff, {Duration = debuffDuration} )
 end 
 
 
