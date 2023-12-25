@@ -53,14 +53,20 @@ function blink(keys)
     local ability = keys.ability
     local skillPoint = ability:GetCursorPosition()
     local casterPosition = caster:GetAbsOrigin()
+    local distance = ability:GetSpecialValueFor("distance")
 
     local fromParticle = "particles/items_fx/blink_dagger_start.vpcf"
     local toParticle = "particles/items_fx/blink_dagger_end.vpcf"
 
+    local direction = (skillPoint - casterPosition):Normalized()
+
+    local newPos = casterPosition + direction * distance
+
     local particleFrom = ParticleManager:CreateParticle(fromParticle, PATTACH_WORLDORIGIN, caster)
     ParticleManager:SetParticleControl(particleFrom, 0, caster:GetAbsOrigin())
 
-	caster:SetAbsOrigin(skillPoint)
+	--caster:SetAbsOrigin(newPos)
+    FindClearSpaceForUnit( caster, newPos, false )
 
     local particleTo = ParticleManager:CreateParticle(toParticle, PATTACH_WORLDORIGIN, caster)
     ParticleManager:SetParticleControl(particleTo, 0, caster:GetAbsOrigin())
