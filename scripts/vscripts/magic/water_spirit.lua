@@ -1,8 +1,55 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+water_spirit_datadriven = ({})
+water_spirit_pre_datadriven = ({})
+LinkLuaModifier( "water_spirit_datadriven_modifier_debuff", "magic/modifiers/water_spirit_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function water_spirit_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function water_spirit_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function water_spirit_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function water_spirit_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function water_spirit_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'b')
+	return aoe_radius
+end
+
+function water_spirit_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/09shuijingling_shengcheng.vpcf"
+    keys.soundCastSp1 =		"magic_water_spirit_cast_sp1"
+    keys.soundCastSp2 =		"magic_water_spirit_cast_sp2"   
+    keys.particles_power = 	"particles/09shuijingling_jiaqiang.vpcf"
+    keys.soundPower =		"magic_water_power_up"
+    keys.particles_weak = 	"particles/09shuijingling_xueruo.vpcf"
+    keys.soundWeak =			"magic_water_power_down"
+    keys.particles_misfire = "particles/09shuijingling_jiluo.vpcf"
+    keys.soundMisfire =		"magic_water_mis_fire" 
+    keys.particles_boom = 	"particles/09shuijingling_baozha.vpcf"
+    keys.soundBoom =			"magic_water_spirit_boom"
+    keys.hitTargetDebuff =   "water_spirit_datadriven_modifier_debuff"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -73,6 +120,7 @@ function waterSpiritAOEOperationCallback(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  --特效有问题，没有无限循环
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
 end
 

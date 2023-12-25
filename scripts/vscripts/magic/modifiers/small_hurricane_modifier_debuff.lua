@@ -26,15 +26,15 @@ end
 
 modifier_small_hurricane_aoe_debuff=({})
 
-function modifier_small_hurricane_shoot_debuff:IsDebuff()
+function modifier_small_hurricane_aoe_debuff:IsDebuff()
     return true
 end
 
-function modifier_sleep_debuff_datadriven:GetEffectName()
+function modifier_small_hurricane_aoe_debuff:GetEffectName()
 	return "particles/hunshui_debuff.vpcf"
 end
 
-function modifier_sleep_debuff_datadriven:GetEffectAttachType()
+function modifier_small_hurricane_aoe_debuff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 

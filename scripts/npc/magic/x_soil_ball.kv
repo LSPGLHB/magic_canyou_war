@@ -4,11 +4,13 @@
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/x_soil_ball.lua"
 
 		"AbilityTextureName"			"viper_viper_strike"
 		"MaxLevel"                      "1"
@@ -117,13 +119,13 @@
                 "particles_boom" 	"particles/22xxingtuqiu_mingzhong.vpcf"
 				"soundBoom"			"magic_x_soil_ball_boom"
 
-				"hitTargetDebuff"  "modifier_x_soil_ball_debuff_datadriven"
+				"hitTargetDebuff"  "x_soil_ball_datadriven_modifier_debuff"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_x_soil_ball_debuff_datadriven"
+			"x_soil_ball_datadriven_modifier_debuff"
 			{
 				"IsHidden"			"1"
                 "EffectName"		"particles/chanraoxiaoguo_debuff_1.vpcf"

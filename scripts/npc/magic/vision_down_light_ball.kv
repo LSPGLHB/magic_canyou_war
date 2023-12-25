@@ -5,12 +5,13 @@
 	{
     // General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 
+		"ScriptFile"					"magic/vision_down_light_ball.lua"
 
 		"AbilityTextureName"			"jakiro_liquid_fire"
 		"MaxLevel"                      "1"
@@ -146,14 +147,13 @@
 				"particles_defense" "particles/duobizhimangbuff_1.vpcf"
                 "soundDefense"      "magic_defence"
 
-
-                "modifierDebuffName"  "modifier_vision_down_light_ball_debuff_datadriven"
+                "modifierDebuffName"  "vision_down_light_ball_datadriven_modifier_debuff"
 			}
 		}
 
         "Modifiers"
 		{
-			"modifier_vision_down_light_ball_debuff_datadriven"
+			"vision_down_light_ball_datadriven_modifier_debuff"
 			{
 				"IsDebuff"			"1"
 				"EffectName"		"particles/zhimang_debuff.vpcf"

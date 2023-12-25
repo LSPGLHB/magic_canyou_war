@@ -4,11 +4,13 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/whirlwind_axe.lua"
 
 		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
 		"MaxLevel"                      "1"
@@ -126,7 +128,7 @@
 				"soundBoomMax"			"magic_whirlwind_axe_boom_max"
 
                 
-                "modifier_caster_hit_debuff"     "modifier_whirlwind_axe_hit_debuff"
+                "modifier_caster_hit_debuff"     "whirlwind_axe_datadriven_modifier_debuff"
                 "modifier_caster_name"   "modifier_whirlwind_axe_caster_buff"
 			}
 
@@ -148,7 +150,7 @@
                 
 			}
 
-            "modifier_whirlwind_axe_hit_debuff"
+            "whirlwind_axe_datadriven_modifier_debuff"
             {
                 "IsDebuff"			"1"
             }

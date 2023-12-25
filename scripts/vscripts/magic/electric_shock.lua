@@ -357,8 +357,8 @@ function electricShockAOEOperationCallback(shoot,unit)
     --ability:ApplyDataDrivenModifier(caster, unit, stunDebuff,  {Duration = stunDebuffDuration})
     --ability:ApplyDataDrivenModifier(caster, unit, sleepDebuff, {Duration = sleepDebuffDuration})
 
-    unit:AddNewModifier(unit,ability,stunDebuff, {Duration = stunDebuffDuration} )
-    unit:AddNewModifier(unit,ability,sleepDebuff, {Duration = sleepDebuffDuration} )
+    unit:AddNewModifier(unit,ability,stunDebuff, {Duration = stunDebuffDuration})
+    unit:AddNewModifier(unit,ability,sleepDebuff, {Duration = sleepDebuffDuration})
      
 end
 

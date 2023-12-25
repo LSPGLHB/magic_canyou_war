@@ -37,7 +37,7 @@ function createShoot(ability)
     keys.soundWeak =			"magic_ice_power_down"	   
     keys.particles_boom = 	"particles/04bingqiu_mingzhong.vpcf"
     keys.soundBoom =			"magic_ice_ball_boom"
-    keys.hitTargetDebuff =   "modifier_ice_ball_debuff_datadriven"
+    keys.hitTargetDebuff =   "ice_ball_datadriven_modifier_debuff"
 
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")

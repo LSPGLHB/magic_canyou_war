@@ -1,8 +1,47 @@
 require('shoot_init')
 require('skill_operation')
-function stepOne(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+twice_ice_ball_datadriven = ({})
+twice_ice_ball_datadriven_stage_b = ({})
+LinkLuaModifier("twice_ice_ball_datadriven_modifier_debuff", "magic/modifiers/twice_ice_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_twice_ice_ball_datadriven_buff", "magic/modifiers/twice_ice_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+function twice_ice_ball_datadriven:OnUpgrade()
+	LevelUpAbility(self)
+end
+
+function twice_ice_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function twice_ice_ball_datadriven:OnSpellStart()
+    stepOne(self)
+end
+function twice_ice_ball_datadriven_stage_b:OnSpellStart()
+    stepTwo(self)
+end
+
+function stepOne(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/34_1bingerlianjian_shengcheng.vpcf"
+    keys.soundCast =			"magic_twice_ice_ball_cast_sp1"
+    keys.particles_power = 	"particles/34_1bingerlianjian_jiaqiang.vpcf"
+    keys.soundPower =		"magic_ice_power_up"
+    keys.particles_weak = 	"particles/34_1bingerlianjian_xueruo.vpcf"
+    keys.soundWeak =			"magic_ice_power_down"
+    keys.particles_misfire = "particles/34_1bingerlianjian_jiluo.vpcf"
+    keys.soundMisfire =		"magic_ice_mis_fire"
+    keys.particles_miss =    "particles/34_1bingerlianjian_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_ice_miss"
+    keys.particles_boom = 	"particles/34_1bingerlianjian_mingzhong.vpcf"
+    keys.soundBoom =			"magic_twice_ice_ball_boom"
+    keys.hitTargetDebuff =        "twice_ice_ball_datadriven_modifier_debuff"
+    keys.modifier_caster_stage_name =	   "modifier_twice_ice_ball_datadriven_buff"
+    keys.ability_a_name =		   magicName
+    keys.ability_b_name =		   magicName.."_stage_b"
+
     local skillPoint = ability:GetCursorPosition()  
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -23,7 +62,8 @@ function stepOne(keys)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     local casterBuff = keys.modifier_caster_stage_name
-    ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
+    --ability:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = 5})
+    caster:AddNewModifier(caster,ability,casterBuff, {Duration = 5})
 --[[
     Timers:CreateTimer(5, function()
         if caster.twice_ice_ball_on == 1 then
@@ -37,9 +77,27 @@ function stepOne(keys)
     moveShoot(keys, shoot, twiceIceBallBoomCallBackSp1, nil)
 end
 
-function stepTwo(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+function stepTwo(ability)
+    local caster = ability:GetCaster()
+    local magicName = 'twice_ice_ball_datadriven'
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/34_2bingerlianjian_shengcheng.vpcf"
+    keys.soundCast =			"magic_twice_ice_ball_cast_sp2"   
+    keys.particles_power = 	"particles/34_2bingerlianjian_jiaqiang.vpcf"
+    keys.soundPower =		"magic_ice_power_up"
+    keys.particles_weak = 	"particles/34_2bingerlianjian_xueruo.vpcf"
+    keys.soundWeak =			"magic_ice_power_down"
+    keys.particles_misfire = "particles/34_2bingerlianjian_jiluo.vpcf"
+    keys.soundMisfire =		"magic_ice_mis_fire"
+    keys.particles_miss =    "particles/34_2bingerlianjian_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_ice_miss"
+    keys.particles_boom = 	"particles/34_2bingerlianjian_mingzhong.vpcf"
+    keys.soundBoom =			"magic_twice_ice_ball_boom"
+    keys.modifier_caster_stage_name =	   "modifier_twice_ice_ball_datadriven_buff"
+    keys.ability_a_name =	   magicName
+    keys.ability_b_name =	   magicName.."_stage_b"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -98,8 +156,8 @@ function twiceIceBallAOEOperationCallbackSp1(shoot,unit)
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
-    ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
-
+    --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})  
+    unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = debuffDuration})
      
 end
 
@@ -107,31 +165,27 @@ function twiceIceBallAOEOperationCallbackSp2(shoot,unit)
     local keys = shoot.keysTable
     local caster = keys.caster
 	local ability = keys.ability
-
     local damage_by_distance = ability:GetSpecialValueFor("damage_by_distance")
-
     local damage = getApplyDamageValue(shoot) * (12 / 18) + (shoot.traveled_distance / damage_by_distance)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-
-    
+    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()}) 
 end
 
-function LevelUpAbility(keys)
-    local caster = keys.caster
-	local this_ability = keys.ability
-	local this_abilityName = this_ability:GetAbilityName()
-	local this_abilityLevel = this_ability:GetLevel()
+function LevelUpAbility(self)
+    local caster = self:GetCaster()
+	local ability = self
+	local abilityName = ability:GetAbilityName()
+	local abilityLevel = ability:GetLevel()
 	-- The ability to level up
-	local ability_b_name = keys.ability_b_name
+	local ability_b_name = abilityName.."_stage_b"
 	local ability_handle = caster:FindAbilityByName(ability_b_name)
 	local ability_level = ability_handle:GetLevel()
 	-- Check to not enter a level up loop
-	if ability_level ~= this_abilityLevel then
-		ability_handle:SetLevel(this_abilityLevel)
+	if ability_level ~= abilityLevel then
+		ability_handle:SetLevel(abilityLevel)
 	end
 end
 
-
+--[[
 function initStage(keys)
     local caster	= keys.caster
 	local ability	= keys.ability
@@ -139,5 +193,5 @@ function initStage(keys)
     local ability_a_name	= keys.ability_a_name
     local ability_b_name	= keys.ability_b_name
     caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
-end
+end]]
 

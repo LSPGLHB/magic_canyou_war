@@ -10,15 +10,16 @@ function fire_ball_datadriven:GetAOERadius(v,t)
 	return aoe_radius
 end
 
-
 function fire_ball_datadriven:GetCastRange(v,t)
     local range = getRangeByName(self,'b')
     return range
 end
 
-
 function fire_ball_datadriven:OnSpellStart()
+	createShoot(self)
+end
 
+function createShoot(ability)
 	local caster = ability:GetCaster()
 	local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)
@@ -32,12 +33,12 @@ function fire_ball_datadriven:OnSpellStart()
 
     keys.particles_boom =  "particles/06huoqiushu_baozha.vpcf"
     keys.soundBoom = "magic_fire_ball_boom"
-
-	keys.hitTargetDebuff = "fire_ball_modifier_beat_back"
 	keys.soundBeat = "magic_beat_hit"
+
+	keys.hitTargetDebuff = "modifier_beat_back"
 	keys.hitDisableTurning = "modifier_disable_turning"
 
-	local skillPoint = self:GetCursorPosition()
+	local skillPoint = ability:GetCursorPosition()
 	local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()

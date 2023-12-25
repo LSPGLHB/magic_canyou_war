@@ -1,8 +1,42 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+
+thunder_area_datadriven = ({})
+LinkLuaModifier( "thunder_area_datadriven_modifier_debuff", "magic/modifiers/thunder_area_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_thunder_area_stun", "magic/modifiers/thunder_area_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function thunder_area_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function thunder_area_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function thunder_area_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/43leidianquyu_shengcheng.vpcf"
+    keys.soundCast =			"magic_thunder_area_cast" 
+    keys.particles_power = 	"particles/43leidianquyu_jiaqiang.vpcf"
+    keys.soundPower =		"magic_thunder_power_up"
+    keys.particles_weak = 	"particles/43leidianquyu_xueruo.vpcf"
+    keys.soundWeak =			"magic_thunder_power_down"
+    keys.particles_duration = 	"particles/43leidianquyu_mingzhong.vpcf"
+    keys.soundDuration =		"magic_thunder_area_duration"
+    keys.particles_stun =	"particles/43leidianquyu_mingzhong_5.vpcf"
+    keys.soundStun =		"magic_thunder_area_stun"
+    keys.aoeTargetDebuff =	"thunder_area_datadriven_modifier_debuff"
+    keys.aoeTargetStun =     "modifier_thunder_area_stun"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
@@ -12,7 +46,6 @@ function createShoot(keys)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
-
 
     local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
     aoe_duration = getFinalValueOperation(caster:GetPlayerID(),aoe_duration,'control',keys.AbilityLevel,nil)
@@ -68,12 +101,12 @@ function thunderAreaDamageCallback(shoot, unit, interval)
     local caster = keys.caster
     local ability = keys.ability
     local duration = ability:GetSpecialValueFor("aoe_duration")
-    
+    local hitTargetDebuff = keys.aoeTargetStun
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval + 1)
     ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-    ability:ApplyDataDrivenModifier(caster, unit, keys.aoeTargetStun, {Duration = 1})
-
+    --ability:ApplyDataDrivenModifier(caster, unit, keys.aoeTargetStun, {Duration = 1})
+    unit:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = 1})
     
 end
 

@@ -1095,9 +1095,6 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
 	end)
 
     Timers:CreateTimer(0,function ()   
-		if shoot.isKillAOE == 1 then
-			return nil
-		end
 		local aroundUnits = FindUnitsInRadius(casterTeam, 
 										position,
 										nil,
@@ -1122,6 +1119,9 @@ function durationAOEDamage(shoot, interval, damageCallbackFunc)
                 checkHitAbilityToMark(shoot, unit)
             end
         end
+		if shoot.isKillAOE == 1 then
+			return nil
+		end
         return interval
     end)  
 	shootKill(shoot)
@@ -1190,16 +1190,12 @@ function durationAOEJudgeByAngleAndTime(shoot, faceAngle, judgeTime, callback)
                 if judgeTime == nil then
                     judgeTime = 0
                 end
-				if unit.visionDownLightBallTime == nil then
+				if shoot.run == nil then
 					unit.visionDownLightBallTime = 0
-				end
-				if unit.visionDownLightBallTimeWorking == nil then
 					unit.visionDownLightBallTimeWorking = 0
-				end
-				if unit.visionDownLightBallTimeDefense == nil then
 					unit.visionDownLightBallTimeDefense = 0
+					shoot.run = 1
 				end
-
                 if angelFlag then
                     unit.visionDownLightBallTimeDefense = 0
 					if unit.visionDownLightBallTimeWorking == 0 and unit.visionDownLightBallTime < judgeTime then

@@ -1,13 +1,38 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+v_ice_ball_datadriven = ({})
+LinkLuaModifier( "modifier_v_ice_ball_debuff_sp1_datadriven", "magic/modifiers/v_ice_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_v_ice_ball_debuff_sp2_datadriven", "magic/modifiers/v_ice_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function v_ice_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function v_ice_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/14vzibingqiu_shengcheng.vpcf"
+    keys.soundCast = 		"magic_v_ice_ball_cast"
+    keys.particles_power = 	"particles/14vzibingqiu_jiaqiang.vpcf"
+    keys.soundPower =		"magic_ice_power_up"
+    keys.particles_weak = 	"particles/14vzibingqiu_xueruo.vpcf"
+    keys.soundWeak =			"magic_ice_power_down"  
+    keys.particles_duration = 	"particles/14vzibingqiu_baozha.vpcf"
+    keys.soundDuration =			"magic_v_ice_ball_boom"
+    keys.aoeTargetDebuffSp1 =  "modifier_v_ice_ball_debuff_sp1_datadriven"
+    keys.aoeTargetDebuffSp2 =  "modifier_v_ice_ball_debuff_sp2_datadriven"
+
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
     local angleRate = ability:GetSpecialValueFor("angle_rate")
-   
     
     local casterPoint = caster:GetAbsOrigin()
     local direction = (skillPoint - casterPoint):Normalized()

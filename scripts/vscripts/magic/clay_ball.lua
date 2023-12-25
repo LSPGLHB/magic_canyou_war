@@ -87,7 +87,7 @@ function clayBallAOEOperationCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
     --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
-    unit:AddNewModifier( caster, ability, hitTargetDebuff, {Duration = debuffDuration} )
+    unit:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = debuffDuration})
 end
 
 function clayBallIntervalCallBack(shoot)

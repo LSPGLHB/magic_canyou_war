@@ -4,12 +4,12 @@ space_collapse_datadriven =({})
 LinkLuaModifier("modifier_space_collapse_aoe_debuff", "magic/modifiers/space_collapse_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function space_collapse_datadriven:GetCastRange(v,t)
-    local range = getRangeByName(self,'b')
+    local range = getRangeByName(self,'a')
     return range
 end
 
 function space_collapse_datadriven:GetAOERadius(v,t)
-	local aoe_radius = getAOERadiusByName(self,'b')
+	local aoe_radius = getAOERadiusByName(self,'a')
 	return aoe_radius
 end
 

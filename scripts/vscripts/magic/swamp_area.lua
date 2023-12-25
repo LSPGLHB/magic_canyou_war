@@ -1,15 +1,54 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+swamp_area_pre_datadriven = ({})
+swamp_area_datadriven = ({})
+LinkLuaModifier( "swamp_area_datadriven_modifier_debuff", "magic/modifiers/swamp_area_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function swamp_area_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function swamp_area_pre_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function swamp_area_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function swamp_area_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function swamp_area_datadriven:GetAOERadius()
+	local aoe_radius = getAOERadiusByName(self,'a')
+	return aoe_radius
+end
+
+function swamp_area_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/27zhaozedidai_shengcheng.vpcf"
+    keys.soundCast =			"magic_swamp_area_cast"
+    keys.particles_power = 	"particles/27zhaozedidai_jiaqiang.vpcf"
+    keys.soundPower =		"magic_soil_power_up"
+    keys.particles_weak = 	"particles/27zhaozedidai_xueruo.vpcf"
+    keys.soundWeak =			"magic_soil_power_down"
+    keys.particles_duration = 	"particles/27zhaozedidai_baozha.vpcf"
+    keys.soundDuration =		"magic_swamp_area_duration"
+    keys.soundDebuff =		"magic_swamp_area_hit"
+    keys.aoeTargetDebuff =	"swamp_area_datadriven_modifier_debuff"
+
     local skillPoint = ability:GetCursorPosition()
-    --local speed = ability:GetSpecialValueFor("speed")
-    --local aoe_radius = ability:GetSpecialValueFor("aoe_radius")
-
-
-
-
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = (skillPoint - casterPoint ):Length2D()
     local direction = (skillPoint - casterPoint):Normalized()

@@ -4,11 +4,13 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/thunder_spirit.lua"
 
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"void_spirit_resonant_pulse"
@@ -118,8 +120,6 @@
 				"particles_boom_max" 	"particles/28leijingling_mingzhong_max.vpcf"
 				"soundBoomMax"			"magic_thunder_spirit_boom_max"
 
-                
-                
                 "modifier_caster_name"   "modifier_thunder_spirit_caster_buff"
 			}
 

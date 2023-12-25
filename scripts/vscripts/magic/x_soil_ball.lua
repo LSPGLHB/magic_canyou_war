@@ -1,8 +1,36 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+x_soil_ball_datadriven =({})
+LinkLuaModifier( "x_soil_ball_datadriven_modifier_debuff", "magic/modifiers/x_soil_ball_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function x_soil_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function x_soil_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/22xxingtuqiu_shengcheng.vpcf"
+    keys.soundCast = 		"magic_x_soil_ball_cast"
+    keys.particles_power = 	"particles/22xxingtuqiu_jiaqiang.vpcf"
+    keys.soundPower =		"magic_soil_power_up"
+    keys.particles_weak = 	"particles/22xxingtuqiu_xueruo.vpcf"
+    keys.soundWeak =			"magic_soil_power_down"
+    keys.particles_misfire = "particles/22xxingtuqiu_jiluo.vpcf"
+    keys.soundMisfire =		"magic_soil_mis_fire"
+    keys.particles_miss =    "particles/22xxingtuqiu_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_soil_miss"
+    keys.particles_boom = 	"particles/22xxingtuqiu_mingzhong.vpcf"
+    keys.soundBoom =			"magic_x_soil_ball_boom"
+    keys.hitTargetDebuff =  "x_soil_ball_datadriven_modifier_debuff"
+
     local skillPoint = ability:GetCursorPosition()
 
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -80,7 +108,8 @@ function xSoilBallAOEOperationCallback(shoot,unit)
     if unit:HasModifier(debuffName) then
         debuffDuration = debuffDuration * 2
     end
-    ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    --ability:ApplyDataDrivenModifier(caster, unit, debuffName, {Duration = debuffDuration})
+    unit:AddNewModifier(caster,ability,debuffName, {Duration = debuffDuration})
 
 end
 

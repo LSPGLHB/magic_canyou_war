@@ -4,18 +4,20 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/twice_stone_ball.lua"
 
 		"AbilityTextureName"			"hoodwink_acorn_shot"
 		"MaxLevel"                      "1"
 		"UnitType"         				"tu"
 		"AbilityLevel"					"c"
 		"PreAbility"					"twine_soil_ball_pre_datadriven"
-		"StageAbility"					"twice_stone_ball_stage_b_datadriven"
+		"StageAbility"					"twice_stone_ball_datadriven_stage_b"
 
 		"IconSrc"                       "file://{images}/custom_game/ability_button/hoodwink_acorn_shot.png"  //选择框图标
 
@@ -87,7 +89,7 @@
 			{
 				"ScriptFile"	"magic/twice_stone_ball.lua"
 				"Function"		"LevelUpAbility"
-				"ability_b_name"	"twice_stone_ball_stage_b_datadriven"
+				"ability_b_name"	"twice_stone_ball_datadriven_stage_b"
 			}
 		}
 		
@@ -129,7 +131,7 @@
 
 				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_datadriven_buff"
 				"ability_a_name"		   "twice_stone_ball_datadriven"
-				"ability_b_name"		   "twice_stone_ball_stage_b_datadriven"
+				"ability_b_name"		   "twice_stone_ball_datadriven_stage_b"
 				
 			}
 		}	
@@ -169,7 +171,7 @@
 						"ScriptFile"		"magic/twice_stone_ball.lua"
 						"Function"			"initStage"
 						"ability_a_name"		   "twice_stone_ball_datadriven"
-						"ability_b_name"	"twice_stone_ball_stage_b_datadriven"
+						"ability_b_name"	"twice_stone_ball_datadriven_stage_b"
 					}
 				}
 			}
@@ -180,15 +182,17 @@
 
     }
 
-    "twice_stone_ball_stage_b_datadriven"
+    "twice_stone_ball_datadriven_stage_b"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/twice_stone_ball.lua"
 
 		"AbilityTextureName"			"alchemist_unstable_concoction"
 		"MaxLevel"                      "1"
@@ -291,13 +295,10 @@
 				"particles_boom" 	"particles/17_2boliping_mingzhong.vpcf"
 				"soundBoom"			"magic_twice_stone_ball_boom_sp2"
 
-
-
-
 				"modifier_caster_stage_name"	   "modifier_twice_stone_ball_datadriven_buff"
                 "hitTargetDebuff"	   "modifier_twice_stone_ball_sp2_debuff"
 				"ability_a_name"	   "twice_stone_ball_datadriven"
-				"ability_b_name"	   "twice_stone_ball_stage_b_datadriven"
+				"ability_b_name"	   "twice_stone_ball_datadriven_stage_b"
 			}
 		}
 		"Modifiers"

@@ -1,9 +1,51 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+wind_dart_datadriven = ({})
+wind_dart_pre_datadriven =({})
+LinkLuaModifier( "modifier_wind_dart_lock", "magic/modifiers/wind_dart_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function wind_dart_pre_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function wind_dart_pre_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function wind_dart_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'b')
+    return range
+end
+
+function wind_dart_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+	keys.particles_nm =      "particles/25fengbiao_shengcheng.vpcf"
+	keys.soundCast = 		"magic_wind_dart_cast"
+	keys.particles_misfire = "particles/25fengbiao_jiluo.vpcf"
+	keys.soundMisfire =		"magic_wind_mis_fire"
+	keys.particles_miss =    "particles/25fengbiao_xiaoshi.vpcf"
+	keys.soundMiss =			"magic_wind_miss"
+	keys.particles_power = 	"particles/25fengbiao_jiaqiang.vpcf"
+	keys.soundPower =		"magic_wind_power_up"
+	keys.particles_weak = 	"particles/25fengbiao_xueruo.vpcf"
+	keys.soundWeak =			"magic_wind_power_down"	
+	keys.particles_boom = 	"particles/25fengbiao_mingzhong.vpcf"
+	keys.soundBoomS1 =			"magic_wind_dart_boom"
+	keys.particles_strike = "particles/25fengbiao_mingzhong_beibu.vpcf"
+	keys.soundStrike =      "magic_wind_dart_boom_strike"
+	keys.soundSpeedUp =		"magic_wind_dart_speed_up"
+	keys.soundSpeedDown =	"magic_wind_dart_speed_down"
+	keys.modifierLockDebuff =	"modifier_wind_dart_lock"
+
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
 	local catch_radius = ability:GetSpecialValueFor("catch_radius")
@@ -95,7 +137,10 @@ function searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, mo
 	
 
 	if lockUnit ~= nil then
-		ability:ApplyDataDrivenModifier(caster, lockUnit, modifierLockDebuff, {Duration = -1})
+		--ability:ApplyDataDrivenModifier(caster, lockUnit, modifierLockDebuff, {Duration = -1})
+		lockUnit:AddNewModifier(caster,ability,modifierLockDebuff, {Duration = -1})
+		EmitSoundOn("magic_wind_dart_lock_target", unit)
+
 		Timers:CreateTimer(function()
 			local isfaceSp2 = isFaceByFaceAngle(shoot, lockUnit, faceAngle)
 

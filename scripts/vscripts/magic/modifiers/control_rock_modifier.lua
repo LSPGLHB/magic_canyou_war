@@ -22,19 +22,18 @@ function control_rock_modifier_under_control:CheckState()
 	}
 	return state
 end
---[[
+
+
 function control_rock_modifier_under_control:OnDestroy()
-    local caster = self:GetCaster()
-    local ability = self:GetAbility()
-    --print("")
-    initMagicStage(caster,ability:GetAbilityName())
+	if IsServer() then
+        local ability = self:GetAbility()
+        local magicName = ability:GetAbilityName()
+        local unit = self:GetParent()
+        local ability_a_name = magicName
+        local ability_b_name = magicName.."_stage_b"
+        --print("OnDestroy:"..magicName)
+        if not unit:IsNull() then
+            unit:SwapAbilities( ability_a_name, ability_b_name, true, false )
+        end
+    end
 end
-
-function initMagicStage(caster,magicName)
-
-	-- Swap main ability
-	local ability_a_name = magicName --keys.ability_a_name
-	local ability_b_name = magicName.."_stage_b" --keys.ability_b_name
-	caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
-	--caster:InterruptMotionControllers( true )
-end]]

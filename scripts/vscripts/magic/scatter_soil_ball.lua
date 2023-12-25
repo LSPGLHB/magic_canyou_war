@@ -30,7 +30,7 @@ function createShoot(ability)
     keys.soundWeak =			"magic_soil_power_down"	
     keys.particles_hit = 	"particles/42sandantuqiu_mingzhong.vpcf"
     keys.soundHit =			"magic_scatter_soil_ball_hit"
-    keys.hitTargetDebuff =   "modifier_scatter_soil_ball_debuff_datadriven"
+    keys.hitTargetDebuff =   "scatter_soil_ball_datadriven_modifier_debuff"
 
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")

@@ -9,7 +9,7 @@ function modifier_disable_turning:GetEffectName()
 end
 
 function modifier_disable_turning:GetEffectAttachType()
-	return "follow_origin"
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function modifier_disable_turning:DeclareFunctions()

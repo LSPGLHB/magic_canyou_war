@@ -1,9 +1,37 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+wind_arrow_datadriven = ({})
+
+function wind_arrow_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'c')
+    return range
+end
+
+function wind_arrow_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm_sp1 =  "particles/05fengjian_shengcheng.vpcf"
+    keys.soundCastSp1 = 		"magic_wind_arrow_cast_sp1"
+    keys.particles_nm_sp2 =  "particles/05fengjian_jiasu.vpcf"
+    keys.soundCastSp2 = 		"magic_wind_arrow_cast_sp2"
+    keys.particles_misfire = "particles/05fengjian_jiluo.vpcf"
+    keys.soundMisfire =		"magic_wind_mis_fire"
+    keys.particles_miss =    "particles/05fengjian_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_wind_miss"
+    keys.particles_power = 	"particles/05fengjian_jiaqiang.vpcf"
+    keys.soundPower =		"magic_wind_power_up"
+    keys.particles_weak = 	"particles/05fengjian_xueruo.vpcf"
+    keys.soundWeak =			"magic_wind_power_down"	
+    keys.particles_boom = 	"particles/05fengjian_mingzhong.vpcf"
+    keys.soundBoom =			"magic_wind_arrow_boom"
+
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
 

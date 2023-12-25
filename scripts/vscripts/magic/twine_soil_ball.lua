@@ -33,8 +33,8 @@ end
 function twine_soil_ball_datadriven:OnSpellStart()
     createTwineSoilBall(self)
 end
-function createTwineSoilBall(ability)
 
+function createTwineSoilBall(ability)
     local caster = ability:GetCaster()
     local magicName = ability:GetAbilityName()
     local keys = getMagicKeys(ability,magicName)

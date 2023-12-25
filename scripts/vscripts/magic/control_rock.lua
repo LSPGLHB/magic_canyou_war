@@ -2,6 +2,8 @@ require('shoot_init')
 require('skill_operation')
 control_rock_pre_datadriven = class({})
 control_rock_datadriven = class({})
+control_rock_pre_datadriven_stage_b = class({})
+control_rock_datadriven_stage_b = class({})
 LinkLuaModifier( "control_rock_modifier_under_control", "magic/modifiers/control_rock_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
 function control_rock_pre_datadriven:OnUpgrade()
@@ -14,10 +16,7 @@ function control_rock_pre_datadriven:GetCastRange(v,t)
     return range
 end
 
-function control_rock_pre_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'c')
-	return aoe_radius
-end
+
 
 function control_rock_pre_datadriven:OnSpellStart()
     createShoot(self)
@@ -33,13 +32,18 @@ function control_rock_datadriven:GetCastRange(v,t)
     return range
 end
 
-function control_rock_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'c')
-	return aoe_radius
-end
+
 
 function control_rock_datadriven:OnSpellStart()
     createShoot(self)
+end
+
+function control_rock_pre_datadriven_stage_b:OnSpellStart()
+	EndControl(self)
+end
+
+function control_rock_datadriven_stage_b:OnSpellStart()
+	EndControl(self)
 end
 
 function createShoot(ability)
@@ -49,7 +53,7 @@ function createShoot(ability)
 
 	keys.isControl = 1
 	keys.modifier_caster_syn_name =	"control_rock_modifier_under_control"
-	keys.modifier_caster_syn_name_b =	"control_rock_modifier_under_control_b"
+	--keys.modifier_caster_syn_name_b = "control_rock_modifier_under_control_b"
 	keys.ability_a_name = magicName
 	keys.ability_b_name = magicName.."_stage_b"
 
@@ -77,7 +81,7 @@ function createShoot(ability)
     creatSkillShootInit(keys,shoot,caster,max_distance,direction)
     shoot.angleRate = angleRate
     local casterBuff = keys.modifier_caster_syn_name
-	local casterBuff_b = keys.modifier_caster_syn_name_b
+	--local casterBuff_b = keys.modifier_caster_syn_name_b
 	local flyDuration = shoot.max_distance_operation / (shoot.speed / GameRules.speedConstant / 0.02)
 
 	local stageAbility = caster:GetAbilityByIndex(7)
@@ -86,7 +90,7 @@ function createShoot(ability)
 	--print(caster:GetAbilityByIndex(6):GetAbilityName())
     --stageAbility:ApplyDataDrivenModifier(caster, caster, casterBuff, {Duration = flyDuration})	
 	--一个用于实现效果，一个用于hasmodifier监测
-	stageAbility:ApplyDataDrivenModifier(caster, caster, casterBuff_b, {Duration = flyDuration}) 
+	--stageAbility:ApplyDataDrivenModifier(caster, caster, casterBuff_b, {Duration = flyDuration}) 
 	caster:AddNewModifier( caster, ability, casterBuff, {Duration = flyDuration})
 
 
@@ -182,13 +186,15 @@ function LevelUpAbility(caster,ability)
 	end
 end
 
-function EndControl( keys )
-	local caster = keys.caster
-	--print("EndControl:"..keys.modifier_caster_syn_name)
-	caster:RemoveModifierByName( keys.modifier_caster_syn_name )
-	caster:RemoveModifierByName( keys.modifier_caster_syn_name_b )
-end
 
+
+function EndControl( ability )
+	local caster = ability:GetCaster()
+	--local unit = ability:GetParent()
+	local modifier_caster_syn_name = 'control_rock_modifier_under_control'
+	caster:RemoveModifierByName( modifier_caster_syn_name )
+end
+--[[
 function initMagicStage(keys)
 	--print("initMagicStage")
 	local caster = keys.caster
@@ -200,7 +206,7 @@ function initMagicStage(keys)
 end
 
 --貌似未使用生效
---[[
+
 function CheckToInterrupt( keys )
 	local caster = keys.caster
 	if caster:IsStunned() or caster:IsHexed() or caster:IsFrozen() or caster:IsNightmared() or caster:IsOutOfGame() then

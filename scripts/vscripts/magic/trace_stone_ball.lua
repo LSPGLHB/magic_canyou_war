@@ -1,9 +1,38 @@
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-function createTraceStoneBall(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+trace_stone_ball_datadriven = ({})
+
+function trace_stone_ball_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function trace_stone_ball_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+	keys.particles_nm =      "particles/12zhuizongtudan_shengcheng.vpcf"
+	keys.soundCast = 		"magic_trace_stone_ball_cast"
+	keys.particles_misfire = "particles/12zhuizongtudan_jiluo.vpcf"
+	keys.soundMisfire =		"magic_stone_mis_fire"
+	keys.particles_miss =    "particles/12zhuizongtudan_xiaoshi.vpcf"
+	keys.soundMiss =			"magic_stone_miss"
+	keys.particles_power = 	"particles/12zhuizongtudan_jiaqiang.vpcf"
+	keys.soundPower =		"magic_stone_power_up"
+	keys.particles_weak = 	"particles/12zhuizongtudan_xueruo.vpcf"
+	keys.soundWeak =			"magic_stone_power_down"	
+	keys.particles_boom = 	"particles/12zhuizongtudan_mingzhong.vpcf"
+	keys.soundBoom =			"magic_trace_stone_ball_hit"
+	keys.particles_strike =	"particles/12zhuizongtudan_mingzhong_baoji.vpcf"
+	keys.soundStrike =		"magic_trace_stone_ball_strike"
+	keys.soundTrace =		"magic_trace_stone_ball_trace"
+
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
 

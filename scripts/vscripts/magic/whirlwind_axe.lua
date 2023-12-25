@@ -1,8 +1,40 @@
 require('shoot_init')
 require('skill_operation')
-function createShoot(keys)
-    local caster = keys.caster
-    local ability = keys.ability
+whirlwind_axe_datadriven = ({})
+LinkLuaModifier( "whirlwind_axe_datadriven_modifier_debuff", "magic/modifiers/whirlwind_axe_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_whirlwind_axe_caster_buff", "magic/modifiers/whirlwind_axe_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+
+function whirlwind_axe_datadriven:GetCastRange(v,t)
+    local range = getRangeByName(self,'a')
+    return range
+end
+
+function whirlwind_axe_datadriven:OnSpellStart()
+    createShoot(self)
+end
+
+function createShoot(ability)
+    local caster = ability:GetCaster()
+    local magicName = ability:GetAbilityName()
+    local keys = getMagicKeys(ability,magicName)
+
+    keys.particles_nm =      "particles/45feifu_shengcheng.vpcf"
+    keys.soundCast =			"magic_whirlwind_axe_cast"
+    keys.particles_power = 	"particles/45feifu_jiaqiang.vpcf"
+    keys.soundPower =		"magic_wind_power_up"
+    keys.particles_weak = 	"particles/45feifu_xueruo.vpcf"
+    keys.soundWeak =			"magic_wind_power_down"
+    keys.particles_misfire = "particles/45feifu_jiluo.vpcf"
+    keys.soundMisfire =		"magic_wind_mis_fire"
+    keys.particles_miss =    "particles/45feifu_xiaoshi.vpcf"
+    keys.soundMiss =			"magic_wind_miss"
+    keys.particles_boom = 	"particles/45feifu_mingzhong.vpcf"
+    keys.soundBoomNM =			"magic_whirlwind_axe_boom"
+    keys.particles_boom_max = 	"particles/45feifu_mingzhong_max.vpcf"
+    keys.soundBoomMax =			"magic_whirlwind_axe_boom_max"
+    keys.modifier_caster_hit_debuff =     "whirlwind_axe_datadriven_modifier_debuff"
+    keys.modifier_caster_name =   "modifier_whirlwind_axe_caster_buff"
+
     local skillPoint = ability:GetCursorPosition()
     local casterPoint = caster:GetAbsOrigin()
     local max_distance = ability:GetSpecialValueFor("max_distance") 
@@ -17,7 +49,9 @@ function createShoot(keys)
 
     local buffName = keys.modifier_caster_name
     local buffDuration = interval * maxCount
-    ability:ApplyDataDrivenModifier(caster, caster, buffName, {Duration = buffDuration})
+    --ability:ApplyDataDrivenModifier(caster, caster, buffName, {Duration = buffDuration})
+    caster:AddNewModifier(caster,ability,buffName, {Duration = buffDuration})
+
     Timers:CreateTimer(interval / 2, function()
         caster:StartGesture(ACT_DOTA_ATTACK)
         if shootCount == maxCount - 1 then
@@ -50,7 +84,6 @@ end
 
 --技能爆炸,单次伤害
 function whirlwindAxeBoomCallBack(shoot)
-   
 	boomAOEOperation(shoot, AOEOperationCallback)
 end
 
@@ -87,7 +120,8 @@ function AOEOperationCallback(shoot,unit)
 
     if currentStack < bounds_damage_count then
         currentStack = currentStack + 1
-        ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = 5})  
+        --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = 5})  
+        unit:AddNewModifier(caster,ability,hitTargetDebuff, {Duration = 5})
         unit:SetModifierStackCount( hitTargetDebuff, abilityName, currentStack )
         EmitSoundOn(keys.soundBoomNM, shoot)
         whirlwindAxeRenderParticles(shoot) 

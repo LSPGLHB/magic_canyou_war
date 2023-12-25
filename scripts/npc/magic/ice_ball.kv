@@ -4,7 +4,7 @@
 	{
         // General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -135,7 +135,7 @@
                 "particles_boom" 	"particles/04bingqiu_mingzhong.vpcf"
 				"soundBoom"			"magic_ice_ball_boom"
 
-                "hitTargetDebuff"   "modifier_ice_ball_debuff_datadriven"
+                "hitTargetDebuff"   "ice_ball_datadriven_modifier_debuff"
 				
 			}
 		}
@@ -143,7 +143,7 @@
 		"Modifiers"
 		{
 
-			"modifier_ice_ball_debuff_datadriven"
+			"ice_ball_datadriven_modifier_debuff"
 			{
 				"IsDebuff"			"1"
 				"EffectName"		"particles/jiansu_debuff.vpcf"

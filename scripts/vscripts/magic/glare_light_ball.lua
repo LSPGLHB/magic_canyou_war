@@ -10,15 +10,9 @@ function glare_light_ball_datadriven:GetCastRange(v,t)
     return range
 end
 
-function glare_light_ball_datadriven:GetAOERadius()
-	local aoe_radius = getAOERadiusByName(self,'b')
-	return aoe_radius
-end
-
 function glare_light_ball_datadriven:OnSpellStart()
     createShoot(self)
 end
-
 
 function createShoot(ability)
     local caster = ability:GetCaster()
@@ -69,7 +63,7 @@ function glareLightBallBoomCallBack(shoot)
     local aoe_radius = shoot.aoe_radius
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local defenceParticles = keys.particles_defense
-
+	local hitTargetDebuff = keys.hitTargetDebuff
 	local position=shoot:GetAbsOrigin()
 	local casterTeam = caster:GetTeam()
 	local aroundUnits = FindUnitsInRadius(casterTeam, 
@@ -115,6 +109,5 @@ function glareLightBallBoomCallBack(shoot)
 		end
 	end 
 
-   
 end
 

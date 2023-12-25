@@ -1,21 +1,21 @@
 require('shoot_init')
 require('skill_operation')
 
-small_hurricane_datadriven =({})
+small_tornado_datadriven =({})
 LinkLuaModifier("modifier_small_hurricane_aoe_debuff", "magic/modifiers/small_hurricane_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
 
 
-function small_hurricane_datadriven:GetCastRange(v,t)
+function small_tornado_datadriven:GetCastRange(v,t)
     local range = getRangeByName(self,'b')
     return range
 end
 
-function small_hurricane_datadriven:GetAOERadius(v,t)
+function small_tornado_datadriven:GetAOERadius(v,t)
 	local aoe_radius = getAOERadiusByName(self,'b')
 	return aoe_radius
 end
 
-function small_hurricane_datadriven:OnSpellStart()
+function small_tornado_datadriven:OnSpellStart()
     createShoot(self)
 end
 

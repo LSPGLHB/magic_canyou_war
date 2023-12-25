@@ -4,18 +4,20 @@
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/twice_ice_ball.lua"
 
 		"AbilityTextureName"			"drow_ranger_frost_arrows"
 		"MaxLevel"                      "1"
 		"UnitType"         				"shui"
 		"AbilityLevel"					"c"
 		"PreAbility"					"water_ball_pre_datadriven"
-		"StageAbility"					"twice_ice_ball_stage_b_datadriven"
+		"StageAbility"					"twice_ice_ball_datadriven_stage_b"
 
 		"IconSrc"                       "file://{images}/custom_game/ability_button/drow_ranger_frost_arrows.png"  //选择框图标
 
@@ -94,7 +96,7 @@
 				"ScriptFile"	"magic/twice_ice_ball.lua"
 				"Function"		"LevelUpAbility"
 				"ability_a_name"	"twice_ice_ball_datadriven"
-				"ability_b_name"	"twice_ice_ball_stage_b_datadriven"
+				"ability_b_name"	"twice_ice_ball_datadriven_stage_b"
 			}
 		}
 		
@@ -136,7 +138,7 @@
 
 				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_datadriven_buff"
 				"ability_a_name"		   "twice_ice_ball_datadriven"
-				"ability_b_name"		   "twice_ice_ball_stage_b_datadriven"
+				"ability_b_name"		   "twice_ice_ball_datadriven_stage_b"
 				
 			}
 		}	
@@ -170,7 +172,7 @@
 						"ScriptFile"		"magic/twice_ice_ball.lua"
 						"Function"			"initStage"
 						"ability_a_name"	"twice_ice_ball_datadriven"
-						"ability_b_name"	"twice_ice_ball_stage_b_datadriven"
+						"ability_b_name"	"twice_ice_ball_datadriven_stage_b"
 					}
 				}
 			}
@@ -181,15 +183,17 @@
 
     }
 
-    "twice_ice_ball_stage_b_datadriven"
+    "twice_ice_ball_datadriven_stage_b"
 	{
     // General
 	//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				        "ability_datadriven"
+		"BaseClass"				        "ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+		"ScriptFile"					"magic/twice_ice_ball.lua"
 
 		"AbilityTextureName"			"drow_ranger_marksmanship"
 		"MaxLevel"                      "1"
@@ -291,7 +295,7 @@
 				"modifier_caster_stage_name"	   "modifier_twice_ice_ball_datadriven_buff"
               
 				"ability_a_name"	   "twice_ice_ball_datadriven"
-				"ability_b_name"	   "twice_ice_ball_stage_b_datadriven"
+				"ability_b_name"	   "twice_ice_ball_datadriven_stage_b"
 			}
 		}
 		
