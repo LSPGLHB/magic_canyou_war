@@ -1,0 +1,75 @@
+"DOTAAbilities"
+{
+	"npc_dota_hero_nevermore_ability"
+    {
+        "BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "nevermore_requiem" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"heroes/nevermore/npc_dota_hero_nevermore_ability.lua"
+
+        "AbilityType"               "hero"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"1700"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+		//"AbilityCharges"                "2"
+        //"AbilityChargeRestoreTime"      "2"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "aoe_radius"			"175"
+            }
+            "02"
+            {
+                "var_type"			    "FIELD_FLOAT"
+                "cast_speed_up"			    "100"
+            }
+            "03"
+            {
+                "var_type"			        "FIELD_FLOAT"
+                "passive_speed_up_percent"	        "50"
+            }
+            "04"
+            {
+                "var_type"			        "FIELD_FLOAT"
+                "miss_ability_speed_up_percent"		"25"
+            }
+            "05"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "miss_ability_speed_up_damage"		        "35"
+            }
+            "06"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "miss_ability_speed_up_duration"		        "5"  //buff持续时间
+            }
+            "07"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "miss_count"		        "2"        //存多少次触发效果
+            }
+            "08"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "miss_times"		        "3"       //累计次数触发
+            }
+
+        }
+    }
+}

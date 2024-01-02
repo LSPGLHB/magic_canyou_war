@@ -61,7 +61,7 @@ end
 
 if IsServer() then
     function modifier_sleep_debuff_datadriven:OnTakeDamage(keys)
-        print("OnTakeDamage")
+        --print("OnTakeDamage")
         local caster = self.caster
         caster:RemoveModifierByName('modifier_sleep_debuff_datadriven')
     end

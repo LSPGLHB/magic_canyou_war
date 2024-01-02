@@ -738,7 +738,7 @@ function beatBackUnit(keys,shoot,hitTarget,beatBackSpeed,beatBackDistance,beatBa
 	if hitTarget.FloatingAirLevel == nil or hitTarget.FloatingAirLevel < 0 then 
 		hitTarget.FloatingAirLevel = 0
 	end
-	targetLabel = hitTarget:GetUnitLabel()
+	local targetLabel = hitTarget:GetUnitLabel()
 	local endPoint1 = hitTarget:GetAbsOrigin() + beatBackDirection * beatBackDistance
 	local endPoint2 = hitTarget:GetAbsOrigin() + beatBackDirection * beatBackDistance+80
 	local isGreenWay1 = GridNav:CanFindPath(hitTarget:GetAbsOrigin(),endPoint1)
@@ -1051,7 +1051,7 @@ function controlTurn(caster, shoot, controlDuration)
 	end, 0)
 end
 
---角度计算添加buff,满足条件返回true
+--角度计算添加buff,满足条件返回true,faceAngle：90-为正前180度
 function isFaceByFaceAngle(shoot, unit, faceAngle)
     local blindDirection = shoot:GetAbsOrigin()  - unit:GetAbsOrigin()
     local blindRadian = math.atan2(blindDirection.y, blindDirection.x) * 180 
@@ -1426,3 +1426,6 @@ function getRangeByName(ability,magicLevel)
 	end
 	return max_distance
 end
+
+
+

@@ -1,0 +1,55 @@
+"DOTAAbilities"
+{
+    "grass_hide_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN
+
+
+
+        "Modifiers"
+        {
+            "modifier_yinshen_datadriven"
+            {
+                "IsHidden"  "1"
+                //"EffectName"		"particles/generic_hero_status/status_invisibility_start.vpcf"
+			    //"EffectAttachType"	"follow_origin"
+                "States"
+                {
+                    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+                    //"MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/grass_hide.lua"
+                        "Function"			"yinshenOnCreated"
+                    }
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/grass_hide.lua"
+                        "Function"			"yinshenOnDestroy"
+                    }
+                }
+            }
+
+
+            "modifier_fanyin_datadriven"
+            {
+                "EffectName"		"particles/jiangzhi_debuff_bone.vpcf"
+				"EffectAttachType"	"follow_origin"
+                "States"
+                {
+                    "MODIFIER_STATE_INVISIBLE"    "MODIFIER_STATE_VALUE_DISABLED"
+                }
+
+                
+            }
+        }
+    }
+}

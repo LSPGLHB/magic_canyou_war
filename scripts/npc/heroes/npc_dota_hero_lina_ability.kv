@@ -1,0 +1,64 @@
+"DOTAAbilities"
+{
+	"npc_dota_hero_lina_ability"
+    {
+        "BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "lina_fiery_soul" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"heroes/lina/npc_dota_hero_lina_ability.lua"
+
+        "AbilityType"               "hero"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"1700"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+		//"AbilityCharges"                "2"
+        //"AbilityChargeRestoreTime"      "2"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "aoe_radius"			"1300"
+            }
+            "02"
+            {
+                "var_type"			    "FIELD_FLOAT"
+                "duration"			    "5"
+            }
+            "03"
+            {
+                "var_type"			        "FIELD_FLOAT"
+                "ability_speed_down_percent"	"-35"
+            }
+            "04"
+            {
+                "var_type"			        "FIELD_FLOAT"
+                "ability_speed_up_percent"		"35"
+            }
+            "05"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "cooldown_reduce"		        "2"
+            }
+            "06"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "face_angle"		        "90"
+            }
+        }
+    }
+}

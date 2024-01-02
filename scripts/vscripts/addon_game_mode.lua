@@ -199,6 +199,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules:SetHeroRespawnEnabled(false)  --复活规则
 
 	local GameMode = GameRules:GetGameModeEntity()
+	GameRules:SetTimeOfDay(0.3)
 	GameMode:SetDaynightCycleDisabled(true)
 	GameMode:SetCameraDistanceOverride(1134) -- 默认1134
 	--GameRules:SetHeroSelectPenaltyTime( 0.0 )
@@ -218,6 +219,7 @@ function magicCanyouWar:InitGameMode()
 	self.flNextTimerConsoleNotify = -1
 
 	GameRules.DropTable = LoadKeyValues("scripts/kv/drops.kv") -- 导入掉落率的列表
+	
 	GameRules.customAbilities = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")--导入技能表
 
 	GameRules.itemList = LoadKeyValues("scripts/npc/npc_items_custom.txt")--导入装备表

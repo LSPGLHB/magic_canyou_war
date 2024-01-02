@@ -42,3 +42,41 @@ function getRandomNumList(from, to, count)
     end
     return randomBox
 end
+
+--合并去重
+function arrayMerge(arr1,arr2)
+    local result = {}
+    if arr1 ~= nil and #arr1 > 0 then
+        for _, value in ipairs(arr1) do
+            table.insert(result, value)
+        end
+    end
+    if arr2 ~= nil and #arr2 > 0 then
+        for _, value in ipairs(arr2) do
+            local isExist = false 
+            for i, v in ipairs(result) do
+                if v == value then
+                    isExist = true
+                    break
+                end
+            end
+            
+            if not isExist then
+                table.insert(result, value)
+            end
+        end
+    end
+    return result
+end
+
+--是否包含
+function checkContainsArrayValue(array, value)
+    if array ~= nil and #array > 0 then
+        for _, v in ipairs(array) do
+            if v == value then
+                return true
+            end
+        end
+    end
+    return false
+end

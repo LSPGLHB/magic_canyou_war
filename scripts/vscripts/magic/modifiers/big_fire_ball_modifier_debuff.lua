@@ -8,7 +8,7 @@ function big_fire_ball_pre_datadriven_modifier_debuff:GetEffectName()
 end
 
 function big_fire_ball_pre_datadriven_modifier_debuff:GetEffectAttachType()
-	return "follow_chest"
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function big_fire_ball_pre_datadriven_modifier_debuff:DeclareFunctions()
@@ -39,7 +39,7 @@ function big_fire_ball_datadriven_modifier_debuff:GetEffectName()
 end
 
 function big_fire_ball_datadriven_modifier_debuff:GetEffectAttachType()
-	return "follow_chest"
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function big_fire_ball_datadriven_modifier_debuff:DeclareFunctions()

@@ -18,6 +18,6 @@ function refreshItemBuff(keys,flag)
 
     setPlayerPower(playerID, "player_defense", flag, item_defense)
 
-   setPlayerBuffByNameAndBValue(keys,"defense",GameRules.playerBaseDefense)
+    setPlayerBuffByNameAndBValue(keys,"defense",GameRules.playerBaseDefense)
 
 end

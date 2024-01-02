@@ -1,4 +1,4 @@
---require('scene/battlefield')
+require('scene/grass_hide')
 --require('scene/player_battlefield_buff')
 require('myMaths')
 LinkLuaModifier( "modifier_power_up", "scene/modifier_power_up.lua" , LUA_MODIFIER_MOTION_NONE)
@@ -44,7 +44,7 @@ function initMapStatus()
         createUnit('yang',DOTA_TEAM_BADGUYS)
     end
     ]]
-
+    grassBuffWork()
 end
 
 function clearTreasureBox()
@@ -188,7 +188,8 @@ function initMagicStone()
     goodMagicStone.alive = 1
     goodMagicStone.name = "goodMagicStone"
     --GameRules.goodMagicStone = goodMagicStone
-    --goodMagicStone:SetContext("name", "magicStone", 0)
+    --goodMagicStone:SetContext("name", "magicStone", 0)、
+    
     
     local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone")
     local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
@@ -256,6 +257,7 @@ function initHero()
         if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local heroTeam = hHero:GetTeam()
+            
             for i = 0 , hHero:GetAbilityCount() do
                 local tempAbility = hHero:GetAbilityByIndex(i)
                 if tempAbility ~= nil then
@@ -271,14 +273,15 @@ function initHero()
             end
             --local tempAbility = hHero:GetAbilityByIndex(0):GetAbilityName()
             --hHero:RemoveAbility(tempAbility) 
-  
+            local heroAbility = hHero:GetUnitName().."_ability"
+            --print("heroAbility:"..heroAbility)
             hHero:AddAbility("nothing_c"):SetLevel(1) --0
             hHero:AddAbility("nothing_b"):SetLevel(1) --1
             hHero:AddAbility("nothing_a"):SetLevel(1) --2
 
             hHero:AddAbility(commonAttack):SetLevel(1)  --3
-            hHero:AddAbility("pull_all_datadriven"):SetLevel(1) --4
-            hHero:AddAbility("push_all_datadriven"):SetLevel(1) --5   --  make_friend_datadriven
+            hHero:AddAbility(heroAbility):SetLevel(1) --4
+            hHero:AddAbility("make_friend_datadriven"):SetLevel(1) --5   --push_all_datadriven  
 
             hHero:AddAbility("nothing_c_stage"):SetLevel(1) --6
             hHero:AddAbility("nothing_b_stage"):SetLevel(1) --7

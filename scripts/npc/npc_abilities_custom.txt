@@ -25,7 +25,14 @@
 //测试用
 #base abilities/make_friend.kv
 
+//英雄技能
+#base heroes/npc_dota_hero_faceless_void_ability.kv
+#base heroes/npc_dota_hero_earth_spirit_ability.kv
+#base heroes/npc_dota_hero_lina_ability.kv
+
+
 //下面才是正文
+#base scene/grass_hide.kv
 #base scene/scene_buff.kv
 #base contract/contract_all.kv
 #base contract/ability_buff.kv
