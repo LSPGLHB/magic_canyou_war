@@ -114,6 +114,7 @@ function Precache( context )
 	--此处开始比较有用
 	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_magic.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_scene.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/voscripts/game_sounds_vo_heroes.vsndevts", context)
 end
 
 -- Create the game mode when we activate
@@ -136,8 +137,8 @@ function magicCanyouWar:InitGameMode()
 	--GameRules:SetCustomGameSetupAutoLaunchDelay(0)--设置自动开始前的等待时间。 
 
 	GameRules.PreTime = 2  --开局延迟吹号角
-	GameRules.refreshCost = 10    --刷新需要金币
-	GameRules.refreshCostAdd = 10 --刷新叠加金币
+	GameRules.refreshCost = 5    --刷新需要金币
+	GameRules.refreshCostAdd = 0 --刷新叠加金币
 	GameRules.studyTime = 21   --学习阶段时间
 	GameRules.prepareTime = 21 --策略阶段时间
 	GameRules.battleTime = 300 --战斗阶段时间
@@ -147,6 +148,7 @@ function magicCanyouWar:InitGameMode()
 	GameRules.freeTime = 5 --战后自由活动时间
 	GameRules.remainsBoxAliveTime = 15 --遗物箱消失时间
 	GameRules.roundEndLoadingTime = 3.5 --轮回石运转时间
+	GameRules.cooldownPercentLimit = 50 --冷却减少上限百分比
 	
 
 	GameRules.winBaseReward = 7 --基础胜方奖励
@@ -155,31 +157,39 @@ function magicCanyouWar:InitGameMode()
 	GameRules.endSeriesWinReward = {14,28} --终结2,3+连胜奖励
 
 	GameRules.magicStoneLabel = "magicStoneLabel"
+	GameRules.magicStonePanLabel = "magicStonePanLabel"
+	GameRules.magicTowerLabel = "magicTowerLabel"
+	GameRules.magicTowerAssistantLabel = "magicTowerAssistantLabel"
 	GameRules.skillLabel = "skillLabel"
+	GameRules.connonLabel = "connonLabel" --抛物线弹道使用
+	GameRules.towerSkillLabel = "towerSkillLabel"
 	GameRules.summonLabel = "summonLabel"  --可被攻击的召唤
 
 	
-	GameRules.nothingLabel ="nothingLabel" --抛物线用或其他不可被攻击的
-	GameRules.stoneLabel = "stoneLabel"
+	GameRules.nothingLabel ="nothingLabel" --其他不可被攻击的东西
+	GameRules.stoneLabel = "stoneLabel" --暂时没用
 	GameRules.shopLabel ="shopLabel"
 	GameRules.boxLabel = "boxLabel"
-	GameRules.battlefieldLabel = "battlefieldLabel"
+	GameRules.battlefieldLabel = "battlefieldLabel"--暂时弃用
 	GameRules.samsaraStoneLabel = "samsaraStoneLabel"
 	GameRules.remainsLabel ="remainsLabel" --遗物
 
 	GameRules.checkWinTeam = nil
 	GameRules.testMode = false
 
-	--场景标签，一般不与子弹互动
+	--场景标签，不与子弹互动
 	GameRules.SceneLabel = {}
 	GameRules.SceneLabel[1] = GameRules.nothingLabel
-	GameRules.SceneLabel[2] = GameRules.stoneLabel
-	GameRules.SceneLabel[3] = GameRules.shopLabel
-	GameRules.SceneLabel[4] = GameRules.boxLabel
-	GameRules.SceneLabel[5] = GameRules.battlefieldLabel
-	GameRules.SceneLabel[6] = GameRules.samsaraStoneLabel
-	GameRules.SceneLabel[7] = GameRules.remainsLabel
-
+	GameRules.SceneLabel[2] = GameRules.shopLabel
+	GameRules.SceneLabel[3] = GameRules.boxLabel
+	GameRules.SceneLabel[4] = GameRules.battlefieldLabel
+	GameRules.SceneLabel[5] = GameRules.samsaraStoneLabel
+	GameRules.SceneLabel[6] = GameRules.remainsLabel
+	GameRules.SceneLabel[7] = GameRules.magicTowerLabel
+	GameRules.SceneLabel[8] = GameRules.magicTowerAssistantLabel
+	GameRules.SceneLabel[9] = GameRules.magicStoneLabel
+	GameRules.SceneLabel[10] = GameRules.magicStonePanLabel
+	GameRules.SceneLabel[11] = GameRules.connonLabel
 
 	GameRules.playerBaseHealth = 50 --基础血量
 	GameRules.playerBaseMana = 100  --基础蓝量
@@ -223,7 +233,8 @@ function magicCanyouWar:InitGameMode()
 	GameRules.customAbilities = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")--导入技能表
 
 	GameRules.itemList = LoadKeyValues("scripts/npc/npc_items_custom.txt")--导入装备表
-	GameRules.contractList = LoadKeyValues("scripts/npc/contract/contract_all.kv")--导入契约表
+	--GameRules.contractList = LoadKeyValues("scripts/npc/contract/contract_all.kv")--导入契约表
+	GameRules.blinkList = LoadKeyValues("scripts/npc/blink/blink_all.kv")--导入契约表
 
 	GameRules.talentCList = LoadKeyValues("scripts/npc/talent/talent_c.kv")--导入提升天赋
 	GameRules.talentBList = LoadKeyValues("scripts/npc/talent/talent_b.kv")
@@ -254,7 +265,7 @@ function magicCanyouWar:InitGameMode()
 
 
 	--监听单位重生
-	--ListenToGameEvent("npc_spawned", Dynamic_Wrap(magicCanyouWar, "OnNPCSpawned"), self)
+	ListenToGameEvent("npc_spawned", Dynamic_Wrap(magicCanyouWar, "OnHeroSpawned"), self)
 
 	--监听游戏进度
 	ListenToGameEvent("game_rules_state_change", Dynamic_Wrap(magicCanyouWar,"OnGameRulesStateChange"), self)
@@ -279,15 +290,27 @@ function magicCanyouWar:InitGameMode()
 	CustomGameEventManager:RegisterListener( "openPlayerStatusJSTOLUA", openPlayerStatusJSTOLUA )
 	CustomGameEventManager:RegisterListener( "closePlayerStatusJSTOLUA", closePlayerStatusJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "refreshPlayerStatusJSTOLUA", refreshPlayerStatusJSTOLUA ) 
-	CustomGameEventManager:RegisterListener( "getContractDetailByNumJSTOLUA", getContractDetailByNumJSTOLUA ) 
-	CustomGameEventManager:RegisterListener( "getMagicDetailByNumJSTOLUA", getMagicDetailByNumJSTOLUA ) 
+	--CustomGameEventManager:RegisterListener( "getContractDetailByNumJSTOLUA", getContractDetailByNumJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "getMagicDetailByNumJSTOLUA", getMagicDetailByNumJSTOLUA )
+	CustomGameEventManager:RegisterListener( "getMagicDetailCloseJSTOLUA", getMagicDetailCloseJSTOLUA ) 
+	
 	CustomGameEventManager:RegisterListener( "getItemDetailByNumJSTOLUA", getItemDetailByNumJSTOLUA ) 
+
+	--属性按钮
+	CustomGameEventManager:RegisterListener( "openHeroAttributeJSTOLUA", openHeroAttributeJSTOLUA )
+	CustomGameEventManager:RegisterListener( "closeHeroAttributeJSTOLUA", closeHeroAttributeJSTOLUA ) 
 	
 	--契约列表
 	--CustomGameEventManager:RegisterListener( "openContractListJSTOLUA", openContractListJSTOLUA ) --打开启用KVTPLUA通道
+	--[[停用契约
 	CustomGameEventManager:RegisterListener( "closeContractListJSTOLUA", closeContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "refreshContractListJSTOLUA", refreshContractListJSTOLUA ) 
 	CustomGameEventManager:RegisterListener( "learnContractByNameJSTOLUA", learnContractByNameJSTOLUA ) 
+	]]
+	--闪现加强列表
+	CustomGameEventManager:RegisterListener( "closeBlinkListJSTOLUA", closeBlinkListJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "refreshBlinkListJSTOLUA", refreshBlinkListJSTOLUA ) 
+	CustomGameEventManager:RegisterListener( "learnBlinkByNameJSTOLUA", learnBlinkByNameJSTOLUA ) 
 
 	--天赋列表
 	CustomGameEventManager:RegisterListener( "closeTalentListJSTOLUA", closeTalentListJSTOLUA ) 
@@ -348,18 +371,19 @@ end
 
 function magicCanyouWar:OnEntityKilled (keys)
 	local unit = EntIndexToHScript(keys.entindex_killed) --受害者
-	local killer = EntIndexToHScript(keys.entindex_attacker) --凶手
+	local killer = EntIndexToHScript(keys.entindex_attacker).owner --凶手
     local name = unit:GetContext("name")
 	local label = unit:GetUnitLabel()
 	local position = unit:GetAbsOrigin()
 	local killerTeam = killer:GetTeam()
-	local killerID = killer:GetPlayerID()
+	local killerID = killer.playerID
 
 	if name == "testdog" then
 		--测试流程面板
 		CustomUI:DynamicHud_Create(killerID,"UITestPanelBG","file://{resources}/layout/custom_game/UI_test.xml",nil)
 		GameRules.testMode = true
 	end
+	
 	
 	--物品掉落测试(金币箱子打开)
 	if label == GameRules.boxLabel then
@@ -395,19 +419,24 @@ function magicCanyouWar:OnEntityKilled (keys)
 
 		local killerBonus = 8  --击杀者获得金币数
 		local teamBonus = 4 --击杀者队友获得金币数
-		local unitID = unit:GetPlayerID()
-		local endPlayerSeriesKill = playerSeriesKill[unitID]
-		--print('playerDie--alreadyKill:'..endPlayerSeriesKill)
-		if endPlayerSeriesKill >= 3 then
-			killerBonus = killerBonus + 4 * 3
+		local unitID = unit.playerID
+		--英雄以外的击杀
+		if killerID ~= nil and killerID >= 0 and killerID <= 9 then
+			local endPlayerSeriesKill = playerSeriesKill[unitID]
+			--print('playerDie--alreadyKill:'..endPlayerSeriesKill)
+			if endPlayerSeriesKill >= 3 then
+				killerBonus = killerBonus + 4 * 3
+			end
+			--被击杀玩家连续击杀数清0
+			playerSeriesKill[unitID] = 0
+			--击杀者连续击杀数+1
+			if playerSeriesKill[killerID] ~= nil then
+				playerSeriesKill[killerID] = playerSeriesKill[killerID] + 1
+			end
+			--击杀者金币增加
+			PlayerResource:SetGold(killerID, killer:GetGold()+killerBonus, true)
+			showGoldWorthParticle(killerID,killerBonus,"team")
 		end
-		--被击杀玩家连续击杀数清0
-		playerSeriesKill[unitID] = 0
-		--击杀者连续击杀数+1
-		playerSeriesKill[killerID] = playerSeriesKill[killerID] + 1
-		--击杀者金币增加
-		PlayerResource:SetGold(killerID, killer:GetGold()+killerBonus, true)
-		showGoldWorthParticle(killerID,killerBonus,"team")
 		for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
 				local hHero = PlayerResource:GetSelectedHeroEntity(playerID) 
@@ -467,12 +496,13 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 	if state == DOTA_GAMERULES_STATE_PRE_GAME then
 		
 		--运行检查商店进程
+		initPlayerPower() --初始化契约容器
 		initHero()--初始化英雄
 		initMapStatus() -- 初始化地图数据
 		initItemList() -- 初始化物品信息
-		initPlayerPower() --初始化契约容器
 		initTempPlayerPower()--初始化回合临时能力提升容器
-		initContractList() --初始化契约信息
+		--initContractList() --初始化契约信息
+		initBlinkList()--初始化契约信息
 		initTalentList() --初始化天赋信息
 		initMagicList()--初始化技能信息
 		initShopStats()--初始化商店
@@ -480,12 +510,20 @@ function magicCanyouWar:OnGameRulesStateChange( keys )
 		Timers:CreateTimer(0,function ()
 			gameProgress()--打开游戏流程的进程
 		end)
-	
-
 	end
 end
 
-
+--英雄重生需要刷新被动能力加强
+function magicCanyouWar:OnHeroSpawned(keys)
+	local entity = EntIndexToHScript(keys.entindex)
+	if entity:IsHero() and entity:GetUnitLabel() ~= GameRules.summonLabel then
+		if entity.startGame == nil then
+			entity.startGame = 1
+		else
+			heroAbilityPassiveInit(entity)
+		end
+	end
+end
 
 --整体弃用
 --捡起物品监听

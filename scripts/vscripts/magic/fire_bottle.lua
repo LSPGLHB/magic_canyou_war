@@ -53,6 +53,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, caster)
     moveShoot(keys, shoot, fireBottleBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 function fireBottleBoomCallBack(shoot)
@@ -92,5 +93,5 @@ function fireBottleDamageCallback(shoot, unit, interval)
     if distance < 0.5 * radius then
         damage = damage * 2
     end
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

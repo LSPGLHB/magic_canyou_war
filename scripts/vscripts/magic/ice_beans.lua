@@ -54,6 +54,7 @@ function LaunchFire(ability)
 
 	Timers:CreateTimer(0,function ()
 		local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+		shoot.shootCount = i
 		creatSkillShootInit(keys,shoot,caster,max_distance,direction)
 		local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
 		ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
@@ -62,6 +63,7 @@ function LaunchFire(ability)
 		moveShoot(keys, shoot, iceBeansBoomCallBack, nil)
 		tempCount = tempCount+1
 		if tempCount == shootCount then
+			caster.shootOver = 1
 			return nil
 		end
 		return 0.2
@@ -86,6 +88,7 @@ function stageOne (keys)
 	caster:SwapAbilities( ability_a_name, ability_b_name, false, true )
 
     initDurationBuff(keys)
+	caster.shootOver = -1
 end
 
 function LevelUpAbility(keys)
@@ -138,7 +141,7 @@ function AOEOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot) / ability:GetSpecialValueFor("charge_count") / ability:GetSpecialValueFor("shoot_count")
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local abilityName = caster:FindAbilityByName(ability:GetAbilityName())
 	local currentStack = unit:GetModifierStackCount(hitTargetDebuff, abilityName)
 	currentStack = currentStack + 1

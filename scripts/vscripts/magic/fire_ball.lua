@@ -58,6 +58,7 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     moveShoot(keys, shoot, fireBallBoomCallBack, nil)
+	caster.shootOver = 1
 end
 
 
@@ -100,7 +101,7 @@ function fireBallAOEOperationCallback(shoot,unit)
 	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,beatBackDirection,AbilityLevel,true)
 	disableTurning(keys,shoot,unit,AbilityLevel)
 	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
 

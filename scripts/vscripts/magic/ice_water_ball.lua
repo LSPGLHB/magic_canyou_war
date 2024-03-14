@@ -55,12 +55,16 @@ function createShoot(ability)
 
     local skillPoint = ability:GetCursorPosition()
     --local speed = ability:GetSpecialValueFor("speed")
-    local max_distance = ability:GetSpecialValueFor("max_distance")
+   
 
     local casterPoint = caster:GetAbsOrigin()
 
     local direction = (skillPoint - casterPoint):Normalized()
     local xPoint_distance = (skillPoint - casterPoint):Length2D()
+
+    local max_distance_temp = ability:GetSpecialValueFor("max_distance")
+
+    local max_distance = max_distance_temp * (1+ xPoint_distance / max_distance_temp * 0.1)
 
     local angle = 0.3 * math.pi
     local newX1 = math.cos(math.atan2(direction.y, direction.x) - angle)
@@ -75,6 +79,7 @@ function createShoot(ability)
 
     
     local shoot_sp1 = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+    shoot_sp1.shootCount = 1
     creatSkillShootInit(keys,shoot_sp1,caster,max_distance,direction_sp1)
 
     local particleID = ParticleManager:CreateParticle(keys.particles_nm_sp1, PATTACH_ABSORIGIN_FOLLOW , shoot_sp1)
@@ -93,6 +98,7 @@ function createShoot(ability)
     moveShoot(keys, shoot_sp1, iceWaterBallBoomCallBackSp1, nil)
 
     local shoot_sp2 = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+    shoot_sp2.shootCount = 2
     creatSkillShootInit(keys,shoot_sp2,caster,max_distance,direction_sp2)
 
     local particleID = ParticleManager:CreateParticle(keys.particles_nm_sp2, PATTACH_ABSORIGIN_FOLLOW , shoot_sp2)
@@ -109,7 +115,7 @@ function createShoot(ability)
     shoot_sp2.particles_boom = keys.particles_boom_sp2
     shoot_sp2.intervalCallBack = intervalCallBackSp2
     moveShoot(keys, shoot_sp2, iceWaterBallBoomCallBackSp2, nil)
-    
+    caster.shootOver = 1
 end
 
 
@@ -128,7 +134,7 @@ function iceWaterBallAOEOperationCallbackSp1(shoot,unit)
     local caster = keys.caster
 	local ability = keys.ability
     local damage = getApplyDamageValue(shoot) / 2
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
 	local playerID = caster:GetPlayerID()	
     local AbilityLevel = shoot.abilityLevel
@@ -178,12 +184,12 @@ end
 
 function intervalCallBackOperation(shoot, flag)
     local angle = shoot.angle
-    local xPoint_distance = shoot.xPoint_distance * (1 + 0.1 * (shoot.xPoint_distance / (shoot.max_distance -200)))
-    
+    local xPoint_distance = shoot.xPoint_distance * (1 + 0.1 * (shoot.xPoint_distance / (shoot.max_distance)))
     local angleRate = flag * angle / (xPoint_distance  / (shoot.speed / 0.02 / GameRules.speedConstant) / 0.02)
     local direction = shoot.direction
     local direction = shoot.direction
     local angle_new = 0
+    --超过交汇点后变成直线
     if xPoint_distance > shoot.traveled_distance then
         angle_new = angleRate * math.pi 
     end

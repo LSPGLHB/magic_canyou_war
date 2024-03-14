@@ -16,9 +16,9 @@ function refreshPublicRangeCPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_range_c_precent_final = ability:GetSpecialValueFor( "talent_range_c_precent_final")
+    local talent_range_percent_final = ability:GetSpecialValueFor( "talent_range_percent_final")
 
-    setPlayerPower(playerID, "talent_range_c_precent_final", flag, talent_range_c_precent_final)
+    setPlayerPower(playerID, "talent_range_percent_final", flag, talent_range_percent_final)
 
 end
 
@@ -39,9 +39,12 @@ function refreshPublicDamageCPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_damage_c_precent_final = ability:GetSpecialValueFor( "talent_damage_c_precent_final")
+    local talent_damage_percent_final = ability:GetSpecialValueFor( "talent_damage_percent_final")
 
-    setPlayerPower(playerID, "talent_damage_c_precent_final", flag, talent_damage_c_precent_final)
+    setPlayerPower(playerID, "talent_damage_d_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_c_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_b_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_a_percent_final", flag, talent_damage_percent_final)
 end
 
 
@@ -61,9 +64,9 @@ function refreshPublicAbilitySpeedCPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_ability_speed_c_precent_final = ability:GetSpecialValueFor( "talent_ability_speed_c_precent_final")
+    local talent_ability_speed_percent_final = ability:GetSpecialValueFor( "talent_ability_speed_percent_final")
 
-    setPlayerPower(playerID, "talent_ability_speed_c_precent_final", flag, talent_ability_speed_c_precent_final)
+    setPlayerPower(playerID, "talent_ability_speed_percent_final", flag, talent_ability_speed_percent_final)
 end
 
 
@@ -83,9 +86,9 @@ function refreshPublicControlCPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_control_c_precent_final = ability:GetSpecialValueFor("talent_control_c_precent_final")
+    local talent_control_percent_final = ability:GetSpecialValueFor("talent_control_percent_final")
 
-    setPlayerPower(playerID, "talent_control_c_precent_final", flag, talent_control_c_precent_final)
+    setPlayerPower(playerID, "talent_control_percent_final", flag, talent_control_percent_final)
 end
 
 
@@ -104,9 +107,9 @@ function refreshPublicDamageMatchHelperCPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_damage_match_helper_c_precent_final = ability:GetSpecialValueFor( "talent_damage_match_helper_c_precent_final")
+    local talent_damage_match_helper_percent_final = ability:GetSpecialValueFor( "talent_damage_match_helper_percent_final")
 
-    setPlayerPower(playerID, "talent_damage_match_helper_c_precent_final", flag, talent_damage_match_helper_c_precent_final)
+    setPlayerPower(playerID, "talent_damage_match_helper_percent_final", flag, talent_damage_match_helper_percent_final)
 end
 
 
@@ -126,9 +129,9 @@ function refreshPublicRangeBPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_range_b_precent_final = ability:GetSpecialValueFor( "talent_range_b_precent_final")
+    local talent_range_percent_final = ability:GetSpecialValueFor( "talent_range_percent_final")
 
-    setPlayerPower(playerID, "talent_range_b_precent_final", flag, talent_range_b_precent_final)
+    setPlayerPower(playerID, "talent_range_percent_final", flag, talent_range_percent_final)
 end
 
 
@@ -148,9 +151,12 @@ function refreshPublicDamageBPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_damage_b_precent_final = ability:GetSpecialValueFor( "talent_damage_b_precent_final")
+    local talent_damage_percent_final = ability:GetSpecialValueFor( "talent_damage_percent_final")
 
-    setPlayerPower(playerID, "talent_damage_b_precent_final", flag, talent_damage_b_precent_final)
+    setPlayerPower(playerID, "talent_damage_d_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_c_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_b_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_a_percent_final", flag, talent_damage_percent_final)
 end
 
 
@@ -170,9 +176,9 @@ function refreshPublicAbilitySpeedBPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_ability_speed_b_precent_final = ability:GetSpecialValueFor( "talent_ability_speed_b_precent_final")
+    local talent_ability_speed_percent_final = ability:GetSpecialValueFor( "talent_ability_speed_percent_final")
 
-    setPlayerPower(playerID, "talent_ability_speed_b_precent_final", flag, talent_ability_speed_b_precent_final)
+    setPlayerPower(playerID, "talent_ability_speed_percent_final", flag, talent_ability_speed_percent_final)
 end
 
 
@@ -192,9 +198,9 @@ function refreshPublicControlBPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_control_b_precent_final = ability:GetSpecialValueFor( "talent_control_b_precent_final")
+    local talent_control_percent_final = ability:GetSpecialValueFor( "talent_control_percent_final")
 
-    setPlayerPower(playerID, "talent_control_b_precent_final", flag, talent_control_b_precent_final)
+    setPlayerPower(playerID, "talent_control_percent_final", flag, talent_control_percent_final)
 end
 
 
@@ -213,9 +219,9 @@ function refreshPublicDamageMatchHelperBPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_damage_match_helper_b_precent_final = ability:GetSpecialValueFor( "talent_damage_match_helper_b_precent_final")
+    local talent_damage_match_helper_percent_final = ability:GetSpecialValueFor( "talent_damage_match_helper_percent_final")
 
-    setPlayerPower(playerID, "talent_damage_match_helper_b_precent_final", flag, talent_damage_match_helper_b_precent_final)
+    setPlayerPower(playerID, "talent_damage_match_helper_percent_final", flag, talent_damage_match_helper_percent_final)
 end
 
 --a级技能分界线
@@ -235,9 +241,9 @@ function refreshPublicRangeAPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_range_a_precent_final = ability:GetSpecialValueFor( "talent_range_a_precent_final")
+    local talent_range_percent_final = ability:GetSpecialValueFor( "talent_range_percent_final")
 
-    setPlayerPower(playerID, "talent_range_a_precent_final", flag, talent_range_a_precent_final)
+    setPlayerPower(playerID, "talent_range_percent_final", flag, talent_range_percent_final)
 end
 
 
@@ -257,9 +263,12 @@ function refreshPublicDamageAPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_damage_a_precent_final = ability:GetSpecialValueFor( "talent_damage_a_precent_final")
+    local talent_damage_percent_final = ability:GetSpecialValueFor( "talent_damage_percent_final")
 
-    setPlayerPower(playerID, "talent_damage_a_precent_final", flag, talent_damage_a_precent_final)
+    setPlayerPower(playerID, "talent_damage_d_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_c_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_b_percent_final", flag, talent_damage_percent_final)
+    setPlayerPower(playerID, "talent_damage_a_percent_final", flag, talent_damage_percent_final)
 end
 
 
@@ -279,9 +288,9 @@ function refreshPublicAbilitySpeedAPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_ability_speed_a_precent_final = ability:GetSpecialValueFor( "talent_ability_speed_a_precent_final")
+    local talent_ability_speed_percent_final = ability:GetSpecialValueFor( "talent_ability_speed_percent_final")
 
-    setPlayerPower(playerID, "talent_ability_speed_a_precent_final", flag, talent_ability_speed_a_precent_final)
+    setPlayerPower(playerID, "talent_ability_speed_percent_final", flag, talent_ability_speed_percent_final)
 end
 
 
@@ -301,9 +310,9 @@ function refreshPublicControlAPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_control_a_precent_final = ability:GetSpecialValueFor( "talent_control_a_precent_final")
+    local talent_control_a_percent_final = ability:GetSpecialValueFor( "talent_control_a_percent_final")
 
-    setPlayerPower(playerID, "talent_control_a_precent_final", flag, talent_control_a_precent_final)
+    setPlayerPower(playerID, "talent_control_a_percent_final", flag, talent_control_a_percent_final)
 end
 
 
@@ -322,7 +331,7 @@ function refreshPublicDamageMatchHelperAPowerUpBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local talent_damage_match_helper_a_precent_final = ability:GetSpecialValueFor( "talent_damage_match_helper_a_precent_final")
+    local talent_damage_match_helper_a_percent_final = ability:GetSpecialValueFor( "talent_damage_match_helper_a_percent_final")
 
-    setPlayerPower(playerID, "talent_damage_match_helper_a_precent_final", flag, talent_damage_match_helper_a_precent_final)
+    setPlayerPower(playerID, "talent_damage_match_helper_a_percent_final", flag, talent_damage_match_helper_a_percent_final)
 end

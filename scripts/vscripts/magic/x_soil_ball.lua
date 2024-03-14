@@ -56,6 +56,7 @@ function createShoot(ability)
     for i = 1, 2, 1 do
         local shootPos = shootPosTable[i]
         local shoot = CreateUnitByName(keys.unitModel, shootPos, true, nil, nil, caster:GetTeam())
+        shoot.shootCount = i
         shootPos = Vector(shootPos.x,shootPos.y,shootPos.z+100)
         shoot:SetAbsOrigin(shootPos)
         local shootDirection = (skillPoint - shoot:GetAbsOrigin()):Normalized()
@@ -69,8 +70,8 @@ function createShoot(ability)
             moveShoot(keys, shoot, xSoilBallBoomCallBack, nil)
             return nil
         end)
-        
     end
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -104,7 +105,7 @@ function xSoilBallAOEOperationCallback(shoot,unit)
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
     if unit:HasModifier(debuffName) then
         debuffDuration = debuffDuration * 2
     end

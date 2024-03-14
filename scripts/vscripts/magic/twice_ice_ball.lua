@@ -75,6 +75,7 @@ function stepOne(ability)
         return nil
     end)]]
     moveShoot(keys, shoot, twiceIceBallBoomCallBackSp1, nil)
+    caster.shootOver = 1
 end
 
 function stepTwo(ability)
@@ -147,7 +148,7 @@ function twiceIceBallAOEOperationCallbackSp1(shoot,unit)
 	local ability = keys.ability
 
     local damage = getApplyDamageValue(shoot) * (6 / 18)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
@@ -167,7 +168,7 @@ function twiceIceBallAOEOperationCallbackSp2(shoot,unit)
 	local ability = keys.ability
     local damage_by_distance = ability:GetSpecialValueFor("damage_by_distance")
     local damage = getApplyDamageValue(shoot) * (12 / 18) + (shoot.traveled_distance / damage_by_distance)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()}) 
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()}) 
 end
 
 function LevelUpAbility(self)

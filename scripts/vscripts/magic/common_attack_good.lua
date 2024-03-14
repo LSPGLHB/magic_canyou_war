@@ -3,7 +3,7 @@ common_attack_good_datadriven = class({})
 require('shoot_init')
 require('skill_operation')
 require('player_power')
-require('scene/game_stone')
+--require('scene/game_stone')
 
 function common_attack_good_datadriven:GetCastRange(t,v)
     local range = getRangeByName(self,'d')
@@ -45,6 +45,7 @@ function common_attack_good_datadriven:OnSpellStart()
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, commonAttackSp1BoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 
@@ -88,12 +89,13 @@ function commonAttackSp1AOEOperationCallback(shoot,unit)
 	local ability = keys.ability
 	local damage = getApplyDamageValue(shoot)
 	local unitLabel = unit:GetUnitLabel()
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    --[[
 	if unitLabel == GameRules.magicStoneLabel then
-		ApplyDamage({victim = unit, attacker = caster, damage = 1, damage_type = DAMAGE_TYPE_PURE})
+		ApplyDamage({victim = unit, attacker = shoot, damage = 1, damage_type = DAMAGE_TYPE_PURE})
 		if not unit:IsAlive() then
 			unit.alive = 0
             magicStoneBroken(unit)
 		end
-	end
+	end]]
 end

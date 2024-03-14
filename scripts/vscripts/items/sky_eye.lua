@@ -14,16 +14,25 @@ function refreshItemBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    --local item_speed = ability:GetSpecialValueFor("item_speed")
 
-    --setPlayerPower(playerID, "player_speed", flag, item_speed)
-
-    --setPlayerBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
+    local item_vision = ability:GetSpecialValueFor("item_vision")
+    local item_health = ability:GetSpecialValueFor("item_health")
+    local item_cooldown_percent_final = ability:GetSpecialValueFor("item_cooldown_percent_final")
+    local item_mana_regen = ability:GetSpecialValueFor("item_mana_regen")
+    
+    setPlayerPower(playerID, "player_vision", flag, item_vision)
+    setPlayerPower(playerID, "player_health", flag, item_health)
+    setPlayerPower(playerID, "player_cooldown_percent_final", flag, item_cooldown_percent_final)
+    setPlayerPower(playerID, "player_mana_regen", flag, item_mana_regen)
+    
+    setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision)
+    setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
+    setPlayerSimpleBuff(keys,"cooldown_percent_final")
+    setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
 
 end
 
 function createSkyEye(keys)
-    print("onMake")
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()

@@ -50,14 +50,15 @@ function createShoot(ability)
     initDurationBuff(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+        shoot.shootCount = i
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
-
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID
         EmitSoundOn(keys.soundCast, shoot)
         moveShoot(keys, shoot, lightBallBoomCallBack, nil)
     end
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -91,7 +92,7 @@ function lightBallAOEOperationCallback(shoot,unit)
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local flag = isFaceByFaceAngle(shoot, unit, faceAngle)
     if flag then
-        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
         debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
         debuffDuration = getApplyControlValue(shoot, debuffDuration)

@@ -51,6 +51,7 @@ function createShoot(ability)
 	EmitSoundOn(keys.soundCast, caster)
     shoot.intervalCallBack = glareLightBallBoomCallBack --周期运行
     moveShoot(keys, shoot, nil, nil)
+	caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -84,7 +85,7 @@ function glareLightBallBoomCallBack(shoot)
             local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
             if isface then
 				local damage = getApplyDamageValue(shoot)
-	        	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})  
+	        	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})  
                 local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
 				debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--装备数值加强
 				debuffDuration = getApplyControlValue(shoot,debuffDuration)--相生相克计算

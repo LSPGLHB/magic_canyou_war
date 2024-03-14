@@ -61,6 +61,7 @@ function createShoot(ability)
     local send_delay = ability:GetSpecialValueFor("send_delay")
     shoot.speed = 0
     moveShoot(keys, shoot, electricArrowBoomCallBack, nil)
+    caster.shootOver = 1
     Timers:CreateTimer(send_delay, function()
         EmitSoundOn(keys.soundCastSp2, shoot)
         local AbilityLevel = shoot.abilityLevel
@@ -91,6 +92,6 @@ function electricArrowAOEOperationCallback(shoot,unit)
     local damage_percent_sp = ability:GetSpecialValueFor("damage_percent_sp")
     local damage_bouns = (unit:GetMaxHealth() - unit:GetHealth()) * (damage_percent_sp / 100)
 	local damage = getApplyDamageValue(shoot) + damage_bouns
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

@@ -75,10 +75,10 @@ function createShoot(ability)
 	keys.modifier_caster_channel_name = "modifier_electric_gather_channel_datadriven"
 
     local skillPoint = ability:GetCursorPosition()
-    local speed = ability:GetSpecialValueFor("speed")
+    --local speed = ability:GetSpecialValueFor("speed")
     local max_distance = ability:GetSpecialValueFor("max_distance")
 
-    local casterPoint = caster:GetAbsOrigin()
+    local casterPoint = GetGroundPosition(caster:GetAbsOrigin(),caster)
     local direction = (skillPoint - casterPoint):Normalized()
 
 
@@ -105,7 +105,7 @@ function createShoot(ability)
     ability.electric_gather_damage_bouns = 0.0
     local charge_time = ability:GetSpecialValueFor("charge_time")
     local charge_damage_per_interval = ability:GetSpecialValueFor("charge_damage_per_interval")
-    local charge_interval = 0.1
+    local charge_interval = ability:GetSpecialValueFor("charge_interval")
     Timers:CreateTimer(function()
         if caster.electric_gather_send == 0 then
             ability.electric_gather_damage_bouns = ability.electric_gather_damage_bouns + charge_damage_per_interval
@@ -119,64 +119,68 @@ function createShoot(ability)
     for i = 1, 2, 1 do
         local shootPos = shootPosTable[i]
         local shoot = CreateUnitByName(keys.unitModel, shootPos, true, nil, nil, caster:GetTeam())
-        shootPos = Vector(shootPos.x,shootPos.y,shootPos.z+100)
+        shoot.shootCount = i
+		shootPos = Vector(shootPos.x,shootPos.y,shootPos.z+100)
         shoot:SetAbsOrigin(shootPos)
-        local shootDirection = (skillPoint - shoot:GetAbsOrigin()):Normalized()
+		local shootLocation = GetGroundPosition(shoot:GetAbsOrigin(),shoot)
+        local shootDirection = (skillPoint - shootLocation):Normalized()
         creatSkillShootInit(keys,shoot,caster,max_distance,shootDirection)
         --shoot.aoe_radius = aoe_radius
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID
+		shoot.max_distance = max_distance
+		shoot.charge_interval = charge_interval
+		shoot.charge_time = charge_time
+		shoot.saveSpeed = shoot.speed
+		--print("shoot.speed:"..shoot.speed)
         EmitSoundOn(keys.soundCastSp1, shoot)
-
-		moveElectricGatherSp1(keys,shoot)
-   
+		moveElectricGatherSp1(keys,shoot)	
     end
-
+	caster.shootOver = 1
 end
 
 function moveElectricGatherSp1(keys,shoot)
 	local caster = keys.caster
 	local ability = keys.ability
 	local pull_back_distance = ability:GetSpecialValueFor("pull_back_distance") 
-	local charge_time = ability:GetSpecialValueFor("charge_time") 
-	local charge_interval =  ability:GetSpecialValueFor("charge_interval")
-    local max_distance = ability:GetSpecialValueFor("max_distance")
+	local charge_time = shoot.charge_time
+	local charge_interval = shoot.charge_interval 
+    --local max_distance = shoot.max_distance
 
 	local playerID = caster:GetPlayerID()
-	local speedBase = ability:GetSpecialValueFor("speed")
+	--local speedBase = ability:GetSpecialValueFor("speed")
 
 	local timeCount = 0
 	
 	shoot.traveled_back_distance = 0
-	Timers:CreateTimer(function()
+	shoot.saveDirection = shoot.direction
+	shoot.direction = shoot.direction * -1
+	moveShoot(keys, shoot, electricGatherBoomCallBack, nil)
 
+	Timers:CreateTimer(function()
 		if caster.electric_gather_send == 1 then
 			shoot.speed = 0
-			max_distance = max_distance + shoot.traveled_back_distance
-			local shootDirection = shoot.direction * -1
-			
+			--shoot.traveled_distance = 0
 			Timers:CreateTimer(charge_time/2,function()
 				EmitSoundOn(keys.soundCastSp2, shoot)
-				creatSkillShootInit(keys,shoot,caster,max_distance,shootDirection)
+				shoot.direction = shoot.saveDirection
+				shoot:SetForwardVector(shoot.direction)
+				shoot.speed = shoot.saveSpeed
+				shoot.max_distance = shoot.max_distance + shoot.traveled_distance * 2				
 				return nil
 			end)
 			return nil
 		end
-		--local maxSpeed = getFinalValueOperation(playerID,speedBase,'ability_speed',shoot.abilityLevel,nil) * GameRules.speedConstant * 0.02
+		--蓄力期间
 		timeCount = timeCount + charge_interval
-
-		shoot.speed = pull_back_distance * 2 / (charge_time * charge_time) *  (charge_time - timeCount) * 0.02
-
-		--print(timeCount)
-		shoot.traveled_back_distance = shoot.traveled_back_distance + shoot.speed
-		
+		shoot.speed = pull_back_distance * 2 / (charge_time * charge_time) *  (charge_time - timeCount) * 0.02 * GameRules.speedConstant	
+		if shoot.speed < 0.1 then
+			shoot.speed = 0.1
+		end
 		return charge_interval
 	end)
-	
-	shoot.direction = shoot.direction * -1
 
-	moveShoot(keys, shoot, electricGatherBoomCallBack, nil)
 end
 
 function electricGatherSend(self)
@@ -222,7 +226,7 @@ function electricGatherAOEOperationCallback(shoot,unit)
 	--print("electricGatherAOEOperationCallback:",ability.electric_gather_damage_bouns)
     local damage = (getApplyDamageValue(shoot)  + ability.electric_gather_damage_bouns) / 2
 	--print("damage:"..damage)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
 

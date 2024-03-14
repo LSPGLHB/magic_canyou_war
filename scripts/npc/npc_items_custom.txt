@@ -1,62 +1,39 @@
-#base items/lvxie.kv
-//#base items/sacrificial_robe.kv
-
-#base items/dragon_claw.kv
-#base items/dragon_gem.kv
-#base items/dragon_heart.kv
-#base items/dragon_squama.kv
-#base items/speed_shoe.kv
-#base items/magic_staff.kv
-#base items/magic_gem.kv
-
-#base items/ability_speed_c.kv
-#base items/ability_speed_b.kv
-#base items/ability_speed_a.kv
-#base items/ability_speed_abc.kv
-
-//#base items/range_c.kv
-//#base items/range_b.kv
-//#base items/range_a.kv
-//#base items/range_abc.kv
-
-#base items/damage_c.kv
-#base items/damage_b.kv
-#base items/damage_a.kv
-#base items/damage_abc.kv
-#base items/damage_match_helper_abc.kv
-
-#base items/control_c.kv
-#base items/control_b.kv
+#base items/control_lock.kv
 #base items/control_a.kv
-#base items/control_abc.kv
-#base items/control_match_helper_abc.kv
-
-#base items/energy_c.kv
-#base items/energy_b.kv
-#base items/energy_a.kv
-#base items/energy_abc.kv
-#base items/energy_match_helper_abc.kv
-
-//#base items/energy_shoe.kv
-
+#base items/control_b.kv
+#base items/damage_a.kv
+#base items/damage_b.kv
+#base items/damage_c.kv
+#base items/damage_d.kv
+#base items/damage_control_imprison.kv
+#base items/damage_control_iceball.kv
+#base items/damage_control_a.kv
+#base items/cannon_push.kv
 #base items/sky_eye.kv
-#base items/dragon_eye.kv
+#base items/cannon_a.kv
+#base items/cannon_b.kv
+#base items/assist_a.kv
+#base items/assist_b.kv
+#base items/assist_c.kv
+#base items/assist_summon_stone.kv
+#base items/assist_hpregen.kv
+#base items/shoe_a.kv
 
+//场景
 #base scene/gold_coin.kv
 
+//测试用
+#base items/bak/lvxie.kv
 
 "DOTAAbilities"
 {
-	
 	"item_lvping"
 	{
-		"ID"                                        "1000"
-		"BaseClass"                                "item_datadriven"
-		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"        	"item_lvping"
+		"ID"                                "1000"
+		"BaseClass"                         "item_datadriven"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"        		"item_lvping"
 		"Model"  							"models/props_gameplay/treasure_chest_gold.vmdl"
-
-
 
 		"ItemDroppable"                        "1"
 		"ItemSellable"                        "1"
@@ -84,8 +61,8 @@
 	{
 		"ID"                                        "1001"
 		"BaseClass"                                "item_datadriven"
-		"AbilityBehavior"                    "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"        	"item_lanping"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"        		"item_lanping"
 		"Model"  							"models/props_gameplay/treasure_chest_gold.vmdl"
 
 

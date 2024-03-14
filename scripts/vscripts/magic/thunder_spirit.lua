@@ -54,9 +54,11 @@ function createShoot(ability)
         end
         return interval
     end)
+    local shootCount = 1
     Timers:CreateTimer(interval, function()
         
         local shoot = CreateUnitByName(keys.unitModel, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeam())
+        shoot.shootCount = shootCount
         creatSkillShootInit(keys,shoot,caster,max_distance,direction)
         --过滤掉增加施法距离的操作
         --shoot.max_distance_operation = max_distance
@@ -70,6 +72,7 @@ function createShoot(ability)
 
         shootCount = shootCount + 1
         if shootCount == maxCount then
+            caster.shootOver = 1
             return nil
         end
         return interval
@@ -122,6 +125,6 @@ function AOEOperationCallback(shoot,unit)
     end
 
 
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

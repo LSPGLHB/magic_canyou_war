@@ -87,6 +87,7 @@ function stepOne(ability)
     end)]]
 
     moveShoot(keys, shoot, twiceStoneBallBoomCallBackSp1, nil)
+    caster.shootOver = 1
 end
 
 function stepTwo(ability)
@@ -162,7 +163,7 @@ function twiceStoneBallAOEOperationCallbackSp1(shoot,unit)
 	local ability = keys.ability
 
     local damage = getApplyDamageValue(shoot) * (8 / 20)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local AbilityLevel = shoot.abilityLevel
     local debuffDelay = ability:GetSpecialValueFor("debuff_delay")

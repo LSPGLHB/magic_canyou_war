@@ -35,9 +35,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1100"
+		"VisionDaytimeRange"	"1800"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1100"
+		"VisionNighttimeRange"	"1800"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -103,9 +103,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1100"
+		"VisionDaytimeRange"	"1800"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1100"
+		"VisionNighttimeRange"	"1800"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -160,7 +160,6 @@
 		"Ability11"					""			
 		"Ability12"					""			
 
-
 		//转身速度
 		"MovementTurnRate"	"1.0"
 		//移动速度
@@ -171,9 +170,9 @@
 		// 基础魔抗
 		"MagicalResistance"	"0"
 		// 白天视野范围
-		"VisionDaytimeRange"	"1100"
+		"VisionDaytimeRange"	"1800"
 		// 夜晚视野
-		"VisionNighttimeRange"	"1100"
+		"VisionNighttimeRange"	"1800"
 		// 主属性类型
 		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 		// 基础力量
@@ -206,4 +205,673 @@
 		"BountyGoldMax"	"0"
 	} 
 	
+	"npc_dota_hero_nevermore" 
+	{
+		"override_hero"	"npc_dota_hero_nevermore"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+
+	"npc_dota_hero_omniknight"
+	{
+		"override_hero"	"npc_dota_hero_omniknight"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	}
+
+	"npc_dota_hero_crystal_maiden"
+	{
+		"override_hero"	"npc_dota_hero_crystal_maiden"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+
+	"npc_dota_hero_rubick"
+	{
+		"override_hero"	"npc_dota_hero_rubick"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+
+	"npc_dota_hero_invoker"
+	{
+		"override_hero"	"npc_dota_hero_invoker"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+
+	"npc_dota_hero_storm_spirit"
+	{
+		"override_hero"	"npc_dota_hero_storm_spirit"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.9"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+
+	"npc_dota_hero_silencer"
+	{
+		"override_hero"	"npc_dota_hero_silencer"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+	
+	"npc_dota_hero_zuus"
+	{
+		"override_hero"	"npc_dota_hero_zuus"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
+	
+	"npc_dota_hero_vengefulspirit"
+	{
+		"override_hero"	"npc_dota_hero_vengefulspirit"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	}
+
+	"npc_dota_hero_morphling"
+	{
+		"override_hero"	"npc_dota_hero_morphling"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"  // 碰撞边界类型，以下为单位尺寸参数:
+        "RingRadius"                "100"                   // 选择圈半径
+		//模型大小
+		"ModelScale"	"0.7"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			
+		"Ability2"					""			
+		"Ability3"					""			
+		"Ability4"					""			
+		"Ability5"					""			
+		"Ability6"					""			
+		"Ability7"					""			
+		"Ability8"					""			
+		"Ability9"					""			
+		"Ability10"					""			
+		"Ability11"					""			
+		"Ability12"					""			
+
+		//转身速度
+		"MovementTurnRate"	"1.0"
+		//移动速度
+		 "MovementSpeed"             "250"
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		// 基础护甲
+		"ArmorPhysical"	"0"
+		// 基础魔抗
+		"MagicalResistance"	"0"
+		// 白天视野范围
+		"VisionDaytimeRange"	"1800"
+		// 夜晚视野
+		"VisionNighttimeRange"	"1800"
+		// 主属性类型
+		//"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
+		// 基础力量
+		"AttributeBaseStrength"	"0"
+		// 力量成长
+		"AttributeStrengthGain"	"0"
+		// 基础智力
+		"AttributeBaseIntelligence"	"0"
+		// 智力成长
+		"AttributeIntelligenceGain"	"0"
+		// 基础敏捷
+		"AttributeBaseAgility"	"0"
+		// 敏捷成长
+		"AttributeAgilityGain"	"0"
+		// 基础生命值
+		"StatusHealth"	"50"
+		// 生命恢复速度，负值无效
+		"StatusHealthRegen"	"0"
+		// 基础魔法值，设置为0会导致没有魔法条
+		"StatusMana"	"100"
+		// 魔法恢复速度，负值无效
+		"StatusManaRegen"	"5"
+		// 单位诞生时的魔法值，-1意味着默认满魔法值
+		"StatusStartingMana"	"-1"
+		// 经验奖励
+		"BountyXP"	"0"
+		// 最小金钱奖励
+		"BountyGoldMin"	"0"
+		// 最大金钱奖励
+		"BountyGoldMax"	"0"
+	} 
 }

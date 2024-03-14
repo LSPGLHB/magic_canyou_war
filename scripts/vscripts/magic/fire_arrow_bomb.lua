@@ -53,7 +53,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, fireArrowBombBoomCallBack, nil)
-
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -86,7 +86,7 @@ function fireArrowBombAOEOperationCallback(shoot,unit)
         local max_distance = ability:GetSpecialValueFor("max_distance")
         --print("fireArrowBombAOEOperationCallback:",getApplyDamageValue(shoot))
         local damage = getApplyDamageValue(shoot) * (ucDistance / max_distance)
-        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 		EmitSoundOn(keys.soundTimeover, shoot)
 		local boomParticle = ParticleManager:CreateParticle(keys.particles_timeover, PATTACH_ABSORIGIN_FOLLOW , unit)
 		ParticleManager:SetParticleControlEnt(boomParticle, 9 , unit, PATTACH_POINT_FOLLOW, nil, unit:GetAbsOrigin(), true)

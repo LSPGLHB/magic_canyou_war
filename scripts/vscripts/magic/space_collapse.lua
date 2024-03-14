@@ -63,6 +63,7 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, shoot)
 	moveShoot(keys, shoot, spaceCollapseBoomCallBack, nil)
+	caster.shootOver = 1
 end
 
 function spaceCollapseBoomCallBack(shoot)

@@ -49,6 +49,7 @@ function createShoot(ability)
     initDurationBuff(keys)
     for i = 1, 2, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+        shoot.shootCount = i
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
 
         local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
@@ -67,6 +68,7 @@ function createShoot(ability)
         EmitSoundOn(keys.soundCast, shoot)
         moveShoot(keys, shoot, vIceBallBoomCallBack, nil)
     end
+    caster.shootOver = 1
 end
 
 
@@ -100,7 +102,7 @@ function vIceBallDamageCallback(shoot, unit, interval)
     local duration = shoot.aoe_duration
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval) / 2
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
 

@@ -14,10 +14,21 @@ function refreshItemBuff(keys,flag)
     local caster = keys.caster
     local ability = keys.ability
     local playerID = caster:GetPlayerID()
-    local item_damage_a = ability:GetSpecialValueFor("item_damage_a")
-    local item_damage_a_precent_base = ability:GetSpecialValueFor("item_damage_a_precent_base")
+    local item_damage_a_percent_base = ability:GetSpecialValueFor("item_damage_a_percent_base")
+    local item_health = ability:GetSpecialValueFor("item_health")
+    
+    local item_ability_speed = ability:GetSpecialValueFor("item_ability_speed")
+    local item_cooldown_percent_final = ability:GetSpecialValueFor("item_cooldown_percent_final")
 
-    setPlayerPower(playerID, "player_damage_a", flag, item_damage_a)
-    setPlayerPower(playerID, "player_damage_a_precent_base", flag, item_damage_a_precent_base)
+    
+    
+    setPlayerPower(playerID, "player_damage_a_percent_base", flag, item_damage_a_percent_base)
+    setPlayerPower(playerID, "player_health", flag, item_health)
+    setPlayerPower(playerID, "player_ability_speed", flag, item_ability_speed)
+    setPlayerPower(playerID, "player_cooldown_percent_final", flag, item_cooldown_percent_final)
+
+
+    setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
+    setPlayerSimpleBuff(keys,"cooldown_percent_final")
 
 end

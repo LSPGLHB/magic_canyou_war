@@ -48,12 +48,8 @@ function createShoot(ability)
     EmitSoundOn(keys.soundCast, shoot)
     shoot.intervalCallBack = traceStoneBallIntervalCallBack
     moveShoot(keys, shoot, traceStoneBallBoomCallback, nil)
-
+	caster.shootOver = 1
 end
-
-
-
-
 
 --技能爆炸,单次伤害
 function traceStoneBallBoomCallback(shoot)  
@@ -94,7 +90,7 @@ function traceStoneBallAOEOperationCallback(shoot,unit)
 	else
 		traceStoneBallRenderParticles(shoot) 	
 	end
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
 --技能追踪

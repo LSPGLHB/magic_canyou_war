@@ -49,9 +49,6 @@ function creatShoot(ability,magicName)
 	keys.soundDefense =      "magic_defence"
 	keys.hitTargetDebuff = magicName.."_modifier_debuff"
 
-
-	
-
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
 
@@ -64,8 +61,9 @@ function creatShoot(ability,magicName)
     ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
-	shoot.intervalCallBack = blindFireBallIntervalCallBack
+	--shoot.intervalCallBack = blindFireBallIntervalCallBack
     moveShoot(keys, shoot, blindFireBallBoomCallBack, nil)
+	caster.shootOver = 1
 end
 
 function blindFireBallBoomCallBack(shoot)
@@ -91,7 +89,7 @@ function blindFireBallAOEOperationCallback(shoot,unit)
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
 
     if isface then
-        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
         local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
 		debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
     	debuffDuration = getApplyControlValue(shoot, debuffDuration)
@@ -109,6 +107,7 @@ function blindFireBallAOEOperationCallback(shoot,unit)
 end
 
 --技能追踪
+--[[
 function blindFireBallIntervalCallBack(shoot)
 
 	local keys = shoot.keysTable
@@ -144,4 +143,4 @@ function blindFireBallIntervalCallBack(shoot)
 		shoot.direction = (shoot.trackUnit:GetAbsOrigin() - position):Normalized()
 	end
 
-end
+end]]

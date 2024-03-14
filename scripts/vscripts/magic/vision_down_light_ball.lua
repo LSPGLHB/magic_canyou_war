@@ -65,6 +65,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, visionDownLightBallDuration, nil)
+    caster.shootOver = 1
 end
 
 function visionDownLightBallDuration(shoot)
@@ -91,7 +92,7 @@ function visionDownLightBallDamageCallback(shoot, unit, interval)
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)
     --local modifierDefenseName = keys.modifierDefenseName
     if isface then   
-        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
         --[[
         if unit:HasModifier(modifierDefenseName) then
             unit:RemoveModifierByName(modifierDefenseName)

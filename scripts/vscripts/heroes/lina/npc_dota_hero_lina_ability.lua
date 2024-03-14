@@ -21,7 +21,7 @@ function npc_dota_hero_lina_ability:OnSpellStart()
     local modifierName = "modifier_observe_buff"
     caster:AddNewModifier(caster, ability, modifierName, {Duration = duration})
     --ability:ApplyDataDrivenModifier(caster, caster, modifierName, {Duration = duration})
-
+    EmitSoundOn("scene_voice_lina_cast",caster)
     local allUnits = {}
     local interval = 0.02
     Timers:CreateTimer(function()
@@ -83,6 +83,7 @@ function npc_dota_hero_lina_ability:OnSpellStart()
         ParticleManager:DestroyParticle(particleID, true)
         interval = -1
     end)
+    caster.shootOver = -1
 end
 
 function refreshNewArrayByOldArray(oldArray,newArray)

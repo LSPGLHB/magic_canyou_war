@@ -1,17 +1,33 @@
 require('scene/grass_hide')
 --require('scene/player_battlefield_buff')
+require('scene/magic_tower')
 require('myMaths')
 LinkLuaModifier( "modifier_power_up", "scene/modifier_power_up.lua" , LUA_MODIFIER_MOTION_NONE)
 function initMapStatus()
-
     --真随机设定
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','') 
     math.randomseed(tonumber(timeTxt))
 
     TreasureBoxGold = "treasureBoxGold"
-    playerBattlefieldBuff = {}--6个法阵初始化(10个是备用而已)
-    for i = 0, 9 do
-        playerBattlefieldBuff[i] = {} 
+    
+    --playerBattlefieldBuff = {}--6个法阵初始化(10个是备用而已)
+    for playerID = 0, 9 do
+        --playerBattlefieldBuff[i] = {} 
+        --玩家数据初始化
+        --playerContractLearn[playerID]={}
+        --playerContractLearn[playerID]['contractName'] = 'nil'
+
+        playerBlinkLearn[playerID] = {}
+        playerBlinkLearn[playerID]['name'] = 'nil'
+        playerTalentLearn[playerID]={}
+        playerTalentLearn[playerID]['talentNameC'] = 'nil'
+        playerTalentLearn[playerID]['talentNameB'] = 'nil'
+        playerTalentLearn[playerID]['talentNameA'] = 'nil'
+        playerOrderTarget[playerID] = 'nil'
+        playerRandomItemNumList[playerID] = {}
+        playerShopLock[playerID] = 0
+        playerRefreshCost[playerID] = GameRules.refreshCost
+        playerSeriesKill[playerID] = 0
     end
 
     --掉落物品
@@ -27,11 +43,18 @@ function initMapStatus()
     otherTreasureBox = {}
     remainsBox = {}
 
+    --用于商店
+    roundItemNameList = {}
+	roundItemCostList = {}
+	roundItemTextureNameList = {}
+	roundItemAttributeList = {}
+
     --法阵能力设置
+    --[[
     BattlefieldBuffVision = {200,200,300,300,400,400,400,400,400,400}
     BattlefieldBuffSpeed = {30,38,46,54,62,70,78,86,94,102}
     BattlefieldBuffManaRegen = {10,12,13,15,16,18,19,21,22,24}
-
+    ]]
     --商店刷新库
     shopProbability = {}
     --建立商店
@@ -44,7 +67,7 @@ function initMapStatus()
         createUnit('yang',DOTA_TEAM_BADGUYS)
     end
     ]]
-    grassBuffWork()
+    --grassBuffWork()
 end
 
 function clearTreasureBox()
@@ -71,6 +94,7 @@ function clearTreasureBox()
 end
 
 --中央宝箱
+--[[
 function initCenterTreasureBox()
     print("=====================initCenterTreasureBox==========================")
     local centerBox = "centerbox"
@@ -84,7 +108,7 @@ function initCenterTreasureBox()
         centerBox.alive = 1
         table.insert(centerTreasureBox,centerBox)
     end
-end
+end]]
 
 --野区宝箱
 function initTreasureBox()
@@ -102,6 +126,7 @@ function initTreasureBox()
         goodBox.alive = 1
         table.insert(otherTreasureBox,goodBox)
     end
+
     for i = 1, 3 ,1 do
         local badBoxName = "badbox"..badRandonNumList[i]
         local badBoxEntities = Entities:FindByName(nil,badBoxName) 
@@ -153,59 +178,6 @@ function samsaraStoneGet(samsaraStone)
 end
 
 
---魔法石初始化
-function initMagicStone()
-    print("=========initMagicStone============")
-    if goodMagicStone ~= nil then
-        if goodMagicStone.alive == 1 then
-            goodMagicStone:ForceKill(true)
-        end
-    end
-
-    if goodMagicStonePan ~= nil then
-        goodMagicStonePan:ForceKill(true)
-    end
-
-    if badMagicStone ~= nil then
-        if badMagicStone.alive == 1 then
-            badMagicStone:ForceKill(true)
-        end
-    end
-
-    if badMagicStonePan ~= nil then
-        badMagicStonePan:ForceKill(true)
-    end
-
-    local goodMagicStoneEntities = Entities:FindByName(nil,"goodMagicStone") 
-    local goodMagicStoneLocation = goodMagicStoneEntities:GetAbsOrigin()
-    goodMagicStonePan = CreateUnitByName("magicStonePan", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
-    goodMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
-    goodMagicStonePan:SetSkin(0)
-    goodMagicStone = CreateUnitByName("magicStone", goodMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
-    --goodMagicStone:AddAbility("magic_stone_good")
-    goodMagicStone:GetAbilityByIndex(0):SetLevel(1)
-    goodMagicStone:SetSkin(0)
-    goodMagicStone.alive = 1
-    goodMagicStone.name = "goodMagicStone"
-    --GameRules.goodMagicStone = goodMagicStone
-    --goodMagicStone:SetContext("name", "magicStone", 0)、
-    
-    
-    local badMagicStoneEntities = Entities:FindByName(nil,"badMagicStone")
-    local badMagicStoneLocation = badMagicStoneEntities:GetAbsOrigin()
-    badMagicStonePan = CreateUnitByName("magicStonePan", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_GOODGUYS)
-    badMagicStonePan:GetAbilityByIndex(0):SetLevel(1)
-    badMagicStonePan:SetSkin(1)
-    badMagicStone = CreateUnitByName("magicStone", badMagicStoneLocation, true, nil, nil, DOTA_TEAM_BADGUYS)
-    --badMagicStone:AddAbility("magic_stone_bad")
-    badMagicStone:GetAbilityByIndex(0):SetLevel(1)
-    badMagicStone:SetSkin(1)
-    badMagicStone.alive = 1
-    badMagicStone.name = "badMagicStone"
-    --GameRules.badMagicStone = badMagicStone
-    --badMagicStone:SetContext("name", "magicStone", 0)
-end
-
 
 -- 商人
 function creatShop()
@@ -225,9 +197,7 @@ function creatShop()
     unit2:SetContext("name", "shop", 0)
 
     local testunit =Entities:FindByName(nil,"testdog") 
-
-
-    local testdog = CreateUnitByName("testdog", Vector(-7638.04,2018.02,136), true, nil, nil, DOTA_TEAM_NEUTRALS)
+    local testdog = CreateUnitByName("testdog", Vector(-8410.24,-739.667,264), true, nil, nil, DOTA_TEAM_NEUTRALS)
     --testdog:GetAbilityByIndex(0):SetLevel(1)
     testdog:SetContext("name", "testdog", 0)
 
@@ -241,7 +211,9 @@ function initHero()
     playerRoundLearn = {}--用于记录玩家是否学习，用于启动随机学习
 
     playerOrderTarget = {} --玩家点击单位
-    playerContractLearn = {} --玩家天赋
+    --playerContractLearn = {} --玩家天赋
+    playerBlinkLearn = {}
+
     playerTalentLearn = {} --玩家铭文
     playerRandomItemNumList = {} --玩家商店物品随机数
     playerShopLock = {} --玩家商店锁定标记
@@ -256,6 +228,7 @@ function initHero()
         --print(PlayerResource:GetConnectionState(playerID))
         if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
+            hHero.playerID = playerID
             local heroTeam = hHero:GetTeam()
             
             for i = 0 , hHero:GetAbilityCount() do
@@ -281,7 +254,7 @@ function initHero()
 
             hHero:AddAbility(commonAttack):SetLevel(1)  --3
             hHero:AddAbility(heroAbility):SetLevel(1) --4
-            hHero:AddAbility("make_friend_datadriven"):SetLevel(1) --5   --push_all_datadriven  
+            hHero:AddAbility("blink"):SetLevel(1) --5   --push_all_datadriven
 
             hHero:AddAbility("nothing_c_stage"):SetLevel(1) --6
             hHero:AddAbility("nothing_b_stage"):SetLevel(1) --7
@@ -289,26 +262,15 @@ function initHero()
             hHero:AddAbility("hero_order_datadriven"):SetLevel(1) --9
             hHero:AddAbility('treasure_box_open_datadriven'):SetLevel(1) --10
             hHero:AddAbility('battlefield_capture_datadriven'):SetLevel(1) --11
-            hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --12
-            --hHero:AddAbility("hero_hidden_ability_datadriven"):SetLevel(1) --13
+            hHero:AddAbility("hero_hidden_status_datadriven"):SetLevel(1) --11
+            hHero:AddAbility("make_friend_datadriven"):SetLevel(1) --12
             
 
             hHero:SetTimeUntilRespawn(1) --重新设置复活时间
 
-            PlayerResource:SetGold(playerID,60,true)
+            PlayerResource:SetGold(playerID,50,true)
 
-            --玩家数据初始化
-            playerContractLearn[playerID]={}
-            playerContractLearn[playerID]['contractName'] = 'nil'
-            playerTalentLearn[playerID]={}
-            playerTalentLearn[playerID]['talentNameC'] = 'nil'
-            playerTalentLearn[playerID]['talentNameB'] = 'nil'
-            playerTalentLearn[playerID]['talentNameA'] = 'nil'
-            playerOrderTarget[playerID] = 'nil'
-            playerRandomItemNumList[playerID] = {}
-            playerShopLock[playerID] = 0
-            playerRefreshCost[playerID] = GameRules.refreshCost
-            playerSeriesKill[playerID] = 0
+            
 
             
 
@@ -319,8 +281,9 @@ function initHero()
                 CustomGameEventManager:Send_ServerToPlayer( PlayerResource:GetPlayer(playerID), "initJS", {})
             end)
             --契约板面
-            CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
+            --CustomUI:DynamicHud_Create(playerID,"UIContractPanelBG","file://{resources}/layout/custom_game/UI_contract_box.xml",nil)
             
+
             --天赋面板
             CustomUI:DynamicHud_Create(playerID,"UITalentPanelBG","file://{resources}/layout/custom_game/UI_talent_box.xml",nil)
 
@@ -475,9 +438,98 @@ function showGoldWorthParticle(playerID,worth,type)
     if type == "team" then
         EmitAnnouncerSoundForPlayer(soundStr, playerID)
     else  
-        EmitSoundOn(soundStr, hHero)  
+        EmitSoundOn(soundStr, hHero)
     end
 end
+
+function blinkOperation(caster, ability, fromParticle, toParticle)
+
+    local skillPoint = ability:GetCursorPosition()
+    local casterPosition = caster:GetAbsOrigin()
+    local max_distance = ability:GetSpecialValueFor("max_distance")
+    local direction = (skillPoint - casterPosition):Normalized()
+    local distance = (skillPoint - casterPosition):Length2D()
+    local newPosition = skillPoint
+    if distance > max_distance then
+        newPosition = casterPosition + direction * max_distance
+    end
+    
+    local canWalk = GridNav:CanFindPath(casterPosition,newPosition)
+    
+    while not canWalk do
+        newPosition = newPosition - direction * 10
+        canWalk = GridNav:CanFindPath(casterPosition,newPosition)
+    end
+    caster:MoveToPosition(newPosition + direction * 1)
+
+    local particleFrom = ParticleManager:CreateParticle(fromParticle, PATTACH_WORLDORIGIN, caster)
+    ParticleManager:SetParticleControl(particleFrom, 0, caster:GetAbsOrigin())
+
+    FindClearSpaceForUnit( caster, newPosition, false )
+
+    local particleTo = ParticleManager:CreateParticle(toParticle, PATTACH_WORLDORIGIN, caster)
+    ParticleManager:SetParticleControl(particleTo, 0, caster:GetAbsOrigin())
+    
+    return newPosition
+end
+
+--是否属于所有类型技能
+function heroCheckSkill(caster,unit)
+	local isTeamSkill = false
+
+	local casterTeam = caster:GetTeam()
+	local unitTeam = unit:GetTeam()
+	local label = unit:GetUnitLabel()
+	if (unit ~= caster and (label == GameRules.skillLabel or label == GameRules.towerSkillLabel)) then
+		isTeamSkill = true
+	end
+	return isTeamSkill
+end
+
+--全技能减冷却
+function reduceCooldownAllAbibity(caster, reduceTime)
+    for i = 0 , 5, 1 do
+        local ability = caster:GetAbilityByIndex(i)
+        local cooldownTimeRemaining = ability:GetCooldownTimeRemaining()		
+        cooldownTimeRemaining = cooldownTimeRemaining - reduceTime 
+        ability:EndCooldown()
+        ability:StartCooldown(cooldownTimeRemaining)
+        local modifierName = ability:GetAbilityName().."_modifier_cooldown"
+        if caster:HasModifier(modifierName) then
+            caster:RemoveModifierByName(modifierName)
+            caster:AddNewModifier( caster, ability, modifierName, {Duration = cooldownTimeRemaining} )
+        end
+    end
+end
+
+--刷新被动属性
+function heroAbilityPassiveInit(hero)
+    local keys = {}
+    keys.caster = hero
+
+    setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
+    setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseVision) 
+    setPlayerBuffByNameAndBValue(keys,"speed",GameRules.playerBaseSpeed)
+    setPlayerBuffByNameAndBValue(keys,"mana",GameRules.playerBaseMana)
+    setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
+    setPlayerBuffByNameAndBValue(keys,"defense",GameRules.playerBaseDefense)
+
+    setPlayerSimpleBuff(keys,"cooldown")
+    setPlayerSimpleBuff(keys,"cooldown_percent_final")
+    setPlayerSimpleBuff(keys,"range")
+    setPlayerSimpleBuff(keys,"range_percent_final")
+    setPlayerSimpleBuff(keys,"radius")
+    setPlayerSimpleBuff(keys,"radius_percent_final")
+end
+
+
+
+
+
+
+
+
+
 
 
 --测试用
@@ -512,3 +564,4 @@ function createUnit(unitName,team)
     local unit = CreateUnitByName(unitName, location, true, nil, nil, team)
     unit:SetContext("name", unitName, 0)
 end
+

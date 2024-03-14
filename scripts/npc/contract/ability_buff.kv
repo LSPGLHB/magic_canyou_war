@@ -3,7 +3,7 @@
         "ability_health_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -34,7 +34,7 @@
         "ability_vision_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -66,7 +66,7 @@
         "ability_speed_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -95,7 +95,7 @@
         "ability_mana_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -124,7 +124,7 @@
         "ability_mana_regen_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -155,7 +155,7 @@
         "ability_cooldown_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -166,10 +166,41 @@
 
                                 "Properties"
                                 {
-                                        "MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE" "1" 
+                                        "MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT" "1" 
                                 }
                         }
                         "modifier_cooldown_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT" "-1" 
+                                }
+                        }
+                }
+        }
+
+        "ability_cooldown_percent_final_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_cooldown_percent_final_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+
+                                "Properties"
+                                {
+                                        "MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE" "1" 
+                                }
+                        }
+                        "modifier_cooldown_percent_final_debuff"
                         {
                                 "Passive"		    "1"
                                 "IsDebuff"          "1"
@@ -186,7 +217,7 @@
         "ability_defense_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -217,7 +248,7 @@
         "ability_range_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -237,10 +268,56 @@
                 }
         }
 
+        "ability_range_percent_base_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_range_percent_base_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+                        }
+
+                        "modifier_range_percent_base_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"                             
+                                
+                        }
+                }
+        }
+
+        "ability_range_percent_final_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_range_percent_final_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+                        }
+
+                        "modifier_range_percent_final_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"                             
+                                
+                        }
+                }
+        }
+
         "ability_radius_control"
         {
                 "BaseClass"                     "ability_datadriven"
-                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"// | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
                 "AbilityType"                   "abilityBuff"
                 "Modifiers"
                 {
@@ -251,6 +328,52 @@
                         }
 
                         "modifier_radius_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"                             
+                                
+                        }
+                }
+        }
+
+        "ability_radius_percent_base_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_radius_percent_base_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+                        }
+
+                        "modifier_radius_percent_base_debuff"
+                        {
+                                "Passive"		    "1"
+                                "IsDebuff"          "1"
+                                "IsHidden"          "1"                             
+                                
+                        }
+                }
+        }
+
+        "ability_radius_percent_final_control"
+        {
+                "BaseClass"                     "ability_datadriven"
+                "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+                "AbilityType"                   "abilityBuff"
+                "Modifiers"
+                {
+                        "modifier_radius_percent_final_buff"
+                        {
+                                "Passive"		    "1"
+                                "IsHidden"          "1"
+                        }
+
+                        "modifier_radius_percent_final_debuff"
                         {
                                 "Passive"		    "1"
                                 "IsDebuff"          "1"

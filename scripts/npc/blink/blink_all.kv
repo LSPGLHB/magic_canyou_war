@@ -1,0 +1,415 @@
+"DOTAAbilities"
+{    
+    "blink_cooldown"
+	{
+
+		"BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "wisp_relocate" 
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"blink/blink_cooldown.lua"
+
+        "AbilityType"               "blink"  
+
+        "MaxLevel"                      "1"   
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"6000"   //施法距离
+		"AbilityCastPoint"				"0.05"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"25"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"620"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cooldown_reduce"				"3"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_regen"				"20"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_percent"				"5"
+			}
+
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"range"				"350"
+			}
+
+
+        }
+    }
+		
+
+
+    "blink_flythor"
+	{
+   		"BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "disruptor_glimpse" 
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"blink/blink_flythor.lua"
+
+        "AbilityType"               "blink"  
+
+        "MaxLevel"                      "1"   
+		
+
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"6000"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"580"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"health_percent"				"10"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"range"				"150"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_percent"	"5"
+			}
+        }
+    }
+
+
+    "blink_miss"
+	{
+
+		"BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "riki_blink_strike" 
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"blink/blink_miss.lua"
+
+        "AbilityType"               "blink"  
+
+        "MaxLevel"                      "1"   
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"6000"   //施法距离
+		"AbilityCastPoint"				"0.05"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"23"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"550"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cooldown_reduce_percent"				"25"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"health_percent"				"5"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"range"				"100"
+			}
+
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"10"
+			}
+
+
+        }
+    }
+
+
+    "blink_power"
+	{
+
+		"BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "phoenix_icarus_dive" 
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"blink/blink_power.lua"
+
+        "AbilityType"               "blink"  
+
+        "MaxLevel"                      "1" 
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"6000"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"26"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"650"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"buff_ability_speed_percent"				"35"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"buff_damage"				"4"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"5"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"search_radius"				"500"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"range"				"400"
+			}
+
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"				"2"
+			}
+
+
+
+        }
+    }
+
+
+
+    "blink_range"
+	{
+
+		"BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "furion_teleportation" 
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"blink/blink_range.lua"
+
+        "AbilityType"               "blink"  
+
+        "MaxLevel"                      "1"   
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"6000"   //施法距离
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"680"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"buff_range"				"300"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"5"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_percent"	"10"
+			}
+
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"range"				"450"
+			}
+
+
+
+
+        }
+    }
+
+    "blink_speed"
+	{
+
+		"BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "morphling_morph_str" 
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		"ScriptFile"				"blink/blink_speed.lua"
+
+        "AbilityType"               "blink"  
+
+        "MaxLevel"                      "1"   
+	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"6000"   //施法距离
+		"AbilityCastPoint"				"0.05"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"23"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_distance"				"610"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"search_radius"				"1000"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed_plus"				"40"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed_plus_step"				"25"
+			}
+			
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"3"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"health_percent"				"5"
+			}
+
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"range"				"250"
+			}
+
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"speed"				"5"
+			}
+		
+			
+        }
+    }
+	
+
+}

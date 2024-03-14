@@ -5,7 +5,6 @@ scatter_thunder_ball_datadriven = class({})
 
 LinkLuaModifier( "modifier_sleep_debuff_datadriven", "magic/modifiers/modifier_sleep_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
-
 function scatter_thunder_ball_pre_datadriven:GetCastRange(v,t)
     local range = getRangeByName(self,'c')
     return range
@@ -23,7 +22,6 @@ end
 function scatter_thunder_ball_datadriven:OnSpellStart()
     creatShoot(self)
 end
-
 
 
 function creatShoot(ability)
@@ -46,10 +44,7 @@ function creatShoot(ability)
 	keys.particles_miss = "particles/03dianqiu_xiaoshi.vpcf"
 	keys.soundMiss = "magic_thunder_miss"	
 
-
 	keys.hitTargetDebuff = "modifier_sleep_debuff_datadriven"
-
-
 
     local skillPoint = ability:GetCursorPosition()
     local max_distance = ability:GetSpecialValueFor("max_distance")
@@ -70,6 +65,7 @@ function creatShoot(ability)
     initDurationBuff(keys)
     for i = 1, 3, 1 do
         local shoot = CreateUnitByName(keys.unitModel, casterPoint, true, nil, nil, caster:GetTeam())
+        shoot.shootCount = i
         creatSkillShootInit(keys,shoot,caster,max_distance,directionTable[i])
         --shoot.aoe_radius = ability:GetSpecialValueFor("max_distance")
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
@@ -78,6 +74,8 @@ function creatShoot(ability)
         EmitSoundOn(keys.soundCast, shoot)
         moveShoot(keys, shoot, scatterThunderBallBoomCallBack, nil)
     end
+    caster.shootOver = 1
+    --print(caster.shootOver)
 end
 
 --技能爆炸,单次伤害
@@ -100,14 +98,18 @@ function AOEOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot) / 3
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel, nil)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)
 
     --ability:ApplyDataDrivenModifier(caster, unit, hitTargetDebuff, {Duration = debuffDuration})
-    unit:AddNewModifier( unit, ability, hitTargetDebuff, {Duration = debuffDuration} )
+    local debuffDelay = ability:GetSpecialValueFor("debuff_delay")
+    Timers:CreateTimer(debuffDelay,function()
+        unit:AddNewModifier( unit, ability, hitTargetDebuff, {Duration = debuffDuration} )
+    end)
+    
 end 
 
 

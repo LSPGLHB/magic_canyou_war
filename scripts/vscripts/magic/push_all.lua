@@ -21,7 +21,6 @@ function getPush(keys)
 
     local catchFlag = false
     
-
 	for k,unit in pairs(aroundUnits) do
         local unitPosition = unit:GetAbsOrigin()
         local label = unit:GetUnitLabel()

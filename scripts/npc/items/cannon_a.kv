@@ -1,0 +1,214 @@
+"DOTAAbilities"
+{
+    "item_cannon_a"
+    {
+        "ID"			"6100"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_chainmail_lg_1"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/cannon_a.lua"
+
+        "ItemType"               "equip"     //equip类型才会在商店出现
+        "ItemCost"               "10"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        //技能施法前摇
+		"AbilityCastPoint"				"0.2"
+	
+		"AbilityCooldown"				"6"
+
+        "AbilitySpecial"
+        { 
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_percent_base"              "5"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_radius_percent_base"              "6"  
+            }
+
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "1"  
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_mana_regen"              "3"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "2"  
+            }
+        }
+    }
+
+    "item_cannon_a_2"
+    {
+        "ID"			"6101"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_chainmail_lg_2"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/cannon_a.lua"
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        //技能施法前摇
+		"AbilityCastPoint"				"0.2"
+	
+		"AbilityCooldown"				"30"
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_percent_base"              "10"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_radius_percent_base"              "12"  
+            }
+
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "3"  
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_mana_regen"              "6"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "5"  
+            }
+        }
+
+    }
+
+    "item_recipe_cannon_a_2"
+    {
+        "ID"                                        "6102"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_cannon_a_2"
+        ItemRequirements   
+        {
+                "01"    "item_cannon_a;item_cannon_a"
+        }
+    }
+
+
+
+    "item_cannon_a_3"
+    {
+        "ID"			"6103"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_chainmail_lg_3"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/cannon_a.lua"
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        //技能施法前摇
+		"AbilityCastPoint"				"0.2"
+	
+		"AbilityCooldown"				"30"
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_percent_base"              "20"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_radius_percent_base"              "20"  
+            }
+
+
+            
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "6"  
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_mana_regen"              "12"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "10"  
+            }
+        }
+
+    }
+
+    "item_recipe_cannon_a_3"
+    {
+        "ID"                                        "6104"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_cannon_a_3"
+        ItemRequirements   
+        {
+                "01"    "item_cannon_a;item_cannon_a_2"
+        }
+
+    }
+
+}
+

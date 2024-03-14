@@ -81,6 +81,7 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     moveShoot(keys, shoot, bigFireBallBoomCallBack, nil)
+	caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -122,7 +123,7 @@ function AOEOperationCallback(shoot,unit)
 	beatBackUnit(keys,shoot,unit,beatBackSpeed,beatBackDistance,beatBackDirection,AbilityLevel,true)
 	disableTurning(keys,shoot,unit,AbilityLevel)
 	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
 	debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)--装备数值加强
 	debuffDuration = getApplyControlValue(shoot, debuffDuration)--相生加强

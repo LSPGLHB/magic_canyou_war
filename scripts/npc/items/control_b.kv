@@ -2,18 +2,15 @@
 {
     "item_control_b"
     {
-        "ID"			"6190"
+        "ID"			"6020"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "soul_booster_lg"
+        "AbilityTextureName"        "item_ancient_janggo_lg_1"
 
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/soul_booster_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_control_b"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_control_b_Description" 
-        "ItemCost"               "52"
+        "ItemCost"               "10"
 
 
         "ItemDroppable"                        "1"
@@ -26,13 +23,35 @@
         
         "AbilitySpecial"
         {
-            "32"
+
+            "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_control_b_precent_base"              "16"  
+                "item_ability_speed_precent_base"              "5"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_damage"              "1"  
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "8"  
             }
 
 
+
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "4"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_cooldown_percent_final"              "3"  
+            }
         }
 
 
@@ -68,17 +87,15 @@
 
 "item_control_b_2"
     {
-        "ID"			"6191"
+        "ID"			"6021"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "octarine_core_lg"
+        "AbilityTextureName"        "item_ancient_janggo_lg_2"
 
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/octarine_core_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_control_b_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_control_b_2_Description" 
+
         "ItemCost"               "0"
 
 
@@ -92,13 +109,34 @@
         
         "AbilitySpecial"
         {
-            "32"
+
+            "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                 "item_control_b_precent_base"              "37"  
+                "item_ability_speed_precent_base"              "10"  
             }
 
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_damage"              "1"  
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "15"  
+            }
 
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "8"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_cooldown_percent_final"              "5"  
+            }
         }
 
 
@@ -132,7 +170,7 @@
 
     "item_recipe_control_b_2"
     {
-        "ID"                                        "6192"
+        "ID"                                        "6022"
         "BaseClass"                        "item_recipe_arcane_boots"
         "ItemCost"                        "0"        
 
@@ -141,6 +179,106 @@
         ItemRequirements   
         {
                 "01"    "item_control_b;item_control_b"
+        }
+
+    }
+
+
+    "item_control_b_3"
+    {
+        "ID"			"6023"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "item_ancient_janggo_lg_3"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_ability_speed_precent_base"              "22"  
+            }
+
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_damage"              "2"  
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "25"  
+            }
+
+
+           "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "20"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_cooldown_percent_final"              "10"  
+            }
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_control_b_3_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/control_b.lua"
+                        "Function"			"modifier_item_control_b_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/control_b.lua"
+                        "Function"			"modifier_item_control_b_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "item_recipe_control_b_3"
+    {
+        "ID"                               "6024"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_control_b_3"
+        ItemRequirements   
+        {
+                "01"    "item_control_b_2;item_control_b"
         }
 
     }

@@ -69,6 +69,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, swampAreaBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 function swampAreaBoomCallBack(shoot)
@@ -104,5 +105,5 @@ function swampAreaDamageCallback(shoot, unit, interval)
     local duration = ability:GetSpecialValueFor("aoe_duration")
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end

@@ -64,6 +64,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, windDartBoomCallBack, nil)
+	caster.shootOver = 1
 	searchLockUnit(keys, caster, shoot, windAngle, faceAngle, windSpeed, keys.modifierLockDebuff)
 end
 
@@ -96,7 +97,7 @@ function windDartAOEOperationCallback(shoot,unit)
         EmitSoundOn(keys.soundStrike, shoot)
     end
      
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()}) 
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()}) 
     windDartAOERenderParticles(shoot)
 end
 

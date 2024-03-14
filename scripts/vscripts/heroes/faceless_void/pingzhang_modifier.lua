@@ -1,24 +1,24 @@
-modifier_pingzhang_buff = ({})
+modifier_faceless_void_buff = ({})
 
-function modifier_pingzhang_buff:DeclareFunctions()
+function modifier_faceless_void_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
 	return funcs
 end
 
-function modifier_pingzhang_buff:GetOverrideAnimation(keys)
+function modifier_faceless_void_buff:GetOverrideAnimation(keys)
     return ACT_DOTA_CATS_ABILITY_4
 end
 
-function modifier_pingzhang_buff:OnCreated()
+function modifier_faceless_void_buff:OnCreated()
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	local unit = self:GetParent()
 	
 end
 
-function modifier_pingzhang_buff:OnDestroy()
+function modifier_faceless_void_buff:OnDestroy()
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	local unit = self:GetParent()

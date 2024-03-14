@@ -402,7 +402,7 @@
         "MaxLevel"                      "1"
 
         "AbilityCooldown"               "0"
-        "AbilityChannelTime"			"1.5"
+        "AbilityChannelTime"			"0.6"
         "AbilityCastPoint"				"0.1"
 
         "OnSpellStart"
@@ -757,6 +757,159 @@
             }
         }
     }   
+
+
+
+    //魔塔配置
+    "magic_tower_main_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+        "AbilityTextureName"        "obsidian_destroyer_astral_imprisonment" //图标
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+
+        "Modifiers"
+        {
+            "modifier_magic_tower_status_datadriven"
+            {
+               "Passive"				"1"
+               "IsHidden"			"1"
+               "States"
+                {
+                    //"MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+            }
+
+            //待机
+            "modifier_magic_tower_idle_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_IDLE"
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/magic_tower.lua"
+                        "Function"			"magicTowerIdle"
+                    }
+                }
+            }
+            //启动
+            "modifier_magic_tower_active_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_CHANNEL_ABILITY_1"
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"scene/magic_tower.lua"
+                        "Function"			"magicTowerActive"
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    //副魔塔配置
+    "magic_tower_assistant_status_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+        "AbilityTextureName"        "obsidian_destroyer_astral_imprisonment" //图标
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+
+        "Modifiers"
+        {
+            "modifier_magic_tower_status_datadriven"
+            {
+               "Passive"				"1"
+               "IsHidden"			"1"
+               "States"
+                {
+                    //"MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                    
+                }
+                
+            }
+
+            //待机
+            "modifier_magic_tower_idle_datadriven"
+            {
+                "IsHidden"			"1"
+                 "OverrideAnimation"     "ACT_DOTA_IDLE"
+            }
+            //启动
+            "modifier_magic_tower_active_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation" "ACT_DOTA_CONSTANT_LAYER"
+            }
+            //破坏
+            "modifier_magic_tower_destroy_datadriven"
+            {
+                "IsHidden"			"1"
+                "OverrideAnimation"     "ACT_DOTA_SPAWN"
+                "States"
+                {
+                   "MODIFIER_STATE_NO_HEALTH_BAR" "MODIFIER_STATE_VALUE_ENABLED"
+                    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+                    
+                }
+            }
+
+        }
+    }
+
+     "magic_tower_defence_datadriven"
+    {
+        "BaseClass"				"ability_datadriven"
+        "AbilityTextureName"        "obsidian_destroyer_astral_imprisonment" //图标
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+		{
+
+            "1"
+            {
+                "var_type"			"FIELD_FLOAT"
+                "speed_percent"		"-50"
+            }
+
+			
+        }
+
+        "Modifiers"
+        {
+            "modifier_good_tower_defence_debuff_datadriven"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/yangmota_jiansu_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_percent"
+				}
+			}
+
+            "modifier_bad_tower_defence_debuff_datadriven"
+			{
+				"IsDebuff"				"1"
+				"EffectName"		"particles/yinmota_jiansu_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_percent"
+				}
+			}
+
+
+        }
+    }
 
 
 }

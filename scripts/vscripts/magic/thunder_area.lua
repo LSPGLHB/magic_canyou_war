@@ -57,6 +57,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, thunderAreaBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 function thunderAreaBoomCallBack(shoot)
@@ -104,7 +105,7 @@ function thunderAreaDamageCallback(shoot, unit, interval)
     local hitTargetDebuff = keys.aoeTargetStun
     local damageTotal = getApplyDamageValue(shoot)
     local damage = damageTotal / (duration / interval + 1)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
     --ability:ApplyDataDrivenModifier(caster, unit, keys.aoeTargetStun, {Duration = 1})
     unit:AddNewModifier(caster, ability, hitTargetDebuff, {Duration = 1})
     

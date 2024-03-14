@@ -29,6 +29,16 @@
 #base heroes/npc_dota_hero_faceless_void_ability.kv
 #base heroes/npc_dota_hero_earth_spirit_ability.kv
 #base heroes/npc_dota_hero_lina_ability.kv
+#base heroes/npc_dota_hero_nevermore_ability.kv
+#base heroes/npc_dota_hero_omniknight_ability.kv
+#base heroes/npc_dota_hero_crystal_maiden_ability.kv
+#base heroes/npc_dota_hero_rubick_ability.kv
+#base heroes/npc_dota_hero_invoker_ability.kv
+#base heroes/npc_dota_hero_storm_spirit_ability.kv
+#base heroes/npc_dota_hero_silencer_ability.kv
+#base heroes/npc_dota_hero_zuus_ability.kv
+#base heroes/npc_dota_hero_vengefulspirit_ability.kv
+#base heroes/npc_dota_hero_morphling_ability.kv
 
 
 //下面才是正文
@@ -44,6 +54,10 @@
 #base magic/push_all.kv
 #base magic/common_attack_good.kv
 #base magic/common_attack_bad.kv
+#base blink/blink.kv
+#base blink/blink_all.kv
+
+
 
 //火系
 #base magic/big_fire_ball.kv

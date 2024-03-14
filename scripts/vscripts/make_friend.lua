@@ -9,9 +9,12 @@ function createFriend(keys)
     --local tempposition=position+chaoxiang*50
     --print("GetTeam:"..unit:GetTeam())
     local new_unit = CreateUnitByName("huoren", position, true, nil, nil, DOTA_TEAM_GOODGUYS)-- DOTA_TEAM_BADGUYS)--
+    
     new_unit:SetControllableByPlayer(player, true)
     new_unit:SetForwardVector(chaoxiang)
     new_unit:SetPlayerID(caster:GetPlayerID())
+    new_unit.playerID = caster.playerID
+
     new_unit:SetSkin(1)
     --print("1:",ACT_DOTA_LOADOUT_RATE)
     --print("2:",ACT_DOTA_LOADOUT)
@@ -32,5 +35,5 @@ function createFriend(keys)
     new_unit2:SetControllableByPlayer(player, true)
     new_unit2:SetForwardVector(chaoxiang)
     new_unit2:SetPlayerID(caster:GetPlayerID())
-
+    new_unit2.playerID = caster.playerID
 end

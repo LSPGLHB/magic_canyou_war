@@ -60,10 +60,11 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, shoot)
 	moveShoot(keys, shoot, snallTornadoBoomCallBack, nil)
+	caster.shootOver = 1
 end
 
 function snallTornadoBoomCallBack(shoot)
-	
+	print(shoot.energy_point)
     snallTornadoRenderParticles(shoot)
     snallTornadoDuration(shoot) 
 end

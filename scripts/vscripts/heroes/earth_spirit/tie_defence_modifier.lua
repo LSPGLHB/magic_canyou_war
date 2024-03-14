@@ -1,9 +1,26 @@
-modifier_tie_defence_passive = ({})
-function modifier_tie_defence_passive:OnCreated()
-    earthSpiritCount = 0
+modifier_earth_spirit_defence_passive = ({})
 
+function modifier_earth_spirit_defence_passive:IsBuff()
+    return true
 end
-function modifier_tie_defence_passive:DeclareFunctions()
+
+function modifier_earth_spirit_defence_passive:OnCreated()
+    if IsServer() then
+        local unit = self:GetParent()
+        unit.earthSpiritPassiveArray = {}
+        earthSpiritCount = 0
+    end
+end
+
+function modifier_earth_spirit_defence_passive:OnDestroy()
+    if IsServer() then
+        local unit = self:GetParent()
+        unit.earthSpiritPassiveArray = {}
+        earthSpiritCount = 0
+    end
+end
+
+function modifier_earth_spirit_defence_passive:DeclareFunctions()
 	local funcs = {
         MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
@@ -11,21 +28,30 @@ function modifier_tie_defence_passive:DeclareFunctions()
 end
 
 
-function modifier_tie_defence_passive:OnTakeDamage(keys)
+function modifier_earth_spirit_defence_passive:OnTakeDamage(keys)
     --受伤的是buff主人
     if IsServer() and keys.unit == self:GetParent() then
         --local caster = self:GetCaster()
         local ability = self:GetAbility()
         local unit = self:GetParent()
         local damage = keys.damage
-        earthSpiritCount = earthSpiritCount + 1
-        
-        local refresh_count = ability:GetSpecialValueFor("refresh_count")
-        if earthSpiritCount >= refresh_count then 
-            ability:EndCooldown()
-            earthSpiritCount = 0
+        local shoot = keys.attacker
+        if unit.earthSpiritPassiveArray == nil then
+            unit.earthSpiritPassiveArray = {}
         end
-        unit:SetModifierStackCount("modifier_tie_defence_passive",unit,earthSpiritCount)
+        local isContain = checkContainsArrayValue(unit.earthSpiritPassiveArray, shoot)
+        if not isContain then
+            local modifierName = "modifier_earth_spirit_defence_passive"
+            table.insert(unit.earthSpiritPassiveArray,shoot)
+            earthSpiritCount = earthSpiritCount + 1
+            local refresh_count = ability:GetSpecialValueFor("refresh_count")
+            if earthSpiritCount >= refresh_count then 
+                ability:EndCooldown()
+                unit:RemoveModifierByName(modifierName)
+                unit:AddNewModifier(unit, ability, modifierName, {Duration = -1})
+            end
+            unit:SetModifierStackCount(modifierName,unit,earthSpiritCount)
+        end
         --print("damage"..damage)    
     end
     --[[攻击者为buff主人
@@ -35,17 +61,17 @@ function modifier_tie_defence_passive:OnTakeDamage(keys)
 end
 
 
-modifier_tie_defence_buff = ({})
+modifier_earth_spirit_defence_buff = ({})
 
-function modifier_tie_defence_buff:GetEffectName()
+function modifier_earth_spirit_defence_buff:GetEffectName()
 	return "particles/tiekuai_buff.vpcf"
 end
 
-function modifier_tie_defence_buff:GetEffectAttachType()
+function modifier_earth_spirit_defence_buff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_tie_defence_buff:DeclareFunctions()
+function modifier_earth_spirit_defence_buff:DeclareFunctions()
 	local funcs = {
         --MODIFIER_EVENT_ON_TAKEDAMAGE,
         --MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
@@ -54,18 +80,18 @@ function modifier_tie_defence_buff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_tie_defence_buff:GetModifierMoveSpeedBonus_Percentage()
+function modifier_earth_spirit_defence_buff:GetModifierMoveSpeedBonus_Percentage()
     return self:GetAbility():GetSpecialValueFor("speed_percent")
 end
 
 if IsServer() then
-    function modifier_tie_defence_buff:OnCreated()
+    function modifier_earth_spirit_defence_buff:OnCreated()
         refreshDefenceBuff(self,true)
     end
 end
 
 if IsServer() then
-    function modifier_tie_defence_buff:OnDestroy()
+    function modifier_earth_spirit_defence_buff:OnDestroy()
         refreshDefenceBuff(self,false)
     end
 end
@@ -79,7 +105,7 @@ function refreshDefenceBuff(self,flag)
     local unit = self:GetParent()
     local playerID = unit:GetPlayerID()
     local defence_percent = ability:GetSpecialValueFor("defence_percent")
-    setPlayerPower(playerID, "player_defense", flag, defence_percent)
+    setPlayerPower(playerID, "talent_defense", flag, defence_percent)
     setPlayerBuffByNameAndBValue(keys,"defense",GameRules.playerBaseDefense)
 end
 

@@ -4,12 +4,13 @@
     {
         "BaseClass"	                "ability_lua"
         "AbilityTextureName"        "nevermore_requiem" //图标
-        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
         "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "MaxLevel"                      "1"
 
 		"ScriptFile"				"heroes/nevermore/npc_dota_hero_nevermore_ability.lua"
-
+   
         "AbilityType"               "hero"
 
 		// Casting
@@ -31,40 +32,49 @@
         {
             "01"
             {
-                "var_type"				"FIELD_INTEGER"
-                "aoe_radius"			"175"
+                "var_type"			    "FIELD_FLOAT"
+                "cast_speed_up"			    "100"
             }
             "02"
             {
                 "var_type"			    "FIELD_FLOAT"
-                "cast_speed_up"			    "100"
+                "cast_speed_up_duration"			"3"             //主动加速持续时间
             }
             "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "aoe_radius"			"175"
+            }            "04"
             {
                 "var_type"			        "FIELD_FLOAT"
                 "passive_speed_up_percent"	        "50"
             }
-            "04"
-            {
-                "var_type"			        "FIELD_FLOAT"
-                "miss_ability_speed_up_percent"		"25"
-            }
             "05"
             {
-                "var_type"			     "FIELD_FLOAT"
-                "miss_ability_speed_up_damage"		        "35"
+                "var_type"			        "FIELD_FLOAT"
+                "passive_speed_up_duration"	        "1"             //预备装态持续时间
             }
             "06"
             {
-                "var_type"			     "FIELD_FLOAT"
-                "miss_ability_speed_up_duration"		        "5"  //buff持续时间
+                "var_type"			        "FIELD_FLOAT"
+                "miss_ability_speed_up_percent"		"60"
             }
             "07"
             {
                 "var_type"			     "FIELD_FLOAT"
-                "miss_count"		        "2"        //存多少次触发效果
+                "miss_ability_damage_percent"		"25"
             }
             "08"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "miss_ability_power_up_duration"		        "6"  //buff持续时间
+            }
+            "09"
+            {
+                "var_type"			     "FIELD_FLOAT"
+                "miss_count"		        "2"        //存多少次触发效果
+            }
+            "10"
             {
                 "var_type"			     "FIELD_FLOAT"
                 "miss_times"		        "3"       //累计次数触发

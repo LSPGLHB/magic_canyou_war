@@ -65,6 +65,7 @@ function createShoot(ability)
     shoot.boomDelay = ability:GetSpecialValueFor("boom_delay")
 	EmitSoundOn(keys.soundCastSp1, shoot)
     moveShoot(keys, shoot, waterSpiritBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -115,7 +116,7 @@ function waterSpiritAOEOperationCallback(shoot,unit)
     local hitTargetDebuff = keys.hitTargetDebuff
     
 	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)

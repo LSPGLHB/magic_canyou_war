@@ -50,6 +50,7 @@ function createShoot(ability)
     EmitSoundOn(keys.soundCast, shoot)
     shoot.intervalCallBack = iceSkeletonIntervalCallBack
     moveShoot(keys, shoot, iceSkeletonBoomCallback, nil)
+	caster.shootOver = 1
 end
 
 
@@ -79,7 +80,7 @@ function iceSkeletonAOEOperationCallback(shoot,unit)
 	local ability = keys.ability
 	local bouns_damage_percentage = ability:GetSpecialValueFor("bouns_damage_percentage") / 100
 	local damage = getApplyDamageValue(shoot) + (unit:GetMaxMana() - unit:GetMana()) * bouns_damage_percentage
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local faceAngle = ability:GetSpecialValueFor("face_angle")
     local isface = isFaceByFaceAngle(shoot, unit, faceAngle)

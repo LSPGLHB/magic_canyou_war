@@ -68,7 +68,7 @@ function createShoot(ability)
     EmitSoundOn(keys.soundCast, shoot)
     shoot.intervalCallBack = oBoomerangIntervalCallBack
     moveShoot(keys, shoot, oBoomerangBoomCallBack, nil)
-
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -86,7 +86,7 @@ function oBoomerangAOEOperationCallback(shoot,unit)
 	local ability = keys.ability
     
     local damage = getApplyDamageValue(shoot) 
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
 	local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff

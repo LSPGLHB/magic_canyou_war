@@ -1,0 +1,181 @@
+"DOTAAbilities"
+{
+    "item_shoe_a"
+    {
+        "ID"			"6150"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_power_treads_lg_1"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/shoe_a.lua"
+
+        "ItemType"               "equip"     //equip类型才会在商店出现
+        "ItemCost"               "10"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        //技能施法前摇
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityCooldown"				"30"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_speed"              "12"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "4"  
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_mana_regen"              "3"  
+            }
+
+        }
+
+
+
+    }
+
+    "item_shoe_a_2"
+    {
+        "ID"			"6151"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_power_treads_lg_2"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/shoe_a.lua"
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        //技能施法前摇
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityCooldown"				"15"
+        
+        "AbilitySpecial"
+        {
+           "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_speed"              "25"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "8"  
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_mana_regen"              "6"  
+            }
+        }
+
+    }
+
+    "item_recipe_shoe_a_2"
+    {
+        "ID"                                        "6152"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_shoe_a_2"
+        ItemRequirements   
+        {
+                "01"    "item_shoe_a;item_shoe_a"
+        }
+    }
+
+
+    "item_shoe_a_3"
+    {
+        "ID"			"6153"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_power_treads_lg_3"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/shoe_a.lua"
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        //技能施法前摇
+		"AbilityCastPoint"				"0.1"
+	
+		"AbilityCooldown"				"15"
+        
+        "AbilitySpecial"
+        {
+           "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_speed"              "50"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "15"  
+            }
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_mana_regen"              "12"  
+            }
+        }
+
+    }
+
+    "item_recipe_shoe_a_3"
+    {
+        "ID"                                        "6154"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_shoe_a_3"
+        ItemRequirements   
+        {
+                "01"    "item_shoe_a;item_shoe_a_2"
+        }
+
+    }
+
+
+}
+

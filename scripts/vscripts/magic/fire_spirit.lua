@@ -68,6 +68,7 @@ function createShoot(ability)
     shoot.boomDelay = ability:GetSpecialValueFor("boom_delay")
 	EmitSoundOn(keys.soundCastSp1, shoot)
     moveShoot(keys, shoot, fireSpiritBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -114,6 +115,6 @@ function AOEOperationCallback(shoot,unit)
 	local caster = keys.caster
 	local ability = keys.ability
 	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 

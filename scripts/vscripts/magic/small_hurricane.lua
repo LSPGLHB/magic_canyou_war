@@ -66,7 +66,7 @@ function createShoot(ability)
 	EmitSoundOn(keys.soundCast, shoot)
 	shoot.castTime = GameRules:GetGameTime()
 	moveShoot(keys, shoot, smallHurricaneBoomCallBack, smallHurricaneTakeAwayCallBack)
-		
+	caster.shootOver = 1
 end
 
 function smallHurricaneBoomCallBack(shoot)	

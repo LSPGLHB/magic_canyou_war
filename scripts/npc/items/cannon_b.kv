@@ -1,0 +1,208 @@
+"DOTAAbilities"
+{
+    "item_cannon_b"
+    {
+        "ID"			"6130"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_soul_booster_lg_1"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/cannon_b.lua"
+
+        "ItemType"               "equip"     //equip类型才会在商店出现
+        "ItemCost"               "10"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+
+        "AbilitySpecial"
+        { 
+
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_percent_base"              "6"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_damage"              "1"  
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "6"  
+            }
+
+
+
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "3"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "4"  
+            }
+
+        }
+    }
+
+    "item_cannon_b_2"
+    {
+        "ID"			"6131"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_soul_booster_lg_2"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/cannon_b.lua"
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_percent_base"              "12"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_damage"              "1"  
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "12"  
+            }
+
+
+
+
+
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "7"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "8"  
+            }
+
+        }
+
+    }
+
+    "item_recipe_cannon_b_2"
+    {
+        "ID"                                        "6132"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_cannon_b_2"
+        ItemRequirements   
+        {
+                "01"    "item_cannon_b;item_cannon_b"
+        }
+    }
+
+
+    "item_cannon_b_3"
+    {
+        "ID"			"6133"
+        "BaseClass"                 "item_lua"
+        "AbilityTextureName"        "item_soul_booster_lg_3"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+        "ScriptFile"				"items/cannon_b.lua"
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_percent_base"              "25"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_damage"              "2"  
+            }
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "25"  
+            }
+
+
+
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "15"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "15"  
+            }
+
+        }
+
+    }
+
+    "item_recipe_cannon_b_3"
+    {
+        "ID"                                        "6134"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_cannon_b_3"
+        ItemRequirements   
+        {
+                "01"    "item_cannon_b;item_cannon_b_2"
+        }
+    }
+
+}
+

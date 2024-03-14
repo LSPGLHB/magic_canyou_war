@@ -66,7 +66,7 @@ function createShoot(ability)
     --过滤掉增加施法距离的操作
 	shoot.max_distance_operation = max_distance
     initDurationBuff(keys)
-
+    
 
     local aoe_duration = ability:GetSpecialValueFor("aoe_duration")
     shoot.aoe_duration = aoe_duration
@@ -78,6 +78,9 @@ function createShoot(ability)
     shoot.boomDelay = ability:GetSpecialValueFor("boom_delay")
 	EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, electricWallBoomCallBack, nil)
+
+    caster.shootOver = 1
+
 end
 
 --技能爆炸,单次伤害
@@ -121,20 +124,7 @@ function electricWallRenderParticles(shoot)
 end
 
 function electricWallDamageCallback(shoot, unit, interval)
-    local keys = shoot.keysTable
-    local caster = keys.caster
-    local shootPos = shoot:GetAbsOrigin()
-    local unitPos = unit:GetAbsOrigin()
-   
-    local ability = keys.ability
-    local duration = shoot.aoe_duration
-	local playerID = caster:GetPlayerID()
-    
-    local damageTotal = getApplyDamageValue(shoot)
-    local damage = damageTotal / (duration / interval)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-
-    
+    damageCallback(shoot, unit, interval)
 end
 
 function electricWallAOEIntervalCallBack(shoot)

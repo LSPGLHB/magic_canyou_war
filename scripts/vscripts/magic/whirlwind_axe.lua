@@ -51,7 +51,7 @@ function createShoot(ability)
     local buffDuration = interval * maxCount
     --ability:ApplyDataDrivenModifier(caster, caster, buffName, {Duration = buffDuration})
     caster:AddNewModifier(caster,ability,buffName, {Duration = buffDuration})
-
+    --caster.shootOver = 0
     Timers:CreateTimer(interval / 2, function()
         caster:StartGesture(ACT_DOTA_ATTACK)
         if shootCount == maxCount - 1 then
@@ -59,26 +59,30 @@ function createShoot(ability)
         end
         return interval
     end)
+    
     Timers:CreateTimer(interval, function()
         local casterDirection = caster:GetForwardVector()
         local shoot = CreateUnitByName(keys.unitModel, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeam())
+        shoot.shootCount = shootCount
         creatSkillShootInit(keys,shoot,caster,max_distance,casterDirection)
-
 
         local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot)
         ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
         shoot.particleID = particleID
+        
         EmitSoundOn(keys.soundCast, shoot)
         
         moveShoot(keys, shoot, whirlwindAxeBoomCallBack, nil)
 
         shootCount = shootCount + 1
         if shootCount == maxCount then
+            caster.shootOver = 1
+            print(caster.shootOver)
             return nil
         end
         return interval
     end)
-   
+    
     
 end
 
@@ -114,9 +118,7 @@ function AOEOperationCallback(shoot,unit)
 
     local damage = getApplyDamageValue(shoot) / maxCount + currentStack * bounds_damage
 
-
-
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     if currentStack < bounds_damage_count then
         currentStack = currentStack + 1

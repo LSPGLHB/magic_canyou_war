@@ -3,7 +3,8 @@ require('get_contract')
 require('get_magic')
 require('get_talent')
 require('game_init')
-require('scene/battlefield')
+require('scene/game_Stone')
+--require('scene/battlefield')
 require('button')
 require('scene/power_up_vpcf')
 --发送到前端显示信息
@@ -58,7 +59,7 @@ function studyStep(gameRound)
                 randomLearnMagic(gameRound)
             end
             if gameRound == 4 then 
-                randomLearnContract()
+                randomlearnBlink()
             end
             if gameRound == 8 then
                 closeMagicListTimeUp()
@@ -96,6 +97,12 @@ function prepareStep(gameRound)
         if prepareTime <= 3 then
             timeUpCounterSound()
         end
+        --[[--模拟其他人打开商店测试
+        if prepareTime == 10 then
+            OnMyUIShopOpen(1)
+            refreshShopListByPlayerID(1)
+            getPlayerShopListByRandomList(1, playerRandomItemNumList[1])
+        end]]
         --时间结束则跳出计时循环进行下一阶段
         if prepareTime < 1  then
             --输出准备结束信息
@@ -128,7 +135,7 @@ function battleStep(gameRound)
     local interval = 1
     local loadingTime = GameRules.roundEndLoadingTime--传送时间
     local battleTime = GameRules.battleTime --战斗时间
-    local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
+    --local battlefieldTimer = GameRules.battlefieldTimer --法阵刷新激活
     local freeTime = GameRules.freeTime --自由活动时间
     local decisiveBattleTime = GameRules.decisiveBattleTime --剩余时间决战阶段
     local centerTreasureBoxTime =GameRules.centerTreasureBoxTime
@@ -136,15 +143,18 @@ function battleStep(gameRound)
     Timers:CreateTimer(0,function ()
         --print("onStepLoop2========check")
         battleTime = battleTime - 1
+        --[[
         if battleTime % battlefieldTimer == 0 and battleTime / battlefieldTimer > 0 then
             battlefieldLaunchTimer() --法阵激活,每30秒一次
-        end
+        end]]
+        --[[
         if battleTime == centerTreasureBoxTime then
             initCenterTreasureBox() --中央宝箱创建
-        end
+        end]]
+        --[[
         if battleTime == decisiveBattleTime then
-            decisiveBattlePowerUp() --决战时刻
-        end
+            --decisiveBattlePowerUp() --决战时刻
+        end]]
         if battleTime <= 5 then 
             timeUpCounterSound() --倒数声效
         end
@@ -187,7 +197,6 @@ function battleStep(gameRound)
                     allPlayerStop()
                     --进行下一轮战斗
                     --英雄位置初始化到预备阶段
-
                     playerPositionTransfer(preparePointsTeam1,playersTeam1,loadingTime,true)
                     playerPositionTransfer(preparePointsTeam2,playersTeam2,loadingTime,true)
                     --传送时间间隔
@@ -254,13 +263,14 @@ function initHeroStatus()
             end
 
             --初始化决战阶段buff
+            --[[
             if hHero:HasAbility("decisive_battle_buff_datadriven") then
                 hHero:RemoveAbility("decisive_battle_buff_datadriven")
             end
             if hHero:HasModifier("modifier_decisive_battle_buff_datadriven") then
                 hHero:RemoveModifierByName("modifier_decisive_battle_buff_datadriven")
             end
-
+            ]]
             --充能补满
             local abilityArry = {0,1,2,3,6,7,8} --技能位置
             for i = 1 , #abilityArry, 1 do
@@ -400,10 +410,13 @@ function roundRewardOperation(winTeam,loseTeam,winFlag)--flag:平局标签 false
         if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
             local hHeroTeam = hHero:GetTeam()
-            local roundReward = 0
+            local roundReward = 50 --基础工资
             if hHeroTeam == winTeam then
-                roundReward = winReward + endReward
+                roundReward = roundReward + winReward + endReward
                 --print("胜利+连胜金币："..winReward.."，终结奖励："..endReward)
+                PlayerResource:SetGold(playerID, hHero:GetGold()+roundReward, true)
+			    showGoldWorthParticle(playerID,roundReward,"team")
+            else
                 PlayerResource:SetGold(playerID, hHero:GetGold()+roundReward, true)
 			    showGoldWorthParticle(playerID,roundReward,"team")
             end
@@ -436,7 +449,7 @@ function getUpGradeListByRound(gameRound)
                     openMagicListPreA(playerID)
                 end
                 if gameRound == 4 then
-                openRandomContractList(playerID)
+                    openRandomBlinkList(playerID)--openRandomContractList(playerID)
                 end
                 if gameRound == 5 then
                     openMagicListC(playerID)
@@ -498,6 +511,7 @@ function checkWinTeam()
         --print("==111==",GameRules.badMagicStone:IsAlive())
         GameRules.checkWinTeam = DOTA_TEAM_GOODGUYS
     end
+
 end
 
 --为胜利方添加胜利特效
@@ -523,10 +537,14 @@ function gameRoundInit(gameRound)
     GameRules.checkWinTeam = nil
     GameRules.gameRound = gameRound
     initPlayerHero()--初始化所有玩家
-    initMagicStone()--初始化魔法石
-    initBattlefield()--初始化法阵   
+    --initMagicStone()--初始化魔法石(合并了)
+    initMagicTower()   --初始化魔塔
+    initMagicTowerAssistant() --初始化边塔
+    
+    --initBattlefield()--初始化法阵   
+    
     initHeroStatus()   --初始化英雄状态
-    roundPowerUp(gameRound) --回合能力提升
+    --roundPowerUp(gameRound) --回合能力提升
     refreshShopList(true,gameRound) --更新商店列表
     getUpGradeListByRound(gameRound) --打开学习能力提升界面
     clearTreasureBox() --清理上局的箱子 
@@ -572,7 +590,7 @@ function refreshShopList(initLockFlag,gameRound)
     end
 end
 
---每回合提升
+--每回合提升(暂停使用)
 function roundPowerUp(gameRound)
     --print("roundPowerUp")
     local healthArray = {0,10,10,10,10,10,10,10,10,10,10,10}
@@ -596,8 +614,8 @@ function roundPowerUp(gameRound)
                 setPlayerBuffByNameAndBValue(keys,"health",GameRules.playerBaseHealth)
                 setPlayerPower(playerID, "talent_vision", true, visionArray[gameRound])
                 setPlayerBuffByNameAndBValue(keys,"vision",GameRules.playerBaseHealth)
-                setPlayerPower(playerID, "talent_cooldown", true, cooldownArray[gameRound])
-                setPlayerBuffByNameAndBValue(keys,"cooldown",0)
+                setPlayerPower(playerID, "talent_cooldown_percent_final", true, cooldownArray[gameRound])
+                setPlayerSimpleBuff(keys,"cooldown_percent_final")
                 setPlayerPower(playerID, "talent_mana_regen", true, manaRegenArray[gameRound])
                 setPlayerBuffByNameAndBValue(keys,"mana_regen",GameRules.playerBaseManaRegen)
 
@@ -620,7 +638,7 @@ function roundPowerUp(gameRound)
 end
 
 
---每回合决战阶段提升
+--每回合决战阶段提升（暂停使用）
 function decisiveBattlePowerUp()
     EmitAnnouncerSound("scene_voice_round_battle_fight")
     EmitAnnouncerSound("scene_voice_round_battle_buff_get")
@@ -857,7 +875,7 @@ function gameInit()
     end
 
     finalWinTeam = DOTA_TEAM_GOODGUYS
-    GoodStoneHP = 6
+    GoodStoneHP = 12
     BadStoneHP = 6
     NumberStr ={"一","二","三","四","五","六","七","八","九","十","十一","十二","十三"} 
 end

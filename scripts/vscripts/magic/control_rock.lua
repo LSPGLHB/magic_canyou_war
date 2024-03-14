@@ -105,7 +105,7 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     moveShoot(keys, shoot, ControlRockBoomCallBack, nil)
-	
+	caster.shootOver = 1
 	local timeCount = 0
 	local interval = 0.1
 	
@@ -164,7 +164,7 @@ function AOEOperationCallback(shoot,unit)
     local caster = keys.caster
 	local ability = keys.ability
     local damage = getApplyDamageValue(shoot)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 end
 
 
@@ -193,6 +193,7 @@ function EndControl( ability )
 	--local unit = ability:GetParent()
 	local modifier_caster_syn_name = 'control_rock_modifier_under_control'
 	caster:RemoveModifierByName( modifier_caster_syn_name )
+	caster.shootOver = -1
 end
 --[[
 function initMagicStage(keys)

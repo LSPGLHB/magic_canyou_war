@@ -65,6 +65,7 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, caster)
     moveShoot(keys, shoot, waterBallBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -90,7 +91,7 @@ function waterBallAOEOperationCallback(shoot,unit)
 	local caster = keys.caster
 	local ability = keys.ability
 	local damage = getApplyDamageValue(shoot)
-	ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff

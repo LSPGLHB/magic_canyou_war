@@ -44,6 +44,7 @@ function createShoot(ability)
     shoot.particleID = particleID
     EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, nil, penetrateThunderBallHitCallBack)
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -60,7 +61,7 @@ function passOperationCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local hitTargetDebuff = keys.hitTargetDebuff
     local damage = getApplyDamageValue(shoot)
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
     local debuffDuration = ability:GetSpecialValueFor("debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,owner)
     debuffDuration = getApplyControlValue(shoot, debuffDuration)

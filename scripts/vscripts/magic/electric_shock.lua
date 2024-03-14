@@ -3,7 +3,7 @@ require('skill_operation')
 
 electric_shock_datadriven = class({})
 electric_shock_datadriven_stage_b = class({})
-LinkLuaModifier( "electric_shock_datadriven_modifier_debuff", "magic/modifiers/electric_shock_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_electric_shock_datadriven_buff", "magic/modifiers/electric_shock_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 LinkLuaModifier( "modifier_electric_shock_stun", "magic/modifiers/electric_shock_modifier_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 LinkLuaModifier( "modifier_sleep_debuff_datadriven", "magic/modifiers/modifier_sleep_debuff.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
@@ -55,7 +55,7 @@ function stepOne(ability)
 
     keys.stunDebuff =        "modifier_electric_shock_stun"
 
-    keys.modifier_caster_syn_name =	   "electric_shock_datadriven_modifier_debuff"
+    keys.modifier_caster_syn_name =	   "modifier_electric_shock_datadriven_buff"--"electric_shock_datadriven_modifier_debuff"
 
     keys.ability_a_name =		   'electric_shock_datadriven'
     keys.ability_b_name =		   "electric_shock_datadriven_stage_b"
@@ -98,7 +98,6 @@ function stepOne(ability)
         if shoot.energy_point == 0 then
             if caster:HasModifier(casterBuff) then
                 caster:RemoveModifierByName(casterBuff) 
-                initStage(caster)
             end
             return nil
         end
@@ -120,6 +119,7 @@ function stepOne(ability)
     caster.electric_shock_a = shoot
     shoot.playerID = playerID
     --moveShoot(keys, shoot, electricBallBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 function stepTwo(ability)
@@ -188,14 +188,12 @@ function stepTwo(ability)
     shoot_a.launchElectricShock = 1
     local casterBuff = keys.modifier_caster_syn_name
     if caster:HasModifier(casterBuff) then
-        print("hasmo")
         caster:RemoveModifierByName(casterBuff) 
-        initStage(caster)
     end
     Timers:CreateTimer(0.5,function()
         launchElectricShock(keys)
     end)
-    
+    caster.shootOver = 1
 end
 
 function launchElectricShock(keys)
@@ -222,8 +220,6 @@ function launchElectricShock(keys)
 
     moveShoot(keys, shoot_a, nil, electricShockAHitCallback)
     moveShoot(keys, shoot_b, nil, electricShockBHitCallback)
-
-    --initStage(keys)
 end
 
 function electricShockAHitCallback(shoot,unit)
@@ -234,7 +230,7 @@ function electricShockAHitCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.stunDebuff
     local damage = getApplyDamageValue(shoot) / 4
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("stun_debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
@@ -253,7 +249,7 @@ function electricShockBHitCallback(shoot,unit)
     local AbilityLevel = shoot.abilityLevel
     local debuffName = keys.sleepDebuff
     local damage = getApplyDamageValue(shoot) / 4
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local debuffDuration = ability:GetSpecialValueFor("sleep_debuff_duration") --debuff持续时间
     debuffDuration = getFinalValueOperation(playerID,debuffDuration,'control',AbilityLevel,nil)
@@ -341,7 +337,7 @@ function electricShockAOEOperationCallback(shoot,unit)
     local sleepDebuff = keys.sleepDebuff   
 
     local damage = getApplyDamageValue(shoot) / 2 
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
     local stunDebuffDuration = ability:GetSpecialValueFor("stun_debuff_duration")--debuff持续时间
     local sleepDebuffDuration = ability:GetSpecialValueFor("sleep_debuff_duration") 
@@ -379,22 +375,6 @@ function LevelUpAbility(self)
 	end
 end
 
-function initStage(caster)
-    --local caster	= keys.caster
-	--local ability	= keys.ability
-    local playerID = caster:GetPlayerID()
-    -- Swap main ability
-    local ability_a_name	= "electric_shock_datadriven"
-    local ability_b_name	= "electric_shock_datadriven_stage_b"
-    caster:SwapAbilities( ability_a_name, ability_b_name, true, false )
 
-    local shoot_a = caster.electric_shock_a--PlayerPower[playerID]["electric_shock_a"]
-
-    if shoot_a.launchElectricShock == 0 then
-        shootSoundAndParticle(shoot_a, 'miss')
-        shootKill(shoot_a)
-    end
-    
-end
 
 

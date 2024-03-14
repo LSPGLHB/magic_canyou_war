@@ -192,82 +192,7 @@ function initMagicList()
 	--重新组装数组
 	local magicTempList = GameRules.customAbilities
 	magicList = {}
-	--[[
-	magicList['magicNameList'] = {}
-	magicList['abilityCooldownList'] = {}
-	magicList['abilityManaCostList'] = {}
-	magicList['magicIconSrcList'] = {}
-	magicList['preMagicList'] = {}
-	magicList['magicLvList'] = {}
-	magicList['stageAbilityList'] = {}
-	magicList['unitTypeList'] = {}
-	magicList['speedList_01'] = {}
-	magicList['speedList_02'] = {}
-	magicList['speedList_14'] = {}
-	magicList['maxDistanceList_03'] = {}
-	magicList['aoeRadiusList_04'] = {}
-	magicList['aoeRadiusList_05'] = {}
-	magicList['maxDistanceList_06'] = {}
-	magicList['maxDistanceList_15'] = {}
-	magicList['damageList_07'] = {}
-	magicList['damageList_08'] = {}
-	magicList['damageList_09'] = {}
-	magicList['maxChargesList_10'] = {}
-	magicList['chargeReplenishTimeList_11'] = {}
-	magicList['energyList_12'] = {}
-	magicList['energyList_13'] = {}
-	magicList['debuffDurationList_21'] = {}
-	magicList['beatBackDistanceList_22'] = {}
-	magicList['debuffDurationList_23'] = {}
-	magicList['aoeDurationList_24'] = {}
-	magicList['debuffDurationList_25'] = {}
-	magicList['debuffDurationList_26'] = {}
-	magicList['stunDebuffDurationList_27'] = {}
-	magicList['sleepDebuffDurationList_28'] = {}
-	magicList['aoeDurationList_29'] = {}
-	magicList['debuffDurationList_30'] = {}
-	magicList['aoeDurationList_31'] = {}
-	magicList['debuffDurationList_32'] = {}
-	magicList['debuffDurationList_33'] = {}
-	magicList['debuffDurationList_34'] = {}
-	magicList['aoeDurationList_35'] = {}
-	magicList['debuffDurationList_36'] = {}
-	magicList['GSpeedList_37'] = {}
-	magicList['aoeDurationList_38'] = {}
-	magicList['disableTurningTimeList_39'] = {}
-	magicList['boomDelayList_50'] = {}
-	magicList['visionRadiusList_51'] = {}
-	magicList['aoeDurationList_52'] = {}
-	magicList['debuffDurationList_53'] = {}
-	magicList['aoeDurationList_54'] = {}
-	magicList['visionTimeList_55'] = {}
-	magicList['debuffDelayList_56'] = {}
-	magicList['debuffDurationList_57'] = {}
-	magicList['searchRangeList_58'] = {}
-	magicList['doubleDamagePercentageList_59'] = {}
-	magicList['bounsDamagePercentageList_60'] = {}
-	magicList['sendDelayList_61'] = {}
-	magicList['chargeTimeList_62'] = {}
-	magicList['turnRatePercentList_63'] = {}
-	magicList['speedPercentList_64'] = {}
-	magicList['channelTimeList_65'] = {}
-	magicList['stageDurationList_66'] = {}
-	magicList['debuffSpeedPercentList_67'] = {}
-	magicList['bounsDamagePercentageList_68'] = {}
-	magicList['debuffDurationList_69'] = {}
-	magicList['aoeRadiusList_70'] = {}
-	magicList['damageByDistanceList_71'] = {}
-	magicList['diffuseSpeedList_72'] = {}
-	magicList['catchRadiusList_75'] = {}
-	magicList['windSpeedList_76'] = {}
-	magicList['windDamagePercentList_77'] = {}
-	magicList['boundsDamagePercentList_78'] = {}
-	magicList['windSpeedList_79'] = {}
-	magicList['boundsDamageList_80'] = {}
-	magicList['boundsDamageCountList_81'] = {}
-	magicList['shootCountList_82'] = {}
-	magicList['GSpeedList_83'] = {}
-	]]
+	
 	--local flag = false
 	local icount = 1
 	
@@ -510,7 +435,7 @@ function initMagicList()
 					if x == "11" then
 						for i,j_val in pairs(y_table) do
 							if i == 'charge_replenish_time' then
-								chargeReplenishTime_11 = string.format("%.2f",j_val)
+								chargeReplenishTime_11 = j_val
 							end
 						end
 					end
@@ -559,7 +484,7 @@ function initMagicList()
 					if x == "25" then
 						for i,j_val in pairs(y_table) do
 							if i == 'debuff_duration' then
-								debuffDuration_25 = string.format("%.2f", j_val)
+								debuffDuration_25 =  j_val
 							end
 						end
 					end
@@ -650,14 +575,14 @@ function initMagicList()
 					if x == "38" then
 						for i,j_val in pairs(y_table) do
 							if i == 'aoe_duration' then
-								aoeDuration_38 = string.format("%.2f", j_val)
+								aoeDuration_38 = j_val
 							end
 						end
 					end
 					if x == "39" then
 						for i,j_val in pairs(y_table) do
 							if i == 'disable_turning_time' then
-								disableTurningTime_39 = string.format("%.2f", j_val)
+								disableTurningTime_39 = j_val
 							end
 						end
 					end
@@ -665,7 +590,7 @@ function initMagicList()
 					if x == "50" then
 						for i,j_val in pairs(y_table) do
 							if i == 'boom_delay' then
-								boomDelay_50 = string.format("%.2f", j_val)
+								boomDelay_50 =  j_val
 							end
 						end
 					end
@@ -700,7 +625,7 @@ function initMagicList()
 					if x == "55" then
 						for i,j_val in pairs(y_table) do
 							if i == 'vision_time' then					
-								visionTime_55 = string.format("%.2f", j_val)
+								visionTime_55 =  j_val
 							end
 						end
 					end
@@ -749,7 +674,7 @@ function initMagicList()
 					if x == "62" then
 						for i,j_val in pairs(y_table) do
 							if i == 'charge_time' then
-								chargeTime_62 = string.format("%.2f", j_val)
+								chargeTime_62 = j_val
 							end
 						end
 					end
@@ -770,7 +695,7 @@ function initMagicList()
 					if x == "65" then
 						for i,j_val in pairs(y_table) do
 							if i == 'channel_time' then
-								channelTime_65 = string.format("%.2f", j_val)
+								channelTime_65 =  j_val
 							end
 						end
 					end
@@ -826,7 +751,7 @@ function initMagicList()
 					if x == "75" then
 						for i,j_val in pairs(y_table) do
 							if i == 'catch_radius' then
-								catchRadius_75 = string.format("%.2f", j_val)
+								catchRadius_75 = j_val
 							end
 						end
 					end
@@ -1148,7 +1073,7 @@ end
 function getRebuildMagicListByNameJSTOLUA( index,keys )
 	local playerID = keys.PlayerID
 	local num  = keys.num
-	local magicName = RandomMagicNameList[playerID][num]
+	local magicName = RandomMagicNameList[playerID][num]['magicNameList']
 	local preMagic = magicName
 	--local magicNameAllList = magicList['magicNameList']
 	--local preMagicList = GameRules.preMagicList 

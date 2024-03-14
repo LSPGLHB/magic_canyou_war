@@ -14,7 +14,6 @@
 
 		"AbilityTextureName"			"bristleback_viscous_nasal_goo"
 		"MaxLevel"                      "1"
-		"AOERadius"                     "150"
 		"UnitType"         				"tu"
 		"AbilityLevel"					"c"
 		"PreAbility"					"twine_soil_ball_pre_datadriven"
@@ -38,23 +37,25 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"   //施法距离
+		//"AbilityCastRange"				"1500"   //施法距离
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"				"6.5"
+		"AbilityCharges"                "2"
+        "AbilityChargeRestoreTime"      "11.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"28"
+		"AbilityManaCost"				"22.5"
 
         "AbilitySpecial"
 		{
             "01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"speed"				"1100"
+				"speed"				"1300"
 			}
             "04"
             {
@@ -64,7 +65,7 @@
             "06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"max_distance"		"1500"
+				"max_distance"		"1300"
 			}
             "20"
 			{
@@ -74,13 +75,13 @@
             "07"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"		    "13"
+				"damage"		    "20"
 			}
 
             "23"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"debuff_duration"		"3"
+				"debuff_duration"		"2.2"
 			}
             "12"
 			{

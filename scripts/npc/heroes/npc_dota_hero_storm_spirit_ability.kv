@@ -1,0 +1,52 @@
+"DOTAAbilities"
+{
+	"npc_dota_hero_storm_spirit_ability"
+    {
+        "BaseClass"	                "ability_lua"
+        "AbilityTextureName"        "storm_spirit_static_remnant" //图标
+        "AbilityBehavior"	        "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "MaxLevel"                      "1"
+
+		"ScriptFile"				"heroes/storm_spirit/npc_dota_hero_storm_spirit_ability.lua"
+
+        "AbilityType"               "hero"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		//"AbilityCastRange"				"1700"   //施法距离
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20"
+		//"AbilityCharges"                "2"
+        //"AbilityChargeRestoreTime"      "2"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "power_up_duration"			"1"
+            }
+
+            "02"
+            {
+                "var_type"			    "FIELD_FLOAT"
+                "damage_up_percent"			    "50"
+            }
+            "03"
+            {
+                "var_type"			    "FIELD_FLOAT"
+                "cooldown_reduce_percent"	  "75"
+            }
+           
+        }
+    }
+}

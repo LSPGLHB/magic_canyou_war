@@ -59,6 +59,7 @@ function createShoot(ability)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, shoot)
     moveShoot(keys, shoot, electricBallBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -92,7 +93,7 @@ function electricBallAOEOperationCallback(shoot,unit)
     local interval = 2
     local timeCount = 0
     Timers:CreateTimer(function()
-        ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+        ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
         --ability:ApplyDataDrivenModifier(caster, unit, stunDebuff, {Duration = 1})
         unit:AddNewModifier( caster, ability, stunDebuff, {Duration = 1} )
         EmitSoundOn(keys.soundBoom, shoot)

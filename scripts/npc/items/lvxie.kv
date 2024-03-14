@@ -8,16 +8,15 @@
 
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
 
-        //"ScriptFile"					"items/lvxie.lua"	
 
-        "ItemType"               "equip"
+        "ItemType"               "equip-bak"
         "IconSrc"                "file://{images}/custom_game/shop_item/skadi_lg.png" 
 		"ItemShowName"           "#DOTA_Tooltip_ability_item_lvxie"
         "ItemDescribe"           "#DOTA_Tooltip_ability_item_lvxie_Description" 
         "ItemCost"               "50"
 
 
-        "ItemDroppable"                        "1"
+        "ItemDroppable"                        "0"
         "ItemSellable"                        "1"
         "ItemPurchasable"                "1"
         "ItemKillable"                        "1"
@@ -64,7 +63,16 @@
                 "var_type"				"FIELD_INTEGER"
                 "item_ability_speed_C_precent_base"     "10"  //增加C技能射速百分比
             }
-
+            "08"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_C"             "100"  //增加C技能射程
+            }
+            "09"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_range_C_precent_base"     "10"  //增加C技能射程百分比
+            }
             "10"
             {
                 "var_type"				"FIELD_INTEGER"
@@ -142,12 +150,12 @@
             "24"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_range"          "500"  
+                "duration_mana"          "50"  
             }
             "25"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_radius"         "300"  
+                "item_mana_duration"         "3"  
             }
             "26"
             {
@@ -159,6 +167,9 @@
                 "var_type"				"FIELD_INTEGER"
                 "item_mana_regen_duration"         "3"  
             }
+
+
+
         }
 
 
@@ -167,7 +178,7 @@
             "modifier_item_lvxie_datadriven"
             {
                 "Passive"			"1"
-                "IsHidden"			"1"
+                //"IsHidden"			"1"
                 
                 "OnCreated"
                 {
@@ -175,7 +186,6 @@
                     {
                         "ScriptFile"		"items/lvxie.lua"
                         "Function"			"modifier_item_lvxie_on_created"
-                        "item_range"        "505"
                     }
                 }
                 

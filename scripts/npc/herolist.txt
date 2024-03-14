@@ -1,11 +1,11 @@
 "CustomHeroList"
 {   
-    //"npc_dota_hero_rubick"              "-1"
+    "npc_dota_hero_rubick"              "-1"
     
-    //"npc_dota_hero_crystal_maiden"                "-1"
+    
     //"npc_dota_hero_furion"                "-1"
     //"npc_dota_hero_vengefulspirit"                "-1"
-    //"npc_dota_hero_zuus"                "-1"
+    
     //"npc_dota_hero_arc_warden"                "-1"
     //"npc_dota_hero_pugna"                "-1"
     //"npc_dota_hero_witch_doctor"                "-1"
@@ -21,8 +21,14 @@
     "npc_dota_hero_earth_spirit"                "-1"
     "npc_dota_hero_lina"                        "-1"
     "npc_dota_hero_nevermore"                   "-1"
-    
-
-
+    "npc_dota_hero_omniknight"                  "-1"
+    "npc_dota_hero_crystal_maiden"              "-1"
+    "npc_dota_hero_rubick"                      "-1"
+    "npc_dota_hero_invoker"                     "-1"
+    "npc_dota_hero_storm_spirit"                "-1"
+    "npc_dota_hero_silencer"                    "-1"
+    "npc_dota_hero_zuus"                        "-1"
+    "npc_dota_hero_vengefulspirit"              "-1"
+    "npc_dota_hero_morphling"                   "-1"
     
 } 

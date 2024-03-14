@@ -12,7 +12,7 @@ end
 --天赋随机列表
 function getRandomTalentList(playerID, talentType)
     local randomNumList = getRandomNumList(1,#talentNameList[talentType],3)
-    print("getRandomTalentList===============:"..playerID.."==="..talentType)
+    --print("getRandomTalentList===============:"..playerID.."==="..talentType)
     RandomTalentNameList[playerID][talentType] = getRandomArrayList(talentNameList[talentType], randomNumList)
     RandomTalentTextureNameList[playerID][talentType]  = getRandomArrayList(talentTextureNameList[talentType], randomNumList)
     --RandomTalentDescribeList[playerID][talentType]  = getRandomArrayList(talentDescribeList[talentType], randomNumList)
@@ -196,13 +196,13 @@ end
 
 --随机天赋觉醒
 function randomLearnTalent(gameRound)
-	if gameRound == 9 then
+	if gameRound == 1 then
 		talentType = 'C'
 	end
-    if gameRound == 10 then
+    if gameRound == 2 then
 		talentType = 'B'
 	end
-    if gameRound == 11 then
+    if gameRound == 3 then
 		talentType = 'A'
 	end
 	local learnNum = math.random(1,3)
@@ -234,10 +234,10 @@ function learnTalentByNum(playerID, num, talentType)
     --local talentDescribe = RandomTalentDescribeList[playerID][talentType][num]
 
     if playerTalentLearn[playerID][talentType] ~= 'nil' then
-        print("==================playerTalentLearn===================")
-        print(playerID)
-        print(talentType)
-        print(playerTalentLearn[playerID][talentType])
+        --print("==================playerTalentLearn===================")
+        --print(playerID)
+        --print(talentType)
+        --print(playerTalentLearn[playerID][talentType])
         
         local modifierName = "modifier_talent_"..playerTalentLearn[playerID][talentType].."_datadriven"
         hHero:RemoveModifierByName(modifierName)

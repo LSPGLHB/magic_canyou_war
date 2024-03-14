@@ -1,10 +1,10 @@
 npc_dota_hero_earth_spirit_ability = ({})
-LinkLuaModifier("modifier_tie_defence_passive", "heroes/earth_spirit/tie_defence_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_tie_defence_buff", "heroes/earth_spirit/tie_defence_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_earth_spirit_defence_passive", "heroes/earth_spirit/tie_defence_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_earth_spirit_defence_buff", "heroes/earth_spirit/tie_defence_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL)
 
 
 function npc_dota_hero_earth_spirit_ability:GetIntrinsicModifierName()
-	return "modifier_tie_defence_passive"
+	return "modifier_earth_spirit_defence_passive"
 end
 
 function npc_dota_hero_earth_spirit_ability:OnSpellStart()
@@ -13,8 +13,10 @@ function npc_dota_hero_earth_spirit_ability:OnSpellStart()
     local defence_percent = ability:GetSpecialValueFor("defence_percent")
     local duration = ability:GetSpecialValueFor("duration")
     local refresh_count = ability:GetSpecialValueFor("refresh_count")
-    local modifierName = "modifier_tie_defence_buff"
+    local modifierName = "modifier_earth_spirit_defence_buff"
+    EmitSoundOn("scene_voice_earth_spirit_cast",caster)
     caster:AddNewModifier(caster, ability, modifierName, {Duration = duration})
+
     local interval = 0.02
     Timers:CreateTimer(function()
         if interval == -1 then
@@ -28,5 +30,6 @@ function npc_dota_hero_earth_spirit_ability:OnSpellStart()
         interval = -1
 
     end)
+    caster.shootOver = -1
 end
 

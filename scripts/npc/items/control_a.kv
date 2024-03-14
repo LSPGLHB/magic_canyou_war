@@ -2,18 +2,15 @@
 {
     "item_control_a"
     {
-        "ID"			"6200"
+        "ID"			"6010"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "cornucopia_lg"
+        "AbilityTextureName"        "item_glimmer_cape_lg_1"
 
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/cornucopia_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_control_a"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_control_a_Description" 
-        "ItemCost"               "47"
+        "ItemCost"               "10"
 
 
         "ItemDroppable"                        "1"
@@ -26,12 +23,34 @@
         
         "AbilitySpecial"
         {
-            "33"
+            "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_control_a_precent_base"              "18"  
+                "item_damage"              "1"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "9"  
             }
 
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "5"  
+            }            
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_speed"              "5"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "3"  
+            }
 
         }
 
@@ -66,19 +85,17 @@
         }
     }
 
-"item_control_a_2"
+    "item_control_a_2"
     {
-        "ID"			"6201"
+        "ID"			"6011"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "refresher_lg"
+        "AbilityTextureName"        "item_glimmer_cape_lg_2"
 
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/refresher_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_control_a_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_control_a_2_Description" 
+
         "ItemCost"               "0"
 
 
@@ -92,12 +109,37 @@
         
         "AbilitySpecial"
         {
-            "33"
+
+            "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                 "item_control_a_precent_base"              "40"  
+                "item_damage"              "1"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "18"  
             }
 
+
+
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "10"  
+            }            
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_speed"              "10"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "5"  
+            }            
 
         }
 
@@ -132,7 +174,7 @@
 
     "item_recipe_control_a_2"
     {
-        "ID"                                        "6202"
+        "ID"                                        "6012"
         "BaseClass"                        "item_recipe_arcane_boots"
         "ItemCost"                        "0"        
 
@@ -141,6 +183,110 @@
         ItemRequirements   
         {
                 "01"    "item_control_a;item_control_a"
+        }
+
+    }
+
+    "item_control_a_3"
+    {
+        "ID"			"6013"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "item_glimmer_cape_lg_3"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_damage"              "2"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_control_percent_base"              "30"  
+            }
+
+
+
+
+
+           "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "25"  
+            }
+
+            "04"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_speed"              "20"  
+            }
+            "05"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_cooldown_percent_final"              "10"  
+            }
+
+
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_control_a_3_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/control_a.lua"
+                        "Function"			"modifier_item_control_a_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/control_a.lua"
+                        "Function"			"modifier_item_control_a_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "item_recipe_control_a_3"
+    {
+        "ID"                                        "6014"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_control_a_3"
+        ItemRequirements   
+        {
+                "01"    "item_control_a_2;item_control_a"
         }
 
     }

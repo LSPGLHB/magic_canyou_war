@@ -2,18 +2,15 @@
 {
     "item_damage_a"
     {
-        "ID"			"6170"
+        "ID"			"6030"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "lesser_crit_lg"
+        "AbilityTextureName"        "item_lesser_crit_lg_1"
 
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
 
 
         "ItemType"               "equip"     //equip类型才会在商店出现
-        "IconSrc"                "file://{images}/custom_game/shop_item/lesser_crit_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_damage_a"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_damage_a_Description" 
-        "ItemCost"               "55"
+        "ItemCost"               "10"
 
 
         "ItemDroppable"                        "1"
@@ -26,15 +23,33 @@
         
         "AbilitySpecial"
         {
-            "25"
+
+            "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_damage_a"              "4"  
+                "item_ability_speed"              "40"  
             }
-            "26"
+
+            "02"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_damage_a_precent_base"              "22"  
+                "item_damage_a_percent_base"              "36"  
+            }
+
+
+
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "2" 
+            }
+
+            "04"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_cooldown_percent_final"              "5"  
             }
 
         }
@@ -70,19 +85,17 @@
         }
     }
 
-"item_damage_a_2"
+    "item_damage_a_2"
     {
-        "ID"			"6171"
+        "ID"			"6031"
         "BaseClass"                 "item_datadriven"
-        "AbilityTextureName"        "greater_crit_lg"
+        "AbilityTextureName"        "item_lesser_crit_lg_2"
 
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"    
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
 
 
         "ItemType"               "equip_plus" //equip_plus类型是合成物品
-        "IconSrc"                "file://{images}/custom_game/shop_item/greater_crit_lg.png" 
-		"ItemShowName"           "#DOTA_Tooltip_ability_item_damage_a_2"
-        "ItemDescribe"           "#DOTA_Tooltip_ability_item_damage_a_2_Description" 
+
         "ItemCost"               "0"
 
 
@@ -96,16 +109,34 @@
         
         "AbilitySpecial"
         {
-            "25"
+            "01"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_damage_a"              "7"  
+                "item_ability_speed"              "80"  
             }
-            "26"
+
+            "02"
             {
                 "var_type"				"FIELD_INTEGER"
-                "item_damage_a_precent_base"              "50"  
+                "item_damage_a_percent_base"              "72"  
             }
+
+
+
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "5" 
+            }
+
+            "04"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_cooldown_percent_final"              "10"  
+            }
+
 
         }
 
@@ -140,7 +171,7 @@
 
     "item_recipe_damage_a_2"
     {
-        "ID"                                        "6172"
+        "ID"                                        "6032"
         "BaseClass"                        "item_recipe_arcane_boots"
         "ItemCost"                        "0"        
 
@@ -150,9 +181,104 @@
         {
                 "01"    "item_damage_a;item_damage_a"
         }
-
     }
 
+    "item_damage_a_3"
+    {
+        "ID"			"6033"
+        "BaseClass"                 "item_datadriven"
+        "AbilityTextureName"        "item_lesser_crit_lg_3"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"    
+
+
+        "ItemType"               "equip_plus" //equip_plus类型是合成物品
+
+        "ItemCost"               "0"
+
+
+        "ItemDroppable"                        "1"
+        "ItemSellable"                        "1"
+        "ItemPurchasable"                "1"
+        "ItemKillable"                        "1"
+        "ItemQuality"                        "rare"
+        "ItemPermanent"                 "0"		//永久的
+
+        
+        "AbilitySpecial"
+        {
+
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_ability_speed"              "80"  
+            }
+            "02"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_damage_a_percent_base"              "72"  
+            }
+
+
+
+
+
+            "03"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "item_health"              "5" 
+            }
+            "04"
+            {
+                "var_type"				"FIELD_FLOAT"
+                "item_cooldown_percent_final"              "10"  
+            }
+
+
+        }
+
+
+        "Modifiers"
+        {
+            "modifier_item_damage_a_3_datadriven"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+                
+                "OnCreated"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/damage_a.lua"
+                        "Function"			"modifier_item_damage_a_on_created"
+                    }
+                }
+                
+                "OnDestroy"
+                {
+                    "RunScript"
+                    {
+                        "ScriptFile"		"items/damage_a.lua"
+                        "Function"			"modifier_item_damage_a_on_destroy"
+                    }
+                }
+            }
+        }
+    }
+
+    "item_recipe_damage_a_3"
+    {
+        "ID"                                        "6034"
+        "BaseClass"                        "item_recipe_arcane_boots"
+        "ItemCost"                        "0"        
+
+        ItemRecipe                 "1" 
+        ItemResult                  "item_damage_a_3"
+        ItemRequirements   
+        {
+                "01"    "item_damage_a;item_damage_a_2"
+        }
+    }
 
 }
 

@@ -82,13 +82,13 @@ function createShoot(ability,magicName)
 	G_Speed = getFinalValueOperation(playerID,G_Speed,'control',shoot.abilityLevel,nil)--数值计算
 	G_Speed = getApplyControlValue(shoot, G_Speed)--克制加强
 	shoot.G_Speed = G_Speed
-	
-	
+		
 	local particleID = ParticleManager:CreateParticle(keys.particles_nm, PATTACH_ABSORIGIN_FOLLOW , shoot) 
 	ParticleManager:SetParticleControlEnt(particleID, keys.cp , shoot, PATTACH_POINT_FOLLOW, nil, shoot:GetAbsOrigin(), true)
 	shoot.particleID = particleID
 	EmitSoundOn(keys.soundCast, shoot)
 	moveShoot(keys, shoot, bigTornadoBoomCallBack, nil)
+	caster.shootOver = 1
 end
 
 function bigTornadoBoomCallBack(shoot)

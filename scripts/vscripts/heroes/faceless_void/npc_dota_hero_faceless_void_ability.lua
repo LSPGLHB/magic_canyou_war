@@ -1,6 +1,6 @@
 require('myMaths')
 npc_dota_hero_faceless_void_ability = ({})
-LinkLuaModifier( "modifier_pingzhang_buff", "heroes/faceless_void/pingzhang_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_faceless_void_buff", "heroes/faceless_void/pingzhang_modifier.lua" ,LUA_MODIFIER_MOTION_HORIZONTAL )
 
 
 function npc_dota_hero_faceless_void_ability:OnSpellStart()
@@ -13,16 +13,15 @@ function npc_dota_hero_faceless_void_ability:OnSpellStart()
     local ability_speed_down_percent = ability:GetSpecialValueFor("ability_speed_down_percent")
     local ability_speed_up_percent = ability:GetSpecialValueFor("ability_speed_up_percent")
     local cooldown_reduce = ability:GetSpecialValueFor("cooldown_reduce")
-    local modifierName = "modifier_pingzhang_buff"
+    local modifierName = "modifier_faceless_void_buff"
     local particleName = "particles/pingzhangge_pingzhang.vpcf"
     local particleID = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN, caster)
     ParticleManager:SetParticleControl(particleID, 0, casterLocation)
 	ParticleManager:SetParticleControl(particleID, 1, Vector(aoe_radius, aoe_radius, aoe_radius))
-    
+    EmitSoundOn("scene_voice_faceless_void_cast",caster)
     caster:AddNewModifier(caster, ability,modifierName,{Duration = duration})
 
     local currentStack = 0
-
     local interval = 0.02
     local pingzhangUnits = {}
     Timers:CreateTimer(function()
@@ -43,7 +42,7 @@ function npc_dota_hero_faceless_void_ability:OnSpellStart()
             local targetLabel = unit:GetUnitLabel()
             local unitEnergy = unit.energy_point
             local checkFlag = checkContainsArrayValue(pingzhangUnits, unit)
-            if targetLabel == GameRules.skillLabel and unitEnergy ~= 0 and not checkFlag then
+            if (targetLabel == GameRules.skillLabel or targetLabel == GameRules.towerSkillLabel) and unitEnergy ~= 0 and not checkFlag then
                 local unitTeam = unit:GetTeam()
                 local unitSpeed = unit.speed
                 if unitTeam == casterTeam then

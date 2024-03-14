@@ -16,7 +16,6 @@ function getGoldCoin(keys)
     --local playerID = caster:GetPlayerID()
     local team = caster:GetTeam()
     local worth = keys.worth
-    
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
         if PlayerResource:GetConnectionState(playerID) ~= DOTA_CONNECTION_STATE_UNKNOWN then
             local hHero = PlayerResource:GetSelectedHeroEntity(playerID)
@@ -85,7 +84,8 @@ function initHeroOpenBoxChannelSucceeded(keys)
     end
 end
 
-
+--弃用
+--[[
 function initHeroCaptureChannelSucceeded(keys)
     --print("==========initHeroCaptureChannelSucceeded========")
     local caster = keys.caster
@@ -93,10 +93,7 @@ function initHeroCaptureChannelSucceeded(keys)
         local casterTeam = caster:GetTeam()
         local targetTeam = caster.battlefieldTarget:GetTeam()
         local stoneModifierName = "modifier_magic_stone_protect_datadriven"
-        --[[
-        if casterTeam == targetTeam then
-            casterTeam = 3
-        end]]
+
         --print("=========================initHeroCaptureChannelSucceeded==========================")
         --print("casterTeam:"..casterTeam..",casterBattlefields:"..#Battlefields[casterTeam])
         --print("targetTeam:"..targetTeam..",targetBattlefields:"..#Battlefields[targetTeam])       
@@ -111,8 +108,8 @@ function initHeroCaptureChannelSucceeded(keys)
         captrueBattlefield(caster.battlefieldTarget, casterTeam)
 
         --刷新被占领方次前线法阵成为开启状态
-        Battlefields[casterTeam][#Battlefields[casterTeam]+1] = Battlefields[targetTeam][#Battlefields[targetTeam]]
-        Battlefields[targetTeam][#Battlefields[targetTeam]] = nil
+        Battlefields[casterTeam][#Battlefields[casterTeam]+1] = Battlefields[targetTeam][#Battlefields[targetTeam].]
+        Battlefields[targetTeam][#Battlefields[targetTeam].] = nil
 
         local goodFieldCount = #Battlefields[2]
         if goodFieldCount > 0 then
@@ -202,7 +199,7 @@ function battlefieldInit(caster)
     end
     ability:ApplyDataDrivenModifier(caster, caster, "modifier_battlefield_flatl_datadriven", {Duration = -1}) 
 end
-
+]]
 function initHeroSearchTarget(keys)
     --print("==========initHeroSearchTarget========")
     local caster = keys.caster

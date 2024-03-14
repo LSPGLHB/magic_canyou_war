@@ -1,6 +1,8 @@
 require('shop')
 require('get_magic')
+require('getBlink')
 require('player_status')
+require('heroAttribute')
 function initShopStats()
     Timers:CreateTimer(0,function ()
         --print("==============checkShop================")
@@ -85,7 +87,7 @@ function refreshShopListByPlayerID(playerID)
     local count = #itemNameList
     --print("itemNameList=====================",count)
     --print("================================================================refreshShopListByPlayerID:"..playerShopLock[playerID])
-    playerRandomItemNumList[playerID] = getRandomNumList(1,count,6)
+    playerRandomItemNumList[playerID] = getRandomNumList(1,count,3)
 end
 
 
@@ -104,6 +106,23 @@ function closePlayerStatusJSTOLUA(index,keys)
     local myPlayer = PlayerResource:GetPlayer(myPlayerID)
     myPlayer.playerStatusShow = false
     OnMyUIPlayerStatusClose(myPlayerID)
+end
+
+--打开英雄属性
+function openHeroAttributeJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    local myPlayer = PlayerResource:GetPlayer(myPlayerID)
+    myPlayer.HeroAttributeShow = true
+    OnMyUIHeroAttributeOpen( myPlayerID )
+    showHeroAttributePanel( myPlayerID )  
+
+end
+
+function closeHeroAttributeJSTOLUA(index,keys)
+    local myPlayerID = keys.PlayerID
+    local myPlayer = PlayerResource:GetPlayer(myPlayerID)
+    myPlayer.HeroAttributeShow = false
+    OnMyUIHeroAttributeClose(myPlayerID)
 end
 
 function getRandomGoldJSTOLUA(index,keys)
@@ -138,7 +157,8 @@ end
 
 function buttondJSTOLUA(index,keys)
     local myPlayerID = keys.PlayerID
-    openRandomContractList(myPlayerID)
+    --openRandomContractList(myPlayerID)
+    openRandomBlinkList(myPlayerID)
 end
 
 function buttoneJSTOLUA(index,keys)

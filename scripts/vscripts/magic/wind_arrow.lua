@@ -49,6 +49,7 @@ function createShoot(ability)
     shoot.windSpeedUpUnit = {}
     shoot.intervalCallBack = windArrowIntervalCallBack
     moveShoot(keys, shoot, windArrowBoomCallBack, nil)
+    caster.shootOver = 1
 end
 
 --技能爆炸,单次伤害
@@ -71,7 +72,7 @@ function windArrowAOEOperationCallback(shoot,unit)
     local bounds_damage_percent =  ability:GetSpecialValueFor("bounds_damage_percent") / 100
 
     local damage = getApplyDamageValue(shoot) + unit:GetHealth() * bounds_damage_percent
-    ApplyDamage({victim = unit, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+    ApplyDamage({victim = unit, attacker = shoot, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
 	EmitSoundOn(keys.soundCastSp1, shoot)
 end
